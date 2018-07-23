@@ -10,7 +10,7 @@ A simple setup is provided in the examples folder; however, the usage of the mod
       Forseti Module Install
      *****************************************/
     module "forseti-install-simple" {
-      source                       = "../../"
+      source                       = "github.com/terraform-google-modules/terraform-google-forseti"
       gsuite_admin_email           = "superadmin@yourdomain.com"
       project_id                   = "my-forseti-project"
       download_forseti             = "true"
