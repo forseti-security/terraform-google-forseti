@@ -15,7 +15,7 @@
 
 
 PROJECT_ID="$1"
-ORG_ID="$(gcloud organizations list --format="value(ID)")"
+ORG_ID="$(gcloud projects describe $PROJECT_ID --format="value(parent.id)")"
 SERVICE_ACCOUNT_NAME="cloud-foundation-forseti-${RANDOM}"
 SERVICE_ACCOUNT_ID="${SERVICE_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
 STAGING_DIR="${PWD}"
@@ -33,7 +33,7 @@ gcloud iam service-accounts keys create ${KEY_FILE} \
     --iam-account ${SERVICE_ACCOUNT_ID} \
     --user-output-enabled false 
 
-echo "Applying permissions..."
+echo "Applying permissions for org $ORG_ID and project $PROJECT_ID..."
 
 gcloud organizations add-iam-policy-binding ${ORG_ID} \
     --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
