@@ -5,22 +5,9 @@ The Terraform Forseti module can be used to quickly install and configure [Forse
 ## Usage
 A simple setup is provided in the examples folder; however, the usage of the module within your own main.tf file is as follows:
 
-*Configure the provider here before the module invocation, see the examples folder*
-
 ```hcl
-    locals {
-      credentials_file_path = "/somewhere/credentials.json"
-    }
-
     /******************************************
-      Provider configuration
-     *****************************************/
-    provider "google" {
-      credentials = "${file(local.credentials_file_path)}"
-    }
-
-    /******************************************
-      Module calling
+      Forseti Module Install
      *****************************************/
     module "forseti-install-simple" {
       source                       = "../../"
@@ -29,11 +16,11 @@ A simple setup is provided in the examples folder; however, the usage of the mod
       download_forseti             = "true"
       sendgrid_api_key             = "345675432456743"
       notification_recipient_email = "admins@yourdomain.com"
-      credentials_file_path        = "${local.credentials_file_path}"
+      credentials_file_path        = "/somewhere/credentials.json"
     }
 ```
 
-Then perform the following commands on the root folder:
+Then perform the following commands on the config folder:
 
 - `terraform init` to get the plugins
 - `terraform plan` to see the infrastructure plan
@@ -70,16 +57,15 @@ In order to execute this module you must have a Service Account with the followi
 - roles/serviceusage.serviceUsageAdmin
 - roles/storage.admin
 
-### GSuite
-#### Admin
-- To use the IAM exploration functionality of Forseti, you will need a Super Admin on the Google Admin console.
+### GSuite Admin
+To use the IAM exploration functionality of Forseti, you will need a Super Admin on the Google Admin console. This admin's email must be passed in the `gsuite_admin_email` variable.
 
 ## Install
 ### Create the Service Account
 You can create the service account manually, or by running the following command: 
 
 ```bash
-./scripts/setup.sh <project_id>
+./helpers/setup.sh <project_id>
 ```
 
 This will create a service account called `cloud-foundation-forseti-<random_numbers>`, give it the proper roles, and download it to your current directory. Note, that using this script assumes that you are currently authenticated as a user that can create/authorize service accounts at both the organization and project levels.
@@ -96,11 +82,9 @@ The following steps need to be performed manually/outside of this module.
 #### Domain Wide Delegation
 Remember to activate the Domain Wide Delegation on the Service Account that Forseti creates for the server operations.
 
-The service account has the form:
+The service account has the form `forseti-server-gcp-<number>@<project_id>.iam.gserviceaccount.com`.
 
-`forseti-server-gcp-< number >@< project id >.iam.gserviceaccount.com`
-
-Please refer to [the Forseti documentation](https://forsetisecurity.org/docs/howto/configure/gsuite-group-collection.html) for the step by step.
+Please refer to [the Forseti documentation](https://forsetisecurity.org/docs/howto/configure/gsuite-group-collection.html) for step by step directions.
 
 More information about Domain Wide Delegation can be found [here](https://developers.google.com/admin-sdk/directory/v1/guides/delegation).
 
@@ -114,15 +98,17 @@ This will deprovision and delete the service account, and then delete the creden
 ## Module Activity
 This module is a wrapper for the Forseti installation. The following steps are executed:
 
-##### Download Forseti repository
-The Forseti repository is dowloaded at the root of the main.tf. If you prefer you can download the repository, modify the templates/files and skip this step.
+1. Download Forseti repository
 
-*Set the variable `download_forseti` = "false" to skip this step*
+    The Forseti repository is dowloaded at the root of the main.tf. If you prefer you can download the repository, modify the templates/files and skip this step.
 
-If you download the repository yourself, be sure to name the folder `forseti-security`
+    **Set the variable `download_forseti = "false"` to skip this step.**
 
-##### Execute the Forseti installation script
-Terraform executes the Forseti installation script and then Forseti handles the rest of the setup using Deployment Manager templates.
+    If you download the repository yourself, be sure to name the folder `forseti-security`.
+
+2. Execute the Forseti installation script
+
+    Terraform executes the Forseti installation script and then Forseti handles the rest of the setup using Deployment Manager templates.
 
 ## File structure
 The project has the following folders and files:
