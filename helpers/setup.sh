@@ -14,14 +14,19 @@
 # limitations under the License.
 
 
-PROJECT_ID="$1"
-ORG_ID="$(gcloud projects describe $PROJECT_ID --format="value(parent.id)")"
+PROJECT_ID="$(gcloud projects list --format="value(projectId)" | grep -Eo "$1")"
+
+if [[ $PROJECT_ID == "" ]];
+then
+    echo "ERROR The specified project wasn't found."
+    exit 1;
+fi
+
+ORG_ID="$(gcloud projects describe ${PROJECT_ID} --format="value(parent.id)")"
 SERVICE_ACCOUNT_NAME="cloud-foundation-forseti-${RANDOM}"
 SERVICE_ACCOUNT_ID="${SERVICE_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
 STAGING_DIR="${PWD}"
 KEY_FILE="${STAGING_DIR}/credentials.json"
-
-echo "Creating service account..."
 
 gcloud iam service-accounts \
     --project ${PROJECT_ID} create ${SERVICE_ACCOUNT_NAME} \

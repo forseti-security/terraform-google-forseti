@@ -16,8 +16,8 @@
 
 PROJECT_ID="$1"
 ORG_ID="$(gcloud projects describe ${PROJECT_ID} --flatten=parent.id | grep -Eo "\d+")"
-SERVICE_ACCOUNT_ID="$2"
-STAGING_DIR="$(echo ${PWD}/staging)"
+SERVICE_ACCOUNT_ID="$2@${PROJECT_ID}.iam.gserviceaccount.com"
+KEY_FILE="$(echo ${PWD}/credentials.json)"
 
 echo "...removing permissions..."
 
@@ -64,7 +64,7 @@ gcloud projects remove-iam-policy-binding ${PROJECT_ID} \
 gcloud iam service-accounts delete ${SERVICE_ACCOUNT_ID} \
     --quiet
 
-rm -rf "staging"
+rm -rf $KEY_FILE
 
 echo "...done..."
 
