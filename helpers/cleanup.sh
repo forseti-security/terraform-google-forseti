@@ -14,7 +14,7 @@
 # limitations under the License.
 
 
-PROJECT_ID="$(gcloud projects list --format="value(projectId)" | grep -Eo "$1")"
+PROJECT_ID="$(gcloud projects list --format="value(projectId)" --filter="$1")"
 
 if [[ $PROJECT_ID == "" ]];
 then
