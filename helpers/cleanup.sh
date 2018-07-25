@@ -24,7 +24,7 @@ fi
 
 ORG_ID="$(gcloud projects describe ${PROJECT_ID} --flatten=parent.id | grep -Eo "\d+")"
 SERVICE_ACCOUNT_ID="$(gcloud iam service-accounts list --format="value(email)" | grep -Eo "$2@${PROJECT_ID}.iam.gserviceaccount.com")"
-KEY_FILE="$(echo ${PWD}/credentials.json)"
+KEY_FILE="${PWD}/credentials.json"
 
 if [[ $SERVICE_ACCOUNT_ID == "" ]];
 then
