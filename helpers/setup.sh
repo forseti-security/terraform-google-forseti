@@ -22,7 +22,14 @@ then
     exit 1;
 fi
 
-ORG_ID="$(gcloud projects describe ${PROJECT_ID} --format="value(parent.id)")"
+ORG_ID="$(gcloud organizations list --format="value(ID) --filter="$2"")"
+
+if [[ $ORG_ID == "" ]];
+then
+    echo "ERROR the specified organization id wasn't found."
+    exit 1;
+fi
+
 SERVICE_ACCOUNT_NAME="cloud-foundation-forseti-${RANDOM}"
 SERVICE_ACCOUNT_ID="${SERVICE_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
 STAGING_DIR="${PWD}"
