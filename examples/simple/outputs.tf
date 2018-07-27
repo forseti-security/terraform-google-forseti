@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 output "buckets_list" {
   value = "${module.forseti-install-simple.buckets_list}"
 }
