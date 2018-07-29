@@ -14,12 +14,25 @@
 # limitations under the License.
 
 
-PROJECT_ID="$1"
-ORG_ID="$(gcloud projects describe ${PROJECT_ID} --flatten=parent.id | grep -Eo "\d+")"
-SERVICE_ACCOUNT_ID="$2"
-STAGING_DIR="$(echo ${PWD}/staging)"
+PROJECT_ID="$(gcloud projects list --format="value(projectId)" --filter="$1")"
 
-echo "...removing permissions..."
+if [[ $PROJECT_ID == "" ]];
+then
+    echo "ERROR The specified project wasn't found."
+    exit 1;
+fi
+
+ORG_ID="$(gcloud projects describe ${PROJECT_ID} --flatten=parent.id | grep -Eo "\d+")"
+SERVICE_ACCOUNT_ID="$(gcloud iam service-accounts list --format="value(email)" | grep -Eo "$2@${PROJECT_ID}.iam.gserviceaccount.com")"
+KEY_FILE="${PWD}/credentials.json"
+
+if [[ $SERVICE_ACCOUNT_ID == "" ]];
+then
+    echo "ERROR The specified service account wasn't found."
+    exit 1;
+fi
+
+echo "Removing permissions..."
 
 gcloud organizations remove-iam-policy-binding ${ORG_ID} \
     --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
@@ -64,8 +77,8 @@ gcloud projects remove-iam-policy-binding ${PROJECT_ID} \
 gcloud iam service-accounts delete ${SERVICE_ACCOUNT_ID} \
     --quiet
 
-rm -rf "staging"
+rm -rf $KEY_FILE
 
-echo "...done..."
+echo "All done."
 
 
