@@ -53,9 +53,9 @@ resource "google_project_service" "activate_services" {
   service = "${element(local.services_list, count.index)}"
 }
 
-# /*******************************************
-#   Repo downloading
-#  *******************************************/
+/*******************************************
+   Repo downloading
+ *******************************************/
 resource "null_resource" "get_repo" {
   count = "${local.should_download ? 1 : 0}"
 
@@ -70,9 +70,9 @@ resource "null_resource" "get_repo" {
   }
 }
 
-# /*******************************************
-#   Forseti execution
-#  *******************************************/
+/*******************************************
+   Forseti execution
+ *******************************************/
 resource "null_resource" "execute_forseti" {
   # First, set the project in gcloud config
   provisioner "local-exec" {
@@ -91,9 +91,9 @@ resource "null_resource" "execute_forseti" {
   depends_on = ["null_resource.get_repo", "google_project_service.activate_services"]
 }
 
-# /*******************************************
-#   Buckets list retrieval
-#  *******************************************/
+/*******************************************
+   Buckets list retrieval
+ *******************************************/
 data "external" "bucket_retrieval" {
   program = ["bash", "${path.module}/scripts/get-project-buckets.sh", "${var.credentials_file_path}"]
 
