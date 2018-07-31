@@ -1,5 +1,0 @@
-sendgrid_api_key = ""
-notification_recipient_email = "john@phoogle.net"
-gsuite_admin_email = "john@phoogle.net"
-project_id = "johnevans-forseti-test2"
-credentials_file_path = "/Users/johnevans/Documents/repos/terraform-google-forseti/credentials.json"
