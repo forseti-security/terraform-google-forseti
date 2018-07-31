@@ -34,3 +34,14 @@ variable "project_id" {
 variable "credentials_file_path" {
   description = "Path to service account json"
 }
+
+variable "shared_vpc" {
+  description = "The ID of the host project which hosts the shared VPC"
+  default     = ""
+}
+
+variable "shared_vpc_subnets" {
+  description = "List of subnets fully qualified subnet IDs (ie. projects/$PROJECT_ID/regions/$REGION/subnetworks/$SUBNET_ID)"
+  type        = "list"
+  default     = [""]
+}
