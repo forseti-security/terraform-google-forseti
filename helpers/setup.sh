@@ -35,6 +35,7 @@ SERVICE_ACCOUNT_ID="${SERVICE_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount.co
 STAGING_DIR="${PWD}"
 KEY_FILE="${STAGING_DIR}/credentials.json"
 
+
 gcloud iam service-accounts \
     --project ${PROJECT_ID} create ${SERVICE_ACCOUNT_NAME} \
     --display-name ${SERVICE_ACCOUNT_NAME}

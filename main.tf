@@ -18,9 +18,22 @@
   Locals configuration
  *****************************************/
 locals {
-  project_id                 = "${var.project_id}"
-  should_download            = "${var.download_forseti == "true" ? true : false}"
-  skip_sendgrid_config       = "${var.sendgrid_api_key == ""}"
+  project_id           = "${var.project_id}"
+  should_download      = "${var.download_forseti == "true" ? true : false}"
+  skip_sendgrid_config = "${var.sendgrid_api_key == ""}"
+
+  services_list = [
+    "admin.googleapis.com",
+    "cloudresourcemanager.googleapis.com",
+    "bigquery-json.googleapis.com",
+    "cloudbilling.googleapis.com",
+    "sql-component.googleapis.com",
+    "sqladmin.googleapis.com",
+    "compute.googleapis.com",
+    "deploymentmanager.googleapis.com",
+    "iam.googleapis.com",
+  ]
+
   launch_command_main        = "python install/gcp_installer.py --no-cloudshell --service-account-key-file ${var.credentials_file_path} --gsuite-superadmin-email ${var.gsuite_admin_email}"
   launch_command_gcs         = "${var.gcs_location != "" ? format("--gcs-location %s", var.gcs_location) : "--gcs-location \"\""}"
   launch_command_cloudsql    = "${var.cloud_sql_region != "" ? format("--cloudsql-region %s", var.cloud_sql_region) : "--cloudsql-region \"\"" }"
@@ -31,7 +44,17 @@ locals {
 }
 
 /*******************************************
-  Repo downloading
+  Activate services
+ *******************************************/
+resource "google_project_service" "activate_services" {
+  count   = "${length(local.services_list)}"
+  project = "${local.project_id}"
+
+  service = "${element(local.services_list, count.index)}"
+}
+
+/*******************************************
+   Repo downloading
  *******************************************/
 resource "null_resource" "get_repo" {
   count = "${local.should_download ? 1 : 0}"
@@ -48,7 +71,7 @@ resource "null_resource" "get_repo" {
 }
 
 /*******************************************
-  Forseti execution
+   Forseti execution
  *******************************************/
 resource "null_resource" "execute_forseti" {
   # First, set the project in gcloud config
@@ -65,11 +88,11 @@ resource "null_resource" "execute_forseti" {
     }
   }
 
-  depends_on = ["null_resource.get_repo"]
+  depends_on = ["null_resource.get_repo", "google_project_service.activate_services"]
 }
 
 /*******************************************
-  Buckets list retrieval
+   Buckets list retrieval
  *******************************************/
 data "external" "bucket_retrieval" {
   program = ["bash", "${path.module}/scripts/get-project-buckets.sh", "${var.credentials_file_path}"]
