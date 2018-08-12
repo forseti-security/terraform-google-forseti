@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+<<<<<<< HEAD
+=======
+
+>>>>>>> e27cad528e3de483952c273b981304653a212777
 output "buckets_list" {
   value       = "${compact(split(" ", data.external.bucket_retrieval.result["buckets_list"]))}"
   description = "The buckets list within the created project"
