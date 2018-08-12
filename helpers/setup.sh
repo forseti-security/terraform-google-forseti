@@ -44,7 +44,7 @@ echo "Downloading key to credentials.json..."
 
 gcloud iam service-accounts keys create ${KEY_FILE} \
     --iam-account ${SERVICE_ACCOUNT_ID} \
-    --user-output-enabled false 
+    --user-output-enabled false
 
 echo "Applying permissions for org $ORG_ID and project $PROJECT_ID..."
 
