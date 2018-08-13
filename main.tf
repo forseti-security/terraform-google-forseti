@@ -74,17 +74,12 @@ resource "null_resource" "get_repo" {
    Forseti execution
  *******************************************/
 resource "null_resource" "execute_forseti" {
-  # First, set the project in gcloud config
-  provisioner "local-exec" {
-    command = "gcloud config set project ${local.project_id}"
-  }
-
-  # Then, execute forseti installation
+  # Execute forseti installation
   provisioner "local-exec" {
     command = "cd forseti-security; ${local.launch_command_fmt}"
 
     environment {
-      CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE = "${var.credentials_file_path}"
+      CLOUDSDK_CORE_PROJECT = "${local.project_id}"
     }
   }
 

@@ -71,6 +71,11 @@ gcloud projects remove-iam-policy-binding ${PROJECT_ID} \
 
 gcloud projects remove-iam-policy-binding ${PROJECT_ID} \
     --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
+    --role="roles/iam.serviceAccountUser" \
+    --user-output-enabled false
+
+gcloud projects remove-iam-policy-binding ${PROJECT_ID} \
+    --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
     --role="roles/storage.admin" \
     --user-output-enabled false
 

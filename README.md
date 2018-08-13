@@ -54,6 +54,7 @@ In order to execute this module you must have a Service Account with the followi
 - roles/compute.securityAdmin
 - roles/deploymentmanager.editor
 - roles/iam.serviceAccountAdmin
+- roles/iam.serviceAccountUser
 - roles/serviceusage.serviceUsageAdmin
 - roles/storage.admin
 
