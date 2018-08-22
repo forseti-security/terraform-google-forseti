@@ -31,6 +31,7 @@ variable "cloud_sql_region" {
 
 variable "sendgrid_api_key" {
   description = "The Sendgrid api key for notifier"
+  default     = ""
 }
 
 variable "notification_recipient_email" {
