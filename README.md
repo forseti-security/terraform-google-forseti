@@ -53,8 +53,6 @@ Then perform the following commands on the config folder:
 
 [^]: (autogen_docs_end)
 
-- `buckets_list`: list of buckets within the created project
-
 ## Requirements
 ### Installation Dependencies
 - [Terraform](https://www.terraform.io/downloads.html) 0.11.x
