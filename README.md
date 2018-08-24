@@ -27,11 +27,8 @@ Then perform the following commands on the config folder:
 - `terraform apply` to apply the infrastructure build
 - `terraform destroy` to destroy the built infrastructure
 
-### Variables
-Please refer the /variables.tf file for the required and optional variables.
-
-### Outputs
-The outputs for this module are the following:
+[^]: (autogen_docs_start)
+[^]: (autogen_docs_end)
 
 - `buckets_list`: list of buckets within the created project
 
@@ -41,6 +38,7 @@ The outputs for this module are the following:
 - [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google) plugin v1.12.0
 - [jq](https://stedolan.github.io/jq/)
 - [Python 2.7.x](https://www.python.org/getit/)
+- [terraform-docs](https://github.com/segmentio/terraform-docs/releases) 0.3.0
 
 ### Service Account
 In order to execute this module you must have a Service Account with the following roles assigned. There is a helpful setup script documented below which can automatically create this account for you.
@@ -111,6 +109,12 @@ This module is a wrapper for the Forseti installation. The following steps are e
 
     Terraform executes the Forseti installation script and then Forseti handles the rest of the setup using Deployment Manager templates.
 
+## Autogeneration of documentation from .tf files
+Run
+```
+make generate_docs
+```
+
 ## File structure
 The project has the following folders and files:
 
@@ -118,4 +122,4 @@ The project has the following folders and files:
 - /examples: examples for using this module
 - /main.tf: main file for this module, contains all the resources to create
 - /variables.tf: all the variables for the module
-- /readme.MD: this file
+- /README.md: this file
