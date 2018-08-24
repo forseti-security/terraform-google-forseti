@@ -28,6 +28,29 @@ Then perform the following commands on the config folder:
 - `terraform destroy` to destroy the built infrastructure
 
 [^]: (autogen_docs_start)
+
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|:----:|:-----:|:-----:|
+| cloud_sql_region | The Cloud SQL region | string | `us-central1` | no |
+| credentials_file_path | Path to service account json | string | - | yes |
+| download_forseti | Whether to download the forseti repo or not. If false, a Forseti repo must be in the root of main.tf file. (Default 'true') | string | `true` | no |
+| forseti_repo_branch | Forseti repository branch | string | `stable` | no |
+| forseti_repo_url | Foresti git repository URL | string | `https://github.com/GoogleCloudPlatform/forseti-security.git` | no |
+| gcs_location | The GCS bucket location | string | `us-central1` | no |
+| gsuite_admin_email | The email of a GSuite super admin, used for pulling user directory information. | string | - | yes |
+| notification_recipient_email | Notification recipient email | string | - | yes |
+| project_id | The ID of the project where Forseti will be installed | string | - | yes |
+| sendgrid_api_key | The Sendgrid api key for notifier | string | `` | no |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| buckets_list | The buckets list within the created project |
+
 [^]: (autogen_docs_end)
 
 - `buckets_list`: list of buckets within the created project
@@ -122,4 +145,4 @@ The project has the following folders and files:
 - /examples: examples for using this module
 - /main.tf: main file for this module, contains all the resources to create
 - /variables.tf: all the variables for the module
-- /README.md: this file
+- /README.md: this file
