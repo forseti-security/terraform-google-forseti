@@ -36,14 +36,17 @@ variable "sendgrid_api_key" {
 
 variable "notification_recipient_email" {
   description = "Notification recipient email"
+  default = ""
 }
 
 variable "gsuite_admin_email" {
   description = "The email of a GSuite super admin, used for pulling user directory information."
+  default = ""
 }
 
 variable "project_id" {
   description = "The ID of the project where Forseti will be installed"
+  default = ""
 }
 
 variable "forseti_repo_url" {
@@ -58,4 +61,5 @@ variable "forseti_repo_branch" {
 
 variable "credentials_file_path" {
   description = "Path to service account json"
+  default = ""
 }

@@ -22,7 +22,7 @@ then
     exit 1;
 fi
 
-ORG_ID="$(gcloud organizations list --format="value(ID) --filter="$2"")"
+ORG_ID="$(gcloud organizations list --format="value(ID)" --filter="$2")"
 
 if [[ $ORG_ID == "" ]];
 then
