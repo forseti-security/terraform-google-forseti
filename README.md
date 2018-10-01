@@ -114,8 +114,10 @@ Remember to cleanup the service account used to install Forseti either manually,
 `./scripts/cleanup.sh <project_id> <service_account_id>`
 
 With terraform run, you will need to make sure the account running terraform has proper permissions:
-`cd scripts/ ; terraform plan`
-`terraform apply`
+```bash
+cd scripts/ ; terraform plan
+terraform apply
+```
 
 This will deprovision and delete the service account, and then delete the credentials file.
 
