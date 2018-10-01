@@ -109,9 +109,13 @@ Please refer to [the Forseti documentation](https://forsetisecurity.org/docs/how
 More information about Domain Wide Delegation can be found [here](https://developers.google.com/admin-sdk/directory/v1/guides/delegation).
 
 ### Cleanup
-Remember to cleanup the service account used to install Forseti either manually, or by running the command:
+Remember to cleanup the service account used to install Forseti either manually, with terraform or by running the command:
 
 `./scripts/cleanup.sh <project_id> <service_account_id>`
+
+With terraform run, you will need to make sure the account running terraform has proper permissions:
+`cd scripts/ ; terraform plan`
+`terraform apply`
 
 This will deprovision and delete the service account, and then delete the credentials file.
 
@@ -143,4 +147,4 @@ The project has the following folders and files:
 - /examples: examples for using this module
 - /main.tf: main file for this module, contains all the resources to create
 - /variables.tf: all the variables for the module
-- /README.md: this file
+- /README.md: this file
