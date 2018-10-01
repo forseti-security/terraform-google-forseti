@@ -92,7 +92,7 @@ or by running the following command:
 or with terraform, you will need to make sure the account running terraform has proper permissions:
 
 ```bash
-cd scripts/ ; terraform plan
+cd helpers/ ; terraform plan
 terraform apply
 ```
 
