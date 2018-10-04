@@ -14,7 +14,3 @@
  * limitations under the License.
  */
 
-output "buckets_list" {
-  value       = "${compact(split(" ", data.external.bucket_retrieval.result["buckets_list"]))}"
-  description = "The buckets list within the created project"
-}

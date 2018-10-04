@@ -14,25 +14,16 @@
  * limitations under the License.
  */
 
-locals {
-  credentials_file_path = "${var.credentials_file_path}"
-}
-
-/******************************************
-  Provider configuration
- *****************************************/
 provider "google" {
-  credentials = "${file(local.credentials_file_path)}"
+  credentials = "${file(var.credentials_path)}"
 }
 
-/******************************************
-  Module calling
- *****************************************/
 module "forseti-install-simple" {
-  source                       = "../../"
-  gsuite_admin_email           = "${var.gsuite_admin_email}"
-  project_id                   = "${var.project_id}"
-  sendgrid_api_key             = "${var.sendgrid_api_key}"
-  notification_recipient_email = "${var.notification_recipient_email}"
-  credentials_file_path        = "${local.credentials_file_path}"
+  source             = "../../"
+  project_id         = "${var.project_id}"
+  gsuite_admin_email = "${var.gsuite_admin_email}"
+  org_id             = "${var.org_id}"
+  forseti_repo_url   = "https://github.com/ocervell/forseti-security"
+  forseti_version    = "fix-tracing-pr"
+  server_type        = "n1-standard-4"
 }

@@ -14,6 +14,3 @@
  * limitations under the License.
  */
 
-output "buckets_list" {
-  value = "${module.forseti-install-simple.buckets_list}"
-}

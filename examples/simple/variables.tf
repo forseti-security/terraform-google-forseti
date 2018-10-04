@@ -14,13 +14,8 @@
  * limitations under the License.
  */
 
-variable "sendgrid_api_key" {
-  description = "The Sendgrid api key for notifier"
-  default     = ""
-}
-
-variable "notification_recipient_email" {
-  description = "Notification recipient email"
+variable "credentials_path" {
+  description = "Path to service account json"
 }
 
 variable "gsuite_admin_email" {
@@ -31,6 +26,6 @@ variable "project_id" {
   description = "The ID of an existing Google project where Forseti will be installed"
 }
 
-variable "credentials_file_path" {
-  description = "Path to service account json"
+variable "org_id" {
+  description = "The organization id"
 }
