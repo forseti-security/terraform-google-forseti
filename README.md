@@ -82,10 +82,18 @@ To use the IAM exploration functionality of Forseti, you will need a Super Admin
 
 ## Install
 ### Create the Service Account
-You can create the service account manually, or by running the following command: 
+You can create the service account manually, 
+or by running the following command: 
 
 ```bash
 ./helpers/setup.sh <project_id>
+```
+
+or with terraform, you will need to make sure the account running terraform has proper permissions:
+
+```bash
+cd helpers/ ; terraform plan
+terraform apply
 ```
 
 This will create a service account called `cloud-foundation-forseti-<random_numbers>`, give it the proper roles, and download it to your current directory. Note, that using this script assumes that you are currently authenticated as a user that can create/authorize service accounts at both the organization and project levels.
@@ -112,6 +120,7 @@ More information about Domain Wide Delegation can be found [here](https://develo
 Remember to cleanup the service account used to install Forseti either manually, or by running the command:
 
 `./scripts/cleanup.sh <project_id> <service_account_id>`
+
 
 This will deprovision and delete the service account, and then delete the credentials file.
 
@@ -143,4 +152,4 @@ The project has the following folders and files:
 - /examples: examples for using this module
 - /main.tf: main file for this module, contains all the resources to create
 - /variables.tf: all the variables for the module
-- /README.md: this file
+- /README.md: this file
