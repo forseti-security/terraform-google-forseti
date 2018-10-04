@@ -14,52 +14,138 @@
  * limitations under the License.
  */
 
-variable "download_forseti" {
-  description = "Whether to download the forseti repo or not. If false, a Forseti repo must be in the root of main.tf file. (Default 'true')"
-  default     = "true"
-}
+#----------------#
+# Forseti config #
+#----------------#
+variable "project_id" {}
 
-variable "gcs_location" {
-  description = "The GCS bucket location"
-  default     = "us-central1"
-}
+variable "gsuite_admin_email" {}
 
-variable "cloud_sql_region" {
-  description = "The Cloud SQL region"
-  default     = "us-central1"
-}
-
-variable "sendgrid_api_key" {
-  description = "The Sendgrid api key for notifier"
-  default     = ""
-}
-
-variable "notification_recipient_email" {
-  description = "Notification recipient email"
-  default = ""
-}
-
-variable "gsuite_admin_email" {
-  description = "The email of a GSuite super admin, used for pulling user directory information."
-  default = ""
-}
-
-variable "project_id" {
-  description = "The ID of the project where Forseti will be installed"
-  default = ""
+variable "forseti_version" {
+  default = "master"
 }
 
 variable "forseti_repo_url" {
-  description = "Foresti git repository URL"
-  default     = "https://github.com/GoogleCloudPlatform/forseti-security.git"
+  default = "https://github.com/GoogleCloudPlatform/forseti-security"
 }
 
-variable "forseti_repo_branch" {
-  description = "Forseti repository branch"
-  default     = "stable"
+variable "forseti_email_recipient" {
+  default = ""
 }
 
-variable "credentials_file_path" {
-  description = "Path to service account json"
+variable "forseti_email_sender" {
+  default = ""
+}
+
+variable "forseti_home" {
+  default = "$USER_HOME/forseti-security"
+}
+
+variable "forseti_run_frequency" {
+  default = "* */2 * * *"
+}
+
+#----------------#
+# Forseti server #
+#----------------#
+variable "server_type" {
+  default = "n1-standard-2"
+}
+
+variable "server_region" {
+  default = "us-central1"
+}
+
+variable "server_boot_image" {
+  default = "ubuntu-os-cloud/ubuntu-1804-lts"
+}
+
+#----------------#
+# Forseti client #
+#----------------#
+variable "client_type" {
+  default = "n1-standard-2"
+}
+
+variable "client_boot_image" {
+  default = "ubuntu-os-cloud/ubuntu-1804-lts"
+}
+
+variable "client_region" {
+  default = "us-central1"
+}
+
+#------------#
+# Forseti db #
+#------------#
+variable "cloudsql_region" {
+  default = "us-central1"
+}
+
+variable "cloudsql_db_name" {
+  default = "forseti_security"
+}
+
+variable "cloudsql_db_port" {
+  default = "3306"
+}
+
+variable "cloudsql_proxy_arch" {
+  default = "linux.amd64"
+}
+
+variable "cloudsql_type" {
+  default = "db-n1-standard-1"
+}
+
+#----------------#
+# Forseti bucket #
+#----------------#
+variable "storage_bucket_location" {
+  default = "us-central1"
+}
+
+variable "bucket_cai_location" {
+  default = ""
+}
+
+#---------#
+# Network #
+#---------#
+variable "vpc_host_network" {
+  default = "default"
+}
+
+variable "vpc_host_subnetwork" {
+  default = "default"
+}
+
+variable "vpc_host_project_id" {
+  default = ""
+}
+
+#-------#
+# Flags #
+#-------#
+variable "enable_write" {
+  default = "false"
+}
+
+variable "enable_cai_bucket" {
+  default = "false"
+}
+
+#--------#
+# Config #
+#--------#
+variable "org_id" {
+  default = ""
+}
+
+variable "folder_id" {
+  default = ""
+}
+
+variable "sendgrid_api_key" {
   default = ""
 }
