@@ -89,10 +89,14 @@ or by running the following command:
 ./helpers/setup.sh <project_id>
 ```
 
-or with terraform, you will need to make sure the account running terraform has proper permissions:
+
+
+Alternatively, you can [use Terraform](https://github.com/terraform-google-modules/terraform-google-forseti/blob/master/helpers/forseti-setup.tf) to create the Service Account and give it the proper permissions:
 
 ```bash
-cd helpers/ ; terraform plan
+gcloud auth application-default login
+cd helpers/
+terraform plan
 terraform apply
 ```
 
