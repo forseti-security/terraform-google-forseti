@@ -23,7 +23,5 @@ module "forseti-install-simple" {
   project_id         = "${var.project_id}"
   gsuite_admin_email = "${var.gsuite_admin_email}"
   org_id             = "${var.org_id}"
-  forseti_repo_url   = "https://github.com/ocervell/forseti-security"
-  forseti_version    = "fix-tracing-pr"
   server_type        = "n1-standard-4"
 }

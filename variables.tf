@@ -22,7 +22,7 @@ variable "project_id" {}
 variable "gsuite_admin_email" {}
 
 variable "forseti_version" {
-  default = "master"
+  default = "stable"
 }
 
 variable "forseti_repo_url" {
