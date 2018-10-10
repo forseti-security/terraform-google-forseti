@@ -194,6 +194,55 @@ resource "google_organization_iam_member" "folder_write" {
   member    = "serviceAccount:${google_service_account.forseti_server.email}"
 }
 
+/*******************************************
+  Forseti Firewall Rules
+ *******************************************/
+resource "google_compute_firewall" "forseti-server-deny-all" {
+  name                    = "forseti-server-deny-all-${random_string.rand.result}"
+  network                 = "${var.vpc_host_network}"
+  target_service_accounts = ["${google_service_account.forseti_server.email}"]
+  source_ranges           = ["0.0.0.0/0"]
+  priority                = "1"
+
+  deny {
+    protocol = "icmp"
+  }
+
+  deny {
+    protocol = "udp"
+  }
+
+  deny {
+    protocol = "tcp"
+  }
+}
+
+resource "google_compute_firewall" "forseti-server-ssh-external" {
+  name                    = "forseti-server-ssh-external-${random_string.rand.result}"
+  network                 = "${var.vpc_host_network}"
+  target_service_accounts = ["${google_service_account.forseti_server.email}"]
+  source_ranges           = ["0.0.0.0/0"]
+  priority                = "0"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+}
+
+resource "google_compute_firewall" "forseti-server-allow-grpc" {
+  name                    = "forseti-server-allow-grpc-${random_string.rand.result}"
+  network                 = "${var.vpc_host_network}"
+  target_service_accounts = ["${google_service_account.forseti_server.email}"]
+  source_ranges           = ["10.128.0.0/9"]
+  priority                = "0"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["50051"]
+  }
+}
+
 #------------------------#
 # Forseti Storage bucket #
 #------------------------#
