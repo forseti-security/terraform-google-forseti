@@ -22,7 +22,7 @@ then
     exit 1;
 fi
 
-ORG_ID="$(gcloud organizations list --format="value(ID) --filter="$2"")"
+ORG_ID="$(gcloud organizations list --format="value(ID)" --filter="$2")"
 
 if [[ $ORG_ID == "" ]];
 then
@@ -83,7 +83,7 @@ gcloud projects add-iam-policy-binding ${PROJECT_ID} \
     --role="roles/serviceusage.serviceUsageAdmin" \
     --user-output-enabled false
 
-gcloud projects remove-iam-policy-binding ${PROJECT_ID} \
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
     --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
     --role="roles/iam.serviceAccountUser" \
     --user-output-enabled false
