@@ -109,6 +109,10 @@ variable "bucket_cai_location" {
   default = ""
 }
 
+variable "bucket_cai_lifecycle_age" {
+  default = "14"
+}
+
 #---------#
 # Network #
 #---------#
