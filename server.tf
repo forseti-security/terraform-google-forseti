@@ -261,6 +261,22 @@ resource "google_storage_bucket_object" "forseti_server_config" {
   content = "${data.template_file.forseti_server_config.rendered}"
 }
 
+resource "google_storage_bucket" "cai_export" {
+  name     = "forseti-cai-export-${local.random_hash}"
+  location = "${var.bucket_cai_location}"
+  project  = "${var.project_id}"
+
+  lifecycle_rule = {
+    action = {
+      type = "Delete"
+    }
+
+    condition = {
+      age = "14"
+    }
+  }
+}
+
 #-------------------------#
 # Forseti server instance #
 #-------------------------#
