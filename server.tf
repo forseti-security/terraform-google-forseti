@@ -272,7 +272,7 @@ resource "google_storage_bucket" "cai_export" {
     }
 
     condition = {
-      age = "14"
+      age = "${var.bucket_cai_lifecycle_age}"
     }
   }
 }
