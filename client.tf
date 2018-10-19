@@ -100,3 +100,20 @@ resource "google_service_account" "forseti_client" {
   project      = "${var.project_id}"
   display_name = "Forseti Server Service Account"
 }
+
+#------------------------#
+# Forseti Storage bucket #
+#------------------------#
+resource "google_storage_bucket" "client_config" {
+  name          = "forseti-client-${local.random_hash}"
+  location      = "${var.storage_bucket_location}"
+  project       = "${var.project_id}"
+  force_destroy = "true"
+}
+
+resource "google_storage_bucket_object" "forseti_client_config" {
+  name       = "configs/forseti_conf_client.yaml"
+  bucket     = "${google_storage_bucket.client_config.name}"
+  content    = "${data.template_file.forseti_client_config.rendered}"
+  depends_on = ["google_compute_instance.forseti-client"]
+}
