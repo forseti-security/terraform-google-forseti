@@ -295,9 +295,8 @@ resource "google_compute_instance" "forseti-server" {
   }
 
   network_interface {
-    network = "${var.vpc_host_network}"
-
-    # subnetwork = "projects/${var.vpc_project_id}/regions/$region/subnetworks/$subnet_id
+    subnetwork_project = "${var.project_id}"
+    subnetwork         = "${var.vpc_host_subnetwork}"
 
     access_config {}
   }
