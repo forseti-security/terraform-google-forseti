@@ -249,15 +249,16 @@ resource "google_compute_firewall" "forseti-server-allow-grpc" {
 #------------------------#
 # Forseti Storage bucket #
 #------------------------#
-resource "google_storage_bucket" "config" {
-  name     = "forseti-server-${local.random_hash}"
-  location = "${var.storage_bucket_location}"
-  project  = "${var.project_id}"
+resource "google_storage_bucket" "server_config" {
+  name          = "forseti-server-${local.random_hash}"
+  location      = "${var.storage_bucket_location}"
+  project       = "${var.project_id}"
+  force_destroy = "true"
 }
 
 resource "google_storage_bucket_object" "forseti_server_config" {
   name    = "configs/forseti_conf_server.yaml"
-  bucket  = "${google_storage_bucket.config.name}"
+  bucket  = "${google_storage_bucket.server_config.name}"
   content = "${data.template_file.forseti_server_config.rendered}"
 }
 
