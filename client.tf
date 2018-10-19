@@ -69,9 +69,8 @@ resource "google_compute_instance" "forseti-client" {
   }
 
   network_interface {
-    network = "${var.vpc_host_network}"
-
-    # subnetwork = "${var.vpc_host_subnetwork}"
+    subnetwork_project = "${var.project_id}"
+    subnetwork         = "${var.vpc_host_subnetwork}"
 
     access_config {}
   }
