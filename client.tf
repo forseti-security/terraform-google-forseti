@@ -14,15 +14,6 @@
  * limitations under the License.
  */
 
-locals {
-  client_startup_script = "${file("${path.module}/scripts/forseti-client/forseti_client_startup_script.sh")}"
-  client_env_script     = "${file("${path.module}/scripts/forseti-client/forseti_environment.sh")}"
-  client_conf           = "${file("${path.module}/configs/forseti_conf_client.yaml")}"
-  client_conf_path      = "${var.forseti_home}/configs/forseti_conf_client.yaml"
-  client_sa_name        = "forseti-client-gcp-${local.random_hash}"
-  client_name           = "forseti-client-vm-${local.random_hash}"
-  client_zone           = "${var.client_region}-c"
-}
 
 #-------------------#
 # Forseti templates #
