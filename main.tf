@@ -33,13 +33,14 @@ locals {
     "deploymentmanager.googleapis.com",
     "iam.googleapis.com",
   ]
-
-  launch_command_main        = "python install/gcp_installer.py --no-cloudshell --service-account-key-file ${var.credentials_file_path} --gsuite-superadmin-email ${var.gsuite_admin_email}"
+  /*COMMAND TO REPLACE SCRIPT FOR AUTOMATION*/
+  launch_first		     = "sh scripts/accScript.sh ${var.gsuite_admin_email}; "
+  launch_command_main        = "cd forseti-security; python install/gcp_installer.py --no-cloudshell --service-account-key-file ${var.credentials_file_path} --gsuite-superadmin-email ${var.gsuite_admin_email}"
   launch_command_gcs         = "${var.gcs_location != "" ? format("--gcs-location %s", var.gcs_location) : "--gcs-location \"\""}"
   launch_command_cloudsql    = "${var.cloud_sql_region != "" ? format("--cloudsql-region %s", var.cloud_sql_region) : "--cloudsql-region \"\"" }"
   launch_command_sendgrid    = "${var.sendgrid_api_key != "" ? format("--sendgrid-api-key %s", var.sendgrid_api_key) : "--skip-sendgrid-config" }"
   launch_command_email_notif = "${var.notification_recipient_email != "" && !local.skip_sendgrid_config ? format("--notification-recipient-email %s", var.notification_recipient_email) : ""}"
-  launch_command_list        = "${compact(list(local.launch_command_main, local.launch_command_sendgrid, local.launch_command_cloudsql, local.launch_command_email_notif, local.launch_command_gcs))}"
+  launch_command_list        = "${compact(list(local.launch_first, local.launch_command_main, local.launch_command_sendgrid, local.launch_command_cloudsql, local.launch_command_email_notif, local.launch_command_gcs))}"
   launch_command_fmt         = "${join(" ", local.launch_command_list)}"
 }
 
@@ -76,7 +77,7 @@ resource "null_resource" "get_repo" {
 resource "null_resource" "execute_forseti" {
   # Execute forseti installation
   provisioner "local-exec" {
-    command = "cd forseti-security; ${local.launch_command_fmt}"
+    command = "${local.launch_command_fmt}"
 
     environment {
       CLOUDSDK_CORE_PROJECT = "${local.project_id}"
