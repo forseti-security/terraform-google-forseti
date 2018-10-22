@@ -203,7 +203,7 @@ resource "google_compute_firewall" "forseti-server-deny-all" {
   network                 = "${var.vpc_host_network}"
   target_service_accounts = ["${google_service_account.forseti_server.email}"]
   source_ranges           = ["0.0.0.0/0"]
-  priority                = "1"
+  priority                = "200"
 
   deny {
     protocol = "icmp"
@@ -224,7 +224,7 @@ resource "google_compute_firewall" "forseti-server-ssh-external" {
   network                 = "${var.vpc_host_network}"
   target_service_accounts = ["${google_service_account.forseti_server.email}"]
   source_ranges           = ["0.0.0.0/0"]
-  priority                = "0"
+  priority                = "100"
 
   allow {
     protocol = "tcp"
@@ -238,7 +238,7 @@ resource "google_compute_firewall" "forseti-server-allow-grpc" {
   network                 = "${var.vpc_host_network}"
   target_service_accounts = ["${google_service_account.forseti_server.email}"]
   source_ranges           = ["10.128.0.0/9"]
-  priority                = "0"
+  priority                = "100"
 
   allow {
     protocol = "tcp"
