@@ -146,7 +146,7 @@ data "template_file" "forseti_server_config" {
 resource "google_project_service" "activate_services" {
   count              = "${length(local.services_list)}"
   project            = "${var.project_id}"
-  service            = "${element(local.services_list, count.index)}"
+  service            = "${local.services_list[count.index]}"
   disable_on_destroy = "false"
 }
 
