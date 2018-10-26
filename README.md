@@ -44,10 +44,10 @@ In order to execute this module you must have a Service Account with the followi
 
 **IAM Roles**:
 On the organization:
-- roles/resourcemanager.organizationAdmin
+- `roles/resourcemanager.organizationAdmin`
 
 On the Forseti project:
-- roles/owner
+- `roles/owner`
 
 ### GSuite Admin
 To use the IAM exploration functionality of Forseti, you will need a Super Admin on the Google Admin console. This admin's email must be passed in the `gsuite_admin_email` variable.
