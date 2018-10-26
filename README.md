@@ -6,9 +6,6 @@ The Terraform Forseti module can be used to quickly install and configure [Forse
 A simple setup is provided in the examples folder; however, the usage of the module within your own main.tf file is as follows:
 
 ```hcl
-    /******************************************
-      Forseti Module Install
-     *****************************************/
     module "forseti-install-simple" {
       source                       = "github.com/terraform-google-modules/terraform-google-forseti"
       gsuite_admin_email           = "superadmin@yourdomain.com"
@@ -28,27 +25,9 @@ Then perform the following commands on the config folder:
 
 [^]: (autogen_docs_start)
 
-
 ## Inputs
 
-| Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| cloud_sql_region | The Cloud SQL region | string | `us-central1` | no |
-| credentials_file_path | Path to service account json | string | - | yes |
-| download_forseti | Whether to download the forseti repo or not. If false, a Forseti repo must be in the root of main.tf file. (Default 'true') | string | `true` | no |
-| forseti_repo_branch | Forseti repository branch | string | `stable` | no |
-| forseti_repo_url | Foresti git repository URL | string | `https://github.com/GoogleCloudPlatform/forseti-security.git` | no |
-| gcs_location | The GCS bucket location | string | `us-central1` | no |
-| gsuite_admin_email | The email of a GSuite super admin, used for pulling user directory information. | string | - | yes |
-| notification_recipient_email | Notification recipient email | string | - | yes |
-| project_id | The ID of the project where Forseti will be installed | string | - | yes |
-| sendgrid_api_key | The Sendgrid api key for notifier | string | `` | no |
-
 ## Outputs
-
-| Name | Description |
-|------|-------------|
-| buckets_list | The buckets list within the created project |
 
 [^]: (autogen_docs_end)
 
@@ -63,18 +42,12 @@ Then perform the following commands on the config folder:
 ### Service Account
 In order to execute this module you must have a Service Account with the following roles assigned. There is a helpful setup script documented below which can automatically create this account for you.
 
-**Organization Roles**:
+**IAM Roles**:
+On the organization:
 - roles/resourcemanager.organizationAdmin
 
-**Project Roles** on the Forseti install project:
-- roles/compute.instanceAdmin
-- roles/compute.networkViewer
-- roles/compute.securityAdmin
-- roles/deploymentmanager.editor
-- roles/iam.serviceAccountAdmin
-- roles/iam.serviceAccountUser
-- roles/serviceusage.serviceUsageAdmin
-- roles/storage.admin
+On the Forseti project:
+- roles/owner
 
 ### GSuite Admin
 To use the IAM exploration functionality of Forseti, you will need a Super Admin on the Google Admin console. This admin's email must be passed in the `gsuite_admin_email` variable.
@@ -113,21 +86,6 @@ Remember to cleanup the service account used to install Forseti either manually,
 `./scripts/cleanup.sh <project_id> <service_account_id>`
 
 This will deprovision and delete the service account, and then delete the credentials file.
-
-## Module Activity
-This module is a wrapper for the Forseti installation. The following steps are executed:
-
-1. Download Forseti repository
-
-    The Forseti repository is dowloaded at the root of the main.tf. If you prefer you can download the repository, modify the templates/files and skip this step.
-
-    **Set the variable `download_forseti = "false"` to skip this step.**
-
-    If you download the repository yourself, be sure to name the folder `forseti-security`.
-
-2. Execute the Forseti installation script
-
-    Terraform executes the Forseti installation script and then Forseti handles the rest of the setup using Deployment Manager templates.
 
 ## Autogeneration of documentation from .tf files
 Run
