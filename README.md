@@ -42,7 +42,9 @@ Then perform the following commands on the config folder:
 ### Service Account
 In order to execute this module you must have a Service Account with the following roles assigned. There is a helpful setup script documented below which can automatically create this account for you.
 
-**IAM Roles**:
+### IAM Roles
+For this module to work, you need the following roles enabled on the Service Account.
+
 On the organization:
 - `roles/resourcemanager.organizationAdmin`
 
