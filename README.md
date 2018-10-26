@@ -13,10 +13,9 @@ A simple setup is provided in the examples folder; however, the usage of the mod
       source                       = "github.com/terraform-google-modules/terraform-google-forseti"
       gsuite_admin_email           = "superadmin@yourdomain.com"
       project_id                   = "my-forseti-project"
-      download_forseti             = "true"
-      sendgrid_api_key             = "345675432456743"
-      notification_recipient_email = "admins@yourdomain.com"
-      credentials_file_path        = "/somewhere/credentials.json"
+      org_id                       = "2313934234"
+      forseti_repo_url             = "https://github.com/GoogleCloudPlatform/forseti-security"
+      forseti_version              = "dev"
     }
 ```
 
@@ -143,4 +142,4 @@ The project has the following folders and files:
 - /examples: examples for using this module
 - /main.tf: main file for this module, contains all the resources to create
 - /variables.tf: all the variables for the module
-- /README.md: this file
+- /README.md: this file
