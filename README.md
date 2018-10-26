@@ -35,9 +35,8 @@ Then perform the following commands on the config folder:
 ### Installation Dependencies
 - [Terraform](https://www.terraform.io/downloads.html) 0.11.x
 - [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google) plugin v1.12.0
-- [jq](https://stedolan.github.io/jq/)
 - [Python 2.7.x](https://www.python.org/getit/)
-- [terraform-docs](https://github.com/segmentio/terraform-docs/releases) 0.3.0
+- [terraform-docs](https://github.com/segmentio/terraform-docs/releases)(optional) 0.3.0
 
 ### Service Account
 In order to execute this module you must have a Service Account with the following roles assigned. There is a helpful setup script documented below which can automatically create this account for you.
