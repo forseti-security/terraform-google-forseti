@@ -1,0 +1,23 @@
+---
+driver:
+  name: terraform
+  root_module_directory: test/fixtures/tf_module
+  variable_files:
+    - test/fixtures/tf_module/temp.tfvars
+
+
+provisioner:
+  name: terraform
+
+verifier:
+  name: terraform
+  groups:
+    - name: default
+      controls:
+        - instance
+
+suites:
+  - name: default
+
+platforms:
+  - name: terraform
