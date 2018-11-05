@@ -47,7 +47,7 @@ For this module to work, you need the following roles enabled on the Service Acc
 On the organization:
 - `roles/resourcemanager.organizationAdmin`
 
-On the Forseti project:
+On the project:
 - `roles/owner`
 
 ### GSuite Admin
@@ -55,7 +55,7 @@ To use the IAM exploration functionality of Forseti, you will need a Super Admin
 
 ## Install
 ### Create the Service Account
-You can create the service account manually, or by running the following command: 
+You can create the service account manually, or by running the following command:
 
 ```bash
 ./helpers/setup.sh <project_id>

@@ -48,4 +48,4 @@ chown -R $USER ${forseti_home}
 
 # Store the variables in /etc/profile.d/forseti_environment.sh
 # so all the users will have access to them
-echo ${forseti_environment} > /etc/profile.d/forseti_environment.sh | sudo sh
+echo "${forseti_environment}" > /etc/profile.d/forseti_environment.sh | sudo sh

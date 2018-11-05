@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 #-------------------#
 # Forseti templates #
 #-------------------#
@@ -22,10 +21,12 @@ data "template_file" "forseti_client_startup_script" {
   template = "${local.client_startup_script}"
 
   vars {
-    forseti_environment = "${data.template_file.forseti_client_environment.rendered}"
-    forseti_repo_url    = "${var.forseti_repo_url}"
-    forseti_version     = "${var.forseti_version}"
-    forseti_home        = "${var.forseti_home}"
+    forseti_environment      = "${data.template_file.forseti_client_environment.rendered}"
+    forseti_repo_url         = "${var.forseti_repo_url}"
+    forseti_version          = "${var.forseti_version}"
+    forseti_home             = "${var.forseti_home}"
+    forseti_client_conf_path = "${local.client_conf_path}"
+    storage_bucket_name      = "${local.client_bucket_name}"
   }
 }
 
@@ -42,10 +43,13 @@ data "template_file" "forseti_client_config" {
   template = "${local.client_conf}"
 
   vars {
-    forseti_server_ip = "${google_compute_instance.forseti-server.network_interface.0.access_config.0.assigned_nat_ip}"
+    forseti_server_ip = "${google_compute_instance.forseti-server.network_interface.0.network_ip}"
   }
 }
 
+#-------------------#
+# Forseti client VM #
+#-------------------#
 resource "google_compute_instance" "forseti-client" {
   name                      = "${local.client_name}"
   zone                      = "${local.client_zone}"
@@ -83,8 +87,18 @@ resource "google_compute_instance" "forseti-client" {
   ]
 }
 
+#----------------------#
+# Forseti client roles #
+#----------------------#
+resource "google_project_iam_member" "client_roles" {
+  count   = "${length(local.client_project_roles)}"
+  role    = "${local.client_project_roles[count.index]}"
+  project = "${var.project_id}"
+  member  = "serviceAccount:${google_service_account.forseti_client.email}"
+}
+
 #-------------------------#
-# Forseti Service Account #
+# Forseti service Account #
 #-------------------------#
 resource "google_service_account" "forseti_client" {
   account_id   = "${local.client_sa_name}"
@@ -93,10 +107,10 @@ resource "google_service_account" "forseti_client" {
 }
 
 #------------------------#
-# Forseti Storage bucket #
+# Forseti storage bucket #
 #------------------------#
 resource "google_storage_bucket" "client_config" {
-  name          = "forseti-client-${local.random_hash}"
+  name          = "${local.client_bucket_name}"
   location      = "${var.storage_bucket_location}"
   project       = "${var.project_id}"
   force_destroy = "true"

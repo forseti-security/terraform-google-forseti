@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 #--------#
 # Locals #
 #--------#
@@ -65,6 +64,11 @@ locals {
     "roles/cloudtrace.agent",
     "roles/logging.logWriter",
     "roles/iam.serviceAccountTokenCreator",
+  ]
+
+  client_project_roles = [
+    "roles/storage.objectViewer",
+    "roles/cloudtrace.agent",
   ]
 
   server_write_roles = [
