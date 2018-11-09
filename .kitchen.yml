@@ -24,7 +24,7 @@ provisioner:
 
 verifier:
   name: shell
-  command: inspec exec test/integration/gcp -t gcp:// --attrs test/integration/my-profile/attributes.yml
+  command: inspec exec test/integration/gcp -t gcp:// --attrs test/integration/gcp/attributes.yml
 
 suites:
   - name: gcp
