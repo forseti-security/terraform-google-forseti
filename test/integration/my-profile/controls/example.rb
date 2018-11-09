@@ -51,3 +51,34 @@ control 'forseti-cloudsql-instance' do
   end
 end
 
+
+control 'forseti-server-iam-roles' do
+  gcp_enable_privileged_resources = '1'
+
+  impact 1.0
+  title 'Test Server IAM Role bindings'
+  describe google_project_iam_binding(project: gcp_project_id, role: "roles/storage.objectViewer") do
+    it { should exist }
+    its ('members'){ should include /forseti/ }
+  end
+  describe google_project_iam_binding(project: gcp_project_id, role: "roles/storage.objectCreator") do
+    it { should exist }
+    its ('members'){ should include /forseti/ }
+  end
+  describe google_project_iam_binding(project: gcp_project_id, role: "roles/cloudsql.client") do
+    it { should exist }
+    its ('members'){ should include /forseti/ }
+  end
+  describe google_project_iam_binding(project: gcp_project_id, role: "roles/cloudtrace.agent") do
+    it { should exist }
+    its ('members'){ should include /forseti/ }
+  end
+  describe google_project_iam_binding(project: gcp_project_id, role: "roles/logging.logWriter") do
+    it { should exist }
+    its ('members'){ should include /forseti/ }
+  end
+  describe google_project_iam_binding(project: gcp_project_id, role: "roles/iam.serviceAccountTokenCreator") do
+    it { should exist }
+    its ('members'){ should include /forseti/ }
+  end
+end
