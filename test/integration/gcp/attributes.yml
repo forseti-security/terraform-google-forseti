@@ -12,22 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
----
-driver:
-  name: terraform
-  root_module_directory: test/fixtures/tf_module
-  variable_files:
-    - test/fixtures/tf_module/temp.tfvars
-
-provisioner:
-  name: terraform
-
-verifier:
-  name: shell
-  command: inspec exec test/integration/gcp -t gcp:// --attrs test/integration/my-profile/attributes.yml
-
-suites:
-  - name: gcp
-
-platforms:
-  - name: terraform
+# Below is to be uncommented and set with your GCP project ID:
+ gcp_project_id: 'rltech-173716'
+ #gcp_org_id: '885916890543'
