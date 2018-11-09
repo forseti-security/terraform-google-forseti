@@ -119,3 +119,18 @@ control 'forseti-server-service-account' do
     its('service_account_emails'){ should include /forseti-server-gcp/ }
   end
 end
+
+control 'forseti-firewall-rules' do
+  impact 1.0
+  title 'Test Forseti Firewall Rules'
+  describe google_compute_firewalls(project: 'chef-inspec-gcp') do
+    its('firewall_names') { should include /forseti-server-ssh-external/ }
+  end
+  describe google_compute_firewalls(project: 'chef-inspec-gcp') do
+    its('firewall_names') { should include /forseti-server-allow-grpc/ }
+  end
+  describe google_compute_firewalls(project: 'chef-inspec-gcp') do
+    its('firewall_names') { should include /forseti-server-deny-all/ }
+  end
+
+end
