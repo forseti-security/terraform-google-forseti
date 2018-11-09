@@ -66,3 +66,7 @@ check_headers:
 .PHONY: generate_docs
 generate_docs:
 	@source test/make.sh && generate_docs
+
+.PHONY: kitchen_all
+kitchen_all:
+	@source kitchen test

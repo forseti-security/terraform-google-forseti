@@ -5,19 +5,15 @@ driver:
   variable_files:
     - test/fixtures/tf_module/temp.tfvars
 
-
 provisioner:
   name: terraform
 
 verifier:
-  name: terraform
-  groups:
-    - name: default
-      controls:
-        - instance
+  name: shell
+  command: inspec exec test/integration/my-profile -t gcp:// --attrs test/integration/my-profile/attributes.yml
 
 suites:
-  - name: default
+  - name: my-profile
 
 platforms:
   - name: terraform
