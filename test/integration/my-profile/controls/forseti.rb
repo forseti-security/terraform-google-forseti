@@ -4,28 +4,7 @@
 title 'Sample Section'
 
 gcp_project_id = attribute('gcp_project_id')
-
-# you add controls here
-control 'gcp-single-region-1.0' do                                                    # A unique ID for this control
-  impact 1.0                                                                          # The criticality, if this control fails.
-  title 'Ensure single region has the correct properties.'                            # A human-readable title
-  desc 'An optional description...'
-  describe google_compute_region(project: gcp_project_id, name: 'europe-west2') do    # The actual test
-    its('zone_names') { should include 'europe-west2-a' }
-  end
-end
-
-# plural resources can be leveraged to loop across many resources
-control 'gcp-regions-loop-1.0' do                                                     # A unique ID for this control
-  impact 1.0                                                                          # The criticality, if this control fails.
-  title 'Ensure regions have the correct properties in bulk.'                         # A human-readable title
-  desc 'An optional description...'
-  google_compute_regions(project: gcp_project_id).region_names.each do |region_name|  # Loop across all regions by name
-    describe google_compute_region(project: gcp_project_id, name: region_name) do     # The test for a single region
-      it { should be_up }
-    end
-  end
-end
+#gcp_org_id = attribute('gcp_org_id')
 
 control 'forseti-client-vm' do
   impact 1.0
@@ -56,7 +35,7 @@ control 'forseti-server-iam-roles' do
   gcp_enable_privileged_resources = '1'
 
   impact 1.0
-  title 'Test Server IAM Role bindings'
+  title 'Test Server Project IAM Role bindings'
   describe google_project_iam_binding(project: gcp_project_id, role: "roles/storage.objectViewer") do
     it { should exist }
     its ('members'){ should include /forseti/ }
@@ -80,5 +59,49 @@ control 'forseti-server-iam-roles' do
   describe google_project_iam_binding(project: gcp_project_id, role: "roles/iam.serviceAccountTokenCreator") do
     it { should exist }
     its ('members'){ should include /forseti/ }
+  end
+end
+
+# @TODO Need to figure out the Org level permissions to execute this test
+#
+# control 'forseti-server-read-iam-roles' do
+#   gcp_enable_privileged_resources = '1'
+#
+#   impact 1.0
+#   title 'Test Server Read Org Level IAM Role bindings'
+#   describe google_project_iam_binding(project: , role: "roles/compute.securityAdmin") do
+#     it { should exist }
+#     its ('members'){ should include /forseti/ }
+#   end
+# end
+
+control 'forseti-google-storage-buckets' do
+  impact 1.0
+  title 'Test GCS Buckets are present'
+  describe google_storage_buckets(project: gcp_project_id) do
+    its('bucket_names') { should include /forseti-server/ }
+  end
+  describe google_storage_buckets(project: gcp_project_id) do
+    its('bucket_names') { should include /forseti-client/ }
+  end
+  # @TODO can't get the bucket to accept regex matching, below works but doesn't account for random_id
+  # describe google_storage_bucket_objects(bucket: 'forseti-server-52d2853a') do
+  #   its('object_names'){ should include 'configs/forseti_conf_server.yaml' }
+  # end
+end
+
+control 'forseti-client-service-account' do
+  impact 1.0
+  title 'Test Forseti Client Service Account'
+  describe google_service_accounts(project: gcp_project_id) do
+    its('service_account_emails'){ should include /forseti-client-gcp/ }
+  end
+end
+
+control 'forseti-server-service-account' do
+  impact 1.0
+  title 'Test Forseti Server Service Account'
+  describe google_service_accounts(project: gcp_project_id) do
+    its('service_account_emails'){ should include /forseti-server-gcp/ }
   end
 end
