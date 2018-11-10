@@ -134,7 +134,7 @@ resource "google_folder_iam_member" "folder_write" {
 #------------------------#
 resource "google_compute_firewall" "forseti-server-deny-all" {
   name                    = "forseti-server-deny-all-${local.random_hash}"
-  project                 = "${var.project_id}"
+  project                 = "${local.vpc_host_project_id}"
   network                 = "${var.vpc_host_network}"
   target_service_accounts = ["${google_service_account.forseti_server.email}"]
   source_ranges           = ["0.0.0.0/0"]
