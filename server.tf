@@ -36,7 +36,7 @@ data "template_file" "forseti_server_startup_script" {
     forseti_server_conf_path = "${local.server_conf_path}"
     forseti_home             = "${var.forseti_home}"
     cloudsql_proxy_arch      = "${var.cloudsql_proxy_arch}"
-    storage_bucket_name      = "${local.storage_bucket_name}"
+    storage_bucket_name      = "${local.server_bucket_name}"
   }
 }
 
@@ -46,7 +46,7 @@ data "template_file" "forseti_server_environment" {
   vars {
     forseti_home             = "${var.forseti_home}"
     forseti_server_conf_path = "${local.server_conf_path}"
-    storage_bucket_name      = "${local.storage_bucket_name}"
+    storage_bucket_name      = "${local.server_bucket_name}"
   }
 }
 
@@ -70,7 +70,7 @@ data "template_file" "forseti_server_config" {
     gsuite_admin_email      = "${var.gsuite_admin_email}"
     forseti_email_sender    = "${var.forseti_email_sender}"
     forseti_email_recipient = "${var.forseti_email_recipient}"
-    storage_bucket_name     = "${local.storage_bucket_name}"
+    storage_bucket_name     = "${local.server_bucket_name}"
     sendgrid_api_key        = "${var.sendgrid_api_key}"
   }
 }
@@ -94,7 +94,7 @@ resource "google_service_account" "forseti_server" {
   display_name = "Forseti Server Service Account"
 }
 
-resource "google_project_iam_member" "project" {
+resource "google_project_iam_member" "server_roles" {
   count   = "${length(local.server_project_roles)}"
   role    = "${local.server_project_roles[count.index]}"
   project = "${var.project_id}"
@@ -108,12 +108,13 @@ resource "google_organization_iam_member" "org_read" {
   member = "serviceAccount:${google_service_account.forseti_server.email}"
 }
 
+
 resource "google_organization_iam_member" "folder_read" {
   count     = "${var.folder_id != "" ? length(local.server_read_roles) : 0}"
   role      = "${local.server_read_roles[count.index]}"
   folder_id = "${var.folder_id}"
   member    = "serviceAccount:${google_service_account.forseti_server.email}"
-  org_id = "${var.org_id}"
+  org_id    = "${var.org_id}"
 }
 
 resource "google_organization_iam_member" "org_write" {
@@ -123,20 +124,21 @@ resource "google_organization_iam_member" "org_write" {
   member = "serviceAccount:${google_service_account.forseti_server.email}"
 }
 
+
 resource "google_organization_iam_member" "folder_write" {
   count     = "${var.folder_id != "" && var.enable_write ? length(local.server_write_roles) : 0}"
   role      = "${local.server_write_roles[count.index]}"
   folder_id = "${var.folder_id}"
-  org_id = "${var.org_id}"
+  org_id    = "${var.org_id}"
   member    = "serviceAccount:${google_service_account.forseti_server.email}"
 }
 
-/*******************************************
-  Forseti Firewall Rules
- *******************************************/
+#------------------------#
+# Forseti Firewall Rules #
+#------------------------#
 resource "google_compute_firewall" "forseti-server-deny-all" {
   name                    = "forseti-server-deny-all-${local.random_hash}"
-  project                 = "${var.project_id}"
+  project                 = "${local.vpc_host_project_id}"
   network                 = "${var.vpc_host_network}"
   target_service_accounts = ["${google_service_account.forseti_server.email}"]
   source_ranges           = ["0.0.0.0/0"]
@@ -187,7 +189,7 @@ resource "google_compute_firewall" "forseti-server-allow-grpc" {
 # Forseti Storage bucket #
 #------------------------#
 resource "google_storage_bucket" "server_config" {
-  name          = "forseti-server-${local.random_hash}"
+  name          = "${local.server_bucket_name}"
   location      = "${var.storage_bucket_location}"
   project       = "${var.project_id}"
   force_destroy = "true"
@@ -251,8 +253,8 @@ resource "google_compute_instance" "forseti-server" {
   }
 
   depends_on = [
-    "google_service_account.forseti_server",
     "google_project_service.activate_services",
+    "google_service_account.forseti_server",
   ]
 }
 
