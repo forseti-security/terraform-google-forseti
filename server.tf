@@ -220,7 +220,8 @@ resource "google_storage_bucket" "cai_export" {
 resource "google_compute_instance" "forseti-server" {
   name                      = "${local.server_name}"
   zone                      = "${local.server_zone}"
-  project                   = "${var.project_id}"
+  # Adding support for Shared VPC
+  project                   = "${var.vpc_host_project_id == "" ? var.project_id : var.vpc_host_project_id}"
   machine_type              = "${var.server_type}"
   allow_stopping_for_update = true
 

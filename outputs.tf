@@ -14,3 +14,29 @@
  * limitations under the License.
  */
 
+output "forseti-server-vm-name" {
+  value = "${google_compute_instance.forseti-server.name}"
+}
+
+output "forseti-server-vm-ip" {
+  value = "${google_compute_instance.forseti-server.network_interface.address}"
+}
+
+output "forseti-client-vm-name" {
+  value = "${google_compute_instance.forseti-client.name}"
+}
+
+output "forseti-client-vm-ip" {
+  value = "${google_compute_instance.forseti-client.network_interface.address}"
+}
+
+
+output "foseti-server-service-account" {
+  value = "${google_service_account.forseti_server.email}"
+}
+
+
+output "foseti-client-service-account" {
+  value = "${google_service_account.forseti_client.email}"
+}
+
