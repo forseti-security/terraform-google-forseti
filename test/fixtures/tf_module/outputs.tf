@@ -14,3 +14,26 @@
  * limitations under the License.
  */
 
+output "forseti-client-vm-name" {
+  value = "${module.forseti-install-simple.forseti-client-vm-name}"
+}
+
+output "forseti-client-vm-ip" {
+  value = "${module.forseti-install-simple.forseti-client-vm-ip}"
+}
+
+output "forseti-client-service-account" {
+  value = "${module.forseti-install-simple.foseti-client-service-account}"
+}
+
+output "forseti-server-vm-name" {
+  value = "${module.forseti-install-simple.forseti-server-vm-name}"
+}
+
+output "forseti-server-vm-ip" {
+  value = "${module.forseti-install-simple.forseti-server-vm-ip}"
+}
+
+output "forseti-server-service-account" {
+  value = "${module.forseti-install-simple.foseti-server-service-account}"
+}
