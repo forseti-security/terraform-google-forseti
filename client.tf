@@ -53,7 +53,7 @@ data "template_file" "forseti_client_config" {
 resource "google_compute_instance" "forseti-client" {
   name                      = "${local.client_name}"
   zone                      = "${local.client_zone}"
-  project                   = "${var.project_id}"
+  project                   = "${var.vpc_host_project_id == "" ? var.project_id : var.vpc_host_project_id}"
   machine_type              = "${var.client_type}"
   allow_stopping_for_update = true
 
