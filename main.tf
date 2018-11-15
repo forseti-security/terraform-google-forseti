@@ -34,8 +34,8 @@ locals {
     "iam.googleapis.com",
   ]
   /*COMMAND TO REPLACE SCRIPT FOR AUTOMATION*/
-  launch_first               = "sh ${path.module}/accScript.sh ${var.gsuite_admin_email}; "
-  launch_command_main        = "cd forseti-security; python install/gcp_installer.py --no-cloudshell --service-account-key-file ${var.credentials_file_path} --gsuite-superadmin-email ${var.gsuite_admin_email}"
+  launch_first               = "sh ${path.module}/accScript.sh ${var.gsuite_admin_email} &&"
+  launch_command_main        = "cd forseti-security && python install/gcp_installer.py --no-cloudshell --service-account-key-file ${var.credentials_file_path} --gsuite-superadmin-email ${var.gsuite_admin_email}"
   launch_command_gcs         = "${var.gcs_location != "" ? format("--gcs-location %s", var.gcs_location) : "--gcs-location \"\""}"
   launch_command_cloudsql    = "${var.cloud_sql_region != "" ? format("--cloudsql-region %s", var.cloud_sql_region) : "--cloudsql-region \"\"" }"
   launch_command_sendgrid    = "${var.sendgrid_api_key != "" ? format("--sendgrid-api-key %s", var.sendgrid_api_key) : "--skip-sendgrid-config" }"
