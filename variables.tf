@@ -17,139 +17,171 @@
 #----------------#
 # Forseti config #
 #----------------#
-variable "project_id" {}
+variable "project_id" {
+  description = "Google Project ID that you want Forseti deployed into"
+}
 
-variable "gsuite_admin_email" {}
+variable "gsuite_admin_email" {
+  description = "G-Suite administrator email address to manage your Forseti installation"
+}
 
 variable "forseti_version" {
-  default = "stable"
+  description = "Forseti software revision that you want "
+  default     = "stable"
 }
 
 variable "forseti_repo_url" {
-  default = "https://github.com/GoogleCloudPlatform/forseti-security"
+  description = "Git repo for the Forseti installation"
+  default     = "https://github.com/GoogleCloudPlatform/forseti-security"
 }
 
 variable "forseti_email_recipient" {
-  default = ""
+  description = "Email address that receives Forseti notifications"
+  default     = ""
 }
 
 variable "forseti_email_sender" {
-  default = ""
+  description = "Email address that sends the Forseti notifications"
+  default     = ""
 }
 
 variable "forseti_home" {
-  default = "$USER_HOME/forseti-security"
+  description = "Forseti installation directory"
+  default     = "$USER_HOME/forseti-security"
 }
 
 variable "forseti_run_frequency" {
-  default = "* */2 * * *"
+  description = "Schedule of running the Forseti scans"
+  default     = "* */2 * * *"
 }
 
 #----------------#
 # Forseti server #
 #----------------#
 variable "server_type" {
-  default = "n1-standard-2"
+  description = "GCE Forseti Server role instance size"
+  default     = "n1-standard-2"
 }
 
 variable "server_region" {
-  default = "us-central1"
+  description = "GCP region where Forseti will be deployed"
+  default     = "us-central1"
 }
 
 variable "server_boot_image" {
-  default = "ubuntu-os-cloud/ubuntu-1804-lts"
+  description = "GCE instance image that is being used, currently Debian only support is available"
+  default     = "ubuntu-os-cloud/ubuntu-1804-lts"
 }
 
 #----------------#
 # Forseti client #
 #----------------#
 variable "client_type" {
-  default = "n1-standard-2"
+  description = "GCE Forseti Client role instance size"
+  default     = "n1-standard-2"
 }
 
 variable "client_boot_image" {
-  default = "ubuntu-os-cloud/ubuntu-1804-lts"
+  description = "GCE Forseti Client role instance size"
+  default     = "ubuntu-os-cloud/ubuntu-1804-lts"
 }
 
 variable "client_region" {
-  default = "us-central1"
+  description = "GCE Forseti Client role region size"
+  default     = "us-central1"
 }
 
 #------------#
 # Forseti db #
 #------------#
 variable "cloudsql_region" {
-  default = "us-central1"
+  description = "CloudSQL region"
+  default     = "us-central1"
 }
 
 variable "cloudsql_db_name" {
-  default = "forseti_security"
+  description = "CloudSQL database name"
+  default     = "forseti_security"
 }
 
 variable "cloudsql_db_port" {
-  default = "3306"
+  description = "CloudSQL database port"
+  default     = "3306"
 }
 
 variable "cloudsql_proxy_arch" {
-  default = "linux.amd64"
+  description = "CloudSQL Proxy architecture"
+  default     = "linux.amd64"
 }
 
 variable "cloudsql_type" {
-  default = "db-n1-standard-1"
+  description = "CloudSQL Instance size"
+  default     = "db-n1-standard-1"
 }
 
 #----------------#
 # Forseti bucket #
 #----------------#
 variable "storage_bucket_location" {
-  default = "us-central1"
+  description = "GCS storage bucket location"
+  default     = "us-central1"
 }
 
 variable "bucket_cai_location" {
-  default = ""
+  description = "GCS CAI storage bucket location"
+  default     = ""
 }
 
 variable "bucket_cai_lifecycle_age" {
-  default = "14"
+  description = "GCS CAI lifecycle age value"
+  default     = "14"
 }
 
 #---------#
 # Network #
 #---------#
 variable "vpc_host_network" {
-  default = "default"
+  description = "VPC host network"
+  default     = "default"
 }
 
 variable "vpc_host_subnetwork" {
-  default = "default"
+  description = "VPC subnetwork"
+  default     = "default"
 }
 
 variable "vpc_host_project_id" {
-  default = ""
+  description = "Shared VPC host project"
+  default     = ""
 }
 
 #-------#
 # Flags #
 #-------#
 variable "enable_write" {
-  default = "false"
+  description = "Enabling/Disabling write actions"
+  default     = "false"
 }
 
 variable "enable_cai_bucket" {
-  default = "false"
+  description = "Enabling/Disabling the CAI Bucket"
+  default     = "false"
 }
 
 #--------#
 # Config #
 #--------#
 variable "org_id" {
-  default = ""
+  description = "GCP Organization ID that Forseti will have purview over"
+  default     = ""
 }
 
 variable "folder_id" {
-  default = ""
+  description = "GCP Folder that the Forseti project will be deployed into"
+  default     = ""
 }
 
 variable "sendgrid_api_key" {
-  default = ""
+  description = "Sendgrid.com API key to enable email notifications"
+  default     = ""
 }

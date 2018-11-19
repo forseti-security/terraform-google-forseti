@@ -108,7 +108,6 @@ resource "google_organization_iam_member" "org_read" {
   member = "serviceAccount:${google_service_account.forseti_server.email}"
 }
 
-
 resource "google_organization_iam_member" "folder_read" {
   count     = "${var.folder_id != "" ? length(local.server_read_roles) : 0}"
   role      = "${local.server_read_roles[count.index]}"
@@ -123,7 +122,6 @@ resource "google_organization_iam_member" "org_write" {
   org_id = "${var.org_id}"
   member = "serviceAccount:${google_service_account.forseti_server.email}"
 }
-
 
 resource "google_organization_iam_member" "folder_write" {
   count     = "${var.folder_id != "" && var.enable_write ? length(local.server_write_roles) : 0}"
@@ -222,8 +220,9 @@ resource "google_storage_bucket" "cai_export" {
 # Forseti server instance #
 #-------------------------#
 resource "google_compute_instance" "forseti-server" {
-  name                      = "${local.server_name}"
-  zone                      = "${local.server_zone}"
+  name = "${local.server_name}"
+  zone = "${local.server_zone}"
+
   # Adding support for Shared VPC
   project                   = "${var.vpc_host_project_id == "" ? var.project_id : var.vpc_host_project_id}"
   machine_type              = "${var.server_type}"
