@@ -30,13 +30,10 @@ output "forseti-client-vm-ip" {
   value = "${google_compute_instance.forseti-client.network_interface.address}"
 }
 
-
 output "foseti-server-service-account" {
   value = "${google_service_account.forseti_server.email}"
 }
 
-
 output "foseti-client-service-account" {
   value = "${google_service_account.forseti_client.email}"
 }
-
