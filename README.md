@@ -61,15 +61,14 @@ Then perform the following commands on the config folder:
 | vpc\_host\_subnetwork | VPC subnetwork | string | `default` | no |
 ## Outputs
 
-
 | Name | Description |
 |------|-------------|
-| forseti-client-vm-ip | - |
-| forseti-client-vm-name | - |
-| forseti-server-vm-ip | - |
-| forseti-server-vm-name | - |
-| foseti-client-service-account | - |
-| foseti-server-service-account | - |
+| forseti-client-vm-ip | Forseti Cleint role vm name |
+| forseti-client-vm-name | Forseti Client role vm name |
+| forseti-server-vm-ip | Forseti Server role ip address |
+| forseti-server-vm-name | Forseti Server role vm name |
+| foseti-client-service-account | Forseti Client role service account |
+| foseti-server-service-account | Forseti Server role service account |
 
 [^]: (autogen_docs_end)
 
