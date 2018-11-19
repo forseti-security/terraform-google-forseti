@@ -27,7 +27,50 @@ Then perform the following commands on the config folder:
 
 ## Inputs
 
+| Name | Description | Type | Default | Required |
+|------|-------------|:----:|:-----:|:-----:|
+| bucket\_cai\_lifecycle\_age | - | string | `14` | no |
+| bucket\_cai\_location | - | string | `` | no |
+| client\_boot\_image | - | string | `ubuntu-os-cloud/ubuntu-1804-lts` | no |
+| client\_region | - | string | `us-central1` | no |
+| client\_type | - | string | `n1-standard-2` | no |
+| cloudsql\_db\_name | - | string | `forseti_security` | no |
+| cloudsql\_db\_port | - | string | `3306` | no |
+| cloudsql\_proxy\_arch | - | string | `linux.amd64` | no |
+| cloudsql\_region | - | string | `us-central1` | no |
+| cloudsql\_type | - | string | `db-n1-standard-1` | no |
+| enable\_cai\_bucket | - | string | `false` | no |
+| enable\_write | - | string | `false` | no |
+| folder\_id | - | string | `` | no |
+| forseti\_email\_recipient | - | string | `` | no |
+| forseti\_email\_sender | - | string | `` | no |
+| forseti\_home | - | string | `$USER_HOME/forseti-security` | no |
+| forseti\_repo\_url | - | string | `https://github.com/GoogleCloudPlatform/forseti-security` | no |
+| forseti\_run\_frequency | - | string | `* */2 * * *` | no |
+| forseti\_version | - | string | `stable` | no |
+| gsuite\_admin\_email | - | string | - | yes |
+| org\_id | - | string | `` | no |
+| project\_id | - | string | - | yes |
+| sendgrid\_api\_key | - | string | `` | no |
+| server\_boot\_image | - | string | `ubuntu-os-cloud/ubuntu-1804-lts` | no |
+| server\_region | - | string | `us-central1` | no |
+| server\_type | - | string | `n1-standard-2` | no |
+| storage\_bucket\_location | - | string | `us-central1` | no |
+| vpc\_host\_network | -| string | `default` | no |
+| vpc\_host\_project\_id | - | string | `` | no |
+| vpc\_host\_subnetwork | - | string | `default` | no |
+
 ## Outputs
+
+
+| Name | Description |
+|------|-------------|
+| forseti-client-vm-ip | - |
+| forseti-client-vm-name | - |
+| forseti-server-vm-ip | - |
+| forseti-server-vm-name | - |
+| foseti-client-service-account | - |
+| foseti-server-service-account | - |
 
 [^]: (autogen_docs_end)
 
