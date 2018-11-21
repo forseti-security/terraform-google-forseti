@@ -87,6 +87,7 @@ For this module to work, you need the following roles enabled on the Service Acc
 
 On the organization:
 - `roles/resourcemanager.organizationAdmin`
+- `roles/securityReviewer`
 
 On the project:
 - `roles/owner`
@@ -142,4 +143,5 @@ The project has the following folders and files:
 - /examples: examples for using this module
 - /main.tf: main file for this module, contains all the resources to create
 - /variables.tf: all the variables for the module
+- /test: all integration tests are located here
 - /README.md: this file
