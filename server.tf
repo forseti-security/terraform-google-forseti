@@ -113,7 +113,7 @@ resource "google_organization_iam_member" "folder_read" {
   role      = "${local.server_read_roles[count.index]}"
   folder_id = "${var.folder_id}"
   member    = "serviceAccount:${google_service_account.forseti_server.email}"
-  org_id    = "${var.org_id}"
+//  org_id    = "${var.org_id}"
 }
 
 resource "google_organization_iam_member" "org_write" {
@@ -127,7 +127,7 @@ resource "google_organization_iam_member" "folder_write" {
   count     = "${var.folder_id != "" && var.enable_write ? length(local.server_write_roles) : 0}"
   role      = "${local.server_write_roles[count.index]}"
   folder_id = "${var.folder_id}"
-  org_id    = "${var.org_id}"
+//  org_id    = "${var.org_id}"
   member    = "serviceAccount:${google_service_account.forseti_server.email}"
 }
 
