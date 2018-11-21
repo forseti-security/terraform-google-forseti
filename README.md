@@ -136,6 +136,13 @@ Run
 make generate_docs
 ```
 
+## Additional Documentation included
+
+- test/README.md:  Overview on howto run the test suite
+- test/integration/gcp/README.md: Detailed information about the base test suite
+- examples/simple/README.md: Overview of basic usage of the module
+
+
 ## File structure
 The project has the following folders and files:
 

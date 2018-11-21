@@ -93,4 +93,9 @@ gcloud projects add-iam-policy-binding ${PROJECT_ID} \
     --role="roles/storage.admin" \
     --user-output-enabled false
 
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+    --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
+    --role="roles/cloudsql.admin" \
+    --user-output-enabled false
+
 echo "All done."
