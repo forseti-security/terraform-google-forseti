@@ -25,8 +25,8 @@ locals {
   server_startup_script   = "${file("${path.module}/scripts/forseti-server/forseti_server_startup_script.sh.tpl")}"
   server_environment      = "${file("${path.module}/scripts/forseti-server/forseti_environment.sh.tpl")}"
   server_env              = "${file("${path.module}/scripts/forseti-server/forseti_env.sh.tpl")}"
-  server_conf             = "${file("${path.module}/configs/forseti_conf_server.yaml.tpl")}"
-  server_conf_path        = "${var.forseti_home}/configs/forseti_conf_server.yaml.tpl"
+  server_conf             = "${file("${path.module}/configs/forseti_conf_server.yaml")}"
+  server_conf_path        = "${var.forseti_home}/configs/forseti_conf_server.yaml"
   server_name             = "forseti-server-vm-${local.random_hash}"
   server_sa_name          = "forseti-server-gcp-${local.random_hash}"
   cloudsql_name           = "forseti-server-db-${local.random_hash}"
@@ -36,8 +36,8 @@ locals {
 
   client_startup_script = "${file("${path.module}/scripts/forseti-client/forseti_client_startup_script.sh.tpl")}"
   client_env_script     = "${file("${path.module}/scripts/forseti-client/forseti_environment.sh.tpl")}"
-  client_conf           = "${file("${path.module}/configs/forseti_conf_client.yaml.tpl")}"
-  client_conf_path      = "${var.forseti_home}/configs/forseti_conf_client.yaml.tpl"
+  client_conf           = "${file("${path.module}/configs/forseti_conf_client.yaml")}"
+  client_conf_path      = "${var.forseti_home}/configs/forseti_conf_client.yaml"
   client_sa_name        = "forseti-client-gcp-${local.random_hash}"
   client_name           = "forseti-client-vm-${local.random_hash}"
   client_bucket_name     = "forseti-client-${local.random_hash}"
@@ -67,6 +67,7 @@ locals {
     "roles/cloudtrace.agent",
     "roles/logging.logWriter",
     "roles/iam.serviceAccountTokenCreator",
+
   ]
 
   client_project_roles = [
