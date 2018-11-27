@@ -49,3 +49,7 @@ chown -R $USER ${forseti_home}
 # Store the variables in /etc/profile.d/forseti_environment.sh
 # so all the users will have access to them
 echo "${forseti_environment}" > /etc/profile.d/forseti_environment.sh | sudo sh
+
+# Download client configuration from GCS
+gsutil cp gs://${storage_bucket_name}/configs/forseti_conf_client.yaml ${forseti_client_conf_path}
+gsutil cp -r gs://${storage_bucket_name}/rules ${forseti_home}/
