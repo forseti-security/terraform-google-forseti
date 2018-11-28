@@ -37,3 +37,9 @@ output "forseti-server-vm-ip" {
 output "forseti-server-service-account" {
   value = "${module.forseti-install-simple.foseti-server-service-account}"
 }
+
+## Required for inspec testing
+
+output "gcp_project_id" {
+  value = "${var.project_id}"
+}
