@@ -69,4 +69,4 @@ generate_docs:
 
 .PHONY: kitchen_all
 kitchen_all:
-	@source kitchen test
+	bundle exec kitchen test
