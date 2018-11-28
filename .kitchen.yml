@@ -24,10 +24,10 @@ provisioner:
 
 verifier:
   name: shell
-  command: inspec exec test/integration/gcp -t gcp:// --attrs test/integration/gcp/attributes.yml
+  command: inspec exec test/integration/tf_module -t gcp:// --attrs test/integration/tf_module/attributes.yml
 
 suites:
-  - name: gcp
+  - name: tf_module
 
 platforms:
   - name: terraform
