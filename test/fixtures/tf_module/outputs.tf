@@ -23,7 +23,7 @@ output "forseti-client-vm-ip" {
 }
 
 output "forseti-client-service-account" {
-  value = "${module.forseti-install-simple.foseti-client-service-account}"
+  value = "${module.forseti-install-simple.forseti-client-service-account}"
 }
 
 output "forseti-server-vm-name" {
@@ -35,7 +35,19 @@ output "forseti-server-vm-ip" {
 }
 
 output "forseti-server-service-account" {
-  value = "${module.forseti-install-simple.foseti-server-service-account}"
+  value = "${module.forseti-install-simple.forseti-server-service-account}"
+}
+
+output "forseti-client-gcs-bucket" {
+  value = "${module.forseti-install-simple.forseti-client-storage-bucket}"
+}
+
+output "forseti-server-gcs-bucket" {
+  value = "${module.forseti-install-simple.forseti-server-storage-bucket}"
+}
+
+output "f" {
+  value = ""
 }
 
 ## Required for inspec testing

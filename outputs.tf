@@ -34,12 +34,22 @@ output "forseti-client-vm-ip" {
   value = "${google_compute_instance.forseti-client.network_interface.address}"
 }
 
-output "foseti-server-service-account" {
+output "forseti-server-service-account" {
   description = "Forseti Server role service account"
   value = "${google_service_account.forseti_server.email}"
 }
 
-output "foseti-client-service-account" {
+output "forseti-client-service-account" {
   description = "Forseti Client role service account"
   value = "${google_service_account.forseti_client.email}"
+}
+
+output "forseti-client-storage-bucket" {
+  description = "Forseti Client Storage Bucket"
+  value = "${google_storage_bucket.client_config.id}"
+}
+
+output "forseti-server-storage-bucket" {
+  description = "Forseti Server Storage Bucket"
+  value = "${google_storage_bucket.server_config.id}"
 }
