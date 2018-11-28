@@ -21,7 +21,6 @@ resource "random_id" "random_hash_suffix" {
   byte_length = 4
 }
 
-
 #--------#
 # Locals #
 #--------#
@@ -40,7 +39,7 @@ locals {
   cloudsql_name           = "forseti-server-db-${local.random_hash}"
   storage_bucket_name     = "forseti-server-${local.random_hash}"
   storage_cai_bucket_name = "forseti-cai-export-${local.random_hash}"
-  server_bucket_name     = "forseti-server-${local.random_hash}"
+  server_bucket_name      = "forseti-server-${local.random_hash}"
 
   client_startup_script = "${file("${path.module}/scripts/forseti-client/forseti_client_startup_script.sh.tpl")}"
   client_env_script     = "${file("${path.module}/scripts/forseti-client/forseti_environment.sh.tpl")}"
@@ -48,7 +47,7 @@ locals {
   client_conf_path      = "${var.forseti_home}/configs/forseti_conf_client.yaml"
   client_sa_name        = "forseti-client-gcp-${local.random_hash}"
   client_name           = "forseti-client-vm-${local.random_hash}"
-  client_bucket_name     = "forseti-client-${local.random_hash}"
+  client_bucket_name    = "forseti-client-${local.random_hash}"
   client_zone           = "${var.client_region}-c"
 
   services_list = [
@@ -75,7 +74,6 @@ locals {
     "roles/cloudtrace.agent",
     "roles/logging.logWriter",
     "roles/iam.serviceAccountTokenCreator",
-
   ]
 
   client_project_roles = [

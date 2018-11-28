@@ -16,40 +16,40 @@
 
 output "forseti-server-vm-name" {
   description = "Forseti Server role vm name"
-  value = "${google_compute_instance.forseti-server.name}"
+  value       = "${google_compute_instance.forseti-server.name}"
 }
 
 output "forseti-server-vm-ip" {
   description = "Forseti Server role ip address"
-  value = "${google_compute_instance.forseti-server.network_interface.address}"
+  value       = "${google_compute_instance.forseti-server.network_interface.address}"
 }
 
 output "forseti-client-vm-name" {
   description = "Forseti Client role vm name"
-  value = "${google_compute_instance.forseti-client.name}"
+  value       = "${google_compute_instance.forseti-client.name}"
 }
 
 output "forseti-client-vm-ip" {
   description = "Forseti Cleint role vm name"
-  value = "${google_compute_instance.forseti-client.network_interface.address}"
+  value       = "${google_compute_instance.forseti-client.network_interface.address}"
 }
 
 output "forseti-server-service-account" {
   description = "Forseti Server role service account"
-  value = "${google_service_account.forseti_server.email}"
+  value       = "${google_service_account.forseti_server.email}"
 }
 
 output "forseti-client-service-account" {
   description = "Forseti Client role service account"
-  value = "${google_service_account.forseti_client.email}"
+  value       = "${google_service_account.forseti_client.email}"
 }
 
 output "forseti-client-storage-bucket" {
   description = "Forseti Client Storage Bucket"
-  value = "${google_storage_bucket.client_config.id}"
+  value       = "${google_storage_bucket.client_config.id}"
 }
 
 output "forseti-server-storage-bucket" {
   description = "Forseti Server Storage Bucket"
-  value = "${google_storage_bucket.server_config.id}"
+  value       = "${google_storage_bucket.server_config.id}"
 }
