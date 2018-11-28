@@ -14,12 +14,6 @@
  * limitations under the License.
  */
 
-#------------------------------#
-# Random string for deployment #
-#------------------------------#
-resource "random_id" "random_project_id_suffix" {
-  byte_length = 4
-}
 
 #-------------------#
 # Forseti templates #

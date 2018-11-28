@@ -14,11 +14,19 @@
  * limitations under the License.
  */
 
+#------------------------------#
+# Random string for deployment #
+#------------------------------#
+resource "random_id" "random_hash_suffix" {
+  byte_length = 4
+}
+
+
 #--------#
 # Locals #
 #--------#
 locals {
-  random_hash             = "${random_id.random_project_id_suffix.hex}"
+  random_hash             = "${random_id.random_hash_suffix.hex}"
   root_resource_id        = "${var.org_id != "" ? "organizations/${var.org_id}" : var.folder_id != "" ? "folders/${var.folder_id}" : ""}"
   vpc_host_project_id     = "${var.vpc_host_project_id != "" ? var.vpc_host_project_id : var.project_id}"
   server_zone             = "${var.server_region}-c"
