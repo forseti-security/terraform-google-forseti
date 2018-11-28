@@ -215,7 +215,7 @@ resource "google_compute_instance" "forseti-server" {
   zone = "${local.server_zone}"
 
   # Adding support for Shared VPC
-  project                   = "${var.vpc_host_project_id == "" ? var.project_id : var.vpc_host_project_id}"
+  project                   = "${var.project_id}"
   machine_type              = "${var.server_type}"
   allow_stopping_for_update = true
 
