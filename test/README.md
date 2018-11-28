@@ -11,7 +11,7 @@ Technology being leveraged in this testing solution:
 - test-kitchen
 
 
-## Update `attributes.yml.example` to point to your project
+## Update `attributes.yml.example` to point to your project for manual execution
 
 Rename the `attributes.yml.example` to `attributes.yml`
 
@@ -23,26 +23,23 @@ gcp_project_id: 'my-gcp-project'
 
 From the root of the module directory execute the following commands:
 
-```aidl
+```
 # Initialize the terraform providers and context
-kitchen setup
+bundle exec kitchen setup
 
 # Invoke the building of the cloud assets defined in the terraform code
-kitchen converge
+bundle exec kitchen converge
 
 # Execute the integration test suite
-kitchen verify
+bundle exec kitchen verify
 
 # Tear down the working environment
-kitchen destroy
+bundle exec kitchen destroy
 ```
 
 If you want to run the full lifecycle suite at once
 
-```aidl
-kitchen test
+```
+bundle exec kitchen test
 ```
 
-# Reference Documentation:
-
-- inspec-gcp
