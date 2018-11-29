@@ -11,12 +11,21 @@ Technology being leveraged in this testing solution:
 - test-kitchen
 
 
-## Update `attributes.yml.example` to point to your project for manual execution
+## Configuring integration tests
 
-Rename the `attributes.yml.example` to `attributes.yml`
+Create a Terraform variables file based on the provided example:
 
 ```
-gcp_project_id: 'my-gcp-project'
+cp test/fixtures/tf_module/terraform.tfvars.example test/fixtures/tf_module/terraform.tfvars
+```
+
+Update `terraform.tfvars` to match your environment:
+
+```
+credentials_path = "../../../credentials.json"`
+gsuite_admin_email = "admin@example.com"
+org_id = "000000000000"
+project_id = "forseti-test-f6bd"
 ```
 
 ## Running Integration Tests
@@ -42,4 +51,3 @@ If you want to run the full lifecycle suite at once
 ```
 bundle exec kitchen test
 ```
-
