@@ -49,6 +49,8 @@ Then perform the following commands on the config folder:
 | forseti\_run\_frequency | Schedule of running the Forseti scans | string | `* */2 * * *` | no |
 | forseti\_version | Forseti software revision that you want | string | `stable` | no |
 | gsuite\_admin\_email | G-Suite administrator email address to manage your Forseti installation | string | - | yes |
+| network | The VPC where the Forseti client and server will be created | string | `default` | no |
+| network\_project | The project containing the VPC and subnetwork where the Forseti client and server will be created | string | `` | no |
 | org\_id | GCP Organization ID that Forseti will have purview over | string | `` | no |
 | project\_id | Google Project ID that you want Forseti deployed into | string | - | yes |
 | sendgrid\_api\_key | Sendgrid.com API key to enable email notifications | string | `` | no |
@@ -56,9 +58,8 @@ Then perform the following commands on the config folder:
 | server\_region | GCP region where Forseti will be deployed | string | `us-central1` | no |
 | server\_type | GCE Forseti Server role instance size | string | `n1-standard-2` | no |
 | storage\_bucket\_location | GCS storage bucket location | string | `us-central1` | no |
-| vpc\_host\_network | VPC host network | string | `default` | no |
-| vpc\_host\_project\_id | Shared VPC host project | string | `` | no |
-| vpc\_host\_subnetwork | VPC subnetwork | string | `default` | no |
+| subnetwork | The VPC subnetwork where the Forseti client and server will be created | string | `default` | no |
+
 ## Outputs
 
 | Name | Description |

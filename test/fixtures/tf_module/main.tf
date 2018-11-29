@@ -24,6 +24,6 @@ module "forseti-install-simple" {
   gsuite_admin_email  = "${var.gsuite_admin_email}"
   org_id              = "${var.org_id}"
   server_type         = "n1-standard-4"
-  vpc_host_subnetwork = "${var.vpc_host_subnetwork}"
+  network_project     = "${var.network_project}"
   enable_cai_bucket   = "${var.enable_cai_bucket}"
 }
