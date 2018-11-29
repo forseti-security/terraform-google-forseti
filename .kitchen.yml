@@ -30,7 +30,6 @@ verifier:
      - name: system
        backend: gcp
        shell: true
-       attributes: ["gcp_project_id","rltech-173716"]
 
 suites:
   - name: tf_module
