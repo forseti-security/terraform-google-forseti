@@ -30,7 +30,7 @@ variable "org_id" {
   description = "The organization id"
 }
 
-variable "vpc_host_subnetwork" {
+variable "subnetwork" {
   default = "default"
 }
 

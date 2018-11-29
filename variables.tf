@@ -140,18 +140,18 @@ variable "bucket_cai_lifecycle_age" {
 #---------#
 # Network #
 #---------#
-variable "vpc_host_network" {
-  description = "VPC host network"
+variable "network" {
+  description = "The VPC where the Forseti client and server will be created"
   default     = "default"
 }
 
-variable "vpc_host_subnetwork" {
-  description = "VPC subnetwork"
+variable "subnetwork" {
+  description = "The VPC subnetwork where the Forseti client and server will be created"
   default     = "default"
 }
 
-variable "vpc_host_project_id" {
-  description = "Shared VPC host project"
+variable "network_project" {
+  description = "The project containing the VPC and subnetwork where the Forseti client and server will be created"
   default     = ""
 }
 

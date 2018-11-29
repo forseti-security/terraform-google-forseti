@@ -127,8 +127,8 @@ resource "google_organization_iam_member" "folder_write" {
 #------------------------#
 resource "google_compute_firewall" "forseti-server-deny-all" {
   name                    = "forseti-server-deny-all-${local.random_hash}"
-  project                 = "${local.vpc_host_project_id}"
-  network                 = "${var.vpc_host_network}"
+  project                 = "${local.network_project}"
+  network                 = "${var.network}"
   target_service_accounts = ["${google_service_account.forseti_server.email}"]
   source_ranges           = ["0.0.0.0/0"]
   priority                = "200"
@@ -148,8 +148,8 @@ resource "google_compute_firewall" "forseti-server-deny-all" {
 
 resource "google_compute_firewall" "forseti-server-ssh-external" {
   name                    = "forseti-server-ssh-external-${local.random_hash}"
-  project                 = "${var.project_id}"
-  network                 = "${var.vpc_host_network}"
+  project                 = "${local.network_project}"
+  network                 = "${var.network}"
   target_service_accounts = ["${google_service_account.forseti_server.email}"]
   source_ranges           = ["0.0.0.0/0"]
   priority                = "100"
@@ -162,8 +162,8 @@ resource "google_compute_firewall" "forseti-server-ssh-external" {
 
 resource "google_compute_firewall" "forseti-server-allow-grpc" {
   name                    = "forseti-server-allow-grpc-${local.random_hash}"
-  project                 = "${var.project_id}"
-  network                 = "${var.vpc_host_network}"
+  project                 = "${local.network_project}"
+  network                 = "${var.network}"
   target_service_accounts = ["${google_service_account.forseti_server.email}"]
   source_ranges           = ["10.128.0.0/9"]
   priority                = "100"
@@ -226,8 +226,8 @@ resource "google_compute_instance" "forseti-server" {
   }
 
   network_interface {
-    subnetwork_project = "${var.project_id}"
-    subnetwork         = "${var.vpc_host_subnetwork}"
+    subnetwork_project = "${local.network_project}"
+    subnetwork         = "${var.subnetwork}"
 
     access_config {}
   }
