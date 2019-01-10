@@ -15,7 +15,7 @@
 ---
 driver:
   name: terraform
-  root_module_directory: test/fixtures/tf_module
+  root_module_directory: examples/simple
   variable_files:
     - test/fixtures/tf_module/terraform.tfvars
 
