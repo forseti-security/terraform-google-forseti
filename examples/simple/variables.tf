@@ -30,8 +30,8 @@ variable "org_id" {
   description = "The organization id"
 }
 
-variable "subnetwork" {
-  default = "default"
+variable "network_project" {
+  default = ""
 }
 
 variable "enable_cai_bucket" {

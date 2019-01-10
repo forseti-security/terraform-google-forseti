@@ -14,3 +14,40 @@
  * limitations under the License.
  */
 
+output "forseti-client-vm-name" {
+  value = "${module.forseti-install-simple.forseti-client-vm-name}"
+}
+
+output "forseti-client-vm-ip" {
+  value = "${module.forseti-install-simple.forseti-client-vm-ip}"
+}
+
+output "forseti-client-service-account" {
+  value = "${module.forseti-install-simple.forseti-client-service-account}"
+}
+
+output "forseti-server-vm-name" {
+  value = "${module.forseti-install-simple.forseti-server-vm-name}"
+}
+
+output "forseti-server-vm-ip" {
+  value = "${module.forseti-install-simple.forseti-server-vm-ip}"
+}
+
+output "forseti-server-service-account" {
+  value = "${module.forseti-install-simple.forseti-server-service-account}"
+}
+
+output "forseti-client-gcs-bucket" {
+  value = "${module.forseti-install-simple.forseti-client-storage-bucket}"
+}
+
+output "forseti-server-gcs-bucket" {
+  value = "${module.forseti-install-simple.forseti-server-storage-bucket}"
+}
+
+## Required for inspec testing
+
+output "gcp_project_id" {
+  value = "${var.project_id}"
+}
