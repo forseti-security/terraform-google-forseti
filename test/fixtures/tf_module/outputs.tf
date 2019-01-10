@@ -46,10 +46,6 @@ output "forseti-server-gcs-bucket" {
   value = "${module.forseti-install-simple.forseti-server-storage-bucket}"
 }
 
-output "f" {
-  value = ""
-}
-
 ## Required for inspec testing
 
 output "gcp_project_id" {
