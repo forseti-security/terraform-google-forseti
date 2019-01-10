@@ -14,7 +14,6 @@ gcp_project_id: 'my-gcp-project'
 ## Run the tests
 
 ```
-$ cd gcp-profile/
 $ inspec exec . -t gcp:// --attrs attributes.yml
 
 Profile: GCP InSpec Profile (my-profile)
