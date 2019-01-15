@@ -23,8 +23,6 @@ provisioner:
   name: terraform
 
 verifier:
-#  name: shell
-#  command: inspec exec test/integration/tf_module -t gcp:// --attrs test/integration/tf_module/attributes.yml
    name: terraform
    systems:
      - name: system
