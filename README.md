@@ -139,17 +139,17 @@ make generate_docs
 
 ## Additional Documentation included
 
-- test/README.md:  Overview on howto run the test suite
-- test/integration/gcp/README.md: Detailed information about the base test suite
-- examples/simple/README.md: Overview of basic usage of the module
+- (test/README.md):  Overview on howto run the test suite
+- (test/integration/gcp/README.md): Detailed information about the base test suite
+- (examples/simple/README.md): Overview of basic usage of the module
 
 
 ## File structure
 The project has the following folders and files:
 
-- /: root folder
-- /examples: examples for using this module
-- /main.tf: main file for this module, contains all the resources to create
-- /variables.tf: all the variables for the module
-- /test: all integration tests are located here
-- /README.md: this file
+- (/): root folder
+- (/examples): examples for using this module
+- (/main.tf): main file for this module, contains all the resources to create
+- (/variables.tf): all the variables for the module
+- (/test): all integration tests are located here
+- (/README.md): this file
