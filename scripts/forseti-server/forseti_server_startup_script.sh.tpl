@@ -46,6 +46,7 @@ sudo apt-get install -y $(cat install/dependencies/apt_packages.txt | grep -v "#
 # Forseti dependencies
 pip install --upgrade pip==9.0.3
 pip install -q --upgrade setuptools wheel
+pip install -q --upgrade -r requirements.txt
 
 # Setup Forseti logging
 touch /var/log/forseti.log
