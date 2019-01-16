@@ -181,7 +181,7 @@ resource "google_storage_bucket_object" "forseti_server_config" {
 }
 
 resource "google_storage_bucket" "cai_export" {
-  count    = "${var.enable_cai_bucket == "true" ? 1 : 0}"
+  count    = "${var.enable_cai_bucket ? 1 : 0}"
   name     = "${local.storage_cai_bucket_name}"
   location = "${var.bucket_cai_location}"
   project  = "${var.project_id}"
