@@ -83,7 +83,7 @@ resource "google_compute_instance" "forseti-client" {
 
   depends_on = [
     "google_service_account.forseti_server",
-    "google_project_service.activate_services",
+    "google_project_service.main",
   ]
 }
 

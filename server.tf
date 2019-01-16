@@ -68,16 +68,6 @@ data "template_file" "forseti_server_config" {
   }
 }
 
-#-------------------#
-# Activate services #
-#-------------------#
-resource "google_project_service" "activate_services" {
-  count              = "${length(local.services_list)}"
-  project            = "${var.project_id}"
-  service            = "${local.services_list[count.index]}"
-  disable_on_destroy = "false"
-}
-
 #-------------------------#
 # Forseti Service Account #
 #-------------------------#
@@ -244,7 +234,7 @@ resource "google_compute_instance" "forseti-server" {
   }
 
   depends_on = [
-    "google_project_service.activate_services",
+    "google_project_service.main",
     "google_service_account.forseti_server",
   ]
 }
@@ -277,7 +267,7 @@ resource "google_sql_database_instance" "master" {
   }
 
   depends_on = [
-    "google_project_service.activate_services",
+    "google_project_service.main",
   ]
 }
 
