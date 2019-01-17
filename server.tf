@@ -229,10 +229,6 @@ resource "google_compute_instance" "forseti-server" {
     scopes = ["cloud-platform"]
   }
 
-  labels {
-    goog-dm = "${local.server_name}"
-  }
-
   depends_on = [
     "google_project_service.main",
     "google_service_account.forseti_server",
