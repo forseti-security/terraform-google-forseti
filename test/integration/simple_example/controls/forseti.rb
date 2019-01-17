@@ -20,6 +20,8 @@ title 'Forseti Terraform GCP Test Suite'
 project_id = attribute('project_id')
 forseti_client_vm_name = attribute('forseti-client-vm-name')
 forseti_server_vm_name = attribute('forseti-server-vm-name')
+forseti_client_gcs_bucket = attribute('forseti-client-gcs-bucket')
+forseti_server_gcs_bucket = attribute('forseti-server-gcs-bucket')
 
 control 'forseti-client-vm' do
   impact 1.0
@@ -104,18 +106,22 @@ control 'forseti-google-storage-buckets' do
   impact 1.0
   title 'Test GCS Buckets are present'
   describe google_storage_buckets(project: project_id) do
-    its('bucket_names') { should include /forseti-server/ }
-  end
-  describe google_storage_buckets(project: project_id) do
-    its('bucket_names') { should include /forseti-client/ }
-  end
-  describe google_storage_buckets(project: project_id) do
+    its('bucket_names') { should include forseti_server_gcs_bucket }
+    its('bucket_names') { should include forseti_client_gcs_bucket }
     its('bucket_names') { should include /forseti-cai-export/ }
   end
-  # @TODO can't get the bucket to accept regex matching, below works but doesn't account for random_id
-  # describe google_storage_bucket_objects(bucket: 'forseti-server-52d2853a') do
-  #   its('object_names'){ should include 'configs/forseti_conf_server.yaml' }
-  # end
+
+  describe google_storage_bucket_objects(bucket: forseti_server_gcs_bucket) do
+    let(:files) do
+      template_dir = File.expand_path(
+        "../../../../modules/rules/templates/rules",
+        __dir__
+      )
+      Dir.glob("#{template_dir}/*.yaml").map {|file| "rules/#{File.basename(file)}" }
+    end
+
+    its('object_names'){ should include(*files) }
+  end
 end
 
 control 'forseti-client-service-account' do

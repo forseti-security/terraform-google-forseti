@@ -180,6 +180,13 @@ resource "google_storage_bucket_object" "forseti_server_config" {
   content = "${data.template_file.forseti_server_config.rendered}"
 }
 
+module "server_rules" {
+  source = "modules/rules"
+  bucket = "${google_storage_bucket.server_config.name}"
+  org_id = "${var.org_id}"
+  domain = "${var.domain}"
+}
+
 resource "google_storage_bucket" "cai_export" {
   count    = "${var.enable_cai_bucket ? 1 : 0}"
   name     = "${local.storage_cai_bucket_name}"
@@ -232,6 +239,7 @@ resource "google_compute_instance" "forseti-server" {
   depends_on = [
     "google_project_service.main",
     "google_service_account.forseti_server",
+    "module.server_rules"
   ]
 }
 

@@ -173,7 +173,10 @@ variable "enable_cai_bucket" {
 #--------#
 variable "org_id" {
   description = "GCP Organization ID that Forseti will have purview over"
-  default     = ""
+}
+
+variable "domain" {
+  description = "The domain associated with the GCP Organization ID"
 }
 
 variable "folder_id" {

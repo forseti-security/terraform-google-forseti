@@ -14,14 +14,7 @@
  * limitations under the License.
  */
 
-provider "google" {
-  credentials = "${file(var.credentials_path)}"
-}
-
-module "forseti-install-simple" {
-  source             = "../../"
-  project_id         = "${var.project_id}"
-  gsuite_admin_email = "${var.gsuite_admin_email}"
-  org_id             = "${var.org_id}"
-  domain             = "${var.domain}"
+output "files" {
+  description = "A list of files that will be uploaded as Forseti rules"
+  value       = "${local.files}"
 }

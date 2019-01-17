@@ -27,5 +27,9 @@ variable "project_id" {
 }
 
 variable "org_id" {
-  description = "The organization id"
+  description = "GCP Organization ID that Forseti will have purview over"
+}
+
+variable "domain" {
+  description = "The domain associated with the GCP Organization ID"
 }

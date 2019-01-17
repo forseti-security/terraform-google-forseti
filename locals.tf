@@ -26,7 +26,7 @@ resource "random_id" "random_hash_suffix" {
 #--------#
 locals {
   random_hash             = "${random_id.random_hash_suffix.hex}"
-  root_resource_id        = "${var.org_id != "" ? "organizations/${var.org_id}" : var.folder_id != "" ? "folders/${var.folder_id}" : ""}"
+  root_resource_id        = "${var.folder_id != "" ? "folders/${var.folder_id}" : "organizations/${var.org_id}"}"
   network_project         = "${var.network_project != "" ? var.network_project : var.project_id}"
   server_zone             = "${var.server_region}-c"
   server_startup_script   = "${file("${path.module}/scripts/forseti-server/forseti_server_startup_script.sh.tpl")}"
