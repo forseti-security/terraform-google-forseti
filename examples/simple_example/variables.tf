@@ -29,11 +29,3 @@ variable "project_id" {
 variable "org_id" {
   description = "The organization id"
 }
-
-variable "network_project" {
-  default = ""
-}
-
-variable "enable_cai_bucket" {
-  default = "false"
-}
