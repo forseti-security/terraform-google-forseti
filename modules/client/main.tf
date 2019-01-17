@@ -14,6 +14,25 @@
  * limitations under the License.
  */
 
+#--------#
+# Locals #
+#--------#
+locals {
+  client_startup_script = "${file("${path.module}/templates/scripts/forseti-client/forseti_client_startup_script.sh.tpl")}"
+  client_env_script     = "${file("${path.module}/templates/scripts/forseti-client/forseti_environment.sh.tpl")}"
+  client_conf           = "${file("${path.module}/templates/configs/forseti_conf_client.yaml.tpl")}"
+  client_conf_path      = "${var.forseti_home}/configs/forseti_conf_client.yaml"
+  client_sa_name        = "forseti-client-gcp-${var.suffix}"
+  client_name           = "forseti-client-vm-${var.suffix}"
+  client_bucket_name    = "forseti-client-${var.suffix}"
+  client_zone           = "${var.client_region}-c"
+
+  client_project_roles = [
+    "roles/storage.objectViewer",
+    "roles/cloudtrace.agent",
+  ]
+}
+
 #-------------------#
 # Forseti templates #
 #-------------------#
@@ -43,7 +62,7 @@ data "template_file" "forseti_client_config" {
   template = "${local.client_conf}"
 
   vars {
-    forseti_server_ip = "${google_compute_instance.forseti-server.network_interface.0.network_ip}"
+    forseti_server_ip = "${var.server_address}"
   }
 }
 
@@ -64,7 +83,7 @@ resource "google_compute_instance" "forseti-client" {
   }
 
   network_interface {
-    subnetwork_project = "${local.network_project}"
+    subnetwork_project = "${var.network_project}"
     subnetwork         = "${var.subnetwork}"
 
     access_config {}
@@ -77,10 +96,7 @@ resource "google_compute_instance" "forseti-client" {
     scopes = ["cloud-platform"]
   }
 
-  depends_on = [
-    "google_service_account.forseti_server",
-    "google_project_service.main",
-  ]
+  depends_on = ["null_resource.services-dependency"]
 }
 
 #----------------------#
@@ -117,4 +133,10 @@ resource "google_storage_bucket_object" "forseti_client_config" {
   bucket     = "${google_storage_bucket.client_config.name}"
   content    = "${data.template_file.forseti_client_config.rendered}"
   depends_on = ["google_compute_instance.forseti-client"]
+}
+
+resource "null_resource" "services-dependency" {
+  triggers {
+    services = "${jsonencode(var.services)}"
+  }
 }

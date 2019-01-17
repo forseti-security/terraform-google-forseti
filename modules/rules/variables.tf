@@ -21,7 +21,7 @@ variable "paths" {
 
 variable "bucket" {
   description = "The GCS bucket where rules will be uploaded"
-  type = "string"
+  type        = "string"
 }
 
 variable "org_id" {

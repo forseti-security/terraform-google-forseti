@@ -14,6 +14,73 @@
  * limitations under the License.
  */
 
+#--------#
+# Locals #
+#--------#
+locals {
+  random_hash             = "${var.suffix}"
+  root_resource_id        = "${var.folder_id != "" ? "folders/${var.folder_id}" : "organizations/${var.org_id}"}"
+  network_project         = "${var.network_project != "" ? var.network_project : var.project_id}"
+  server_zone             = "${var.server_region}-c"
+  server_startup_script   = "${file("${path.module}/templates/scripts/forseti-server/forseti_server_startup_script.sh.tpl")}"
+  server_environment      = "${file("${path.module}/templates/scripts/forseti-server/forseti_environment.sh.tpl")}"
+  server_env              = "${file("${path.module}/templates/scripts/forseti-server/forseti_env.sh.tpl")}"
+  server_conf             = "${file("${path.module}/templates/configs/forseti_conf_server.yaml.tpl")}"
+  server_conf_path        = "${var.forseti_home}/configs/forseti_conf_server.yaml"
+  server_name             = "forseti-server-vm-${local.random_hash}"
+  server_sa_name          = "forseti-server-gcp-${local.random_hash}"
+  cloudsql_name           = "forseti-server-db-${local.random_hash}"
+  storage_bucket_name     = "forseti-server-${local.random_hash}"
+  storage_cai_bucket_name = "forseti-cai-export-${local.random_hash}"
+  server_bucket_name      = "forseti-server-${local.random_hash}"
+
+  services_list = [
+    "admin.googleapis.com",
+    "appengine.googleapis.com",
+    "bigquery-json.googleapis.com",
+    "cloudbilling.googleapis.com",
+    "cloudresourcemanager.googleapis.com",
+    "sql-component.googleapis.com",
+    "sqladmin.googleapis.com",
+    "compute.googleapis.com",
+    "deploymentmanager.googleapis.com",
+    "iam.googleapis.com",
+    "cloudtrace.googleapis.com",
+    "container.googleapis.com",
+    "servicemanagement.googleapis.com",
+    "logging.googleapis.com",
+  ]
+
+  server_project_roles = [
+    "roles/storage.objectViewer",
+    "roles/storage.objectCreator",
+    "roles/cloudsql.client",
+    "roles/cloudtrace.agent",
+    "roles/logging.logWriter",
+    "roles/iam.serviceAccountTokenCreator",
+  ]
+
+  server_write_roles = [
+    "roles/compute.securityAdmin",
+  ]
+
+  server_read_roles = [
+    "roles/appengine.appViewer",
+    "roles/bigquery.dataViewer",
+    "roles/browser",
+    "roles/cloudasset.viewer",
+    "roles/cloudsql.viewer",
+    "roles/compute.networkViewer",
+    "roles/iam.securityReviewer",
+    "roles/servicemanagement.quotaViewer",
+    "roles/serviceusage.serviceUsageConsumer",
+  ]
+
+  server_bucket_roles = [
+    "roles/storage.objectAdmin",
+  ]
+}
+
 #-------------------#
 # Forseti templates #
 #-------------------#
@@ -134,6 +201,8 @@ resource "google_compute_firewall" "forseti-server-deny-all" {
   deny {
     protocol = "tcp"
   }
+
+  depends_on = ["null_resource.services-dependency"]
 }
 
 resource "google_compute_firewall" "forseti-server-ssh-external" {
@@ -148,6 +217,8 @@ resource "google_compute_firewall" "forseti-server-ssh-external" {
     protocol = "tcp"
     ports    = ["22"]
   }
+
+  depends_on = ["null_resource.services-dependency"]
 }
 
 resource "google_compute_firewall" "forseti-server-allow-grpc" {
@@ -162,6 +233,8 @@ resource "google_compute_firewall" "forseti-server-allow-grpc" {
     protocol = "tcp"
     ports    = ["50051"]
   }
+
+  depends_on = ["null_resource.services-dependency"]
 }
 
 #------------------------#
@@ -172,6 +245,8 @@ resource "google_storage_bucket" "server_config" {
   location      = "${var.storage_bucket_location}"
   project       = "${var.project_id}"
   force_destroy = "true"
+
+  depends_on = ["null_resource.services-dependency"]
 }
 
 resource "google_storage_bucket_object" "forseti_server_config" {
@@ -181,7 +256,7 @@ resource "google_storage_bucket_object" "forseti_server_config" {
 }
 
 module "server_rules" {
-  source = "modules/rules"
+  source = "../rules"
   bucket = "${google_storage_bucket.server_config.name}"
   org_id = "${var.org_id}"
   domain = "${var.domain}"
@@ -202,6 +277,8 @@ resource "google_storage_bucket" "cai_export" {
       age = "${var.bucket_cai_lifecycle_age}"
     }
   }
+
+  depends_on = ["null_resource.services-dependency"]
 }
 
 #-------------------------#
@@ -211,7 +288,6 @@ resource "google_compute_instance" "forseti-server" {
   name = "${local.server_name}"
   zone = "${local.server_zone}"
 
-  # Adding support for Shared VPC
   project                   = "${var.project_id}"
   machine_type              = "${var.server_type}"
   allow_stopping_for_update = true
@@ -237,9 +313,9 @@ resource "google_compute_instance" "forseti-server" {
   }
 
   depends_on = [
-    "google_project_service.main",
     "google_service_account.forseti_server",
-    "module.server_rules"
+    "module.server_rules",
+    "null_resource.services-dependency",
   ]
 }
 
@@ -270,9 +346,7 @@ resource "google_sql_database_instance" "master" {
     }
   }
 
-  depends_on = [
-    "google_project_service.main",
-  ]
+  depends_on = ["null_resource.services-dependency"]
 }
 
 resource "google_sql_database" "forseti-db" {
@@ -285,4 +359,10 @@ resource "google_sql_user" "root" {
   name     = "root"
   instance = "${google_sql_database_instance.master.name}"
   project  = "${var.project_id}"
+}
+
+resource "null_resource" "services-dependency" {
+  triggers {
+    services = "${jsonencode(var.services)}"
+  }
 }
