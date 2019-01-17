@@ -98,6 +98,9 @@ control 'forseti-google-storage-buckets' do
   describe google_storage_buckets(project: gcp_project_id) do
     its('bucket_names') { should include /forseti-client/ }
   end
+  describe google_storage_buckets(project: gcp_project_id) do
+    its('bucket_names') { should include /forseti-cai-export/ }
+  end
   # @TODO can't get the bucket to accept regex matching, below works but doesn't account for random_id
   # describe google_storage_bucket_objects(bucket: 'forseti-server-52d2853a') do
   #   its('object_names'){ should include 'configs/forseti_conf_server.yaml' }

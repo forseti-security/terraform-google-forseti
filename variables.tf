@@ -129,7 +129,7 @@ variable "storage_bucket_location" {
 
 variable "bucket_cai_location" {
   description = "GCS CAI storage bucket location"
-  default     = ""
+  default     = "us-central1"
 }
 
 variable "bucket_cai_lifecycle_age" {
@@ -164,8 +164,8 @@ variable "enable_write" {
 }
 
 variable "enable_cai_bucket" {
-  description = "Enabling/Disabling the CAI Bucket"
-  default     = "false"
+  description = "Create a GCS bucket for CAI exports"
+  default     = "true"
 }
 
 #--------#
