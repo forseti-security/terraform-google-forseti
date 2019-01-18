@@ -126,12 +126,18 @@ data "template_file" "forseti_server_config" {
   template = "${local.server_conf}"
 
   vars {
-    root_resource_id        = "${local.root_resource_id}"
-    gsuite_admin_email      = "${var.gsuite_admin_email}"
-    forseti_email_sender    = "${var.forseti_email_sender}"
-    forseti_email_recipient = "${var.forseti_email_recipient}"
-    storage_bucket_name     = "${local.server_bucket_name}"
-    sendgrid_api_key        = "${var.sendgrid_api_key}"
+    # The variable casing and naming used here is used to match the
+    # upstream forseti templates more closely, reducing the amount
+    # of modifications needed to convert the Python templates into
+    # Terraform templates.
+    ROOT_RESOURCE_ID         = "${local.root_resource_id}"
+    DOMAIN_SUPER_ADMIN_EMAIL = "${var.gsuite_admin_email}"
+    CAI_ENABLED              = "${var.enable_cai_bucket}"
+    FORSETI_CAI_BUCKET       = "${google_storage_bucket.cai_export.name}"
+    FORSETI_BUCKET           = "${local.server_bucket_name}"
+    SENDGRID_API_KEY         = "${var.sendgrid_api_key}"
+    EMAIL_SENDER             = "${var.forseti_email_sender}"
+    EMAIL_RECIPIENT          = "${var.forseti_email_recipient}"
   }
 }
 
