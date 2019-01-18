@@ -42,7 +42,7 @@ module "vpc" {
 
 module "service-project" {
   source              = "terraform-google-modules/project-factory/google"
-  version             = "v0.3.0"
+  version             = "v1.0.0"
   group_name          = ""
   create_group        = false
   random_project_id   = "true"

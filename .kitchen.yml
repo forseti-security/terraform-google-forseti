@@ -52,7 +52,17 @@ verifier:
        shell_options: "--login"
 
 suites:
-  - name: simple_example
+  - name: tf_module
+    driver:
+      name: terraform
+      root_module_directory: examples/simple
+      variable_files:
+      - test/fixtures/tf_module/terraform.tfvars
+  - name: shared_vpc
+    driver:
+      name: terraform
+      command_timeout: 1800
+      root_module_directory: test/fixtures/shared_vpc
 
 platforms:
   - name: terraform
