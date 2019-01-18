@@ -161,7 +161,7 @@ resource "google_organization_iam_member" "org_read" {
 resource "google_folder_iam_member" "folder_read" {
   count     = "${var.folder_id != "" ? length(local.server_read_roles) : 0}"
   role      = "${local.server_read_roles[count.index]}"
-  folder_id = "${var.folder_id}"
+  folder    = "${var.folder_id}"
   member    = "serviceAccount:${google_service_account.forseti_server.email}"
 }
 
@@ -175,7 +175,7 @@ resource "google_organization_iam_member" "org_write" {
 resource "google_folder_iam_member" "folder_write" {
   count     = "${var.folder_id != "" && var.enable_write ? length(local.server_write_roles) : 0}"
   role      = "${local.server_write_roles[count.index]}"
-  folder_id = "${var.folder_id}"
+  folder    = "${var.folder_id}"
   member    = "serviceAccount:${google_service_account.forseti_server.email}"
 }
 
