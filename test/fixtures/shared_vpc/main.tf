@@ -43,8 +43,6 @@ module "vpc" {
 module "service-project" {
   source              = "terraform-google-modules/project-factory/google"
   version             = "v1.0.0"
-  group_name          = ""
-  create_group        = false
   random_project_id   = "true"
   name                = "forseti-service"
   org_id              = "${var.org_id}"
@@ -71,4 +69,5 @@ module "forseti" {
   network_project     = "${var.shared_project_id}"
   org_id              = "${var.org_id}"
   server_region       = "${var.region}"
+  domain              = ""
 }
