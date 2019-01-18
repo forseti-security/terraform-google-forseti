@@ -36,9 +36,9 @@ variable "forseti_home" {
   default     = "$USER_HOME/forseti-security"
 }
 
-##----------------#
-## Forseti client #
-##----------------#
+#----------------#
+# Forseti client #
+#----------------#
 variable "client_type" {
   description = "GCE Forseti Client role instance size"
   default     = "n1-standard-2"
