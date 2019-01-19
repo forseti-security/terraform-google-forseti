@@ -46,6 +46,14 @@ output "forseti_server_vm_name" {
   value = "${module.forseti.forseti-server-vm-name}"
 }
 
+output "forseti_client_vm_ip" {
+  value = "${module.forseti.forseti-client-vm-ip}"
+}
+
+output "forset_client_vm_name" {
+  value = "${module.forseti.forseti-client-vm-name}"
+}
+
 output "region" {
   value = "${var.region}"
 }

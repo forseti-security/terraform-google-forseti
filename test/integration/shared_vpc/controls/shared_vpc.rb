@@ -14,12 +14,15 @@
 
 title 'Forseti Terraform GCP Test Suite'
 
-forseti_project_id = attribute("forseti_project_id")
-shared_project_id = attribute("shared_project_id")
-forseti_server_vm_name = attribute("forseti_server_vm_name")
-region = attribute("region")
-network_name = attribute('network_name')
-subnetwork_self_link = attribute('subnetwork_self_link')
+forseti_project_id      = attribute("forseti_project_id")
+shared_project_id       = attribute("shared_project_id")
+forseti_server_vm_name  = attribute("forseti_server_vm_name")
+forseti_server_vm_ip    = attribute("forseti_server_vm_ip")
+forseti_client_vm_name  = attribute("forseti_client_vm_name")
+forseti_client_vm_ip    = attribute("forseti_client_vm_ip")
+region                  = attribute("region")
+network_name            = attribute('network_name')
+subnetwork_self_link    = attribute('subnetwork_self_link')
 
 
 control 'forseti-service-project' do
@@ -56,6 +59,16 @@ end
 control 'forseti-server' do
   title 'test forseti server'
   describe google_compute_instance(project: forseti_project_id,  zone: "#{region}-c", name: forseti_server_vm_name) do
+    it { should exist }
+    its('has_disks_encrypted_with_csek?') { should be false }
+    its('status') { should eq 'RUNNING' }
+    its('disk_count'){should eq 1}
+  end
+end
+
+control 'forseti-client' do
+  title 'test client server'
+  describe google_compute_instance(project: forseti_project_id,  zone: "#{region}-c", name: forseti_client_vm_name) do
     it { should exist }
     its('has_disks_encrypted_with_csek?') { should be false }
     its('status') { should eq 'RUNNING' }

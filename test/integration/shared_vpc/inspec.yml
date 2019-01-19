@@ -37,6 +37,15 @@ attributes:
   - name: forseti_server_vm_name
     required: true
     description: "Forseti server name"
+  - name: forseti_server_vm_ip
+    required: true
+    description: "Forseti server ip"
+  - name: forseti_client_vm_name
+    required: true
+    description: "Forseti client name"
+  - name: forseti_client_vm_ip
+    required: true
+    description: "Forseti client ip"
   - name: region
     required: true
     description: "Region in which the server is deployed"
