@@ -1,22 +1,11 @@
 # Forseti Infrastructure Tests
 
-## Working with the testing framework
-
-Technology being leveraged in this testing solution:
-
-- kitchen-terraform
-- kitchen-inspec
-- inspec 3.x +
-- terraform
-- test-kitchen
-
-
 ## Configuring integration tests
 
 Create a Terraform variables file based on the provided example:
 
 ```
-cp test/fixtures/tf_module/terraform.tfvars.example test/fixtures/tf_module/terraform.tfvars
+cp test/fixtures/simple_example/terraform.tfvars.example test/fixtures/tf_module/terraform.tfvars
 ```
 
 Update `terraform.tfvars` to match your environment:
