@@ -27,7 +27,7 @@ module "vpc" {
 
   subnets = [
     {
-      subnet_name           = "forseti-subnet-01"
+      subnet_name           = "${var.subnetwork_name}"
       subnet_ip             = "${var.subnet_cidr}"
       subnet_region         = "${var.region}"
       subnet_private_access = true
@@ -50,7 +50,7 @@ module "service-project" {
   credentials_path    = "${var.credentials_path}"
   shared_vpc          = "${var.shared_project_id}"
   shared_vpc_subnets  = [
-    "projects/${var.shared_project_id}/regions/${var.region}/subnetworks/forseti-subnet-01",
+    "projects/${var.shared_project_id}/regions/${var.region}/subnetworks/${var.subnetwork_name}",
   ]
   activate_apis = [
     "storage-api.googleapis.com",

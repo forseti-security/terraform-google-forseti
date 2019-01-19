@@ -39,3 +39,8 @@ variable "subnet_cidr" {
   description = "Subnetwork CIDR"
   default     = "10.0.0.0/24"
 }
+
+variable "subnetwork_name" {
+  description = "Name of the subnetwork where forseti will be deployed"
+  default = "forseti-subnet-01"
+}

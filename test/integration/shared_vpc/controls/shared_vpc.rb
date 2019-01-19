@@ -15,10 +15,50 @@
 title 'Forseti Terraform GCP Test Suite'
 
 forseti_project_id = attribute("forseti_project_id")
+shared_project_id = attribute("shared_project_id")
+forseti_server_vm_name = attribute("forseti_server_vm_name")
+region = attribute("region")
+network_name = attribute('network_name')
+subnetwork_self_link = attribute('subnetwork_self_link')
+
 
 control 'forseti-service-project' do
-  title 'test forseti project name'
-  describe forseti_project_id do
-    it { should =~ /forseti/ }
+  impact 1.0
+  title 'test forseti project'
+  describe google_compute_project_info(project: forseti_project_id) do
+    its('xpn_project_status') { should eq 'UNSPECIFIED_XPN_PROJECT_STATUS' }
+    its('name') { should eq forseti_project_id}
+  end
+end
+
+control 'forseti-shared-project' do
+  impact 1.0
+  title 'test shared project'
+  describe google_compute_project_info(project: shared_project_id) do
+    its('xpn_project_status') { should eq 'HOST' }
+    its('name') { should eq shared_project_id}
+  end
+end
+
+control 'shared-network' do
+  impact 1.0
+  title 'test shared vpc'
+  describe google_compute_network(project: shared_project_id,  name: network_name) do
+    it { should exist }
+    its('name') { should eq network_name }
+    its ('subnetworks.count') { should eq 1 }
+    its ('subnetworks.first') { should include subnetwork_self_link}
+    its ('auto_create_subnetworks'){ should be false }
+    its ('routing_config.routing_mode') { should eq "GLOBAL" }
+  end
+end
+
+control 'forseti-server' do
+  title 'test forseti server'
+  describe google_compute_instance(project: forseti_project_id,  zone: "#{region}-c", name: forseti_server_vm_name) do
+    it { should exist }
+    its('has_disks_encrypted_with_csek?') { should be false }
+    its('status') { should eq 'RUNNING' }
+    its('disk_count'){should eq 1}
   end
 end

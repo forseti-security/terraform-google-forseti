@@ -30,10 +30,22 @@ output "network_self_link" {
   value = "${module.vpc.network_self_link}"
 }
 
+output "network_name" {
+  value = "${module.vpc.network_name}"
+}
+
+output "subnetwork_self_link" {
+  value = "${"projects/${var.shared_project_id}/regions/${var.region}/subnetworks/${var.subnetwork_name}"}"
+}
+
 output "forseti_server_vm_ip" {
   value = "${module.forseti.forseti-server-vm-ip}"
 }
 
 output "forseti_server_vm_name" {
   value = "${module.forseti.forseti-server-vm-name}"
+}
+
+output "region" {
+  value = "${var.region}"
 }

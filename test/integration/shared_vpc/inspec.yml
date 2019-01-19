@@ -16,23 +16,33 @@ name: shared-vpc-profile
 version: 0.1.0
 title: GCP Forseti InSpec Profile
 copyright: Google LLC
-copyright_email: vlahovic@google.com
 license: Apache-2.0
 summary: An InSpec Compliance Profile For Forseti in GCP
 
 depends:
-- name: inspec-gcp
-  url: https://github.com/inspec/inspec-gcp/archive/master.tar.gz
+  - name: inspec-gcp
+    url: https://github.com/inspec/inspec-gcp/archive/master.tar.gz
 supports:
-- platform: gcp
+  - platform: gcp
 
 attributes:
-- name: shared_project_id
-  required: true
-  description: 'Shared VPC Project ID.'
-  type: string
-
-- name: forseti_project_id
-  required: true
-  description: 'Forseti project id. This is a service project.'
-  type: string
+  - name: shared_project_id
+    required: true
+    description: 'Shared VPC Project ID.'
+    type: string
+  - name: forseti_project_id
+    required: true
+    description: 'Forseti project id. This is a service project.'
+    type: string
+  - name: forseti_server_vm_name
+    required: true
+    description: "Forseti server name"
+  - name: region
+    required: true
+    description: "Region in which the server is deployed"
+  - name: network_name
+    required: true
+    description: "VPC name"
+  - name: subnetwork_self_link
+    required: true
+    description: "Self link of the subnetwork where forseti server is deployed"
