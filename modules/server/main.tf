@@ -125,11 +125,11 @@ data "template_file" "forseti_server_env" {
 data "template_file" "forseti_server_config" {
   template = "${local.server_conf}"
 
+  # The variable casing and naming used here is used to match the
+  # upstream forseti templates more closely, reducing the amount
+  # of modifications needed to convert the Python templates into
+  # Terraform templates.
   vars {
-    # The variable casing and naming used here is used to match the
-    # upstream forseti templates more closely, reducing the amount
-    # of modifications needed to convert the Python templates into
-    # Terraform templates.
     ROOT_RESOURCE_ID         = "${local.root_resource_id}"
     DOMAIN_SUPER_ADMIN_EMAIL = "${var.gsuite_admin_email}"
     CAI_ENABLED              = "${var.enable_cai_bucket}"
@@ -165,10 +165,10 @@ resource "google_organization_iam_member" "org_read" {
 }
 
 resource "google_folder_iam_member" "folder_read" {
-  count     = "${var.folder_id != "" ? length(local.server_read_roles) : 0}"
-  role      = "${local.server_read_roles[count.index]}"
-  folder    = "${var.folder_id}"
-  member    = "serviceAccount:${google_service_account.forseti_server.email}"
+  count  = "${var.folder_id != "" ? length(local.server_read_roles) : 0}"
+  role   = "${local.server_read_roles[count.index]}"
+  folder = "${var.folder_id}"
+  member = "serviceAccount:${google_service_account.forseti_server.email}"
 }
 
 resource "google_organization_iam_member" "org_write" {
@@ -179,10 +179,10 @@ resource "google_organization_iam_member" "org_write" {
 }
 
 resource "google_folder_iam_member" "folder_write" {
-  count     = "${var.folder_id != "" && var.enable_write ? length(local.server_write_roles) : 0}"
-  role      = "${local.server_write_roles[count.index]}"
-  folder    = "${var.folder_id}"
-  member    = "serviceAccount:${google_service_account.forseti_server.email}"
+  count  = "${var.folder_id != "" && var.enable_write ? length(local.server_write_roles) : 0}"
+  role   = "${local.server_write_roles[count.index]}"
+  folder = "${var.folder_id}"
+  member = "serviceAccount:${google_service_account.forseti_server.email}"
 }
 
 #------------------------#
