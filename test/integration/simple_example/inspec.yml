@@ -37,6 +37,12 @@ attributes:
 - name: forseti-server-gcs-bucket
   required: true
   type: string
+- name: forseti-client-service-account
+  required: true
+  type: string
+- name: forseti-server-service-account
+  required: true
+  type: string
 depends:
 - name: inspec-gcp
   url: https://github.com/inspec/inspec-gcp/archive/master.tar.gz

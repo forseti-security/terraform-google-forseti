@@ -22,9 +22,10 @@ forseti_client_vm_name = attribute('forseti-client-vm-name')
 forseti_server_vm_name = attribute('forseti-server-vm-name')
 forseti_client_gcs_bucket = attribute('forseti-client-gcs-bucket')
 forseti_server_gcs_bucket = attribute('forseti-server-gcs-bucket')
+forseti_client_service_account = attribute('forseti-client-service-account')
+forseti_server_service_account = attribute('forseti-server-service-account')
 
 control 'forseti-client-vm' do
-  impact 1.0
   title 'Test forseti client vm'
   describe google_compute_instance(
     project: project_id,
@@ -36,9 +37,7 @@ control 'forseti-client-vm' do
   end
 end
 
-
 control 'forseti-server-vm' do
-  impact 1.0
   title 'Test forseti server vm'
   describe google_compute_instance(
     project: project_id,
@@ -51,41 +50,37 @@ control 'forseti-server-vm' do
 end
 
 control 'forseti-cloudsql-instance' do
-  impact 1.0
   title 'Test CloudSQL Instance is up'
   describe google_sql_database_instances(project: project_id) do
-    its('instance_names') { should include /forseti-server-db-*/ }
+    its('instance_names') { should include(/forseti-server-db-*/) }
   end
 end
 
-
 control 'forseti-server-iam-roles' do
-
-  impact 1.0
   title 'Test Server Project IAM Role bindings'
   describe google_project_iam_binding(project: project_id, role: "roles/storage.objectViewer") do
     it { should exist }
-    its ('members'){ should include /forseti/ }
+    its('members') { should include forseti_server_service_account }
   end
   describe google_project_iam_binding(project: project_id, role: "roles/storage.objectCreator") do
     it { should exist }
-    its ('members'){ should include /forseti/ }
+    its('members') { should include forseti_server_service_account }
   end
   describe google_project_iam_binding(project: project_id, role: "roles/cloudsql.client") do
     it { should exist }
-    its ('members'){ should include /forseti/ }
+    its('members') { should include forseti_server_service_account }
   end
   describe google_project_iam_binding(project: project_id, role: "roles/cloudtrace.agent") do
     it { should exist }
-    its ('members'){ should include /forseti/ }
+    its('members') { should include forseti_server_service_account }
   end
   describe google_project_iam_binding(project: project_id, role: "roles/logging.logWriter") do
     it { should exist }
-    its ('members'){ should include /forseti/ }
+    its('members') { should include forseti_server_service_account }
   end
   describe google_project_iam_binding(project: project_id, role: "roles/iam.serviceAccountTokenCreator") do
     it { should exist }
-    its ('members'){ should include /forseti/ }
+    its('members') { should include forseti_server_service_account }
   end
 end
 
@@ -94,7 +89,6 @@ end
 # control 'forseti-server-read-iam-roles' do
 #   gcp_enable_privileged_resources = '1'
 #
-#   impact 1.0
 #   title 'Test Server Read Org Level IAM Role bindings'
 #   describe google_project_iam_binding(project: , role: "roles/compute.securityAdmin") do
 #     it { should exist }
@@ -103,12 +97,11 @@ end
 # end
 
 control 'forseti-google-storage-buckets' do
-  impact 1.0
   title 'Test GCS Buckets are present'
   describe google_storage_buckets(project: project_id) do
     its('bucket_names') { should include forseti_server_gcs_bucket }
     its('bucket_names') { should include forseti_client_gcs_bucket }
-    its('bucket_names') { should include /forseti-cai-export/ }
+    its('bucket_names') { should include(/forseti-cai-export/) }
   end
 
   describe google_storage_bucket_objects(bucket: forseti_server_gcs_bucket) do
@@ -125,32 +118,26 @@ control 'forseti-google-storage-buckets' do
 end
 
 control 'forseti-client-service-account' do
-  impact 1.0
   title 'Test Forseti Client Service Account'
   describe google_service_accounts(project: project_id) do
-    its('service_account_emails'){ should include /forseti-client-gcp/ }
+    let(:email) { "#{forseti_client_service_account}@#{project_id}.iam.gserviceaccount.com" }
+    its('service_account_emails') { should include email }
   end
 end
 
 control 'forseti-server-service-account' do
-  impact 1.0
   title 'Test Forseti Server Service Account'
   describe google_service_accounts(project: project_id) do
-    its('service_account_emails'){ should include /forseti-server-gcp/ }
+    let(:email) { "#{forseti_server_service_account}@#{project_id}.iam.gserviceaccount.com" }
+    its('service_account_emails') { should include email }
   end
 end
 
 control 'forseti-firewall-rules' do
-  impact 1.0
   title 'Test Forseti Firewall Rules'
   describe google_compute_firewalls(project: project_id) do
-    its('firewall_names') { should include /forseti-server-ssh-external/ }
+    its('firewall_names') { should include(/forseti-server-ssh-external/) }
+    its('firewall_names') { should include(/forseti-server-allow-grpc/) }
+    its('firewall_names') { should include(/forseti-server-deny-all/) }
   end
-  describe google_compute_firewalls(project: project_id) do
-    its('firewall_names') { should include /forseti-server-allow-grpc/ }
-  end
-  describe google_compute_firewalls(project: project_id) do
-    its('firewall_names') { should include /forseti-server-deny-all/ }
-  end
-
 end
