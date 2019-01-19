@@ -30,7 +30,7 @@ Then perform the following commands on the config folder:
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | bucket\_cai\_lifecycle\_age | GCS CAI lifecycle age value | string | `14` | no |
-| bucket\_cai\_location | GCS CAI storage bucket location | string | `` | no |
+| bucket\_cai\_location | GCS CAI storage bucket location | string | `us-central1` | no |
 | client\_boot\_image | GCE Forseti Client role instance size | string | `ubuntu-os-cloud/ubuntu-1804-lts` | no |
 | client\_region | GCE Forseti Client role region size | string | `us-central1` | no |
 | client\_type | GCE Forseti Client role instance size | string | `n1-standard-2` | no |
@@ -39,7 +39,8 @@ Then perform the following commands on the config folder:
 | cloudsql\_proxy\_arch | CloudSQL Proxy architecture | string | `linux.amd64` | no |
 | cloudsql\_region | CloudSQL region | string | `us-central1` | no |
 | cloudsql\_type | CloudSQL Instance size | string | `db-n1-standard-1` | no |
-| enable\_cai\_bucket | Enabling/Disabling the CAI Bucket | string | `false` | no |
+| domain | The domain associated with the GCP Organization ID | string | - | yes |
+| enable\_cai\_bucket | Create a GCS bucket for CAI exports | string | `true` | no |
 | enable\_write | Enabling/Disabling write actions | string | `false` | no |
 | folder\_id | GCP Folder that the Forseti project will be deployed into | string | `` | no |
 | forseti\_email\_recipient | Email address that receives Forseti notifications | string | `` | no |
@@ -47,11 +48,11 @@ Then perform the following commands on the config folder:
 | forseti\_home | Forseti installation directory | string | `$USER_HOME/forseti-security` | no |
 | forseti\_repo\_url | Git repo for the Forseti installation | string | `https://github.com/GoogleCloudPlatform/forseti-security` | no |
 | forseti\_run\_frequency | Schedule of running the Forseti scans | string | `* */2 * * *` | no |
-| forseti\_version | Forseti software revision that you want | string | `stable` | no |
+| forseti\_version | The version of Forseti to install | string | `v2.10.0` | no |
 | gsuite\_admin\_email | G-Suite administrator email address to manage your Forseti installation | string | - | yes |
 | network | The VPC where the Forseti client and server will be created | string | `default` | no |
 | network\_project | The project containing the VPC and subnetwork where the Forseti client and server will be created | string | `` | no |
-| org\_id | GCP Organization ID that Forseti will have purview over | string | `` | no |
+| org\_id | GCP Organization ID that Forseti will have purview over | string | - | yes |
 | project\_id | Google Project ID that you want Forseti deployed into | string | - | yes |
 | sendgrid\_api\_key | Sendgrid.com API key to enable email notifications | string | `` | no |
 | server\_boot\_image | GCE instance image that is being used, currently Debian only support is available | string | `ubuntu-os-cloud/ubuntu-1804-lts` | no |
@@ -64,12 +65,14 @@ Then perform the following commands on the config folder:
 
 | Name | Description |
 |------|-------------|
-| forseti-client-vm-ip | Forseti Cleint role vm name |
-| forseti-client-vm-name | Forseti Client role vm name |
-| forseti-server-vm-ip | Forseti Server role ip address |
-| forseti-server-vm-name | Forseti Server role vm name |
-| foseti-client-service-account | Forseti Client role service account |
-| foseti-server-service-account | Forseti Server role service account |
+| forseti-client-service-account | Forseti Client service account |
+| forseti-client-storage-bucket | Forseti Client storage bucket |
+| forseti-client-vm-ip | Forseti Client VM ip address |
+| forseti-client-vm-name | Forseti Client VM name |
+| forseti-server-service-account | Forseti Server service account |
+| forseti-server-storage-bucket | Forseti Server storage bucket |
+| forseti-server-vm-ip | Forseti Server VM ip address |
+| forseti-server-vm-name | Forseti Server VM name |
 
 [^]: (autogen_docs_end)
 
