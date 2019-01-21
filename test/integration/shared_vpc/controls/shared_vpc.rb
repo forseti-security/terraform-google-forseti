@@ -67,7 +67,7 @@ control 'forseti-server' do
 end
 
 control 'forseti-client' do
-  title 'test client server'
+  title 'test forset client'
   describe google_compute_instance(project: forseti_project_id,  zone: "#{region}-c", name: forseti_client_vm_name) do
     it { should exist }
     its('has_disks_encrypted_with_csek?') { should be false }

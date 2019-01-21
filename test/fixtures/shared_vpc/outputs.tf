@@ -50,7 +50,7 @@ output "forseti_client_vm_ip" {
   value = "${module.forseti.forseti-client-vm-ip}"
 }
 
-output "forset_client_vm_name" {
+output "forseti_client_vm_name" {
   value = "${module.forseti.forseti-client-vm-name}"
 }
 
