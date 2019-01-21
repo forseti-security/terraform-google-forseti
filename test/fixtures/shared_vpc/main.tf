@@ -69,5 +69,5 @@ module "forseti" {
   network_project     = "${var.shared_project_id}"
   org_id              = "${var.org_id}"
   server_region       = "${var.region}"
-  domain              = ""
+  domain              = "${var.domain}"
 }

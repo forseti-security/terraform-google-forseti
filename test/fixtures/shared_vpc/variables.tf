@@ -30,6 +30,10 @@ variable "billing_account" {
   description = "Billing account 0000-0000-0000"
 }
 
+variable "domain" {
+  description = "Organization domain"
+}
+
 variable "region" {
   description = "Region where forseti subnetwork will be deployed"
   default     = "us-east1"

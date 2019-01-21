@@ -18,3 +18,4 @@ credentials_path = "/path/to/credentials.json"
 shared_project_id = "sample-project-001"
 org_id = 100000000000
 billing_account = "000000-000000-000000"
+domain = "company.domain.com"

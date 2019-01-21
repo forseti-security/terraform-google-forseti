@@ -56,7 +56,16 @@ control 'shared-network' do
   end
 end
 
+control 'forseti-networks' do
+  impact 1.0
+  title 'Forseti project has not VPCs'
+  describe google_compute_networks(project: forseti_project_id) do
+    it { should_not exist }
+  end
+end
+
 control 'forseti-server' do
+  impact 1.0
   title 'test forseti server'
   describe google_compute_instance(project: forseti_project_id,  zone: "#{region}-c", name: forseti_server_vm_name) do
     it { should exist }
@@ -67,11 +76,33 @@ control 'forseti-server' do
 end
 
 control 'forseti-client' do
+  impact 1.0
   title 'test forset client'
   describe google_compute_instance(project: forseti_project_id,  zone: "#{region}-c", name: forseti_client_vm_name) do
     it { should exist }
     its('has_disks_encrypted_with_csek?') { should be false }
     its('status') { should eq 'RUNNING' }
     its('disk_count'){should eq 1}
+  end
+end
+
+control 'forseti-command on server' do
+  impact 1.0
+  title 'Check that server can run a forseti command'
+  describe command("gcloud compute ssh #{forseti_server_vm_name} --project #{forseti_project_id}  --zone=#{region}-c --command 'forseti inventory list' ") do
+    its(:exit_status) { should eq 0 }
+    its(:stderr) { should eq '' }
+
+    let!(:response) do
+      if subject.exit_status == 0
+        JSON.parse(subject.stdout, symbolize_names: true)
+      else
+        {}
+      end
+    end
+
+    it 'forseti config should point to gRPC port' do
+      expect(response).to include(endpoint, 'localhost:50051')
+    end
   end
 end
