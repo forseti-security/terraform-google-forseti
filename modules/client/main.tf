@@ -96,7 +96,10 @@ resource "google_compute_instance" "forseti-client" {
     scopes = ["cloud-platform"]
   }
 
-  depends_on = ["null_resource.services-dependency"]
+  depends_on = [
+    "null_resource.services-dependency",
+    "google_storage_bucket_object.forseti_client_config",
+  ]
 }
 
 #----------------------#
@@ -129,10 +132,9 @@ resource "google_storage_bucket" "client_config" {
 }
 
 resource "google_storage_bucket_object" "forseti_client_config" {
-  name       = "configs/forseti_conf_client.yaml"
-  bucket     = "${google_storage_bucket.client_config.name}"
-  content    = "${data.template_file.forseti_client_config.rendered}"
-  depends_on = ["google_compute_instance.forseti-client"]
+  name    = "configs/forseti_conf_client.yaml"
+  bucket  = "${google_storage_bucket.client_config.name}"
+  content = "${data.template_file.forseti_client_config.rendered}"
 }
 
 resource "null_resource" "services-dependency" {
