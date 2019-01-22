@@ -49,3 +49,24 @@ control 'forseti-command-server' do
     end
   end
 end
+
+control 'forseti-command-client' do
+  impact 1.0
+  title 'Check that forseti client is running'
+  describe command("gcloud compute ssh #{forseti_client_vm_name} --project #{forseti_project_id}  --zone=#{region}-c --command 'forseti config show'") do
+    its(:exit_status) { should eq 0 }
+    its(:stderr) { should eq '' }
+
+    let!(:response) do
+      if subject.exit_status == 0
+        JSON.parse(subject.stdout.tr("'",'"'), symbolize_names: true)
+      else
+        {}
+      end
+    end
+
+    it 'forseti config should point to gRPC port' do
+      expect(response).to include(endpoint: "#{forseti_client_vm_ip}:50051")
+    end
+  end
+end
