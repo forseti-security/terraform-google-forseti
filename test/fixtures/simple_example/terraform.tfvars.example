@@ -9,6 +9,9 @@
 # Example:
 #org_id = "000000000000"
 
+# Required: the GCP domain associated with the project_id
+#domain = "example.com"
+
 # Required: the GCP project where the Forseti resources will be created.
 # Example:
 #project_id = "forseti-test-e5ac"
