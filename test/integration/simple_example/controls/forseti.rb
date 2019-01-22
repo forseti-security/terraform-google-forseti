@@ -20,8 +20,8 @@ title 'Forseti Terraform GCP Test Suite'
 project_id = attribute('project_id')
 forseti_client_vm_name = attribute('forseti-client-vm-name')
 forseti_server_vm_name = attribute('forseti-server-vm-name')
-forseti_client_gcs_bucket = attribute('forseti-client-gcs-bucket')
-forseti_server_gcs_bucket = attribute('forseti-server-gcs-bucket')
+forseti_client_storage_bucket = attribute('forseti-client-storage-bucket')
+forseti_server_storage_bucket = attribute('forseti-server-storage-bucket')
 forseti_client_service_account = attribute('forseti-client-service-account')
 forseti_server_service_account = attribute('forseti-server-service-account')
 
@@ -96,12 +96,12 @@ end
 control 'forseti-google-storage-buckets' do
   title 'Test GCS Buckets are present'
   describe google_storage_buckets(project: project_id) do
-    its('bucket_names') { should include forseti_server_gcs_bucket }
-    its('bucket_names') { should include forseti_client_gcs_bucket }
+    its('bucket_names') { should include forseti_server_storage_bucket }
+    its('bucket_names') { should include forseti_client_storage_bucket }
     its('bucket_names') { should include(/forseti-cai-export/) }
   end
 
-  describe google_storage_bucket_objects(bucket: forseti_server_gcs_bucket) do
+  describe google_storage_bucket_objects(bucket: forseti_server_storage_bucket) do
     let(:files) do
       %w[
         rules/audit_logging_rules.yaml
