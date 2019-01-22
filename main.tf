@@ -40,6 +40,8 @@ locals {
     "container.googleapis.com",
     "servicemanagement.googleapis.com",
     "logging.googleapis.com",
+    "cloudasset.googleapis.com",
+    "storage-api.googleapis.com",
   ]
 }
 
