@@ -5,7 +5,7 @@
 Create a Terraform variables file based on the provided example:
 
 ```bash
-cp test/fixtures/simple_example/terraform.tfvars.example test/fixtures/tf_module/terraform.tfvars
+cp test/fixtures/simple_example/terraform.tfvars.example test/fixtures/simple_example/terraform.tfvars
 ```
 
 Update `terraform.tfvars` to match your environment:
