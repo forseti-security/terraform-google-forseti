@@ -134,16 +134,16 @@ end
 
 control 'forseti-client-service-account' do
   title 'Test Forseti Client Service Account'
-  describe google_service_account(name: "projects/#{project_id}/serviceAccounts/#{forseti_client_service_account}@#{project_id}.iam.gserviceaccount.com") do
-    its(:email) { should eq "#{forseti_client_service_account}@#{project_id}.iam.gserviceaccount.com" }
+  describe google_service_account(name: "projects/#{project_id}/serviceAccounts/#{forseti_client_service_account}") do
+    its(:email) { should eq forseti_client_service_account }
     its(:display_name) { should eq "Forseti Client Service Account" }
   end
 end
 
 control 'forseti-server-service-account' do
   title 'Test Forseti Server Service Account'
-  describe google_service_account(name: "projects/#{project_id}/serviceAccounts/#{forseti_server_service_account}@#{project_id}.iam.gserviceaccount.com") do
-    its(:email) { should eq "#{forseti_server_service_account}@#{project_id}.iam.gserviceaccount.com" }
+  describe google_service_account(name: "projects/#{project_id}/serviceAccounts/#{forseti_server_service_account}") do
+    its(:email) { should eq forseti_server_service_account }
     its(:display_name) { should eq "Forseti Server Service Account" }
   end
 end
