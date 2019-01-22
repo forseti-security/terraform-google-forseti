@@ -84,13 +84,14 @@ control 'forseti-server-iam-roles' do
   end
 end
 
-control 'forseti-server-read-iam-roles' do
-  title 'Test Server Read Org Level IAM Role bindings'
-  describe google_project_iam_binding(project: project_id, role: "roles/compute.securityAdmin") do
-    it { should exist }
-    its('members') { should include forseti_server_service_account }
-  end
-end
+# @todo: Create Terraform test fixture with `enable_write = "true"`
+#control 'forseti-server-read-iam-roles' do
+#  title 'Test Server Read Org Level IAM Role bindings'
+#  describe google_project_iam_binding(project: project_id, role: "roles/compute.securityAdmin") do
+#    it { should exist }
+#    its('members') { should include "serviceAccount:#{forseti_server_service_account}" }
+#  end
+#end
 
 control 'forseti-google-storage-buckets' do
   title 'Test GCS Buckets are present'
