@@ -118,7 +118,7 @@ resource "google_project_iam_member" "client_roles" {
 resource "google_service_account" "forseti_client" {
   account_id   = "${local.client_sa_name}"
   project      = "${var.project_id}"
-  display_name = "Forseti Server Service Account"
+  display_name = "Forseti Client Service Account"
 }
 
 #------------------------#
