@@ -99,6 +99,12 @@ On the project:
 ### GSuite Admin
 To use the IAM exploration functionality of Forseti, you will need a Super Admin on the Google Admin console. This admin's email must be passed in the `gsuite_admin_email` variable.
 
+### APIs
+For this module to work, you need the following APIs enabled on the Forseti project.
+
+- compute.googleapis.com
+- serviceusage.googleapis.com
+
 ## Install
 ### Create the Service Account
 You can create the service account manually, or by running the following command:
