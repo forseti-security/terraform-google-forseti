@@ -37,6 +37,6 @@ bundle exec kitchen destroy
 
 If you want to run the full lifecycle suite at once
 
-```
+```bash
 bundle exec kitchen test
 ```
