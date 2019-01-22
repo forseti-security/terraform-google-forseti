@@ -31,7 +31,7 @@ attributes:
     required: true
     description: 'Shared VPC Project ID.'
     type: string
-  - name: forseti_project_id
+  - name: service_project_id
     required: true
     description: 'Forseti project id. This is a service project.'
     type: string

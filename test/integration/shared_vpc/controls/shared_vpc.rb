@@ -14,7 +14,7 @@
 
 title 'Forseti Terraform GCP Test Suite for Shared VPC setup'
 
-forseti_project_id      = attribute("forseti_project_id")
+service_project_id      = attribute("service_project_id")
 shared_project_id       = attribute("shared_project_id")
 forseti_server_vm_name  = attribute("forseti_server_vm_name")
 forseti_server_vm_ip    = attribute("forseti_server_vm_ip")
@@ -28,9 +28,9 @@ credentials_path        = attribute('credentials_path')
 control 'forseti-service-project' do
   impact 1.0
   title 'test forseti project'
-  describe google_compute_project_info(project: forseti_project_id) do
+  describe google_compute_project_info(project: service_project_id) do
     its('xpn_project_status') { should eq 'UNSPECIFIED_XPN_PROJECT_STATUS' }
-    its('name') { should eq forseti_project_id}
+    its('name') { should eq service_project_id}
   end
 end
 
@@ -59,7 +59,7 @@ end
 control 'forseti-networks' do
   impact 1.0
   title 'Forseti project has not VPCs'
-  describe google_compute_networks(project: forseti_project_id) do
+  describe google_compute_networks(project: service_project_id) do
     it { should_not exist }
   end
 end
@@ -67,7 +67,7 @@ end
 control 'forseti-server' do
   impact 1.0
   title 'test forseti server'
-  describe google_compute_instance(project: forseti_project_id,  zone: "#{region}-c", name: forseti_server_vm_name) do
+  describe google_compute_instance(project: service_project_id,  zone: "#{region}-c", name: forseti_server_vm_name) do
     it { should exist }
     its('has_disks_encrypted_with_csek?') { should be false }
     its('status') { should eq 'RUNNING' }
@@ -78,7 +78,7 @@ end
 control 'forseti-client' do
   impact 1.0
   title 'test forset client'
-  describe google_compute_instance(project: forseti_project_id,  zone: "#{region}-c", name: forseti_client_vm_name) do
+  describe google_compute_instance(project: service_project_id,  zone: "#{region}-c", name: forseti_client_vm_name) do
     it { should exist }
     its('has_disks_encrypted_with_csek?') { should be false }
     its('status') { should eq 'RUNNING' }
