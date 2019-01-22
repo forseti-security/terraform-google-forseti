@@ -84,17 +84,13 @@ control 'forseti-server-iam-roles' do
   end
 end
 
-# @TODO Need to figure out the Org level permissions to execute this test
-#
-# control 'forseti-server-read-iam-roles' do
-#   gcp_enable_privileged_resources = '1'
-#
-#   title 'Test Server Read Org Level IAM Role bindings'
-#   describe google_project_iam_binding(project: , role: "roles/compute.securityAdmin") do
-#     it { should exist }
-#     its ('members'){ should include /forseti/ }
-#   end
-# end
+control 'forseti-server-read-iam-roles' do
+  title 'Test Server Read Org Level IAM Role bindings'
+  describe google_project_iam_binding(project: project_id, role: "roles/compute.securityAdmin") do
+    it { should exist }
+    its('members') { should include forseti_server_service_account }
+  end
+end
 
 control 'forseti-google-storage-buckets' do
   title 'Test GCS Buckets are present'
