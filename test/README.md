@@ -10,7 +10,7 @@ cp test/fixtures/simple_example/terraform.tfvars.example test/fixtures/tf_module
 
 Update `terraform.tfvars` to match your environment:
 
-```
+```bash
 credentials_path = "../../../credentials.json"`
 gsuite_admin_email = "admin@example.com"
 org_id = "000000000000"
