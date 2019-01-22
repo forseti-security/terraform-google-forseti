@@ -4,7 +4,7 @@
 
 Create a Terraform variables file based on the provided example:
 
-```
+```bash
 cp test/fixtures/simple_example/terraform.tfvars.example test/fixtures/tf_module/terraform.tfvars
 ```
 
