@@ -4,8 +4,9 @@ single project while `shared_vpc` tests deploy forseti module into a project tha
 host-project
 
 # shared_vpc integration tests
-`shared_vpc` integration tests require that you manually create a project that will hold a shared VPC. Service account
-used to create the environment defined in `test/fixtures/shared_vpc` must have the following roles:
+`shared_vpc` integration tests requires that you already have host project and service project setup with shared-vpc and
+at least one shared subnetwork. Service account that you use to create the environment defined in 
+`test/fixtures/shared_vpc` must have the following roles:
 * Organization Administrator (roles/resourcemanager.organizationAdmin)
 * Compute Shared VPC Admin (roles/compute.xpnAdmin)
 * Project Creator (roles/resourcemanager.projectCreator)
@@ -22,9 +23,12 @@ Update `terraform.tfvars` to match your environment:
 ```
 credentials_path = "/path/to/credentials.json"
 shared_project_id = "sample-project-001"
+service_project_id = "service-project-001"
 org_id = 100000000000
 billing_account = "000000-000000-000000"
 domain = "company.domain.com"
+network_name = "shared-vpc"
+subnetwork = "subnet-001"
 ```
 
 ## Running Integration Tests

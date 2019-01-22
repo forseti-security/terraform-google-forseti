@@ -16,7 +16,7 @@ provisioner:
   name: terraform
 
 suites:
-  - name: tf_module
+  - name: simple_example
     driver:
       name: terraform
       root_module_directory: test/fixtures/simple_example

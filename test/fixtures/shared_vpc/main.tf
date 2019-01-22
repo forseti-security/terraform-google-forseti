@@ -16,56 +16,21 @@
 
 provider "google-beta" {
   credentials = "${file(var.credentials_path)}"
-  #version     = "~> 1.20"
+  version     = "~> 1.20"
 }
 
-module "vpc" {
-  source          = "github.com/terraform-google-modules/terraform-google-network.git"
-  network_name    = "forseti-shared-vpc"
-  project_id      = "${var.shared_project_id}"
-  shared_vpc_host = "true"
-
-  subnets = [
-    {
-      subnet_name           = "${var.subnetwork_name}"
-      subnet_ip             = "${var.subnet_cidr}"
-      subnet_region         = "${var.region}"
-      subnet_private_access = true
-    }
-  ]
-
-  secondary_ranges = {
-    forseti-subnet-01 = []
-  }
-
-}
-
-module "service-project" {
-  source              = "terraform-google-modules/project-factory/google"
-  version             = "v1.0.0"
-  random_project_id   = "true"
-  name                = "forseti-service"
-  org_id              = "${var.org_id}"
-  billing_account     = "${var.billing_account}"
-  credentials_path    = "${var.credentials_path}"
-  shared_vpc          = "${var.shared_project_id}"
-  shared_vpc_subnets  = [
-    "projects/${var.shared_project_id}/regions/${var.region}/subnetworks/${var.subnetwork_name}",
-  ]
-  activate_apis = [
-    "storage-api.googleapis.com",
-    "compute.googleapis.com",
-    "sqladmin.googleapis.com"
-  ]
+data "google_compute_network" "shared-vpc-network" {
+  name    = "${var.network_name}"
+  project = "${var.shared_project_id}"
 }
 
 module "forseti" {
   source              = "../../.."
-  project_id          = "${module.service-project.project_id}"
+  project_id          = "${var.service_project_id}"
   client_region       = "${var.region}"
   gsuite_admin_email  = "admin@example.com"
-  network             = "${module.vpc.network_self_link}"
-  subnetwork          = "forseti-subnet-01"
+  network             = "${data.google_compute_network.shared-vpc-network.self_link}"
+  subnetwork          = "${var.subnetwork_name}"
   network_project     = "${var.shared_project_id}"
   org_id              = "${var.org_id}"
   server_region       = "${var.region}"

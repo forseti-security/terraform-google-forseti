@@ -15,23 +15,19 @@
  */
 
 output "forseti_project_id" {
-  value = "${module.service-project.project_id}"
+  value = "${var.service_project_id}"
 }
 
 output "shared_project_id" {
   value = "${var.shared_project_id}"
 }
 
-output "subnet_ips" {
-  value = "${module.vpc.subnets_ips}"
-}
-
 output "network_self_link" {
-  value = "${module.vpc.network_self_link}"
+  value = "${data.google_compute_network.shared-vpc-network.self_link}"
 }
 
 output "network_name" {
-  value = "${module.vpc.network_name}"
+  value = "${var.network_name}"
 }
 
 output "subnetwork_self_link" {

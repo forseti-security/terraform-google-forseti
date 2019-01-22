@@ -22,6 +22,10 @@ variable "shared_project_id" {
   description = "ID of the project that will have shared VPC"
 }
 
+variable "service_project_id" {
+  description = "ID of the project that will have forseti server"
+}
+
 variable "org_id" {
   description = "Organization ID"
 }
@@ -34,6 +38,15 @@ variable "domain" {
   description = "Organization domain"
 }
 
+variable "network_name" {
+  description = "Name of the shared VPC"
+}
+
+variable "subnetwork_name" {
+  description = "Name of the subnetwork where forseti will be deployed"
+  default = "forseti-subnet-01"
+}
+
 variable "region" {
   description = "Region where forseti subnetwork will be deployed"
   default     = "us-east1"
@@ -44,7 +57,3 @@ variable "subnet_cidr" {
   default     = "10.0.0.0/24"
 }
 
-variable "subnetwork_name" {
-  description = "Name of the subnetwork where forseti will be deployed"
-  default = "forseti-subnet-01"
-}
