@@ -53,9 +53,3 @@ output "forseti-server-storage-bucket" {
   description = "Forseti Server storage bucket"
   value       = "${module.forseti-install-simple.forseti-server-storage-bucket}"
 }
-
-## Required for inspec testing
-
-output "gcp_project_id" {
-  value = "${var.project_id}"
-}
