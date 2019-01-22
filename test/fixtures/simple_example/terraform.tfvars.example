@@ -1,6 +1,6 @@
 # Required: The path to a service account credentials file
 # Example:
-#credentials_path = "../../../credentials.json"`
+#credentials_path = "../../../credentials.json"
 
 # Required: user email account that has super admin access to the G Suite domain
 #gsuite_admin_email = "admin@example.com"
