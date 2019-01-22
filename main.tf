@@ -34,7 +34,6 @@ locals {
     "sql-component.googleapis.com",
     "sqladmin.googleapis.com",
     "compute.googleapis.com",
-    "deploymentmanager.googleapis.com",
     "iam.googleapis.com",
     "cloudtrace.googleapis.com",
     "container.googleapis.com",
