@@ -21,7 +21,7 @@ project_id = "forseti-test-f6bd"
 
 From the root of the module directory execute the following commands:
 
-```
+```bash
 # Initialize the terraform providers and context
 bundle exec kitchen setup
 
