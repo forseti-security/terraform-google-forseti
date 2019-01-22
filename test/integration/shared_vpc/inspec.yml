@@ -22,10 +22,11 @@ summary: An InSpec Compliance Profile For Forseti in GCP
 depends:
   - name: inspec-gcp
     url: https://github.com/inspec/inspec-gcp/archive/master.tar.gz
-supports:
-  - platform: gcp
 
 attributes:
+  - name: credentials_path
+    description: 'Service account credentials'
+    required: true
   - name: shared_project_id
     required: true
     description: 'Shared VPC Project ID.'

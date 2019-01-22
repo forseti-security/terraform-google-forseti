@@ -57,3 +57,7 @@ output "forseti_client_vm_name" {
 output "region" {
   value = "${var.region}"
 }
+
+output "credentials_path" {
+  value = "${var.credentials_path}"
+}
