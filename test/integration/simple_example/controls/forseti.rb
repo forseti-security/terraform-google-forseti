@@ -60,27 +60,27 @@ control 'forseti-server-iam-roles' do
   title 'Test Server Project IAM Role bindings'
   describe google_project_iam_binding(project: project_id, role: "roles/storage.objectViewer") do
     it { should exist }
-    its('members') { should include forseti_server_service_account }
+    its('members') { should include "serviceAccount:#{forseti_server_service_account}" }
   end
   describe google_project_iam_binding(project: project_id, role: "roles/storage.objectCreator") do
     it { should exist }
-    its('members') { should include forseti_server_service_account }
+    its('members') { should include "serviceAccount:#{forseti_server_service_account}" }
   end
   describe google_project_iam_binding(project: project_id, role: "roles/cloudsql.client") do
     it { should exist }
-    its('members') { should include forseti_server_service_account }
+    its('members') { should include "serviceAccount:#{forseti_server_service_account}" }
   end
   describe google_project_iam_binding(project: project_id, role: "roles/cloudtrace.agent") do
     it { should exist }
-    its('members') { should include forseti_server_service_account }
+    its('members') { should include "serviceAccount:#{forseti_server_service_account}" }
   end
   describe google_project_iam_binding(project: project_id, role: "roles/logging.logWriter") do
     it { should exist }
-    its('members') { should include forseti_server_service_account }
+    its('members') { should include "serviceAccount:#{forseti_server_service_account}" }
   end
   describe google_project_iam_binding(project: project_id, role: "roles/iam.serviceAccountTokenCreator") do
     it { should exist }
-    its('members') { should include forseti_server_service_account }
+    its('members') { should include "serviceAccount:#{forseti_server_service_account}" }
   end
 end
 
