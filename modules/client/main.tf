@@ -129,6 +129,8 @@ resource "google_storage_bucket" "client_config" {
   location      = "${var.storage_bucket_location}"
   project       = "${var.project_id}"
   force_destroy = "true"
+
+  depends_on = ["null_resource.services-dependency"]
 }
 
 resource "google_storage_bucket_object" "forseti_client_config" {
