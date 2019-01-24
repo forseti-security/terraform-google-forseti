@@ -6,13 +6,14 @@ The Terraform Forseti module can be used to quickly install and configure [Forse
 A simple setup is provided in the examples folder; however, the usage of the module within your own main.tf file is as follows:
 
 ```hcl
-    module "forseti-install-simple" {
-      source                       = "github.com/terraform-google-modules/terraform-google-forseti"
+    module "forseti" {
+      source  = "terraform-google-modules/forseti/google"
+      version = "1.0.0"
+
       gsuite_admin_email           = "superadmin@yourdomain.com"
+      gsuite_admin_email           = "yourdomain.com"
       project_id                   = "my-forseti-project"
       org_id                       = "2313934234"
-      forseti_repo_url             = "https://github.com/GoogleCloudPlatform/forseti-security"
-      forseti_version              = "dev"
     }
 ```
 
