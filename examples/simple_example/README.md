@@ -1,3 +1,7 @@
+# Simple Example
+
+This example illustrates how to set up a minimal Forseti installation.
+
 [^]: (autogen_docs_start)
 
 ## Inputs
