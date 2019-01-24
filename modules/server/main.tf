@@ -34,23 +34,6 @@ locals {
   storage_cai_bucket_name = "forseti-cai-export-${local.random_hash}"
   server_bucket_name      = "forseti-server-${local.random_hash}"
 
-  services_list = [
-    "admin.googleapis.com",
-    "appengine.googleapis.com",
-    "bigquery-json.googleapis.com",
-    "cloudbilling.googleapis.com",
-    "cloudresourcemanager.googleapis.com",
-    "sql-component.googleapis.com",
-    "sqladmin.googleapis.com",
-    "compute.googleapis.com",
-    "deploymentmanager.googleapis.com",
-    "iam.googleapis.com",
-    "cloudtrace.googleapis.com",
-    "container.googleapis.com",
-    "servicemanagement.googleapis.com",
-    "logging.googleapis.com",
-  ]
-
   server_project_roles = [
     "roles/storage.objectViewer",
     "roles/storage.objectCreator",
