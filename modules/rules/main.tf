@@ -55,4 +55,8 @@ resource "google_storage_bucket_object" "main" {
   name    = "${element(local.files, count.index)}"
   content = "${element(data.template_file.main.*.rendered, count.index)}"
   bucket  = "${var.bucket}"
+
+  lifecycle {
+    ignore_changes = ["content", "detect_md5hash"]
+  }
 }
