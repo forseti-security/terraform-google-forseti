@@ -70,11 +70,6 @@ gcloud projects add-iam-policy-binding ${PROJECT_ID} \
 
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
     --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
-    --role="roles/deploymentmanager.editor" \
-    --user-output-enabled false
-
-gcloud projects add-iam-policy-binding ${PROJECT_ID} \
-    --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
     --role="roles/iam.serviceAccountAdmin" \
     --user-output-enabled false
 
