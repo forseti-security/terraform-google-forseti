@@ -31,10 +31,10 @@ attributes:
 - name: forseti-server-vm-name
   required: true
   type: string
-- name: forseti-client-gcs-bucket
+- name: forseti-client-storage-bucket
   required: true
   type: string
-- name: forseti-server-gcs-bucket
+- name: forseti-server-storage-bucket
   required: true
   type: string
 - name: forseti-client-service-account

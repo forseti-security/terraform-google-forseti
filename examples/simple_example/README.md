@@ -14,15 +14,14 @@
 
 | Name | Description |
 |------|-------------|
-| forseti-client-gcs-bucket | - |
-| forseti-client-service-account | - |
-| forseti-client-vm-ip | - |
-| forseti-client-vm-name | - |
-| forseti-server-gcs-bucket | - |
-| forseti-server-service-account | - |
-| forseti-server-vm-ip | - |
-| forseti-server-vm-name | - |
-| gcp\_project\_id | - |
-| project\_id | - |
+| forseti-client-service-account | Forseti Client service account |
+| forseti-client-storage-bucket | Forseti Client storage bucket |
+| forseti-client-vm-ip | Forseti Client VM ip address |
+| forseti-client-vm-name | Forseti Client VM name |
+| forseti-server-service-account | Forseti Server service account |
+| forseti-server-storage-bucket | Forseti Server storage bucket |
+| forseti-server-vm-ip | Forseti Server VM ip address |
+| forseti-server-vm-name | Forseti Server VM name |
+| project\_id | A forwarded copy of `project_id` for InSpec |
 
 [^]: (autogen_docs_end)
