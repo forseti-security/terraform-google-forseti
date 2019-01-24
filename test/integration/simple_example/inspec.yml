@@ -44,7 +44,8 @@ attributes:
   required: true
   type: string
 depends:
-- name: inspec-gcp
-  url: https://github.com/inspec/inspec-gcp/archive/master.tar.gz
+  - name: inspec-gcp
+    git: https://github.com/inspec/inspec-gcp.git
+    version: '~> 0.9.0'
 supports:
 - platform: gcp

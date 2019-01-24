@@ -32,7 +32,6 @@ Session.vim
 crash.log
 
 # Kitchen files
-**/inspec.lock
 **/.kitchen
 **/.kitchen.local.yml
 **/Gemfile.lock
