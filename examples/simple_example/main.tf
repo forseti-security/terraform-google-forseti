@@ -16,6 +16,19 @@
 
 provider "google" {
   credentials = "${file(var.credentials_path)}"
+  version     = "~> 1.20"
+}
+
+provider "null" {
+  version     = "~> 2.0"
+}
+
+provider "template" {
+  version     = "~> 2.0"
+}
+
+provider "random" {
+  version     = "~> 2.0"
 }
 
 module "forseti-install-simple" {
