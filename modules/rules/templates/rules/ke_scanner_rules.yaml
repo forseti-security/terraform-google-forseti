@@ -33,7 +33,7 @@ rules:
       - logging.googleapis.com
 
 # Some example rules are included below.  For more examples, see
-# tests/scanner/scanners/data/ke_scanner_test_data.yaml
+# https://github.com/GoogleCloudPlatform/forseti-security/blob/dev/tests/scanner/scanners/data/ke_scanner_test_data.yaml
 
 #   - name: stackdriver monitoring should be enabled
 #     resource:
