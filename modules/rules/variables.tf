@@ -14,12 +14,6 @@
  * limitations under the License.
  */
 
-variable "paths" {
-  description = "A list of Forseti templates to add to the server bucket"
-  type        = "list"
-  default     = ["rules/audit_logging_rules.yaml", "rules/bigquery_rules.yaml", "rules/blacklist_rules.yaml", "rules/bucket_rules.yaml", "rules/cloudsql_rules.yaml", "rules/enabled_apis_rules.yaml", "rules/external_project_access_rules.yaml", "rules/firewall_rules.yaml", "rules/forwarding_rules.yaml", "rules/group_rules.yaml", "rules/iam_rules.yaml", "rules/iap_rules.yaml", "rules/instance_network_interface_rules.yaml", "rules/ke_rules.yaml", "rules/ke_scanner_rules.yaml", "rules/lien_rules.yaml", "rules/location_rules.yaml", "rules/log_sink_rules.yaml", "rules/resource_rules.yaml", "rules/retention_rules.yaml", "rules/service_account_key_rules.yaml"]
-}
-
 variable "bucket" {
   description = "The GCS bucket where rules will be uploaded"
   type        = "string"
