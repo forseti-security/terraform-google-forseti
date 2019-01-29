@@ -1,0 +1,17 @@
+# Required: The path to a service account credentials file
+# Example:
+#credentials_path = "../../../credentials.json"
+
+# Required: user email account that has super admin access to the G Suite domain
+#gsuite_admin_email = "admin@example.com"
+
+# Required: the GCP organization ID
+# Example:
+#org_id = "000000000000"
+
+# Required: the GCP domain associated with the project_id
+#domain = "example.com"
+
+# Required: the GCP project where the Forseti resources will be created.
+# Example:
+#project_id = "forseti-test-e5ac"

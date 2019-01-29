@@ -14,42 +14,42 @@
  * limitations under the License.
  */
 
-output "forseti-server-vm-name" {
-  description = "Forseti Server VM name"
-  value       = "${module.server.forseti-server-vm-name}"
-}
-
-output "forseti-server-vm-ip" {
-  description = "Forseti Server VM ip address"
-  value       = "${module.server.forseti-server-vm-ip}"
-}
-
 output "forseti-client-vm-name" {
   description = "Forseti Client VM name"
-  value       = "${module.client.forseti-client-vm-name}"
+  value       = "${module.forseti-install-simple.forseti-client-vm-name}"
 }
 
 output "forseti-client-vm-ip" {
   description = "Forseti Client VM ip address"
-  value       = "${module.client.forseti-client-vm-ip}"
-}
-
-output "forseti-server-service-account" {
-  description = "Forseti Server service account"
-  value       = "${module.server.forseti-server-service-account}"
+  value       = "${module.forseti-install-simple.forseti-client-vm-ip}"
 }
 
 output "forseti-client-service-account" {
   description = "Forseti Client service account"
-  value       = "${module.client.forseti-client-service-account}"
+  value       = "${module.forseti-install-simple.forseti-client-service-account}"
+}
+
+output "forseti-server-vm-name" {
+  description = "Forseti Server VM name"
+  value       = "${module.forseti-install-simple.forseti-server-vm-name}"
+}
+
+output "forseti-server-vm-ip" {
+  description = "Forseti Server VM ip address"
+  value       = "${module.forseti-install-simple.forseti-server-vm-ip}"
+}
+
+output "forseti-server-service-account" {
+  description = "Forseti Server service account"
+  value       = "${module.forseti-install-simple.forseti-server-service-account}"
 }
 
 output "forseti-client-storage-bucket" {
   description = "Forseti Client storage bucket"
-  value       = "${module.client.forseti-client-storage-bucket}"
+  value       = "${module.forseti-install-simple.forseti-client-storage-bucket}"
 }
 
 output "forseti-server-storage-bucket" {
   description = "Forseti Server storage bucket"
-  value       = "${module.server.forseti-server-storage-bucket}"
+  value       = "${module.forseti-install-simple.forseti-server-storage-bucket}"
 }

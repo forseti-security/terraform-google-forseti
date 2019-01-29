@@ -14,23 +14,10 @@
  * limitations under the License.
  */
 
-variable "sendgrid_api_key" {
-  description = "The Sendgrid api key for notifier"
-  default     = ""
-}
+// These outputs are used to test the module with kitchen-terraform
+// They do not need to be included in real-world uses of this module
 
-variable "notification_recipient_email" {
-  description = "Notification recipient email"
-}
-
-variable "gsuite_admin_email" {
-  description = "The email of a GSuite super admin, used for pulling user directory information *and* sending notifications."
-}
-
-variable "project_id" {
-  description = "The ID of an existing Google project where Forseti will be installed"
-}
-
-variable "credentials_file_path" {
-  description = "Path to service account json"
+output "project_id" {
+  description = "A forwarded copy of `project_id` for InSpec"
+  value       = "${var.project_id}"
 }

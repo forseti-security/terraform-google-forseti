@@ -1,0 +1,514 @@
+global:
+
+    dummy_key: this_is_just_a_placeholder_see_issue_2486
+
+##############################################################################
+
+inventory:
+
+    # Root resource to start crawling from, formatted as
+    # <resource_type>/<resource_id>, (e.g. "organizations/12345677890")
+    root_resource_id: ${ROOT_RESOURCE_ID}
+
+    # gsuite access
+    domain_super_admin_email: ${DOMAIN_SUPER_ADMIN_EMAIL}
+
+    api_quota:
+        # We are not using the max allowed API quota because we wanted to
+        # include some rooms for retries.
+        # Period is in seconds.
+
+        # Set disable_polling to True to disable polling that API for creation
+        # of the inventory. This can speed up inventory creation for
+        # organizations that do not use specific APIs. Defaults to False if
+        # not defined.
+        admin:
+          max_calls: 14
+          period: 1.0
+          disable_polling: False
+        appengine:
+          max_calls: 18
+          period: 1.0
+          disable_polling: False
+        bigquery:
+          max_calls: 160
+          period: 1.0
+          disable_polling: False
+        cloudasset:
+          max_calls: 1
+          period: 1.0
+          disable_polling: False
+        cloudbilling:
+          max_calls: 5
+          period: 1.2
+          disable_polling: False
+        compute:
+          max_calls: 18
+          period: 1.0
+          disable_polling: False
+        container:
+          max_calls: 9
+          period: 1.0
+          disable_polling: False
+        crm:
+          max_calls: 4
+          period: 1.2
+          disable_polling: False
+        iam:
+          max_calls: 90
+          period: 1.0
+          disable_polling: False
+        logging:
+          max_calls: 9
+          period: 1.0
+          disable_polling: False
+        securitycenter:
+          max_calls: 1
+          period: 1.1
+          disable_polling: False
+        servicemanagement:
+          max_calls: 2
+          period: 1.1
+          disable_polling: False
+        sqladmin:
+          max_calls: 1
+          period: 1.1
+          disable_polling: False
+        storage:  # Does not use API quota
+          disable_polling: False
+
+    cai:
+        # The FORSETI_CAI_BUCKET needs to be in Forseti project.
+        enabled: ${CAI_ENABLED}
+        gcs_path: gs://${FORSETI_CAI_BUCKET}
+
+        # Timeout in seconds to wait for the exportAssets API to return success.
+        # Defaults to 3600 if not set.
+        api_timeout: 3600
+
+        # Optional list of asset types supported by Cloud Asset inventory API.
+        # https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/overview
+        # If included, only the asset types listed will be included in the
+        # Forseti inventory. This can be used to reduce the size of the
+        # inventory database to save on storage and reduce the time to complete
+        # a pull of the inventory.
+        #
+        # If commented out then all currently supported asset types are
+        # exported from Cloud Asset API. The list of default asset types is
+        # in google/cloud/forseti/services/inventory/base/cloudasset.py
+
+        #asset_types:
+        #    - google.appengine.Application
+        #    - google.appengine.Service
+        #    - google.appengine.Version
+        #    - google.cloud.bigquery.Dataset
+        #    - google.cloud.bigquery.Table
+        #    - google.cloud.billing.BillingAccount
+        #    - google.cloud.dataproc.Cluster
+        #    - google.cloud.dataproc.Job
+        #    - google.cloud.dns.ManagedZone
+        #    - google.cloud.dns.Policy
+        #    - google.cloud.kms.CryptoKey
+        #    - google.cloud.kms.CryptoKeyVersion
+        #    - google.cloud.kms.KeyRing
+        #    - google.cloud.resourcemanager.Folder
+        #    - google.cloud.resourcemanager.Organization
+        #    - google.cloud.resourcemanager.Project
+        #    - google.cloud.sql.Instance
+        #    - google.cloud.storage.Bucket
+        #    - google.compute.Autoscaler
+        #    - google.compute.BackendBucket
+        #    - google.compute.BackendService
+        #    - google.compute.Disk
+        #    - google.compute.Firewall
+        #    - google.compute.ForwardingRule
+        #    - google.compute.HealthCheck
+        #    - google.compute.HttpHealthCheck
+        #    - google.compute.HttpsHealthCheck
+        #    - google.compute.Image
+        #    - google.compute.Instance
+        #    - google.compute.InstanceGroup
+        #    - google.compute.InstanceGroupManager
+        #    - google.compute.InstanceTemplate
+        #    - google.compute.License
+        #    - google.compute.Network
+        #    - google.compute.Project
+        #    - google.compute.Route
+        #    - google.compute.Router
+        #    - google.compute.Snapshot
+        #    - google.compute.SslCertificate
+        #    - google.compute.Subnetwork
+        #    - google.compute.TargetHttpProxy
+        #    - google.compute.TargetHttpsProxy
+        #    - google.compute.TargetInstance
+        #    - google.compute.TargetPool
+        #    - google.compute.TargetSslProxy
+        #    - google.compute.TargetTcpProxy
+        #    - google.compute.TargetVpnGateway
+        #    - google.compute.UrlMap
+        #    - google.compute.VpnTunnel
+        #    - google.container.Cluster
+        #    - google.iam.Role
+        #    - google.iam.ServiceAccount
+        #    - google.pubsub.Subscription
+        #    - google.pubsub.Topic
+        #    - google.spanner.Database
+        #    - google.spanner.Instance
+
+    # Number of days to retain inventory data:
+    #  -1 : (default) keep all previous data forever
+    #   0 : delete all previous inventory data before running
+    retention_days: -1
+
+##############################################################################
+
+scanner:
+
+    # Output path (do not include filename).
+    # If GCS location, the format of the path should be:
+    # gs://bucket-name/path/for/output
+    output_path: gs://${FORSETI_BUCKET}/scanner_violations
+
+    # Rules path (do not include filename).
+    # If GCS location, the format of the path should be:
+    # gs://bucket-name/path/for/rules_path
+    # if no rules_path is specified, rules are
+    # searched in /path/to/forseti_security/rules/
+    rules_path: /home/ubuntu/forseti-security/rules
+
+    # Enable the scanners as default to true when integrated for Forseti 2.0.
+
+    scanners:
+        - name: audit_logging
+          enabled: false
+        - name: bigquery
+          enabled: true
+        - name: blacklist
+          enabled: true
+        - name: bucket_acl
+          enabled: true
+        - name: cloudsql_acl
+          enabled: true
+        - name: enabled_apis
+          enabled: false
+        - name: firewall_rule
+          enabled: true
+        - name: forwarding_rule
+          enabled: false
+        - name: group
+          enabled: true
+        - name: iam_policy
+          enabled: true
+        - name: iap
+          enabled: true
+        - name: instance_network_interface
+          enabled: false
+        - name: ke_scanner
+          enabled: false
+        - name: ke_version_scanner
+          enabled: true
+        - name: lien
+          enabled: true
+        - name: location
+          enabled: true
+        - name: log_sink
+          enabled: true
+        - name: resource
+          enabled: true
+        - name: service_account_key
+          enabled: true
+
+##############################################################################
+
+notifier:
+
+    # Provide connector details
+    email_connector:
+      name: sendgrid
+      auth:
+        api_key: ${SENDGRID_API_KEY}
+      sender: ${EMAIL_SENDER}
+      recipient: ${EMAIL_RECIPIENT}
+      data_format: csv
+
+    # For every resource type you can set up a notification pipeline
+    # to send alerts for every violation found
+    resources:
+        - resource: iam_policy_violations
+          should_notify: true
+          notifiers:
+            # Email violations
+            - name: email_violations
+            # Upload violations to GCS.
+            - name: gcs_violations
+              configuration:
+                data_format: csv
+                # gcs_path should begin with "gs://"
+                gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+            # Slack webhook pipeline.
+            # Create an incoming webhook in your organization's Slack setting, located at:
+            # https://[your_org].slack.com/apps/manage/custom-integrations
+            # Add the provided URL in the configuration below in `webhook_url`.
+            - name: slack_webhook
+              configuration:
+                data_format: json  # slack only supports json
+                webhook_url: ''
+
+        - resource: audit_logging_violations
+          should_notify: true
+          notifiers:
+            # Email violations
+            - name: email_violations
+            # Upload violations to GCS.
+            - name: gcs_violations
+              configuration:
+                data_format: csv
+                # gcs_path should begin with "gs://"
+                gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+
+        - resource: blacklist_violations
+          should_notify: true
+          notifiers:
+            # Email violations
+            - name: email_violations
+            # Upload violations to GCS.
+            - name: gcs_violations
+              configuration:
+                data_format: csv
+                # gcs_path should begin with "gs://"
+                gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+
+        - resource: bigquery_acl_violations
+          should_notify: true
+          notifiers:
+            # Email violations
+            - name: email_violations
+            # Upload violations to GCS.
+            - name: gcs_violations
+              configuration:
+                data_format: csv
+                # gcs_path should begin with "gs://"
+                gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+
+        - resource: buckets_acl_violations
+          should_notify: true
+          notifiers:
+            # Email violations
+            - name: email_violations
+            # Upload violations to GCS.
+            - name: gcs_violations
+              configuration:
+                data_format: csv
+                # gcs_path should begin with "gs://"
+                gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+
+        - resource: cloudsql_acl_violations
+          should_notify: true
+          notifiers:
+            # Email violations
+            - name: email_violations
+            # Upload violations to GCS.
+            - name: gcs_violations
+              configuration:
+                data_format: csv
+                # gcs_path should begin with "gs://"
+                gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+
+        - resource: enabled_apis_violations
+          should_notify: true
+          notifiers:
+            # Email violations
+            - name: email_violations
+            # Upload violations to GCS.
+            - name: gcs_violations
+              configuration:
+                data_format: csv
+                # gcs_path should begin with "gs://"
+                gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+
+        - resource: firewall_rule_violations
+          should_notify: true
+          notifiers:
+            # Email violations
+            - name: email_violations
+            # Upload violations to GCS.
+            - name: gcs_violations
+              configuration:
+                data_format: csv
+                # gcs_path should begin with "gs://"
+                gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+
+        - resource: forwarding_rule_violations
+          should_notify: true
+          notifiers:
+            # Email violations
+            - name: email_violations
+            # Upload violations to GCS.
+            - name: gcs_violations
+              configuration:
+                data_format: csv
+                # gcs_path should begin with "gs://"
+                gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+
+        - resource: ke_version_violations
+          should_notify: true
+          notifiers:
+            # Email violations
+            - name: email_violations
+            # Upload violations to GCS.
+            - name: gcs_violations
+              configuration:
+                data_format: csv
+                # gcs_path should begin with "gs://"
+                gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+
+        - resource: ke_violations
+          should_notify: true
+          notifiers:
+            # Email violations
+            - name: email_violations
+            # Upload violations to GCS.
+            - name: gcs_violations
+              configuration:
+                data_format: csv
+                # gcs_path should begin with "gs://"
+                gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+
+        - resource: groups_violations
+          should_notify: true
+          notifiers:
+            # Email violations
+            - name: email_violations
+            # Upload violations to GCS.
+            - name: gcs_violations
+              configuration:
+                data_format: csv
+                # gcs_path should begin with "gs://"
+                gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+
+        - resource: instance_network_interface_violations
+          should_notify: true
+          notifiers:
+            # Email violations
+            - name: email_violations
+            # Upload violations to GCS.
+            - name: gcs_violations
+              configuration:
+                data_format: csv
+                # gcs_path should begin with "gs://"
+                gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+
+        - resource: iap_violations
+          should_notify: true
+          notifiers:
+            # Email violations
+            - name: email_violations
+            # Upload violations to GCS.
+            - name: gcs_violations
+              configuration:
+                data_format: csv
+                # gcs_path should begin with "gs://"
+                gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+
+        - resource: lien_violations
+          should_notify: true
+          notifiers:
+            # Email violations
+            - name: email_violations
+            # Upload violations to GCS.
+            - name: gcs_violations
+              configuration:
+                data_format: csv
+                # gcs_path should begin with "gs://"
+                gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+
+        - resource: location_violations
+          should_notify: true
+          notifiers:
+            # Email violations
+            - name: email_violations
+            # Upload violations to GCS.
+            - name: gcs_violations
+              configuration:
+                data_format: csv
+                # gcs_path should begin with "gs://"
+                gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+
+        - resource: log_sink_violations
+          should_notify: true
+          notifiers:
+            # Email violations
+            - name: email_violations
+            # Upload violations to GCS.
+            - name: gcs_violations
+              configuration:
+                data_format: csv
+                # gcs_path should begin with "gs://"
+                gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+
+        - resource: resource_violations
+          should_notify: true
+          notifiers:
+            # Email violations
+            - name: email_violations
+              configuration:
+                sendgrid_api_key: ${SENDGRID_API_KEY}
+                sender: ${EMAIL_SENDER}
+                recipient: ${EMAIL_RECIPIENT}
+            # Upload violations to GCS.
+            - name: gcs_violations
+              configuration:
+                data_format: csv
+                # gcs_path should begin with "gs://"
+                gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+
+        - resource: service_account_key_violations
+          should_notify: true
+          notifiers:
+            # Email violations
+            - name: email_violations
+            # Upload violations to GCS.
+            - name: gcs_violations
+              configuration:
+                data_format: csv
+                # gcs_path should begin with "gs://"
+                gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+
+        - resource: external_project_access_violations
+          should_notify: true
+          notifiers:
+            # Email violations
+            - name: email_violations
+            # Upload violations to GCS.
+            - name: gcs_violations
+              configuration:
+                data_format: csv
+                # gcs_path should begin with "gs://"
+                gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+
+
+    violation:
+      cscc:
+        enabled: false
+        mode: api
+        # Alpha API
+        organization_id: ${ROOT_RESOURCE_ID}
+        # gcs_path should begin with "gs://"
+        gcs_path:
+        # Beta API
+        # Cloud SCC Beta API uses a new source_id.  It is unique per
+        # organization and must be generated via a self-registration process.
+        # If source_id is used, then it will activate the Beta API,
+        # and the Beta API will take precedence over the Alpha API.
+        # The format is: organizations/ORG_ID/sources/SOURCE_ID
+        source_id:
+
+    inventory:
+      gcs_summary:
+        enabled: true
+        # data_format may be one of: csv (the default) or json
+        data_format: csv
+        # gcs_path should begin with "gs://"
+        gcs_path: gs://${FORSETI_BUCKET}/inventory_summary
+      email_summary:
+        enabled: true

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
-output "buckets_list" {
-  value = "${module.forseti-install-simple.buckets_list}"
+output "files" {
+  description = "A list of files that will be uploaded as Forseti rules"
+  value       = "${local.files}"
 }

@@ -73,24 +73,6 @@ variable "server_boot_image" {
   default     = "ubuntu-os-cloud/ubuntu-1804-lts"
 }
 
-#----------------#
-# Forseti client #
-#----------------#
-variable "client_type" {
-  description = "GCE Forseti Client role instance size"
-  default     = "n1-standard-2"
-}
-
-variable "client_boot_image" {
-  description = "GCE Forseti Client role instance size"
-  default     = "ubuntu-os-cloud/ubuntu-1804-lts"
-}
-
-variable "client_region" {
-  description = "GCE Forseti Client role region size"
-  default     = "us-central1"
-}
-
 #------------#
 # Forseti db #
 #------------#
@@ -137,9 +119,9 @@ variable "bucket_cai_lifecycle_age" {
   default     = "14"
 }
 
-#---------#
-# Network #
-#---------#
+##---------#
+## Network #
+##---------#
 variable "network" {
   description = "The VPC where the Forseti client and server will be created"
   default     = "default"
@@ -187,4 +169,14 @@ variable "folder_id" {
 variable "sendgrid_api_key" {
   description = "Sendgrid.com API key to enable email notifications"
   default     = ""
+}
+
+variable "suffix" {
+  description = "The random suffix to append to all Forseti resources"
+}
+
+variable "services" {
+  description = "An artificial dependency to bypass #10462"
+  type        = "list"
+  default     = [""]
 }
