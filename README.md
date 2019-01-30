@@ -10,10 +10,10 @@ A simple setup is provided in the examples folder; however, the usage of the mod
       source  = "terraform-google-modules/forseti/google"
       version = "1.0.0"
 
-      gsuite_admin_email           = "superadmin@yourdomain.com"
-      gsuite_admin_email           = "yourdomain.com"
-      project_id                   = "my-forseti-project"
-      org_id                       = "2313934234"
+      gsuite_admin_email = "superadmin@yourdomain.com"
+      domain             = "yourdomain.com"
+      project_id         = "my-forseti-project"
+      org_id             = "2313934234"
     }
 ```
 
