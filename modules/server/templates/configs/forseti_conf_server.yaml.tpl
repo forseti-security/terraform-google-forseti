@@ -23,59 +23,59 @@ inventory:
         # organizations that do not use specific APIs. Defaults to False if
         # not defined.
         admin:
-          max_calls: 14
-          period: 1.0
-          disable_polling: False
+          max_calls: ${ADMIN_MAX_CALLS}
+          period: ${ADMIN_PERIOD}
+          disable_polling: ${ADMIN_DISABLE_POLLING}
         appengine:
-          max_calls: 18
-          period: 1.0
-          disable_polling: False
+          max_calls: ${APPENGINE_MAX_CALLS}
+          period: ${APPENGINE_PERIOD}
+          disable_polling: ${APPENGINE_DISABLE_POLLING}
         bigquery:
-          max_calls: 160
-          period: 1.0
-          disable_polling: False
+          max_calls: ${BIGQUERY_MAX_CALLS}
+          period: ${BIGQUERY_PERIOD}
+          disable_polling: ${BIGQUERY_DISABLE_POLLING}
         cloudasset:
-          max_calls: 1
-          period: 1.0
-          disable_polling: False
+          max_calls: ${CLOUDASSET_MAX_CALLS}
+          period: ${CLOUDASSET_PERIOD}
+          disable_polling:  ${CLOUDASSET_DISABLE_POLLING}
         cloudbilling:
-          max_calls: 5
-          period: 1.2
-          disable_polling: False
+          max_calls: ${CLOUDBILLING_MAX_CALLS}
+          period: ${CLOUDBILLING_PERIOD}
+          disable_polling: ${CLOUDBILLING_DISABLE_POLLING}
         compute:
-          max_calls: 18
-          period: 1.0
-          disable_polling: False
+          max_calls: ${COMPUTE_MAX_CALLS}
+          period: ${COMPUTE_PERIOD}
+          disable_polling: ${COMPUTE_DISABLE_POLLING}
         container:
-          max_calls: 9
-          period: 1.0
-          disable_polling: False
+          max_calls: ${CONTAINER_MAX_CALLS}
+          period: ${CONTAINER_PERIOD}
+          disable_polling: ${CONTAINER_DISABLE_POLLING}
         crm:
-          max_calls: 4
-          period: 1.2
-          disable_polling: False
+          max_calls: ${CRM_MAX_CALLS}
+          period: ${CRM_PERIOD}
+          disable_polling: ${CRM_DISABLE_POLLING}
         iam:
-          max_calls: 90
-          period: 1.0
-          disable_polling: False
+          max_calls: ${IAM_MAX_CALLS}
+          period: ${IAM_PERIOD}
+          disable_polling: ${IAM_DISABLE_POLLING}
         logging:
-          max_calls: 9
-          period: 1.0
-          disable_polling: False
+          max_calls: ${LOGGING_MAX_CALLS}
+          period: ${LOGGING_PERIOD}
+          disable_polling: ${LOGGING_DISABLE_POLLING}
         securitycenter:
-          max_calls: 1
-          period: 1.1
-          disable_polling: False
+          max_calls: ${SECURITYCENTER_MAX_CALLS}
+          period: ${SECURITYCENTER_PERIOD}
+          disable_polling: ${SECURITYCENTER_DISABLE_POLLING}
         servicemanagement:
-          max_calls: 2
-          period: 1.1
-          disable_polling: False
+          max_calls: ${SERVICEMANAGEMENT_MAX_CALLS}
+          period: ${SERVICEMANAGEMENT_PERIOD}
+          disable_polling: ${SERVICEMANAGEMENT_DISABLE_POLLING}
         sqladmin:
-          max_calls: 1
-          period: 1.1
-          disable_polling: False
+          max_calls: ${SQLADMIN_MAX_CALLS}
+          period: ${SQLADMIN_PERIOD}
+          disable_polling: ${SQLADMIN_DISABLE_POLLING}
         storage:  # Does not use API quota
-          disable_polling: False
+          disable_polling: ${STORAGE_DISABLE_POLLING}
 
     cai:
         # The FORSETI_CAI_BUCKET needs to be in Forseti project.
@@ -84,7 +84,7 @@ inventory:
 
         # Timeout in seconds to wait for the exportAssets API to return success.
         # Defaults to 3600 if not set.
-        api_timeout: 3600
+        api_timeout: ${CAI_API_TIMEOUT}
 
         # Optional list of asset types supported by Cloud Asset inventory API.
         # https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/overview
@@ -158,7 +158,7 @@ inventory:
     # Number of days to retain inventory data:
     #  -1 : (default) keep all previous data forever
     #   0 : delete all previous inventory data before running
-    retention_days: -1
+    retention_days: ${CAI_RETENTION_DAYS}
 
 ##############################################################################
 
@@ -180,43 +180,43 @@ scanner:
 
     scanners:
         - name: audit_logging
-          enabled: false
+          enabled: ${AUDIT_LOGGING_ENABLED}
         - name: bigquery
-          enabled: true
+          enabled: ${BIQUERY_ENABLED}
         - name: blacklist
-          enabled: true
+          enabled: ${BLACKLIST_ENABLED}
         - name: bucket_acl
-          enabled: true
+          enabled: ${BUCKET_ACL_ENABLED}
         - name: cloudsql_acl
-          enabled: true
+          enabled: ${CLOUDSQL_ACL_ENABLED}
         - name: enabled_apis
-          enabled: false
+          enabled: ${ENABLED_APIS_ENABLED}
         - name: firewall_rule
-          enabled: true
+          enabled: ${FIREWALL_RULE_ENABLED}
         - name: forwarding_rule
-          enabled: false
+          enabled: ${FORWARDING_RULE_ENABLED}
         - name: group
-          enabled: true
+          enabled: ${GROUP_ENABLED}
         - name: iam_policy
-          enabled: true
+          enabled: ${IAM_POLICY_ENABLED}
         - name: iap
-          enabled: true
+          enabled: ${IAP_ENABLED}
         - name: instance_network_interface
-          enabled: false
+          enabled: ${INSTANCE_NETWORK_INTERFACE_ENABLED}
         - name: ke_scanner
-          enabled: false
+          enabled: ${KE_SCANNER_ENABLED}
         - name: ke_version_scanner
-          enabled: true
+          enabled: ${KE_VERSION_SCANNER_ENABLED}
         - name: lien
-          enabled: true
+          enabled: ${LIEN_ENABLED}
         - name: location
-          enabled: true
+          enabled: ${LOCATION_ENABLED}
         - name: log_sink
-          enabled: true
+          enabled: ${LOG_SINK_ENABLED}
         - name: resource
-          enabled: true
+          enabled: ${RESOURCE_ENABLED}
         - name: service_account_key
-          enabled: true
+          enabled: ${SERVICE_ACCOUNT_KEY_ENABLED}
 
 ##############################################################################
 
@@ -235,7 +235,7 @@ notifier:
     # to send alerts for every violation found
     resources:
         - resource: iam_policy_violations
-          should_notify: true
+          should_notify: ${IAM_POLICY_VIOLATIONS_SHOULD_NOTIFY}
           notifiers:
             # Email violations
             - name: email_violations
@@ -252,10 +252,10 @@ notifier:
             - name: slack_webhook
               configuration:
                 data_format: json  # slack only supports json
-                webhook_url: ''
+                webhook_url: ${IAM_POLICY_VIOLATIONS_SLACK_WEBHOOK}
 
         - resource: audit_logging_violations
-          should_notify: true
+          should_notify: ${AUDIT_LOGGING_VIOLATIONS_SHOULD_NOTIFY}
           notifiers:
             # Email violations
             - name: email_violations
@@ -267,7 +267,7 @@ notifier:
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
 
         - resource: blacklist_violations
-          should_notify: true
+          should_notify: ${BLACKLIST_VIOLATIONS_SHOULD_NOTIFY}
           notifiers:
             # Email violations
             - name: email_violations
@@ -279,7 +279,7 @@ notifier:
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
 
         - resource: bigquery_acl_violations
-          should_notify: true
+          should_notify: ${BIGQUERY_ACL_VIOLATIONS_SHOULD_NOTIFY}
           notifiers:
             # Email violations
             - name: email_violations
@@ -291,7 +291,7 @@ notifier:
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
 
         - resource: buckets_acl_violations
-          should_notify: true
+          should_notify: ${BUCKETS_ACL_VIOLATIONS_SHOULD_NOTIFY}
           notifiers:
             # Email violations
             - name: email_violations
@@ -303,7 +303,7 @@ notifier:
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
 
         - resource: cloudsql_acl_violations
-          should_notify: true
+          should_notify: ${CLOUDSQL_ACL_VIOLATIONS_SHOULD_NOTIFY}
           notifiers:
             # Email violations
             - name: email_violations
@@ -315,7 +315,7 @@ notifier:
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
 
         - resource: enabled_apis_violations
-          should_notify: true
+          should_notify: ${ENABLED_APIS_VIOLATIONS_SHOULD_NOTIFY}
           notifiers:
             # Email violations
             - name: email_violations
@@ -327,7 +327,7 @@ notifier:
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
 
         - resource: firewall_rule_violations
-          should_notify: true
+          should_notify: ${FIREWALL_RULE_VIOLATIONS_SHOULD_NOTIFY}
           notifiers:
             # Email violations
             - name: email_violations
@@ -339,7 +339,7 @@ notifier:
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
 
         - resource: forwarding_rule_violations
-          should_notify: true
+          should_notify: ${FORWARDING_RULE_VIOLATIONS_SHOULD_NOTIFY}
           notifiers:
             # Email violations
             - name: email_violations
@@ -351,7 +351,7 @@ notifier:
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
 
         - resource: ke_version_violations
-          should_notify: true
+          should_notify: ${KE_VERSION_VIOLATIONS_SHOULD_NOTIFY}
           notifiers:
             # Email violations
             - name: email_violations
@@ -363,7 +363,7 @@ notifier:
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
 
         - resource: ke_violations
-          should_notify: true
+          should_notify: ${KE_VIOLATIONS_SHOULD_NOTIFY}
           notifiers:
             # Email violations
             - name: email_violations
@@ -375,7 +375,7 @@ notifier:
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
 
         - resource: groups_violations
-          should_notify: true
+          should_notify: ${GROUPS_VIOLATIONS_SHOULD_NOTIFY}
           notifiers:
             # Email violations
             - name: email_violations
@@ -387,7 +387,7 @@ notifier:
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
 
         - resource: instance_network_interface_violations
-          should_notify: true
+          should_notify: ${INSTANCE_NETWORK_INTERFACE_VIOLATIONS_SHOULD_NOTIFY}
           notifiers:
             # Email violations
             - name: email_violations
@@ -399,7 +399,7 @@ notifier:
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
 
         - resource: iap_violations
-          should_notify: true
+          should_notify: ${IAP_VIOLATIONS_SHOULD_NOTIFY}
           notifiers:
             # Email violations
             - name: email_violations
@@ -411,7 +411,7 @@ notifier:
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
 
         - resource: lien_violations
-          should_notify: true
+          should_notify: ${LIEN_VIOLATIONS_SHOULD_NOTIFY}
           notifiers:
             # Email violations
             - name: email_violations
@@ -423,7 +423,7 @@ notifier:
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
 
         - resource: location_violations
-          should_notify: true
+          should_notify: ${LOCATION_VIOLATIONS_SHOULD_NOTIFY}
           notifiers:
             # Email violations
             - name: email_violations
@@ -435,7 +435,7 @@ notifier:
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
 
         - resource: log_sink_violations
-          should_notify: true
+          should_notify: ${LOG_SINK_VIOLATIONS_SHOULD_NOTIFY}
           notifiers:
             # Email violations
             - name: email_violations
@@ -447,7 +447,7 @@ notifier:
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
 
         - resource: resource_violations
-          should_notify: true
+          should_notify: ${RESOURCE_VIOLATIONS_SHOULD_NOTIFY}
           notifiers:
             # Email violations
             - name: email_violations
@@ -463,7 +463,7 @@ notifier:
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
 
         - resource: service_account_key_violations
-          should_notify: true
+          should_notify: ${SERVICE_ACCOUNT_KEY_VIOLATIONS_SHOULD_NOTIFY}
           notifiers:
             # Email violations
             - name: email_violations
@@ -475,7 +475,7 @@ notifier:
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
 
         - resource: external_project_access_violations
-          should_notify: true
+          should_notify: ${EXTERNAL_PROJECT_ACCESS_VIOLATIONS_SHOULD_NOTIFY}
           notifiers:
             # Email violations
             - name: email_violations
@@ -489,7 +489,7 @@ notifier:
 
     violation:
       cscc:
-        enabled: false
+        enabled: ${CSCC_VIOLATIONS_ENABLED}
         mode: api
         # Alpha API
         organization_id: ${ROOT_RESOURCE_ID}
@@ -501,14 +501,14 @@ notifier:
         # If source_id is used, then it will activate the Beta API,
         # and the Beta API will take precedence over the Alpha API.
         # The format is: organizations/ORG_ID/sources/SOURCE_ID
-        source_id:
+        source_id: ${CSCC_SOURCE_ID}
 
     inventory:
       gcs_summary:
-        enabled: true
+        enabled: ${INVENTORY_GCS_SUMMARY_ENABLED}
         # data_format may be one of: csv (the default) or json
         data_format: csv
         # gcs_path should begin with "gs://"
         gcs_path: gs://${FORSETI_BUCKET}/inventory_summary
       email_summary:
-        enabled: true
+        enabled: ${INVENTORY_EMAIL_SUMMARY_ENABLED}
