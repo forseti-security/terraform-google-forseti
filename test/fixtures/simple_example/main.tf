@@ -14,29 +14,26 @@
  * limitations under the License.
  */
 
-provider "google" {
-  credentials = "${file(var.credentials_path)}"
-  version     = "~> 1.20"
+resource "tls_private_key" "main" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
 }
 
-provider "null" {
-  version = "~> 2.0"
+resource "local_file" "gce-keypair-pk" {
+  content  = "${tls_private_key.main.private_key_pem}"
+  filename = "${path.module}/sshkey"
 }
 
-provider "template" {
-  version = "~> 2.0"
-}
+ module "forseti-install-simple" {
+   source = "../../../examples/simple_example"
 
-provider "random" {
-  version = "~> 2.0"
-}
+  credentials_path   = "${var.credentials_path}"
+  gsuite_admin_email = "${var.gsuite_admin_email}"
+  project_id         = "${var.project_id}"
+  org_id             = "${var.org_id}"
+  domain             = "${var.domain}"
 
-module "forseti-install-simple" {
-  source                   = "../../"
-  project_id               = "${var.project_id}"
-  gsuite_admin_email       = "${var.gsuite_admin_email}"
-  org_id                   = "${var.org_id}"
-  domain                   = "${var.domain}"
-  client_instance_metadata = "${var.instance_metadata}"
-  server_instance_metadata = "${var.instance_metadata}"
+  instance_metadata {
+    sshKeys = "ubuntu:${tls_private_key.main.public_key_openssh}"
+  }
 }

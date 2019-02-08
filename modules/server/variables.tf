@@ -73,6 +73,12 @@ variable "server_boot_image" {
   default     = "ubuntu-os-cloud/ubuntu-1804-lts"
 }
 
+variable "server_instance_metadata" {
+  description = "Metadata key/value pairs to make available from within the server instance."
+  type        = "map"
+  default     = {}
+}
+
 #------------#
 # Forseti db #
 #------------#

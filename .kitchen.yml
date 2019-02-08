@@ -15,9 +15,7 @@
 ---
 driver:
   name: terraform
-  root_module_directory: examples/simple_example
-  variable_files:
-    - test/fixtures/simple_example/terraform.tfvars
+  root_module_directory: test/fixtures/simple_example
 
 provisioner:
   name: terraform
@@ -25,8 +23,32 @@ provisioner:
 verifier:
    name: terraform
    systems:
-     - name: system
+     - name: gcp
        backend: gcp
+       controls:
+         - forseti
+
+     - name: server
+       backend: ssh
+       controls:
+         - server
+       hosts_output: forseti-server-vm-public-ip
+       user: ubuntu
+       key_files:
+         - test/fixtures/simple_example/sshkey
+       shell: true
+       shell_options: "--login"
+
+     - name: forseti-client
+       backend: ssh
+       controls:
+         - client
+       hosts_output: forseti-client-vm-public-ip
+       user: ubuntu
+       key_files:
+         - test/fixtures/simple_example/sshkey
+       shell: true
+       shell_options: "--login"
 
 suites:
   - name: simple_example
