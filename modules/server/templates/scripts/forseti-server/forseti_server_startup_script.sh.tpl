@@ -1,11 +1,10 @@
 #!/bin/bash
-exec > /tmp/deployment.log
-exec 2>&1
 
 # Ubuntu update.
 sudo apt-get update -y
-sudo apt-get upgrade -y
-sudo apt-get update && sudo apt-get --assume-yes install google-cloud-sdk
+sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade
+sudo apt-get update -y
+sudo apt-get --assume-yes install google-cloud-sdk
 
 # Env variables
 USER_HOME=/home/ubuntu
