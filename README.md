@@ -48,7 +48,7 @@ Then perform the following commands on the config folder:
 | forseti\_email\_sender | Email address that sends the Forseti notifications | string | `` | no |
 | forseti\_home | Forseti installation directory | string | `$USER_HOME/forseti-security` | no |
 | forseti\_repo\_url | Git repo for the Forseti installation | string | `https://github.com/GoogleCloudPlatform/forseti-security` | no |
-| forseti\_run\_frequency | Schedule of running the Forseti scans | string | `* */2 * * *` | no |
+| forseti\_run\_frequency | Schedule of running the Forseti scans | string | `0 */2 * * *` | no |
 | forseti\_version | The version of Forseti to install | string | `v2.10.0` | no |
 | gsuite\_admin\_email | G-Suite administrator email address to manage your Forseti installation | string | - | yes |
 | network | The VPC where the Forseti client and server will be created | string | `default` | no |
