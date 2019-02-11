@@ -377,8 +377,8 @@ notifier:
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
 
         - resource: kms_violations
-          should_notify: true
-          notifiers: ${KMS_VIOLATIONS_SHOULD_NOTIFY}
+          should_notify: ${KMS_VIOLATIONS_SHOULD_NOTIFY}
+          notifiers:
             # Email violations
             - name: email_violations
             # Upload violations to GCS.
