@@ -72,6 +72,12 @@ variable "server_address" {
   description = "The Forseti server address"
 }
 
+variable "client_instance_metadata" {
+  description = "Metadata key/value pairs to make available from within the client instance."
+  type        = "map"
+  default     = {}
+}
+
 variable "suffix" {
   description = "The random suffix to append to all Forseti resources"
 }

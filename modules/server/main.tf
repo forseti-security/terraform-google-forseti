@@ -296,6 +296,8 @@ resource "google_compute_instance" "forseti-server" {
     access_config {}
   }
 
+  metadata = "${var.server_instance_metadata}"
+
   metadata_startup_script = "${data.template_file.forseti_server_startup_script.rendered}"
 
   service_account {
