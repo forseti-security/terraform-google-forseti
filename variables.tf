@@ -52,7 +52,7 @@ variable "forseti_home" {
 
 variable "forseti_run_frequency" {
   description = "Schedule of running the Forseti scans"
-  default     = "* */2 * * *"
+  default     = "0 */2 * * *"
 }
 
 #----------------#
