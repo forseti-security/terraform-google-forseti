@@ -386,7 +386,7 @@ notifier:
               configuration:
                 data_format: csv
                 # gcs_path should begin with "gs://"
-                gcs_path: gs://{FORSETI_BUCKET}/scanner_violations
+                gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
             # Slack webhook pipeline.
             # Create an incoming webhook in your organization's Slack setting, located at:
             # https://[your_org].slack.com/apps/manage/custom-integrations
