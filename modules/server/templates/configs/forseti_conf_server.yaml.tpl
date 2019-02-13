@@ -158,7 +158,7 @@ inventory:
     # Number of days to retain inventory data:
     #  -1 : (default) keep all previous data forever
     #   0 : delete all previous inventory data before running
-    retention_days: ${CAI_RETENTION_DAYS}
+    retention_days: ${INVENTORY_RETENTION_DAYS}
 
 ##############################################################################
 
@@ -182,7 +182,7 @@ scanner:
         - name: audit_logging
           enabled: ${AUDIT_LOGGING_ENABLED}
         - name: bigquery
-          enabled: ${BIQUERY_ENABLED}
+          enabled: ${BIGQUERY_ENABLED}
         - name: blacklist
           enabled: ${BLACKLIST_ENABLED}
         - name: bucket_acl
