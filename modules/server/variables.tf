@@ -261,7 +261,7 @@ variable "cai_api_timeout" {
   default     = "3600"
 }
 
-variable "cai_retention_days" {
+variable "inventory_retention_days" {
   description = "Number of days to retain inventory data."
   default     = "-1"
 }
@@ -274,7 +274,7 @@ variable "audit_logging_enabled" {
   default     = "false"
 }
 
-variable "biquery_enabled" {
+variable "bigquery_enabled" {
   description = "Big Query scanner enabled."
   default     = "true"
 }

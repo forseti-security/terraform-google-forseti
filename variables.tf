@@ -285,7 +285,7 @@ variable "cai_api_timeout" {
   default     = "3600"
 }
 
-variable "cai_retention_days" {
+variable "inventory_retention_days" {
   description = "Number of days to retain inventory data."
   default     = "-1"
 }
