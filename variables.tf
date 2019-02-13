@@ -298,7 +298,7 @@ variable "audit_logging_enabled" {
   default     = "false"
 }
 
-variable "biquery_enabled" {
+variable "bigquery_enabled" {
   description = "Big Query scanner enabled."
   default     = "true"
 }
