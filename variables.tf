@@ -73,6 +73,12 @@ variable "server_boot_image" {
   default     = "ubuntu-os-cloud/ubuntu-1804-lts"
 }
 
+variable "server_instance_metadata" {
+  description = "Metadata key/value pairs to make available from within the server instance."
+  type        = "map"
+  default     = {}
+}
+
 #---------------------------------#
 # Forseti server config inventory #
 #---------------------------------#
@@ -541,6 +547,12 @@ variable "client_boot_image" {
 variable "client_region" {
   description = "GCE Forseti Client role region size"
   default     = "us-central1"
+}
+
+variable "client_instance_metadata" {
+  description = "Metadata key/value pairs to make available from within the client instance."
+  type        = "map"
+  default     = {}
 }
 
 #------------#

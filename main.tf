@@ -57,18 +57,19 @@ resource "google_project_service" "main" {
 module "client" {
   source = "modules/client"
 
-  project_id              = "${var.project_id}"
-  client_boot_image       = "${var.client_boot_image}"
-  server_address          = "${module.server.forseti-server-vm-ip}"
-  subnetwork              = "${var.subnetwork}"
-  forseti_home            = "${var.forseti_home}"
-  storage_bucket_location = "${var.storage_bucket_location}"
-  forseti_version         = "${var.forseti_version}"
-  forseti_repo_url        = "${var.forseti_repo_url}"
-  client_type             = "${var.client_type}"
-  network_project         = "${local.network_project}"
-  suffix                  = "${local.random_hash}"
-  client_region           = "${var.client_region}"
+  project_id               = "${var.project_id}"
+  client_boot_image        = "${var.client_boot_image}"
+  server_address           = "${module.server.forseti-server-vm-ip}"
+  subnetwork               = "${var.subnetwork}"
+  forseti_home             = "${var.forseti_home}"
+  storage_bucket_location  = "${var.storage_bucket_location}"
+  forseti_version          = "${var.forseti_version}"
+  forseti_repo_url         = "${var.forseti_repo_url}"
+  client_type              = "${var.client_type}"
+  network_project          = "${local.network_project}"
+  suffix                   = "${local.random_hash}"
+  client_region            = "${var.client_region}"
+  client_instance_metadata = "${var.client_instance_metadata}"
 
   services = "${google_project_service.main.*.service}"
 }
@@ -105,6 +106,7 @@ module "server" {
   folder_id                                           = "${var.folder_id}"
   sendgrid_api_key                                    = "${var.sendgrid_api_key}"
   suffix                                              = "${local.random_hash}"
+  server_instance_metadata                            = "${var.server_instance_metadata}"
   storage_disable_polling                             = "${var.storage_disable_polling}",
   sqladmin_period                                     = "${var.sqladmin_period}",
   sqladmin_max_calls                                  = "${var.sqladmin_max_calls}",

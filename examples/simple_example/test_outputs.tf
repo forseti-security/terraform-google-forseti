@@ -1,1 +1,0 @@
-../../test/fixtures/simple_example/test_outputs.tf

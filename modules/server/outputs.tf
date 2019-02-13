@@ -20,8 +20,13 @@ output "forseti-server-vm-name" {
 }
 
 output "forseti-server-vm-ip" {
-  description = "Forseti Server VM ip address"
+  description = "Forseti Server VM private IP address"
   value       = "${google_compute_instance.forseti-server.network_interface.0.network_ip}"
+}
+
+output "forseti-server-vm-public-ip" {
+  description = "Forseti Server VM public IP address"
+  value       = "${google_compute_instance.forseti-server.network_interface.0.access_config.0.nat_ip}"
 }
 
 output "forseti-server-service-account" {

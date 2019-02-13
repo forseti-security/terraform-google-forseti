@@ -15,8 +15,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-title 'Forseti Terraform GCP Test Suite'
-
 project_id = attribute('project_id')
 forseti_client_vm_name = attribute('forseti-client-vm-name')
 forseti_server_vm_name = attribute('forseti-server-vm-name')
@@ -25,8 +23,9 @@ forseti_server_storage_bucket = attribute('forseti-server-storage-bucket')
 forseti_client_service_account = attribute('forseti-client-service-account')
 forseti_server_service_account = attribute('forseti-server-service-account')
 
-control 'forseti-client-vm' do
-  title 'Test forseti client vm'
+control 'forseti' do
+  title "Forseti GCP resources"
+
   describe google_compute_instance(
     project: project_id,
     zone: 'us-central1-c',
@@ -35,10 +34,7 @@ control 'forseti-client-vm' do
     it { should exist }
     its('machine_size') { should eq 'n1-standard-2' }
   end
-end
 
-control 'forseti-server-vm' do
-  title 'Test forseti server vm'
   describe google_compute_instance(
     project: project_id,
     zone: 'us-central1-c',
@@ -47,17 +43,11 @@ control 'forseti-server-vm' do
     it { should exist }
     its('machine_size') { should eq 'n1-standard-2' }
   end
-end
 
-control 'forseti-cloudsql-instance' do
-  title 'Test CloudSQL Instance is up'
   describe google_sql_database_instances(project: project_id) do
     its('instance_names') { should include(/forseti-server-db-*/) }
   end
-end
 
-control 'forseti-server-iam-roles' do
-  title 'Test Server Project IAM Role bindings'
   describe google_project_iam_binding(project: project_id, role: "roles/storage.objectViewer") do
     it { should exist }
     its('members') { should include "serviceAccount:#{forseti_server_service_account}" }
@@ -82,10 +72,7 @@ control 'forseti-server-iam-roles' do
     it { should exist }
     its('members') { should include "serviceAccount:#{forseti_server_service_account}" }
   end
-end
 
-control 'forseti-google-storage-buckets' do
-  title 'Test GCS Buckets are present'
   describe google_storage_buckets(project: project_id) do
     its('bucket_names') { should include forseti_server_storage_bucket }
     its('bucket_names') { should include forseti_client_storage_bucket }
@@ -121,26 +108,17 @@ control 'forseti-google-storage-buckets' do
 
     its('object_names') { should include(*files) }
   end
-end
 
-control 'forseti-client-service-account' do
-  title 'Test Forseti Client Service Account'
   describe google_service_account(name: "projects/#{project_id}/serviceAccounts/#{forseti_client_service_account}") do
     its(:email) { should eq forseti_client_service_account }
     its(:display_name) { should eq "Forseti Client Service Account" }
   end
-end
 
-control 'forseti-server-service-account' do
-  title 'Test Forseti Server Service Account'
   describe google_service_account(name: "projects/#{project_id}/serviceAccounts/#{forseti_server_service_account}") do
     its(:email) { should eq forseti_server_service_account }
     its(:display_name) { should eq "Forseti Server Service Account" }
   end
-end
 
-control 'forseti-firewall-rules' do
-  title 'Test Forseti Firewall Rules'
   describe google_compute_firewalls(project: project_id) do
     its('firewall_names') { should include(/forseti-server-ssh-external/) }
     its('firewall_names') { should include(/forseti-server-allow-grpc/) }

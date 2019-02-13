@@ -45,7 +45,7 @@ output "forseti-server-vm-ip" {
 }
 
 output "forseti-server-vm-public-ip" {
-  description = "Forseti Client VM public IP address"
+  description = "Forseti Server VM public IP address"
   value       = "${module.forseti-install-simple.forseti-server-vm-public-ip}"
 }
 
@@ -62,4 +62,9 @@ output "forseti-client-storage-bucket" {
 output "forseti-server-storage-bucket" {
   description = "Forseti Server storage bucket"
   value       = "${module.forseti-install-simple.forseti-server-storage-bucket}"
+}
+
+output "project_id" {
+  description = "A forwarded copy of `project_id` for InSpec"
+  value       = "${var.project_id}"
 }
