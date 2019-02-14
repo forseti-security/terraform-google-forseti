@@ -153,5 +153,6 @@ function check_headers() {
   echo "Checking file headers"
   # Use the exclusion behavior of find_files
   find_files . -type f -print0 \
+    | grep -v 'modules/rules/*.yaml' \
     | compat_xargs -0 python test/verify_boilerplate.py
 }
