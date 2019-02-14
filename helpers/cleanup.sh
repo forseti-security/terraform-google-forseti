@@ -22,7 +22,7 @@ then
     exit 1;
 fi
 
-ORG_ID="$(gcloud projects describe ${PROJECT_ID} --flatten=parent.id | grep -Eo "\d+")"
+ORG_ID="$(gcloud projects describe "${PROJECT_ID}" --flatten=parent.id | grep -Eo "\d+")"
 SERVICE_ACCOUNT_ID="$(gcloud iam service-accounts list --format="value(email)" | grep -Eo "$2@${PROJECT_ID}.iam.gserviceaccount.com")"
 KEY_FILE="${PWD}/credentials.json"
 
@@ -34,51 +34,49 @@ fi
 
 echo "Removing permissions..."
 
-gcloud organizations remove-iam-policy-binding ${ORG_ID} \
+gcloud organizations remove-iam-policy-binding "${ORG_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
     --role="roles/resourcemanager.organizationAdmin" \
     --user-output-enabled false
 
-gcloud projects remove-iam-policy-binding ${PROJECT_ID} \
+gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
     --role="roles/compute.instanceAdmin" \
     --user-output-enabled false
 
-gcloud projects remove-iam-policy-binding ${PROJECT_ID} \
+gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
     --role="roles/compute.networkViewer" \
     --user-output-enabled false
 
-gcloud projects remove-iam-policy-binding ${PROJECT_ID} \
+gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
     --role="roles/compute.securityAdmin" \
     --user-output-enabled false
 
-gcloud projects remove-iam-policy-binding ${PROJECT_ID} \
+gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
     --role="roles/serviceusage.serviceUsageAdmin" \
     --user-output-enabled false
 
-gcloud projects remove-iam-policy-binding ${PROJECT_ID} \
+gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
     --role="roles/iam.serviceAccountAdmin" \
     --user-output-enabled false
 
-gcloud projects remove-iam-policy-binding ${PROJECT_ID} \
+gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
     --role="roles/iam.serviceAccountUser" \
     --user-output-enabled false
 
-gcloud projects remove-iam-policy-binding ${PROJECT_ID} \
+gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
     --role="roles/storage.admin" \
     --user-output-enabled false
 
-gcloud iam service-accounts delete ${SERVICE_ACCOUNT_ID} \
+gcloud iam service-accounts delete "${SERVICE_ACCOUNT_ID}" \
     --quiet
 
-rm -rf $KEY_FILE
+rm -rf "$KEY_FILE"
 
 echo "All done."
-
-
