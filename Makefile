@@ -75,12 +75,7 @@ check_headers:
 # Integration tests
 .PHONY: test_integration
 test_integration:
-	bundle install
-	bundle exec kitchen create
-	bundle exec kitchen converge
-	bundle exec kitchen converge
-	bundle exec kitchen verify
-	bundle exec kitchen destroy
+	test/ci_integration.sh
 
 .PHONY: generate_docs
 generate_docs:
