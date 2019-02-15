@@ -69,8 +69,7 @@ test_check_headers:
 
 .PHONY: check_headers
 check_headers:
-	@echo "Checking file headers"
-	@python test/verify_boilerplate.py
+	@source test/make.sh && check_headers
 
 # Integration tests
 .PHONY: test_integration
