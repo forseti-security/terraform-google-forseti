@@ -15,9 +15,9 @@
 # Below is the example that you can reference to create your own rule.
 # rules:
 #   # This rule helps with:
-#   # #1 Ensure instances with external IPs are only running 
+#   # #1 Ensure instances with external IPs are only running
 #   # on whitelisted networks
-#   # #2 Ensure instances are only running on networks created in allowed 
+#   # #2 Ensure instances are only running on networks created in allowed
 #   # projects (using XPN)
 #   - name: all networks covered in whitelist
 #     project: '*'
