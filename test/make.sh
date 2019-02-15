@@ -150,9 +150,13 @@ function prepare_test_variables() {
 }
 
 function check_headers() {
-  echo "Checking file headers"
-  # Use the exclusion behavior of find_files
-  find_files . -type f -print0 \
-    | grep -v 'modules/rules/*.yaml' \
+  local path
+  while read -r path; do
+    if [[ $path =~ "modules/rules/templates/rules" ]]; then
+      echo "Skipping Forseti rules file $path" 1>&2
+    else
+      echo -ne "$path\0"
+    fi
+  done < <(find_files . -type f) \
     | compat_xargs -0 python test/verify_boilerplate.py
 }
