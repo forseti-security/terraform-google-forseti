@@ -24,6 +24,10 @@ control 'server' do
     its('exit_status') { should eq 0 }
   end
 
+  describe command("forseti inventory list") do
+    its('exit_status') { should eq 0 }
+  end
+
   describe command('forseti_server') do
     it { should exist }
   end
