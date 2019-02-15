@@ -44,7 +44,7 @@ resource "null_resource" "wait_for_server" {
   }
 
   provisioner "remote-exec" {
-    inline = "while ! [ -f /etc/profile.d/forseti_environment.sh ]; do sleep 10; done"
+    script = "${path.module}/scripts/wait-for-forseti.sh"
 
     connection {
       user        = "ubuntu"
@@ -60,7 +60,7 @@ resource "null_resource" "wait_for_client" {
   }
 
   provisioner "remote-exec" {
-    inline = "while ! [ -f /etc/profile.d/forseti_environment.sh ]; do sleep 10; done"
+    script = "${path.module}/scripts/wait-for-forseti.sh"
 
     connection {
       user        = "ubuntu"
