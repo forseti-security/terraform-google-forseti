@@ -89,6 +89,11 @@ version:
 .PHONY: docker_run
 docker_run:
 	docker run --rm -it \
+		-e PROJECT_ID \
+		-e ORG_ID \
+		-e DOMAIN \
+		-e GSUITE_ADMIN_EMAIL \
+		-e SERVICE_ACCOUNT_JSON \
 		-e CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=${CREDENTIALS_PATH} \
 		-e GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_PATH} \
 		-v $(CURDIR):/cft/workdir \
@@ -98,6 +103,11 @@ docker_run:
 .PHONY: docker_create
 docker_create:
 	docker run --rm -it \
+		-e PROJECT_ID \
+		-e ORG_ID \
+		-e DOMAIN \
+		-e GSUITE_ADMIN_EMAIL \
+		-e SERVICE_ACCOUNT_JSON \
 		-e CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=${CREDENTIALS_PATH} \
 		-e GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_PATH} \
 		-v $(CURDIR):/cft/workdir \
@@ -107,6 +117,11 @@ docker_create:
 .PHONY: docker_converge
 docker_converge:
 	docker run --rm -it \
+		-e PROJECT_ID \
+		-e ORG_ID \
+		-e DOMAIN \
+		-e GSUITE_ADMIN_EMAIL \
+		-e SERVICE_ACCOUNT_JSON \
 		-e CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=${CREDENTIALS_PATH} \
 		-e GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_PATH} \
 		-v $(CURDIR):/cft/workdir \
@@ -116,6 +131,11 @@ docker_converge:
 .PHONY: docker_verify
 docker_verify:
 	docker run --rm -it \
+		-e PROJECT_ID \
+		-e ORG_ID \
+		-e DOMAIN \
+		-e GSUITE_ADMIN_EMAIL \
+		-e SERVICE_ACCOUNT_JSON \
 		-e CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=${CREDENTIALS_PATH} \
 		-e GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_PATH} \
 		-v $(CURDIR):/cft/workdir \
@@ -125,6 +145,11 @@ docker_verify:
 .PHONY: docker_destroy
 docker_destroy:
 	docker run --rm -it \
+		-e PROJECT_ID \
+		-e ORG_ID \
+		-e DOMAIN \
+		-e GSUITE_ADMIN_EMAIL \
+		-e SERVICE_ACCOUNT_JSON \
 		-e CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=${CREDENTIALS_PATH} \
 		-e GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_PATH} \
 		-v $(CURDIR):/cft/workdir \
@@ -132,5 +157,15 @@ docker_destroy:
 		/bin/bash -c "kitchen destroy"
 
 .PHONY: test_integration_docker
-test_integration_docker: docker_create docker_converge docker_verify docker_destroy
-	@echo "Running test-kitchen tests in docker"
+test_integration_docker:
+	docker run --rm -it \
+		-e PROJECT_ID \
+		-e ORG_ID \
+		-e DOMAIN \
+		-e GSUITE_ADMIN_EMAIL \
+		-e SERVICE_ACCOUNT_JSON \
+		-e CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=${CREDENTIALS_PATH} \
+		-e GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_PATH} \
+		-v $(CURDIR):/cft/workdir \
+		${DOCKER_REPO_BASE_KITCHEN_TERRAFORM} \
+		test/ci_integration.sh
