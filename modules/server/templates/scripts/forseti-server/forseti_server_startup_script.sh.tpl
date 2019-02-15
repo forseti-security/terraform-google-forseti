@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Env variables
+USER=ubuntu
+USER_HOME=/home/ubuntu
+
 # forseti_conf_server digest: ${forseti_conf_server_checksum}
 # This digest is included in the startup script to rebuild the Forseti server VM
 # whenever the server configuration changes.
@@ -8,17 +12,14 @@
 sudo apt-get update -y
 sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade
 sudo apt-get update -y
-sudo apt-get --assume-yes install google-cloud-sdk
-
-# Env variables
-USER_HOME=/home/ubuntu
+sudo apt-get --assume-yes install google-cloud-sdk git unzip
 
 # Install fluentd if necessary.
 FLUENTD=$(ls /usr/sbin/google-fluentd)
 if [ -z "$FLUENTD" ]; then
-      cd $USER_HOME
-      curl -sSO https://dl.google.com/cloudagents/install-logging-agent.sh
-      bash install-logging-agent.sh
+    cd $USER_HOME
+    curl -sSO https://dl.google.com/cloudagents/install-logging-agent.sh
+    bash install-logging-agent.sh
 fi
 
 # Check whether Cloud SQL proxy is installed.
@@ -39,9 +40,6 @@ git clone ${forseti_repo_url}
 cd forseti-security
 git fetch --all
 git checkout ${forseti_version}
-
-# Forseti Host Setup
-sudo apt-get install -y git unzip
 
 # Forseti host dependencies
 sudo apt-get install -y $(cat install/dependencies/apt_packages.txt | grep -v "#" | xargs)

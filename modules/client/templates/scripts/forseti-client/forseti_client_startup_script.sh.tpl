@@ -1,17 +1,14 @@
 #!/bin/bash
 
+# Env variables
+USER=ubuntu
+USER_HOME=/home/ubuntu
+
 # Ubuntu update.
 sudo apt-get update -y
 sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade
-
-# Forseti setup.
-sudo apt-get install -y git unzip
-
-# Forseti dependencies
-sudo apt-get install -y libffi-dev libssl-dev libmysqlclient-dev python-pip python-dev build-essential
-
-USER=ubuntu
-USER_HOME=/home/ubuntu
+sudo apt-get update -y
+sudo apt-get --assume-yes install google-cloud-sdk git unzip
 
 # Install fluentd if necessary.
 FLUENTD=$(ls /usr/sbin/google-fluentd)
@@ -31,9 +28,13 @@ cd forseti-security
 git fetch --all
 git checkout ${forseti_version}
 
+# Forseti host dependencies
+sudo apt-get install -y $(cat install/dependencies/apt_packages.txt | grep -v "#" | xargs)
+
 # Forseti dependencies
 pip install --upgrade pip==9.0.3
 pip install -q --upgrade setuptools wheel
+pip install -q --upgrade -r requirements.txt
 
 # Install tracing libraries
 pip install .[tracing]
