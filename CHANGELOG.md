@@ -8,6 +8,21 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ## [Unreleased]
 
+## [v1.1.0]
+1.1.0 is a backward compatible feature release. This module release supports Forseti v2.11.0.
+
+### ADDED
+- Add "roles/orgpolicy.policyViewer" to server service account roles. [#44]
+- Add variables to configure forseti_conf_server.yaml. [#50]
+- Add host integration tests for Forseti server and client. [#48]
+- Install forseti pip requirements on client instance [#55]
+
+### CHANGED
+- Never prompt for user input from Apt in Forseti startup scripts. [#45]
+- Rebuild Forseti server when forseti_conf_server.yaml changes. [#46]
+- Fix cron default frequency to be every 2 hours. [#47]
+- Update forseti_version to v2.11.0. [#58]
+
 ## [v1.0.0]
 1.0.0 is a backwards incompatible release and is a full rewrite of the module.
 ### CHANGED
@@ -19,6 +34,14 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 [Unreleased]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.0.0...HEAD
 [v1.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v0.1.0...v1.0.0
+[v1.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.0.0...v1.1.0
 
 [#33]: https://github.com/terraform-google-modules/terraform-google-project-factory/pull/33
-
+[#44]: https://github.com/terraform-google-modules/terraform-google-project-factory/pull/44
+[#45]: https://github.com/terraform-google-modules/terraform-google-project-factory/pull/45
+[#46]: https://github.com/terraform-google-modules/terraform-google-project-factory/pull/46
+[#47]: https://github.com/terraform-google-modules/terraform-google-project-factory/pull/47
+[#48]: https://github.com/terraform-google-modules/terraform-google-project-factory/pull/48
+[#50]: https://github.com/terraform-google-modules/terraform-google-project-factory/pull/50
+[#55]: https://github.com/terraform-google-modules/terraform-google-project-factory/pull/55
+[#58]: https://github.com/terraform-google-modules/terraform-google-project-factory/pull/58
