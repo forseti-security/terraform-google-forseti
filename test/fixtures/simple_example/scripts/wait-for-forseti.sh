@@ -27,5 +27,5 @@ for _ in {1..300}; do
   fi
 done
 
-echo "Forseti was not ready after $MAX_WAIT seconds!"
+echo "Forseti was not ready after 300 seconds!"
 exit 1
