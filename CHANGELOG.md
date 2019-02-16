@@ -8,6 +8,12 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ## [Unreleased]
 
+## [v1.1.1]
+1.1.1 is a backward compatible feature release. This module release supports Forseti v2.11.1.
+
+### CHANGED
+- Update forseti_version to v2.11.1. [#59]
+
 ## [v1.1.0]
 1.1.0 is a backward compatible feature release. This module release supports Forseti v2.11.0.
 
@@ -35,13 +41,15 @@ Extending the adopted spec, each change should have a link to its corresponding 
 [Unreleased]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.0.0...HEAD
 [v1.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v0.1.0...v1.0.0
 [v1.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.0.0...v1.1.0
+[v1.1.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.1.0...v1.1.1
 
-[#33]: https://github.com/terraform-google-modules/terraform-google-project-factory/pull/33
-[#44]: https://github.com/terraform-google-modules/terraform-google-project-factory/pull/44
-[#45]: https://github.com/terraform-google-modules/terraform-google-project-factory/pull/45
-[#46]: https://github.com/terraform-google-modules/terraform-google-project-factory/pull/46
-[#47]: https://github.com/terraform-google-modules/terraform-google-project-factory/pull/47
-[#48]: https://github.com/terraform-google-modules/terraform-google-project-factory/pull/48
-[#50]: https://github.com/terraform-google-modules/terraform-google-project-factory/pull/50
-[#55]: https://github.com/terraform-google-modules/terraform-google-project-factory/pull/55
-[#58]: https://github.com/terraform-google-modules/terraform-google-project-factory/pull/58
+[#33]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/33
+[#44]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/44
+[#45]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/45
+[#46]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/46
+[#47]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/47
+[#48]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/48
+[#50]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/50
+[#55]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/55
+[#58]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/58
+[#59]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/59
