@@ -40,7 +40,6 @@ variable "network_name" {
 
 variable "subnetwork" {
   description = "Name of the subnetwork where forseti will be deployed"
-  default = "forseti-subnet-01"
 }
 
 variable "region" {
