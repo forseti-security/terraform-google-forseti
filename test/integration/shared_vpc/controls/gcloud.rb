@@ -15,10 +15,10 @@
 title 'Forseti Terraform GCP Test Suite for Shared VPC setup using gcloud command'
 
 project_id              = attribute("project_id")
-forseti_server_vm_name  = attribute("forseti_server_vm_name")
-forseti_server_vm_ip    = attribute("forseti_server_vm_ip")
-forseti_client_vm_name  = attribute("forseti_client_vm_name")
-forseti_client_vm_ip    = attribute("forseti_client_vm_ip")
+forseti_server_vm_name  = attribute("forseti-server-vm-name")
+forseti_server_vm_ip    = attribute("forseti-server-vm-ip")
+forseti_client_vm_name  = attribute("forseti-client-vm-name")
+forseti_client_vm_ip    = attribute("forseti-client-vm-ip")
 region                  = attribute("region")
 network_name            = attribute('network_name')
 subnetwork_self_link    = attribute('subnetwork_self_link')

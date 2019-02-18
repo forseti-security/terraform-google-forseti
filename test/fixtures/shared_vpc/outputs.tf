@@ -34,19 +34,19 @@ output "subnetwork_self_link" {
   value = "${"projects/${var.network_project}/regions/${var.region}/subnetworks/${var.subnetwork}"}"
 }
 
-output "forseti_server_vm_ip" {
+output "forseti-server-vm-ip" {
   value = "${module.forseti.forseti-server-vm-ip}"
 }
 
-output "forseti_server_vm_name" {
+output "forseti-server-vm-name" {
   value = "${module.forseti.forseti-server-vm-name}"
 }
 
-output "forseti_client_vm_ip" {
+output "forseti-client-vm-ip" {
   value = "${module.forseti.forseti-client-vm-ip}"
 }
 
-output "forseti_client_vm_name" {
+output "forseti-client-vm-name" {
   value = "${module.forseti.forseti-client-vm-name}"
 }
 

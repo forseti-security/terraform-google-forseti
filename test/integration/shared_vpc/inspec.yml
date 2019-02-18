@@ -35,16 +35,16 @@ attributes:
     required: true
     description: 'Forseti project id. This is a service project.'
     type: string
-  - name: forseti_server_vm_name
+  - name: forseti-server-vm-name
     required: true
     description: "Forseti server name"
-  - name: forseti_server_vm_ip
+  - name: forseti-server-vm-ip
     required: true
     description: "Forseti server ip"
-  - name: forseti_client_vm_name
+  - name: forseti-client-vm-name
     required: true
     description: "Forseti client name"
-  - name: forseti_client_vm_ip
+  - name: forseti-client-vm-ip
     required: true
     description: "Forseti client ip"
   - name: region
