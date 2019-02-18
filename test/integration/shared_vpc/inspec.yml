@@ -53,6 +53,3 @@ attributes:
   - name: network_name
     required: true
     description: "VPC name"
-  - name: subnetwork_self_link
-    required: true
-    description: "Self link of the subnetwork where forseti server is deployed"

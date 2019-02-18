@@ -30,10 +30,6 @@ variable "org_id" {
   description = "Organization ID"
 }
 
-variable "billing_account" {
-  description = "Billing account 0000-0000-0000"
-}
-
 variable "domain" {
   description = "Organization domain"
 }

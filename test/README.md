@@ -5,11 +5,7 @@ host-project
 
 # shared_vpc integration tests
 `shared_vpc` integration tests requires that you already have host project and service project setup with shared-vpc and
-at least one shared subnetwork. Service account that you use to create the environment defined in 
-`test/fixtures/shared_vpc` must have the following roles:
-* Organization Administrator (roles/resourcemanager.organizationAdmin)
-* Compute Shared VPC Admin (roles/compute.xpnAdmin)
-* Project Creator (roles/resourcemanager.projectCreator)
+at least one shared subnetwork.
 
 ## Configuring integration tests
 Create a Terraform variables file based on the provided example:
@@ -22,10 +18,9 @@ Update `terraform.tfvars` to match your environment:
 
 ```
 credentials_path = "/path/to/credentials.json"
-shared_project_id = "sample-project-001"
-service_project_id = "service-project-001"
+network_project = "sample-project-001"
+project_id = "service-project-001"
 org_id = 100000000000
-billing_account = "000000-000000-000000"
 domain = "company.domain.com"
 network_name = "shared-vpc"
 subnetwork = "subnet-001"
@@ -54,11 +49,6 @@ If you want to run the full lifecycle suite at once
 ```
 bundle exec kitchen test
 ```
-
-## Caveat
-At the moment `bundle exec kitchen destroy shared-vpc` will fail to destroy all the resources on the first run. You will
-have to run this command at least 2 times. At the end the whole environment will be destroyed but some terraform states
-will fails to be destroyed.
 
 # simple_example integration tests
 

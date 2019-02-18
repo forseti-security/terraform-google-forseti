@@ -18,7 +18,6 @@ credentials_path = "/path/to/credentials.json"
 network_project = "sample-project-001"
 project_id = "sample-project-002"
 org_id = 100000000000
-billing_account = "000000-000000-000000"
 domain = "company.domain.com"
 network_name = "shared-vpc"
 subnetwork = "subnet-001"

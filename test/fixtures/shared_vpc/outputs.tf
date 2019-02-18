@@ -30,10 +30,6 @@ output "network_name" {
   value = "${var.network_name}"
 }
 
-output "subnetwork_self_link" {
-  value = "${"projects/${var.network_project}/regions/${var.region}/subnetworks/${var.subnetwork}"}"
-}
-
 output "forseti-server-vm-ip" {
   value = "${module.forseti.forseti-server-vm-ip}"
 }
