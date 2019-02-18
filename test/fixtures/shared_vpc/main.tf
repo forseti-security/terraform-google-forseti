@@ -21,17 +21,17 @@ provider "google-beta" {
 
 data "google_compute_network" "shared-vpc-network" {
   name    = "${var.network_name}"
-  project = "${var.shared_project_id}"
+  project = "${var.network_project}"
 }
 
 module "forseti" {
   source              = "../../.."
-  project_id          = "${var.service_project_id}"
+  project_id          = "${var.project_id}"
   client_region       = "${var.region}"
-  gsuite_admin_email  = "admin@example.com"
+  gsuite_admin_email  = "${var.gsuite_admin_email}"
   network             = "${data.google_compute_network.shared-vpc-network.self_link}"
-  subnetwork          = "${var.subnetwork_name}"
-  network_project     = "${var.shared_project_id}"
+  subnetwork          = "${var.subnetwork}"
+  network_project     = "${var.network_project}"
   org_id              = "${var.org_id}"
   server_region       = "${var.region}"
   domain              = "${var.domain}"

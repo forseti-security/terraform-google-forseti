@@ -69,8 +69,6 @@ suites:
           controls:
             - forseti-service-project
             - forseti-shared-project
-            - shared-network
-            - forseti-networks
             - forseti-server
             - forseti-client
         - name: shared_vpc

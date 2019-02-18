@@ -18,11 +18,11 @@ variable "credentials_path" {
   description = "Location of service account json credentials"
 }
 
-variable "shared_project_id" {
+variable "network_project" {
   description = "ID of the project that will have shared VPC"
 }
 
-variable "service_project_id" {
+variable "project_id" {
   description = "ID of the project that will have forseti server"
 }
 
@@ -42,7 +42,7 @@ variable "network_name" {
   description = "Name of the shared VPC"
 }
 
-variable "subnetwork_name" {
+variable "subnetwork" {
   description = "Name of the subnetwork where forseti will be deployed"
   default = "forseti-subnet-01"
 }
@@ -52,8 +52,7 @@ variable "region" {
   default     = "us-east1"
 }
 
-variable "subnet_cidr" {
-  description = "Subnetwork CIDR"
-  default     = "10.0.0.0/24"
+variable "gsuite_admin_email" {
+  description = "gSuite admin email"
+  default     = "admin@company.domain.com"
 }
-

@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-output "service_project_id" {
-  value = "${var.service_project_id}"
+output "project_id" {
+  value = "${var.project_id}"
 }
 
-output "shared_project_id" {
-  value = "${var.shared_project_id}"
+output "network_project" {
+  value = "${var.network_project}"
 }
 
 output "network_self_link" {
@@ -31,7 +31,7 @@ output "network_name" {
 }
 
 output "subnetwork_self_link" {
-  value = "${"projects/${var.shared_project_id}/regions/${var.region}/subnetworks/${var.subnetwork_name}"}"
+  value = "${"projects/${var.network_project}/regions/${var.region}/subnetworks/${var.subnetwork}"}"
 }
 
 output "forseti_server_vm_ip" {

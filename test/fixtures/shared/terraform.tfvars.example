@@ -15,8 +15,8 @@
  */
 
 credentials_path = "/path/to/credentials.json"
-shared_project_id = "sample-project-001"
-service_project_id = "sample-project-002"
+network_project = "sample-project-001"
+project_id = "sample-project-002"
 org_id = 100000000000
 billing_account = "000000-000000-000000"
 domain = "company.domain.com"

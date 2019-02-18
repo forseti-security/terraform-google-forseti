@@ -14,8 +14,7 @@
 
 title 'Forseti Terraform GCP Test Suite for Shared VPC setup using gcloud command'
 
-service_project_id      = attribute("service_project_id")
-shared_project_id       = attribute("shared_project_id")
+project_id              = attribute("project_id")
 forseti_server_vm_name  = attribute("forseti_server_vm_name")
 forseti_server_vm_ip    = attribute("forseti_server_vm_ip")
 forseti_client_vm_name  = attribute("forseti_client_vm_name")
@@ -28,11 +27,11 @@ credentials_path        = attribute('credentials_path')
 control 'forseti-command-server' do
   impact 1.0
   title 'Check that forseti server is running'
-  describe command("gcloud compute ssh #{forseti_server_vm_name} --project #{service_project_id}  --zone=#{region}-c --command 'sudo systemctl status forseti --no-page'") do
+  describe command("gcloud compute ssh #{forseti_server_vm_name} --project #{project_id}  --zone=#{region}-c --command 'sudo systemctl status forseti --no-page'") do
     its(:exit_status) { should eq 0 }
     its(:stderr) { should eq '' }
   end
-  describe command("gcloud compute ssh #{forseti_server_vm_name} --project #{service_project_id}  --zone=#{region}-c --command 'forseti config show'") do
+  describe command("gcloud compute ssh #{forseti_server_vm_name} --project #{project_id}  --zone=#{region}-c --command 'forseti config show'") do
     its(:exit_status) { should eq 0 }
     its(:stderr) { should eq '' }
 
@@ -53,7 +52,7 @@ end
 control 'forseti-command-client' do
   impact 1.0
   title 'Check that forseti client is running'
-  describe command("gcloud compute ssh #{forseti_client_vm_name} --project #{service_project_id}  --zone=#{region}-c --command 'forseti config show'") do
+  describe command("gcloud compute ssh #{forseti_client_vm_name} --project #{project_id}  --zone=#{region}-c --command 'forseti config show'") do
     its(:exit_status) { should eq 0 }
     its(:stderr) { should eq '' }
 
