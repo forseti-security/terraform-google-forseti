@@ -14,15 +14,25 @@
  * limitations under the License.
  */
 
-module "forseti-shared-vpc" {
-  source              = "../../../examples/shared_vpc"
-  credentials_path    = "${var.credentials_path}"
+provider "google-beta" {
+  credentials = "${file(var.credentials_path)}"
+  version     = "~> 1.20"
+}
+
+data "google_compute_network" "shared-vpc-network" {
+  name    = "${var.network_name}"
+  project = "${var.network_project}"
+}
+
+module "forseti" {
+  source              = "../../"
   project_id          = "${var.project_id}"
-  region              = "${var.region}"
+  client_region       = "${var.region}"
   gsuite_admin_email  = "${var.gsuite_admin_email}"
-  network_name        = "${var.network_name}"
+  network             = "${data.google_compute_network.shared-vpc-network.self_link}"
   subnetwork          = "${var.subnetwork}"
   network_project     = "${var.network_project}"
   org_id              = "${var.org_id}"
+  server_region       = "${var.region}"
   domain              = "${var.domain}"
 }

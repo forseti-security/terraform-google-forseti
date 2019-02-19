@@ -21,3 +21,4 @@ org_id = 100000000000
 domain = "company.domain.com"
 network_name = "shared-vpc"
 subnetwork = "subnet-001"
+gsuite_admin_email = "admin@company.domain.com"

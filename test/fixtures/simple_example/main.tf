@@ -24,8 +24,8 @@ resource "local_file" "gce-keypair-pk" {
   filename = "${path.module}/sshkey"
 }
 
- module "forseti-install-simple" {
-   source = "../../../examples/simple_example"
+module "forseti-install-simple" {
+  source = "../../../examples/simple_example"
 
   credentials_path   = "${var.credentials_path}"
   gsuite_admin_email = "${var.gsuite_admin_email}"

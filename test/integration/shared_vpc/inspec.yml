@@ -24,9 +24,6 @@ depends:
     url: https://github.com/inspec/inspec-gcp/archive/master.tar.gz
 
 attributes:
-  - name: credentials_path
-    description: 'Service account credentials'
-    required: true
   - name: network_project
     required: true
     description: 'Shared VPC Project ID.'

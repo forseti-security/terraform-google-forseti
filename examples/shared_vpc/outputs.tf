@@ -14,15 +14,34 @@
  * limitations under the License.
  */
 
-module "forseti-shared-vpc" {
-  source              = "../../../examples/shared_vpc"
-  credentials_path    = "${var.credentials_path}"
-  project_id          = "${var.project_id}"
-  region              = "${var.region}"
-  gsuite_admin_email  = "${var.gsuite_admin_email}"
-  network_name        = "${var.network_name}"
-  subnetwork          = "${var.subnetwork}"
-  network_project     = "${var.network_project}"
-  org_id              = "${var.org_id}"
-  domain              = "${var.domain}"
+output "project_id" {
+  value = "${var.project_id}"
+}
+
+output "network_project" {
+  value = "${var.network_project}"
+}
+
+output "network_name" {
+  value = "${var.network_name}"
+}
+
+output "forseti-server-vm-ip" {
+  value = "${module.forseti.forseti-server-vm-ip}"
+}
+
+output "forseti-server-vm-name" {
+  value = "${module.forseti.forseti-server-vm-name}"
+}
+
+output "forseti-client-vm-ip" {
+  value = "${module.forseti.forseti-client-vm-ip}"
+}
+
+output "forseti-client-vm-name" {
+  value = "${module.forseti.forseti-client-vm-name}"
+}
+
+output "region" {
+  value = "${var.region}"
 }

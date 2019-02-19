@@ -22,34 +22,26 @@ output "network_project" {
   value = "${var.network_project}"
 }
 
-output "network_self_link" {
-  value = "${data.google_compute_network.shared-vpc-network.self_link}"
-}
-
 output "network_name" {
   value = "${var.network_name}"
 }
 
 output "forseti-server-vm-ip" {
-  value = "${module.forseti.forseti-server-vm-ip}"
+  value = "${module.forseti-shared-vpc.forseti-server-vm-ip}"
 }
 
 output "forseti-server-vm-name" {
-  value = "${module.forseti.forseti-server-vm-name}"
+  value = "${module.forseti-shared-vpc.forseti-server-vm-name}"
 }
 
 output "forseti-client-vm-ip" {
-  value = "${module.forseti.forseti-client-vm-ip}"
+  value = "${module.forseti-shared-vpc.forseti-client-vm-ip}"
 }
 
 output "forseti-client-vm-name" {
-  value = "${module.forseti.forseti-client-vm-name}"
+  value = "${module.forseti-shared-vpc.forseti-client-vm-name}"
 }
 
 output "region" {
   value = "${var.region}"
-}
-
-output "credentials_path" {
-  value = "${var.credentials_path}"
 }

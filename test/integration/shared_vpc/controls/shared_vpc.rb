@@ -22,7 +22,6 @@ forseti_client_vm_name  = attribute("forseti-client-vm-name")
 forseti_client_vm_ip    = attribute("forseti-client-vm-ip")
 region                  = attribute("region")
 network_name            = attribute('network_name')
-credentials_path        = attribute('credentials_path')
 
 control 'forseti-service-project' do
   impact 1.0
