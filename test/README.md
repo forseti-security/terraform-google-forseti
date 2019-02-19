@@ -75,20 +75,20 @@ From the root of the module directory execute the following commands:
 
 ```bash
 # Initialize the terraform providers and context
-bundle exec kitchen setup tf-module
+bundle exec kitchen setup simple-example
 
 # Invoke the building of the cloud assets defined in the terraform code
-bundle exec kitchen converge tf-module
+bundle exec kitchen converge simple-example
 
 # Execute the integration test suite
-bundle exec kitchen verify tf-module
+bundle exec kitchen verify simple-example
 
 # Tear down the working environment
-bundle exec kitchen destroy tf-module
+bundle exec kitchen destroy simple-example
 ```
 
 If you want to run the full lifecycle suite at once
 
 ```bash
-bundle exec kitchen test tf-module
+bundle exec kitchen test simple-example
 ```
