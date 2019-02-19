@@ -34,7 +34,7 @@ variable "domain" {
   description = "Organization domain"
 }
 
-variable "network_name" {
+variable "network" {
   description = "Name of the shared VPC"
 }
 

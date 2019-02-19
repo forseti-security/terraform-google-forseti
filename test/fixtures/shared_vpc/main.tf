@@ -20,7 +20,7 @@ module "forseti-shared-vpc" {
   project_id          = "${var.project_id}"
   region              = "${var.region}"
   gsuite_admin_email  = "${var.gsuite_admin_email}"
-  network_name        = "${var.network_name}"
+  network             = "${var.network}"
   subnetwork          = "${var.subnetwork}"
   network_project     = "${var.network_project}"
   org_id              = "${var.org_id}"

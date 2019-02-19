@@ -43,7 +43,7 @@
 
 # Required: Name of the shared VPC
 # Example:
-#network_name = "shared-vpc"
+#network = "shared-vpc"
 
 # Required: Name of the subnetwork where forseti will be deployed
 # Example:

@@ -22,7 +22,7 @@ network_project = "sample-project-001"
 project_id = "service-project-001"
 org_id = 100000000000
 domain = "company.domain.com"
-network_name = "shared-vpc"
+network = "shared-vpc"
 subnetwork = "subnet-001"
 ```
 

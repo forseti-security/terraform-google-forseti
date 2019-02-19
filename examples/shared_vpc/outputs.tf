@@ -24,11 +24,6 @@ output "network_project" {
   value       = "${var.network_project}"
 }
 
-output "network_name" {
-  description = "Shared VPC name"
-  value       = "${var.network_name}"
-}
-
 output "forseti-server-vm-ip" {
   description = "Forseti Server VM private IP address"
   value       = "${module.forseti.forseti-server-vm-ip}"

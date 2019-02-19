@@ -47,6 +47,3 @@ attributes:
   - name: region
     required: true
     description: "Region in which the server is deployed"
-  - name: network_name
-    required: true
-    description: "VPC name"

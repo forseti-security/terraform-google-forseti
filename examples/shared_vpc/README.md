@@ -13,7 +13,7 @@ This example illustrates how to set up a Forseti installation with shared VPC.
 | org\_id | GCP Organization ID that Forseti will have purview over | string | - | yes |
 | project\_id | The ID of an existing service Google project where Forseti will be installed | string | - | yes |
 | network\_project | The ID of an existing host Google project where shared VPC lives | string | - | yes |
-| network\_name | The name of an existing VPC in host Google project | string | - | yes |
+| network | The name of an existing VPC in host Google project | string | - | yes |
 | subnetwork | The ID of a subnetwork in the shared VPC network  | string | - | yes |
 | region | The ID of an existing Google project where Forseti will be installed | string | us-east1 | no |
 
@@ -27,6 +27,6 @@ This example illustrates how to set up a Forseti installation with shared VPC.
 | forseti-server-vm-name | Forseti Server VM name |
 | project\_id | A forwarded copy of `project_id` for InSpec |
 | network\_project | A forwarded copy of `network_project` for InSpec |
-| network\_name | A forwarded copy of `network_name` for InSpec |
+| network | A forwarded copy of `network_name` for InSpec |
 | region | A forwarded copy of `region` for InSpec |
 

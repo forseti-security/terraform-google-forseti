@@ -20,7 +20,6 @@ forseti_server_vm_ip    = attribute("forseti-server-vm-ip")
 forseti_client_vm_name  = attribute("forseti-client-vm-name")
 forseti_client_vm_ip    = attribute("forseti-client-vm-ip")
 region                  = attribute("region")
-network_name            = attribute('network_name')
 
 control 'forseti-command-server' do
   impact 1.0

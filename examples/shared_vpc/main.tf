@@ -24,7 +24,7 @@ module "forseti" {
   project_id          = "${var.project_id}"
   client_region       = "${var.region}"
   gsuite_admin_email  = "${var.gsuite_admin_email}"
-  network             = "${var.network_name}"
+  network             = "${var.network}"
   subnetwork          = "${var.subnetwork}"
   network_project     = "${var.network_project}"
   org_id              = "${var.org_id}"
