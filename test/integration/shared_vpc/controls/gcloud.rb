@@ -31,18 +31,7 @@ control 'forseti-command-server' do
   describe command("gcloud compute ssh #{forseti_server_vm_name} --project #{project_id}  --zone=#{region}-c --command 'forseti config show'") do
     its(:exit_status) { should eq 0 }
     its(:stderr) { should eq '' }
-
-    let!(:response) do
-      if subject.exit_status == 0
-        JSON.parse(subject.stdout.tr("'",'"'), symbolize_names: true)
-      else
-        {}
-      end
-    end
-
-    it 'forseti config should point to gRPC port' do
-      expect(response).to include(endpoint: 'localhost:50051')
-    end
+    its(:stdout) {should match /'endpoint': 'localhost:50051'/ }
   end
 end
 
@@ -52,17 +41,6 @@ control 'forseti-command-client' do
   describe command("gcloud compute ssh #{forseti_client_vm_name} --project #{project_id}  --zone=#{region}-c --command 'forseti config show'") do
     its(:exit_status) { should eq 0 }
     its(:stderr) { should eq '' }
-
-    let!(:response) do
-      if subject.exit_status == 0
-        JSON.parse(subject.stdout.tr("'",'"'), symbolize_names: true)
-      else
-        {}
-      end
-    end
-
-    it 'forseti config should point to gRPC port' do
-      expect(response).to include(endpoint: "#{forseti_client_vm_ip}:50051")
-    end
+    its(:stdout) {should match /'endpoint': '#{forseti_client_vm_ip}:50051'/ }
   end
 end
