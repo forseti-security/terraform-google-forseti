@@ -48,5 +48,5 @@ variable "region" {
 }
 
 variable "gsuite_admin_email" {
-  description = "gSuite admin email"
+  description = "G Suite admin email"
 }

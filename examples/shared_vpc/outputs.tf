@@ -15,33 +15,41 @@
  */
 
 output "project_id" {
-  value = "${var.project_id}"
+  description = "ID of the service project"
+  value       = "${var.project_id}"
 }
 
 output "network_project" {
-  value = "${var.network_project}"
+  description = "ID of the network project holding shared VPC"
+  value       = "${var.network_project}"
 }
 
 output "network_name" {
-  value = "${var.network_name}"
+  description = "Shared VPC name"
+  value       = "${var.network_name}"
 }
 
 output "forseti-server-vm-ip" {
-  value = "${module.forseti.forseti-server-vm-ip}"
+  description = "Forseti Server VM private IP address"
+  value       = "${module.forseti.forseti-server-vm-ip}"
 }
 
 output "forseti-server-vm-name" {
-  value = "${module.forseti.forseti-server-vm-name}"
+  description = "Forseti Server VM name"
+  value       = "${module.forseti.forseti-server-vm-name}"
 }
 
 output "forseti-client-vm-ip" {
-  value = "${module.forseti.forseti-client-vm-ip}"
+  description = "Forseti Client VM private IP address"
+  value       = "${module.forseti.forseti-client-vm-ip}"
 }
 
 output "forseti-client-vm-name" {
-  value = "${module.forseti.forseti-client-vm-name}"
+  description = "Forseti Client VM name"
+  value       = "${module.forseti.forseti-client-vm-name}"
 }
 
 output "region" {
-  value = "${var.region}"
+  description = "Region in which server and client will be deployed"
+  value       = "${var.region}"
 }
