@@ -27,7 +27,7 @@ control 'forseti-service-project' do
   title 'test forseti project'
   describe google_compute_project_info(project: project_id) do
     its('xpn_project_status') { should eq 'UNSPECIFIED_XPN_PROJECT_STATUS' }
-    its('name') { should eq project_id}
+    its('name') { should eq project_id }
   end
 end
 
@@ -36,7 +36,7 @@ control 'forseti-shared-project' do
   title 'test shared project'
   describe google_compute_project_info(project: network_project) do
     its('xpn_project_status') { should eq 'HOST' }
-    its('name') { should eq network_project}
+    its('name') { should eq network_project }
   end
 end
 
