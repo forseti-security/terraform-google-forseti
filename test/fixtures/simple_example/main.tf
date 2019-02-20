@@ -40,7 +40,7 @@ resource "local_file" "gce-keypair-pk" {
 
 resource "null_resource" "wait_for_server" {
   triggers = {
-    server_instance_id = "${uuid()}"
+    always_run = "${uuid()}"
   }
 
   provisioner "remote-exec" {
@@ -56,7 +56,7 @@ resource "null_resource" "wait_for_server" {
 
 resource "null_resource" "wait_for_client" {
   triggers = {
-    client_instance_id = "${uuid()}"
+    always_run = "${uuid()}"
   }
 
   provisioner "remote-exec" {
