@@ -37,58 +37,58 @@ KEY_FILE="${STAGING_DIR}/credentials.json"
 
 
 gcloud iam service-accounts \
-    --project ${PROJECT_ID} create ${SERVICE_ACCOUNT_NAME} \
-    --display-name ${SERVICE_ACCOUNT_NAME}
+    --project "${PROJECT_ID}" create ${SERVICE_ACCOUNT_NAME} \
+    --display-name "${SERVICE_ACCOUNT_NAME}"
 
 echo "Downloading key to credentials.json..."
 
-gcloud iam service-accounts keys create ${KEY_FILE} \
-    --iam-account ${SERVICE_ACCOUNT_ID} \
+gcloud iam service-accounts keys create "${KEY_FILE}" \
+    --iam-account "${SERVICE_ACCOUNT_ID}" \
     --user-output-enabled false
 
 echo "Applying permissions for org $ORG_ID and project $PROJECT_ID..."
 
-gcloud organizations add-iam-policy-binding ${ORG_ID} \
+gcloud organizations add-iam-policy-binding "${ORG_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
     --role="roles/resourcemanager.organizationAdmin" \
     --user-output-enabled false
 
-gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
     --role="roles/compute.instanceAdmin" \
     --user-output-enabled false
 
-gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
     --role="roles/compute.networkViewer" \
     --user-output-enabled false
 
-gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
     --role="roles/compute.securityAdmin" \
     --user-output-enabled false
 
-gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
     --role="roles/iam.serviceAccountAdmin" \
     --user-output-enabled false
 
-gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
     --role="roles/serviceusage.serviceUsageAdmin" \
     --user-output-enabled false
 
-gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
     --role="roles/iam.serviceAccountUser" \
     --user-output-enabled false
 
-gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
     --role="roles/storage.admin" \
     --user-output-enabled false
 
-gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
     --role="roles/cloudsql.admin" \
     --user-output-enabled false

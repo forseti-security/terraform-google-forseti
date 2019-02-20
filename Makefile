@@ -24,6 +24,9 @@ DOCKER_REPO_BASE_KITCHEN_TERRAFORM 	:= ${DOCKER_ORG}/cft/kitchen-terraform:${DOC
 # All is the first target in the file so it will get picked up when you just run 'make' on its own
 all: check_shell check_python check_golang check_terraform check_docker check_base_files test_check_headers check_headers check_trailing_whitespace generate_docs
 
+.PHONY: check
+check: check_shell check_python check_golang check_terraform check_docker check_base_files test_check_headers check_headers check_trailing_whitespace
+
 # The .PHONY directive tells make that this isn't a real target and so
 # the presence of a file named 'check_shell' won't cause this target to stop
 # working
@@ -66,18 +69,12 @@ test_check_headers:
 
 .PHONY: check_headers
 check_headers:
-	@echo "Checking file headers"
-	@python test/verify_boilerplate.py
+	@source test/make.sh && check_headers
 
 # Integration tests
 .PHONY: test_integration
 test_integration:
-	bundle install
-	bundle exec kitchen create
-	bundle exec kitchen converge
-	bundle exec kitchen converge
-	bundle exec kitchen verify
-	bundle exec kitchen destroy
+	test/ci_integration.sh
 
 .PHONY: generate_docs
 generate_docs:
@@ -92,6 +89,11 @@ version:
 .PHONY: docker_run
 docker_run:
 	docker run --rm -it \
+		-e PROJECT_ID \
+		-e ORG_ID \
+		-e DOMAIN \
+		-e GSUITE_ADMIN_EMAIL \
+		-e SERVICE_ACCOUNT_JSON \
 		-e CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=${CREDENTIALS_PATH} \
 		-e GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_PATH} \
 		-v $(CURDIR):/cft/workdir \
@@ -101,6 +103,11 @@ docker_run:
 .PHONY: docker_create
 docker_create:
 	docker run --rm -it \
+		-e PROJECT_ID \
+		-e ORG_ID \
+		-e DOMAIN \
+		-e GSUITE_ADMIN_EMAIL \
+		-e SERVICE_ACCOUNT_JSON \
 		-e CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=${CREDENTIALS_PATH} \
 		-e GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_PATH} \
 		-v $(CURDIR):/cft/workdir \
@@ -110,6 +117,11 @@ docker_create:
 .PHONY: docker_converge
 docker_converge:
 	docker run --rm -it \
+		-e PROJECT_ID \
+		-e ORG_ID \
+		-e DOMAIN \
+		-e GSUITE_ADMIN_EMAIL \
+		-e SERVICE_ACCOUNT_JSON \
 		-e CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=${CREDENTIALS_PATH} \
 		-e GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_PATH} \
 		-v $(CURDIR):/cft/workdir \
@@ -119,6 +131,11 @@ docker_converge:
 .PHONY: docker_verify
 docker_verify:
 	docker run --rm -it \
+		-e PROJECT_ID \
+		-e ORG_ID \
+		-e DOMAIN \
+		-e GSUITE_ADMIN_EMAIL \
+		-e SERVICE_ACCOUNT_JSON \
 		-e CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=${CREDENTIALS_PATH} \
 		-e GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_PATH} \
 		-v $(CURDIR):/cft/workdir \
@@ -128,6 +145,11 @@ docker_verify:
 .PHONY: docker_destroy
 docker_destroy:
 	docker run --rm -it \
+		-e PROJECT_ID \
+		-e ORG_ID \
+		-e DOMAIN \
+		-e GSUITE_ADMIN_EMAIL \
+		-e SERVICE_ACCOUNT_JSON \
 		-e CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=${CREDENTIALS_PATH} \
 		-e GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_PATH} \
 		-v $(CURDIR):/cft/workdir \
@@ -135,5 +157,15 @@ docker_destroy:
 		/bin/bash -c "kitchen destroy"
 
 .PHONY: test_integration_docker
-test_integration_docker: docker_create docker_converge docker_verify docker_destroy
-	@echo "Running test-kitchen tests in docker"
+test_integration_docker:
+	docker run --rm -it \
+		-e PROJECT_ID \
+		-e ORG_ID \
+		-e DOMAIN \
+		-e GSUITE_ADMIN_EMAIL \
+		-e SERVICE_ACCOUNT_JSON \
+		-e CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=${CREDENTIALS_PATH} \
+		-e GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_PATH} \
+		-v $(CURDIR):/cft/workdir \
+		${DOCKER_REPO_BASE_KITCHEN_TERRAFORM} \
+		test/ci_integration.sh

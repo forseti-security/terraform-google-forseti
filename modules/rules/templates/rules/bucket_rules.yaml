@@ -27,7 +27,7 @@ rules:
     entity: allAuthenticatedUsers
     email: '*'
     domain: '*'
-    role: '*' 
+    role: '*'
     resource:
         - resource_ids:
           - ${org_id}

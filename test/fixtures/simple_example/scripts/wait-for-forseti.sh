@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Copyright 2018 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +14,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ruby '2.5.3'
+# Block until the Forseti startup script has finished running.
 
-source 'https://rubygems.org/' do
-  gem 'kitchen-terraform', '~> 4.1'
-end
+echo "Waiting for up to 300 seconds for Forseti to be ready."
+
+for _ in {1..300}; do
+  if [[ -f /etc/profile.d/forseti_environment.sh ]]; then
+    echo "Forseti is ready."
+    exit 0
+  else
+    sleep 1
+  fi
+done
+
+echo "Forseti was not ready after 300 seconds!"
+exit 1

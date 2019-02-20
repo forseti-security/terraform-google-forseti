@@ -36,7 +36,7 @@ control 'server' do
     it { should exist }
   end
 
-  describe file("/home/ubuntu/forseti-security/configs/forseti_conf_server.yaml") do 
+  describe file("/home/ubuntu/forseti-security/configs/forseti_conf_server.yaml") do
     it { should exist }
     it "is valid YAML" do
       YAML.load(subject.content)
