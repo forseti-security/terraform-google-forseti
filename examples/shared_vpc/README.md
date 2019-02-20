@@ -27,6 +27,6 @@ This example illustrates how to set up a Forseti installation with shared VPC.
 | forseti-server-vm-name | Forseti Server VM name |
 | project\_id | A forwarded copy of `project_id` for InSpec |
 | network\_project | A forwarded copy of `network_project` for InSpec |
-| network | A forwarded copy of `network_name` for InSpec |
+| subnetwork | A forwarded copy of `subnetwork` for InSpec |
 | region | A forwarded copy of `region` for InSpec |
 

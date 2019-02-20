@@ -20,6 +20,45 @@ forseti_server_vm_ip    = attribute("forseti-server-vm-ip")
 forseti_client_vm_name  = attribute("forseti-client-vm-name")
 forseti_client_vm_ip    = attribute("forseti-client-vm-ip")
 region                  = attribute("region")
+subnetwork              = attribute("subnetwork")
+network_project         = attribute("network_project")
+
+control 'forseti-subnetwork' do
+  impact 1.0
+  title 'Check that forseti server and client are on a proper subnet'
+  describe command(" gcloud compute instances describe #{forseti_server_vm_name} --project #{project_id} --zone #{region}-c --format=json") do
+    its(:exit_status) { should eq 0 }
+    its(:stderr) { should eq '' }
+
+    let(:data) do
+      if subject.exit_status == 0
+        JSON.parse(subject.stdout, symbolize_names: true)
+      else
+        {}
+      end
+    end
+
+    it 'forseti server should be on shared vpc subnetwork' do
+      expect(data[:networkInterfaces].first).to include(subnetwork: "https://www.googleapis.com/compute/v1/projects/#{network_project}/regions/#{region}/subnetworks/#{subnetwork}")
+    end
+  end
+  describe command(" gcloud compute instances describe #{forseti_client_vm_name} --project #{project_id} --zone #{region}-c --format=json") do
+    its(:exit_status) { should eq 0 }
+    its(:stderr) { should eq '' }
+
+    let(:data) do
+      if subject.exit_status == 0
+        JSON.parse(subject.stdout, symbolize_names: true)
+      else
+        {}
+      end
+    end
+
+    it 'forseti server should be on shared vpc subnetwork' do
+      expect(data[:networkInterfaces].first).to include(subnetwork: "https://www.googleapis.com/compute/v1/projects/#{network_project}/regions/#{region}/subnetworks/#{subnetwork}")
+    end
+  end
+end
 
 control 'forseti-command-server' do
   impact 1.0

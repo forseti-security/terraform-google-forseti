@@ -48,3 +48,8 @@ output "region" {
   description = "Region in which server and client will be deployed"
   value       = "${var.region}"
 }
+
+output "subnetwork" {
+  description = "Subnetwork where server and client will be deployed"
+  value       = "${var.subnetwork}"
+}

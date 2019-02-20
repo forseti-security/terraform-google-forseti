@@ -47,3 +47,6 @@ attributes:
   - name: region
     required: true
     description: "Region in which the server is deployed"
+  - name: subnetwork
+    required: true
+    description: "Subnetwork where server and client are deployed"

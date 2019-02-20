@@ -76,6 +76,7 @@ suites:
           backend: local
           shell: true
           controls:
+            - forseti-subnetwork
             - forseti-command-server
             - forseti-command-client
     provisioner:
