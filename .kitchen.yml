@@ -74,7 +74,6 @@ suites:
             - forseti-client
         - name: shared_vpc
           backend: local
-          shell: true
           controls:
             - forseti-subnetwork
             - forseti-command-server

@@ -53,3 +53,8 @@ output "subnetwork" {
   description = "Subnetwork where server and client will be deployed"
   value       = "${var.subnetwork}"
 }
+
+output "credentials_path" {
+  description = "Pass through the `credentials_path` variable so that InSpec can reuse the credentials"
+  value       = "${var.credentials_path}"
+}

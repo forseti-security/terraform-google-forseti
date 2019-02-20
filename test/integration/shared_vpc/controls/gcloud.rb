@@ -22,11 +22,16 @@ forseti_client_vm_ip    = attribute("forseti-client-vm-ip")
 region                  = attribute("region")
 subnetwork              = attribute("subnetwork")
 network_project         = attribute("network_project")
+credentials_path        = attribute('credentials_path')
+
+ENV['CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE'] = File.absolute_path(
+  credentials_path,
+  File.join(__dir__, "../../../fixtures/shared_vpc"))
 
 control 'forseti-subnetwork' do
   impact 1.0
   title 'Check that forseti server and client are on a proper subnet'
-  describe command(" gcloud compute instances describe #{forseti_server_vm_name} --project #{project_id} --zone #{region}-c --format=json") do
+  describe command("gcloud compute instances describe #{forseti_server_vm_name} --project #{project_id} --zone #{region}-c --format=json") do
     its(:exit_status) { should eq 0 }
     its(:stderr) { should eq '' }
 
@@ -42,7 +47,7 @@ control 'forseti-subnetwork' do
       expect(data[:networkInterfaces].first).to include(subnetwork: "https://www.googleapis.com/compute/v1/projects/#{network_project}/regions/#{region}/subnetworks/#{subnetwork}")
     end
   end
-  describe command(" gcloud compute instances describe #{forseti_client_vm_name} --project #{project_id} --zone #{region}-c --format=json") do
+  describe command("gcloud compute instances describe #{forseti_client_vm_name} --project #{project_id} --zone #{region}-c --format=json") do
     its(:exit_status) { should eq 0 }
     its(:stderr) { should eq '' }
 

@@ -15,7 +15,7 @@
  */
 
 variable "credentials_path" {
-  description = "Location of service account json credentials"
+  description = "Path to service account json"
 }
 
 variable "network_project" {

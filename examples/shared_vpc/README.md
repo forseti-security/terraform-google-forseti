@@ -29,4 +29,5 @@ This example illustrates how to set up a Forseti installation with shared VPC.
 | network\_project | A forwarded copy of `network_project` for InSpec |
 | subnetwork | A forwarded copy of `subnetwork` for InSpec |
 | region | A forwarded copy of `region` for InSpec |
+| credentials\_path | A forwarded copy of `credentials_path` for InSpec |
 
