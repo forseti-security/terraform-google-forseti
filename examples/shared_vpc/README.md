@@ -23,8 +23,10 @@ This example illustrates how to set up a Forseti installation with shared VPC.
 |------|-------------|
 | forseti-client-vm-ip | Forseti Client VM ip address |
 | forseti-client-vm-name | Forseti Client VM name |
+| forseti-client-vm-public-ip | Forseti Client VM public ip address |
 | forseti-server-vm-ip | Forseti Server VM ip address |
 | forseti-server-vm-name | Forseti Server VM name |
+| forseti-server-vm-public-ip | Forseti Server VM public ip address |
 | project\_id | A forwarded copy of `project_id` for InSpec |
 | network\_project | A forwarded copy of `network_project` for InSpec |
 | subnetwork | A forwarded copy of `subnetwork` for InSpec |
