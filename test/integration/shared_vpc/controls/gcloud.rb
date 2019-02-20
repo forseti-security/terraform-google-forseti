@@ -68,11 +68,11 @@ end
 control 'forseti-command-server' do
   impact 1.0
   title 'Check that forseti server is running'
-  describe command("gcloud compute ssh #{forseti_server_vm_name} --project #{project_id}  --zone=#{region}-c --command 'sudo systemctl status forseti --no-page'") do
+  describe command("sudo systemctl status forseti --no-page") do
     its(:exit_status) { should eq 0 }
     its(:stderr) { should eq '' }
   end
-  describe command("gcloud compute ssh #{forseti_server_vm_name} --project #{project_id}  --zone=#{region}-c --command 'forseti config show'") do
+  describe command("forseti config show") do
     its(:exit_status) { should eq 0 }
     its(:stderr) { should eq '' }
     its(:stdout) {should match /'endpoint': 'localhost:50051'/ }
@@ -82,7 +82,7 @@ end
 control 'forseti-command-client' do
   impact 1.0
   title 'Check that forseti client is running'
-  describe command("gcloud compute ssh #{forseti_client_vm_name} --project #{project_id}  --zone=#{region}-c --command 'forseti config show'") do
+  describe command("forseti config show") do
     its(:exit_status) { should eq 0 }
     its(:stderr) { should eq '' }
     its(:stdout) {should match /'endpoint': '#{forseti_client_vm_ip}:50051'/ }

@@ -20,14 +20,16 @@ provider "google-beta" {
 }
 
 module "forseti" {
-  source              = "../../"
-  project_id          = "${var.project_id}"
-  client_region       = "${var.region}"
-  gsuite_admin_email  = "${var.gsuite_admin_email}"
-  network             = "${var.network}"
-  subnetwork          = "${var.subnetwork}"
-  network_project     = "${var.network_project}"
-  org_id              = "${var.org_id}"
-  server_region       = "${var.region}"
-  domain              = "${var.domain}"
+  source                   = "../../"
+  project_id               = "${var.project_id}"
+  client_region            = "${var.region}"
+  gsuite_admin_email       = "${var.gsuite_admin_email}"
+  network                  = "${var.network}"
+  subnetwork               = "${var.subnetwork}"
+  network_project          = "${var.network_project}"
+  org_id                   = "${var.org_id}"
+  server_region            = "${var.region}"
+  domain                   = "${var.domain}"
+  client_instance_metadata = "${var.instance_metadata}"
+  server_instance_metadata = "${var.instance_metadata}"
 }

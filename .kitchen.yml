@@ -76,7 +76,25 @@ suites:
           backend: local
           controls:
             - forseti-subnetwork
+        - name: server
+          backend: ssh
+          controls:
             - forseti-command-server
+          hosts_output: forseti-server-vm-public-ip
+          user: ubuntu
+          key_files:
+            - test/fixtures/shared_vpc/sshkey
+          shell: true
+          shell_options: "--login"
+        - name: forseti-client
+          backend: ssh
+          controls:
             - forseti-command-client
+          hosts_output: forseti-client-vm-public-ip
+          user: ubuntu
+          key_files:
+            - test/fixtures/shared_vpc/sshkey
+          shell: true
+          shell_options: "--login"
     provisioner:
       name: terraform

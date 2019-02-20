@@ -14,6 +14,16 @@
  * limitations under the License.
  */
 
+resource "tls_private_key" "main" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "local_file" "gce-keypair-pk" {
+  content  = "${tls_private_key.main.private_key_pem}"
+  filename = "${path.module}/sshkey"
+}
+
 module "forseti-shared-vpc" {
   source              = "../../../examples/shared_vpc"
   credentials_path    = "${var.credentials_path}"
@@ -25,4 +35,8 @@ module "forseti-shared-vpc" {
   network_project     = "${var.network_project}"
   org_id              = "${var.org_id}"
   domain              = "${var.domain}"
+
+  instance_metadata {
+    sshKeys = "ubuntu:${tls_private_key.main.public_key_openssh}"
+  }
 }
