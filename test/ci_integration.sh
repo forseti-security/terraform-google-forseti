@@ -42,6 +42,9 @@ setup_environment() {
   export TF_VAR_domain="${DOMAIN}"
   export TF_VAR_gsuite_admin_email="${GSUITE_ADMIN_EMAIL}"
   export TF_VAR_credentials_path="${CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE}"
+  export TF_VAR_network_project="${NETWORK_PROJECT}"
+  export TF_VAR_network="${NETWORK}"
+  export TF_VAR_subnetwork="${SUBNETWORK}"
 }
 
 main() {
