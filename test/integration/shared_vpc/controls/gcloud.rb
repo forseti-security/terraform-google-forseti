@@ -74,7 +74,7 @@ control 'forseti-command-server' do
   describe command("forseti config show") do
     its(:exit_status) { should eq 0 }
     its(:stderr) { should eq '' }
-    its(:stdout) {should match /'endpoint': 'localhost:50051'/ }
+    its(:stdout) { should match /'endpoint': 'localhost:50051'/ }
   end
 end
 
@@ -84,6 +84,6 @@ control 'forseti-command-client' do
   describe command("forseti config show") do
     its(:exit_status) { should eq 0 }
     its(:stderr) { should eq '' }
-    its(:stdout) {should match /'endpoint': '#{forseti_server_vm_ip}:50051'/ }
+    its(:stdout) { should match /'endpoint': '#{forseti_server_vm_ip}:50051'/ }
   end
 end

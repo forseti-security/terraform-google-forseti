@@ -595,6 +595,12 @@ variable "network_project" {
   default     = ""
 }
 
+variable "source_ranges" {
+  description = "List of CIDRs that will be allowed gRPC access to forseti server"
+  type        = "list"
+  default     = ["10.128.0.0/9"]
+}
+
 #-------#
 # Flags #
 #-------#
