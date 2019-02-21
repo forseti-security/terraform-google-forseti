@@ -67,6 +67,7 @@ module "client" {
   forseti_repo_url         = "${var.forseti_repo_url}"
   client_type              = "${var.client_type}"
   network_project          = "${local.network_project}"
+  network                  = "${var.network}"
   suffix                   = "${local.random_hash}"
   client_region            = "${var.client_region}"
   client_instance_metadata = "${var.client_instance_metadata}"

@@ -19,7 +19,6 @@ network_project         = attribute("network_project")
 forseti_server_vm_name  = attribute("forseti-server-vm-name")
 forseti_server_vm_ip    = attribute("forseti-server-vm-ip")
 forseti_client_vm_name  = attribute("forseti-client-vm-name")
-forseti_client_vm_ip    = attribute("forseti-client-vm-ip")
 region                  = attribute("region")
 
 control 'forseti-service-project' do
