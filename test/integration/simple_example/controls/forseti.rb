@@ -123,5 +123,52 @@ control 'forseti' do
     its('firewall_names') { should include(/forseti-server-ssh-external/) }
     its('firewall_names') { should include(/forseti-server-allow-grpc/) }
     its('firewall_names') { should include(/forseti-server-deny-all/) }
+    its('firewall_names') { should include(/forseti-client-ssh-external/) }
+    its('firewall_names') { should include(/forseti-client-deny-all/) }
   end
+
+  google_compute_firewalls(project: project_id).where(firewall_name: /forseti-(server|client)-ssh-external/).firewall_names.each do |firewall_name|
+    describe google_compute_firewall(project: project_id, name: firewall_name) do
+      its('direction') { should eq "INGRESS" }
+      its('allowed_ssh?')  { should be true }
+      its('allowed_https?') { should be false }
+      its('allowed_http?') { should be false }
+      its('priority') { should eq 100 }
+      its('source_ranges') { should eq ["0.0.0.0/0"] }
+      it { should_not allow_port_protocol("21", "tcp") }
+      it { should_not allow_port_protocol("8080", "tcp") }
+    end
+  end
+
+  google_compute_firewalls(project: project_id).where(firewall_name: /forseti-server-allow-grpc/).firewall_names.each do |firewall_name|
+    describe google_compute_firewall(project: project_id, name: firewall_name) do
+      its('direction') { should eq "INGRESS" }
+      its('allowed_ssh?')  { should be false }
+      its('allowed_https?') { should be false }
+      its('allowed_http?') { should be false }
+      its('priority') { should eq 100 }
+      it { should_not allow_port_protocol("21", "tcp") }
+      it { should_not allow_port_protocol("8080", "tcp") }
+    end
+  end
+
+  google_compute_firewalls(project: project_id).where(firewall_name: /forseti-(client|server)-deny-all/).firewall_names.each do |firewall_name|
+    describe google_compute_firewall(project: project_id, name: firewall_name) do
+      its('direction') { should eq "INGRESS" }
+      its('priority') { should eq 200 }
+      its('source_ranges') { should eq ["0.0.0.0/0"] }
+      its('denied.first.ip_protocol') { should eq 'icmp' }
+
+      let(:denied) do
+        subject.denied
+      end
+      it 'denied.second.ip_protocol should eq udp' do
+        expect(denied[1].ip_protocol).to eq('udp')
+      end
+      it 'denied.third.ip_protocol should eq tcp' do
+        expect(denied[2].ip_protocol).to eq('tcp')
+      end
+    end
+  end
+
 end
