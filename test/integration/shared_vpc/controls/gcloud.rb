@@ -71,7 +71,7 @@ control 'forseti-command-server' do
     its(:exit_status) { should eq 0 }
     its(:stderr) { should eq '' }
   end
-  
+
   describe command("forseti config show") do
     its(:exit_status) { should eq 0 }
     its(:stderr) { should eq '' }
