@@ -71,10 +71,26 @@ control 'forseti-command-server' do
     its(:exit_status) { should eq 0 }
     its(:stderr) { should eq '' }
   end
+  
   describe command("forseti config show") do
     its(:exit_status) { should eq 0 }
     its(:stderr) { should eq '' }
-    its(:stdout) { should match /'endpoint': 'localhost:50051'/ }
+  end
+
+  describe command("forseti server configuration get") do
+    its('exit_status') { should eq 0 }
+  end
+
+  describe command('forseti_server') do
+    it { should exist }
+  end
+
+  describe command('forseti_enforcer') do
+    it { should exist }
+  end
+
+  describe command('forseti') do
+    it { should exist }
   end
 end
 

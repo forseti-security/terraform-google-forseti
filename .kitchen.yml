@@ -73,6 +73,7 @@ suites:
             - forseti-shared-project
             - forseti-server
             - forseti-client
+            - forseti-shared-firewall
         - name: shared_vpc
           backend: local
           controls:

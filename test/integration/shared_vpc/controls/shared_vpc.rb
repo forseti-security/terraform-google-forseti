@@ -20,6 +20,7 @@ forseti_server_vm_name  = attribute("forseti-server-vm-name")
 forseti_server_vm_ip    = attribute("forseti-server-vm-ip")
 forseti_client_vm_name  = attribute("forseti-client-vm-name")
 region                  = attribute("region")
+network                 = attribute("network")
 
 control 'forseti-service-project' do
   impact 1.0
@@ -58,5 +59,14 @@ control 'forseti-client' do
     its('has_disks_encrypted_with_csek?') { should be false }
     its('status') { should eq 'RUNNING' }
     its('disk_count'){should eq 1}
+  end
+end
+
+control 'forseti-shared-firewall' do
+  google_compute_firewalls(project: network_project).where(firewall_name: /forseti-/).firewall_names.each do |firewall_name|
+    describe google_compute_firewall(project: network_project, name: firewall_name) do
+      its('direction') { should eq "INGRESS" }
+      its('network') { should eq "https://www.googleapis.com/compute/v1/projects/#{network_project}/global/networks/#{network}" }
+    end
   end
 end
