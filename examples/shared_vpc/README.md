@@ -15,7 +15,7 @@ This example illustrates how to set up a Forseti installation with shared VPC.
 | network\_project | The ID of an existing host Google project where shared VPC lives | string | - | yes |
 | network | The name of an existing VPC in host Google project | string | - | yes |
 | subnetwork | The ID of a subnetwork in the shared VPC network  | string | - | yes |
-| region | The ID of an existing Google project where Forseti will be installed | string | us-east1 | no |
+| region | The ID of an existing Google project where Forseti will be installed | string | us-central1 | no |
 
 ## Outputs
 

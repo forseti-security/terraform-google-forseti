@@ -44,7 +44,7 @@ variable "subnetwork" {
 
 variable "region" {
   description = "Region where forseti subnetwork will be deployed"
-  default     = "us-east1"
+  default     = "us-central1"
 }
 
 variable "gsuite_admin_email" {
