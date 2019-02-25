@@ -98,6 +98,10 @@ On the organization:
 On the project:
 - `roles/owner`
 
+On the host project (when using shared VPC)
+- `roles/compute.securityAdmin`
+- `roles/compute.networkAdmin`
+
 ### GSuite Admin
 To use the IAM exploration functionality of Forseti, you will need a Super Admin on the Google Admin console. This admin's email must be passed in the `gsuite_admin_email` variable.
 
