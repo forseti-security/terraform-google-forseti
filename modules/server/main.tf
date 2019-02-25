@@ -343,10 +343,11 @@ module "server_rules" {
 }
 
 resource "google_storage_bucket" "cai_export" {
-  count    = "${var.enable_cai_bucket ? 1 : 0}"
-  name     = "${local.storage_cai_bucket_name}"
-  location = "${var.bucket_cai_location}"
-  project  = "${var.project_id}"
+  count         = "${var.enable_cai_bucket ? 1 : 0}"
+  name          = "${local.storage_cai_bucket_name}"
+  location      = "${var.bucket_cai_location}"
+  project       = "${var.project_id}"
+  force_destroy = "true"
 
   lifecycle_rule = {
     action = {
