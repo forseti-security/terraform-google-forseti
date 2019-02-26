@@ -40,3 +40,35 @@ module "forseti-shared-vpc" {
     sshKeys = "ubuntu:${tls_private_key.main.public_key_openssh}"
   }
 }
+
+resource "null_resource" "wait_for_server" {
+  triggers = {
+    always_run = "${uuid()}"
+  }
+
+  provisioner "remote-exec" {
+    script = "${path.module}/scripts/wait-for-forseti.sh"
+
+    connection {
+      user        = "ubuntu"
+      host        = "${module.forseti-shared-vpc.forseti-server-vm-public-ip}"
+      private_key = "${tls_private_key.main.private_key_pem}"
+    }
+  }
+}
+
+resource "null_resource" "wait_for_client" {
+  triggers = {
+    always_run = "${uuid()}"
+  }
+
+  provisioner "remote-exec" {
+    script = "${path.module}/scripts/wait-for-forseti.sh"
+
+    connection {
+      user        = "ubuntu"
+      host        = "${module.forseti-shared-vpc.forseti-client-vm-public-ip}"
+      private_key = "${tls_private_key.main.private_key_pem}"
+    }
+  }
+}
