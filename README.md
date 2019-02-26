@@ -61,6 +61,7 @@ Then perform the following commands on the config folder:
 | server\_type | GCE Forseti Server role instance size | string | `n1-standard-2` | no |
 | storage\_bucket\_location | GCS storage bucket location | string | `us-central1` | no |
 | subnetwork | The VPC subnetwork where the Forseti client and server will be created | string | `default` | no |
+| source_ranges | List of CIDRs that will be allowed gRPC access to forseti server | list | `["10.128.0.0/9"]` | no |
 
 ## Outputs
 
@@ -96,6 +97,10 @@ On the organization:
 
 On the project:
 - `roles/owner`
+
+On the host project (when using shared VPC)
+- `roles/compute.securityAdmin`
+- `roles/compute.networkAdmin`
 
 ### GSuite Admin
 To use the IAM exploration functionality of Forseti, you will need a Super Admin on the Google Admin console. This admin's email must be passed in the `gsuite_admin_email` variable.

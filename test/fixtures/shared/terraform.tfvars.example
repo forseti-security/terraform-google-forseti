@@ -1,0 +1,50 @@
+/**
+ * Copyright 2018 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+# Required: The path to a service account credentials file
+# Example:
+#credentials_path = "../../../credentials.json"
+
+# Required: user email account that has super admin access to the G Suite domain
+#gsuite_admin_email = "admin@example.com"
+
+# Required: the GCP organization ID
+# Example:
+#org_id = "000000000000"
+
+# Required: the GCP domain associated with the project_id
+#domain = "example.com"
+
+# Required: the GCP project where the Forseti resources will be created.
+# Example:
+#project_id = "forseti-test-e5ac"
+
+#------------------------------#
+# Additional variables necessary
+# for shared_vpc use case
+#------------------------------#
+
+# Required: ID of the project that will have shared VPC.
+# Example:
+#network_project = "sample-project-001"
+
+# Required: Name of the shared VPC
+# Example:
+#network = "shared-vpc"
+
+# Required: Name of the subnetwork where forseti will be deployed
+# Example:
+#subnetwork = "subnet-001"

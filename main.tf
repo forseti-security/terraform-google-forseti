@@ -67,6 +67,7 @@ module "client" {
   forseti_repo_url         = "${var.forseti_repo_url}"
   client_type              = "${var.client_type}"
   network_project          = "${local.network_project}"
+  network                  = "${var.network}"
   suffix                   = "${local.random_hash}"
   client_region            = "${var.client_region}"
   client_instance_metadata = "${var.client_instance_metadata}"
@@ -100,6 +101,7 @@ module "server" {
   network                                             = "${var.network}"
   subnetwork                                          = "${var.subnetwork}"
   network_project                                     = "${var.network_project}"
+  source_ranges                                       = "${var.source_ranges}"
   enable_write                                        = "${var.enable_write}"
   org_id                                              = "${var.org_id}"
   domain                                              = "${var.domain}"
@@ -138,7 +140,7 @@ module "server" {
   cloudasset_period                                   = "${var.cloudasset_period}",
   cloudasset_max_calls                                = "${var.cloudasset_max_calls}",
   cloudasset_disable_polling                          = "${var.cloudasset_disable_polling}",
-  inventory_retention_days                                  = "${var.inventory_retention_days}",
+  inventory_retention_days                            = "${var.inventory_retention_days}",
   cai_api_timeout                                     = "${var.cai_api_timeout}",
   bigquery_period                                     = "${var.bigquery_period}",
   bigquery_max_calls                                  = "${var.bigquery_max_calls}",

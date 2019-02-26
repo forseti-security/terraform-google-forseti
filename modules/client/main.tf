@@ -104,6 +104,48 @@ resource "google_compute_instance" "forseti-client" {
   ]
 }
 
+#------------------------#
+# Forseti firewall rules #
+#------------------------#
+resource "google_compute_firewall" "forseti-client-deny-all" {
+  name                    = "forseti-client-deny-all-${var.suffix}"
+  project                 = "${var.network_project}"
+  network                 = "${var.network}"
+  target_service_accounts = ["${google_service_account.forseti_client.email}"]
+  source_ranges           = ["0.0.0.0/0"]
+  priority                = "200"
+
+  deny {
+    protocol = "icmp"
+  }
+
+  deny {
+    protocol = "udp"
+  }
+
+  deny {
+    protocol = "tcp"
+  }
+
+  depends_on = ["null_resource.services-dependency"]
+}
+
+resource "google_compute_firewall" "forseti-client-ssh-external" {
+  name                    = "forseti-client-ssh-external-${var.suffix}"
+  project                 = "${var.network_project}"
+  network                 = "${var.network}"
+  target_service_accounts = ["${google_service_account.forseti_client.email}"]
+  source_ranges           = ["0.0.0.0/0"]
+  priority                = "100"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+
+  depends_on = ["null_resource.services-dependency"]
+}
+
 #----------------------#
 # Forseti client roles #
 #----------------------#
