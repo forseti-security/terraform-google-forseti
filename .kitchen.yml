@@ -26,6 +26,7 @@ suites:
       command_timeout: 1800
     verifier:
       name: terraform
+      color: false
       systems:
         - name: gcp
           backend: gcp
@@ -63,6 +64,7 @@ suites:
       root_module_directory: test/fixtures/shared_vpc
     verifier:
       name: terraform
+      color: false
       systems:
         - name: shared_vpc
           backend: gcp
