@@ -80,7 +80,10 @@ control 'forseti' do
   end
 
   describe google_storage_bucket_objects(bucket: forseti_server_storage_bucket) do
-    let(:files) do
+
+    # Enumerate the files that we expect to be present. This fixture ensures that we
+    # don't silently drop a rules file.
+    let(:expected_files) do
       %w[
         rules/audit_logging_rules.yaml
         rules/bigquery_rules.yaml
@@ -105,6 +108,18 @@ control 'forseti' do
         rules/service_account_key_rules.yaml
       ]
     end
+
+    # Enumerate the files that are present in the rules directory  This fixture ensures
+    # that we don't miss an included rules file.
+    let(:present_files) do
+      template_dir = File.expand_path(
+        "../../../../modules/rules/templates/rules",
+        __dir__
+      )
+      Dir.glob("#{template_dir}/*.yaml").map {|file| "rules/#{File.basename(file)}" }
+    end
+
+    let(:files) { expected_files | present_files }
 
     its('object_names') { should include(*files) }
   end
