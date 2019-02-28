@@ -32,7 +32,6 @@ EOF
 project_id=""
 host_project=""
 service_account_id=""
-org=""
 
 OPTIND=1
 while getopts ":h:p:s:f:o:" opt; do
@@ -46,8 +45,6 @@ while getopts ":h:p:s:f:o:" opt; do
         s)  service_account_id=$OPTARG
             ;;
         f)  host_project=$OPTARG
-            ;;
-        o)  org=$OPTARG
             ;;
         *)
             show_help >&2

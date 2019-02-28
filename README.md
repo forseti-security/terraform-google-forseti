@@ -244,9 +244,9 @@ Remember to cleanup the service account used to install Forseti either manually,
 
 ```bash
 # Standard setup
-./helpers/cleanup.sh -p <project_id> -o <org_name> -s <service_account_name>
+./helpers/cleanup.sh -p <project_id> -s <service_account_name>
 # Shared VPC setup
-./helpers/cleanup.sh -p <project_id> -f <host_project_id> -o <org_name> -s <service_account_name>
+./helpers/cleanup.sh -p <project_id> -f <host_project_id> -s <service_account_name>
 ```
 
 This will deprovision and delete the service account, and then delete the credentials file.
