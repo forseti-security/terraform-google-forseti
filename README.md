@@ -8,7 +8,7 @@ A simple setup is provided in the examples folder; however, the usage of the mod
 ```hcl
     module "forseti" {
       source  = "terraform-google-modules/forseti/google"
-      version = "v1.1.0"
+      version = "~> 1.2"
 
       gsuite_admin_email = "superadmin@yourdomain.com"
       domain             = "yourdomain.com"

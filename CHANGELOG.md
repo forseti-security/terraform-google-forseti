@@ -13,6 +13,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ### ADDED
 - Added new `shared-vpc` example, fix firewall rules for client SSH access. [#32]
+- Firewall rule source ranges are now user-controllable. [#32], [#67]
 
 ### CHANGED
 - Update forseti_version to v2.12.0. [#61]
@@ -57,7 +58,8 @@ Extending the adopted spec, each change should have a link to its corresponding 
 [v1.1.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.1.0...v1.1.1
 [v1.2.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.1.1...v1.2.0
 
-[#61]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/64
+[#67]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/67
+[#61]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/61
 [#64]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/64
 [#32]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/32
 [#56]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/56
