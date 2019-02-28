@@ -134,7 +134,6 @@ control 'forseti' do
       its('allowed_https?') { should be false }
       its('allowed_http?') { should be false }
       its('priority') { should eq 100 }
-      its('source_ranges') { should eq ["0.0.0.0/0"] }
       it { should_not allow_port_protocol("21", "tcp") }
       it { should_not allow_port_protocol("8080", "tcp") }
     end
