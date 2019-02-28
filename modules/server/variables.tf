@@ -595,10 +595,16 @@ variable "network_project" {
   default     = ""
 }
 
-variable "source_ranges" {
+variable "server_grpc_allow_ranges" {
   description = "List of CIDRs that will be allowed gRPC access to forseti server"
   type        = "list"
   default     = ["10.128.0.0/9"]
+}
+
+variable "server_ssh_allow_ranges" {
+  description = "List of CIDRs that will be allowed ssh access to forseti server"
+  type        = "list"
+  default     = ["0.0.0.0/0"]
 }
 
 #-------#

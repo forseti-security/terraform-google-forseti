@@ -290,7 +290,7 @@ resource "google_compute_firewall" "forseti-server-ssh-external" {
   project                 = "${local.network_project}"
   network                 = "${var.network}"
   target_service_accounts = ["${google_service_account.forseti_server.email}"]
-  source_ranges           = ["0.0.0.0/0"]
+  source_ranges           = "${var.server_ssh_allow_ranges}"
   priority                = "100"
 
   allow {
@@ -306,7 +306,7 @@ resource "google_compute_firewall" "forseti-server-allow-grpc" {
   project                 = "${local.network_project}"
   network                 = "${var.network}"
   target_service_accounts = ["${google_service_account.forseti_server.email}"]
-  source_ranges           = "${var.source_ranges}"
+  source_ranges           = "${var.server_grpc_allow_ranges}"
   priority                = "100"
 
   allow {

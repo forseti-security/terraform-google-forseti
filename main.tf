@@ -71,6 +71,7 @@ module "client" {
   suffix                   = "${local.random_hash}"
   client_region            = "${var.client_region}"
   client_instance_metadata = "${var.client_instance_metadata}"
+  client_ssh_allow_ranges  = "${var.client_ssh_allow_ranges}"
 
   services = "${google_project_service.main.*.service}"
 }
@@ -101,7 +102,8 @@ module "server" {
   network                                             = "${var.network}"
   subnetwork                                          = "${var.subnetwork}"
   network_project                                     = "${var.network_project}"
-  source_ranges                                       = "${var.source_ranges}"
+  server_grpc_allow_ranges                            = "${var.server_grpc_allow_ranges}"
+  server_ssh_allow_ranges                             = "${var.server_ssh_allow_ranges}"
   enable_write                                        = "${var.enable_write}"
   org_id                                              = "${var.org_id}"
   domain                                              = "${var.domain}"
