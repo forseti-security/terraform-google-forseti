@@ -54,6 +54,12 @@ suites:
             - test/fixtures/simple_example/sshkey
           shell: true
           shell_options: "--login"
+
+        - name: org-iam
+          backend: local
+          controls:
+            - forseti-org-iam
+
       provisioner:
         name: terraform
 

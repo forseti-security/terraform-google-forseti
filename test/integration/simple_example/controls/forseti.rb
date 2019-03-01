@@ -15,6 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+org_id = attribute('org_id')
 project_id = attribute('project_id')
 forseti_client_vm_name = attribute('forseti-client-vm-name')
 forseti_server_vm_name = attribute('forseti-server-vm-name')
@@ -184,5 +185,38 @@ control 'forseti' do
       end
     end
   end
+end
 
+control 'forseti-org-iam' do
+  title "Validate organization roles of SA"
+  describe command("gcloud organizations get-iam-policy #{org_id} --filter='bindings.members:#{forseti_server_service_account}' --flatten='bindings[].members' --format='csv(bindings.role)'") do
+    its(:exit_status) { should eq 0 }
+    its(:stderr) { should eq '' }
+
+    let(:sa_roles) do
+      roles = Array.new
+      CSV.parse(subject.stdout).each {|role|
+        roles.push(role[0])
+      }
+      roles[1..-1]
+    end
+
+    expected_roles = [
+      "roles/appengine.appViewer",
+      "roles/bigquery.dataViewer",
+      "roles/bigquery.metadataViewer",
+      "roles/browser",
+      "roles/cloudasset.viewer",
+      "roles/cloudsql.viewer",
+      "roles/compute.networkViewer",
+      "roles/iam.securityReviewer",
+      "roles/orgpolicy.policyViewer",
+      "roles/servicemanagement.quotaViewer",
+      "roles/serviceusage.serviceUsageConsumer",
+    ]
+
+    it 'has all expected org roles' do
+      expect(sa_roles).to match_array(expected_roles)
+    end
+  end
 end
