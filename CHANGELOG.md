@@ -8,6 +8,20 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ## [Unreleased]
 
+## [v1.2.0]
+1.2.0 is a backwards compatible feature and bugfix release. This module release supports Forseti v2.12.0.
+
+### ADDED
+- Added new `shared-vpc` example, fix firewall rules for client SSH access. [#32]
+- Firewall rule source ranges are now user-controllable. [#32], [#67]
+
+### CHANGED
+- Update forseti_version to v2.12.0. [#61]
+
+### FIXED
+- `terraform destroy` now removes non-empty CAI export buckets [#56]
+- Add missing `kms_rules.yaml` rules file. [#64]
+
 ## [v1.1.1]
 1.1.1 is a backward compatible feature release. This module release supports Forseti v2.11.1.
 
@@ -42,7 +56,13 @@ Extending the adopted spec, each change should have a link to its corresponding 
 [v1.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v0.1.0...v1.0.0
 [v1.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.0.0...v1.1.0
 [v1.1.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.1.0...v1.1.1
+[v1.2.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.1.1...v1.2.0
 
+[#67]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/67
+[#61]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/61
+[#64]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/64
+[#32]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/32
+[#56]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/56
 [#33]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/33
 [#44]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/44
 [#45]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/45

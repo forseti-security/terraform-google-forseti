@@ -31,6 +31,7 @@ locals {
     "rules/instance_network_interface_rules.yaml",
     "rules/ke_rules.yaml",
     "rules/ke_scanner_rules.yaml",
+    "rules/kms_rules.yaml",
     "rules/lien_rules.yaml",
     "rules/location_rules.yaml",
     "rules/log_sink_rules.yaml",

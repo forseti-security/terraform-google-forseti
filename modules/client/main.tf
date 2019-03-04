@@ -135,7 +135,7 @@ resource "google_compute_firewall" "forseti-client-ssh-external" {
   project                 = "${var.network_project}"
   network                 = "${var.network}"
   target_service_accounts = ["${google_service_account.forseti_client.email}"]
-  source_ranges           = ["0.0.0.0/0"]
+  source_ranges           = "${var.client_ssh_allow_ranges}"
   priority                = "100"
 
   allow {

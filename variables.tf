@@ -27,7 +27,7 @@ variable "gsuite_admin_email" {
 
 variable "forseti_version" {
   description = "The version of Forseti to install"
-  default     = "v2.11.1"
+  default     = "v2.12.0"
 }
 
 variable "forseti_repo_url" {
@@ -79,10 +79,16 @@ variable "server_instance_metadata" {
   default     = {}
 }
 
-variable "source_ranges" {
+variable "server_grpc_allow_ranges" {
   description = "List of CIDRs that will be allowed gRPC access to forseti server"
   type        = "list"
   default     = ["10.128.0.0/9"]
+}
+
+variable "server_ssh_allow_ranges" {
+  description = "List of CIDRs that will be allowed ssh access to forseti server"
+  type        = "list"
+  default     = ["0.0.0.0/0"]
 }
 
 #---------------------------------#
@@ -559,6 +565,12 @@ variable "client_instance_metadata" {
   description = "Metadata key/value pairs to make available from within the client instance."
   type        = "map"
   default     = {}
+}
+
+variable "client_ssh_allow_ranges" {
+  description = "List of CIDRs that will be allowed ssh access to forseti client"
+  type        = "list"
+  default     = ["0.0.0.0/0"]
 }
 
 #------------#
