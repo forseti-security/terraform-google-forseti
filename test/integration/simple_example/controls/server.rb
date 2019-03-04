@@ -417,7 +417,9 @@ control 'server' do
     end
   end
 
-  %w[
+  # Enumerate the files that we expect to be present. This fixture ensures that we
+  # don't silently drop a rules file.
+  expected_files = %w[
     audit_logging_rules.yaml
     bigquery_rules.yaml
     blacklist_rules.yaml
@@ -439,7 +441,17 @@ control 'server' do
     resource_rules.yaml
     retention_rules.yaml
     service_account_key_rules.yaml
-  ].each do |file|
+  ]
+
+  template_dir = File.expand_path("../../../../modules/rules/templates/rules", __dir__)
+
+  # Enumerate the files that are present in the rules directory. This fixture ensures
+  # that we don't miss an included rules file.
+  present_files = Dir.glob("#{template_dir}/*.yaml").map {|file| File.basename(file) }
+
+  files = expected_files | present_files
+
+  files.each do |file|
     describe file("/home/ubuntu/forseti-security/rules/#{file}") do
       it { should exist }
       it "is valid YAML" do
