@@ -189,31 +189,29 @@ end
 
 control 'forseti-org-iam' do
   title "Validate organization roles of SA"
-  describe command("gcloud organizations get-iam-policy #{org_id} --filter='bindings.members:#{forseti_server_service_account}' --flatten='bindings[].members' --format='csv(bindings.role)'") do
+  describe command("gcloud organizations get-iam-policy #{org_id} --filter='bindings.members:#{forseti_server_service_account}' --flatten='bindings[].members' --format='json(bindings.role)'") do
     its(:exit_status) { should eq 0 }
     its(:stderr) { should eq '' }
 
     let(:sa_roles) do
-      roles = Array.new
-      CSV.parse(subject.stdout).each {|role|
-        roles.push(role[0])
-      }
-      roles[1..-1]
+      JSON.parse(subject.stdout).map { |a| a["bindings"]["role"] }
     end
 
-    expected_roles = [
-      "roles/appengine.appViewer",
-      "roles/bigquery.dataViewer",
-      "roles/bigquery.metadataViewer",
-      "roles/browser",
-      "roles/cloudasset.viewer",
-      "roles/cloudsql.viewer",
-      "roles/compute.networkViewer",
-      "roles/iam.securityReviewer",
-      "roles/orgpolicy.policyViewer",
-      "roles/servicemanagement.quotaViewer",
-      "roles/serviceusage.serviceUsageConsumer",
-    ]
+    let(:expected_roles) do
+      [
+        "roles/appengine.appViewer",
+        "roles/bigquery.dataViewer",
+        "roles/bigquery.metadataViewer",
+        "roles/browser",
+        "roles/cloudasset.viewer",
+        "roles/cloudsql.viewer",
+        "roles/compute.networkViewer",
+        "roles/iam.securityReviewer",
+        "roles/orgpolicy.policyViewer",
+        "roles/servicemanagement.quotaViewer",
+        "roles/serviceusage.serviceUsageConsumer",
+      ]
+    end
 
     it 'has all expected org roles' do
       expect(sa_roles).to match_array(expected_roles)
