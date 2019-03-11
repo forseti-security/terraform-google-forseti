@@ -24,9 +24,13 @@ This example illustrates how to set up a Forseti installation with shared VPC.
 | Name | Description |
 |------|-------------|
 | credentials\_path | Pass through the `credentials_path` variable so that InSpec can reuse the credentials |
+| forseti-client-service-account | Forseti Client service account |
+| forseti-client-storage-bucket | Forseti Client storage bucket |
 | forseti-client-vm-ip | Forseti Client VM private IP address |
 | forseti-client-vm-name | Forseti Client VM name |
 | forseti-client-vm-public-ip | Forseti Client VM public IP address |
+| forseti-server-service-account | Forseti Server service account |
+| forseti-server-storage-bucket | Forseti Server storage bucket |
 | forseti-server-vm-ip | Forseti Server VM private IP address |
 | forseti-server-vm-name | Forseti Server VM name |
 | forseti-server-vm-public-ip | Forseti Server VM public IP address |

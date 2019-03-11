@@ -28,6 +28,10 @@ attributes:
     required: true
     description: 'Shared VPC Project ID.'
     type: string
+  - name: org_id
+    required: true
+    description: 'Organization ID'
+    type: string
   - name: project_id
     required: true
     description: 'Forseti project id. This is a service project.'
@@ -56,3 +60,15 @@ attributes:
   - name: credentials_path
     required: true
     description: "Path to service account credentials file"
+  - name: forseti-client-storage-bucket
+    required: true
+    description: "Forseti Client Storage Bucket"
+  - name: forseti-server-storage-bucket
+    required: true
+    description: "Forseti Server Storage Bucket"
+  - name: forseti-client-service-account
+    required: true
+    description: "Forseti Client Service Account"
+  - name: forseti-server-service-account
+    required: true
+    description: "Forseti Server Service Account"

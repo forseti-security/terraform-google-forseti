@@ -81,14 +81,17 @@ suites:
             - forseti-server
             - forseti-client
             - forseti-shared-firewall
-        - name: shared_vpc
+            - forseti
+        - name: gcloud
           backend: local
           controls:
             - forseti-subnetwork
+            - forseti-org-iam
         - name: server
           backend: ssh
           controls:
             - forseti-command-server
+            - server
           hosts_output: forseti-server-vm-public-ip
           user: ubuntu
           key_files:
@@ -99,6 +102,7 @@ suites:
           backend: ssh
           controls:
             - forseti-command-client
+            - client
           hosts_output: forseti-client-vm-public-ip
           user: ubuntu
           key_files:
