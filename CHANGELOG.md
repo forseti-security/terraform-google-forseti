@@ -8,6 +8,15 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ## [Unreleased]
 
+## [v1.3.0]
+1.3.0 is a backwards compatible feature release. This module release supports Forseti v2.13.0.
+
+### ADDED
+- Added server service account to the `roles/bigquery.metadataViewer` role. [#71]
+
+### CHANGED
+- Changed `forseti_version` default to v2.13.0. [#73]
+
 ## [v1.2.0]
 1.2.0 is a backwards compatible feature and bugfix release. This module release supports Forseti v2.12.0.
 
@@ -52,12 +61,15 @@ Extending the adopted spec, each change should have a link to its corresponding 
 ### ADDED
 - This is the initial release of the Forseti module.
 
-[Unreleased]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.3.0...HEAD
 [v1.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v0.1.0...v1.0.0
 [v1.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.0.0...v1.1.0
 [v1.1.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.1.0...v1.1.1
 [v1.2.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.1.1...v1.2.0
+[v1.3.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.2.0...v1.3.0
 
+[#73]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/73
+[#71]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/71
 [#67]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/67
 [#61]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/61
 [#64]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/64
