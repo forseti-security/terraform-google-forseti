@@ -68,3 +68,8 @@ output "project_id" {
   description = "A forwarded copy of `project_id` for InSpec"
   value       = "${var.project_id}"
 }
+
+output "org_id" {
+  description = "A forwarded copy of `org_id` for InSpec"
+  value       = "${var.org_id}"
+}

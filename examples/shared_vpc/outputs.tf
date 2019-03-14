@@ -73,3 +73,23 @@ output "credentials_path" {
   description = "Pass through the `credentials_path` variable so that InSpec can reuse the credentials"
   value       = "${var.credentials_path}"
 }
+
+output "forseti-client-storage-bucket" {
+  description = "Forseti Client storage bucket"
+  value       = "${module.forseti.forseti-client-storage-bucket}"
+}
+
+output "forseti-server-storage-bucket" {
+  description = "Forseti Server storage bucket"
+  value       = "${module.forseti.forseti-server-storage-bucket}"
+}
+
+output "forseti-client-service-account" {
+  description = "Forseti Client service account"
+  value       = "${module.forseti.forseti-client-service-account}"
+}
+
+output "forseti-server-service-account" {
+  description = "Forseti Server service account"
+  value       = "${module.forseti.forseti-server-service-account}"
+}
