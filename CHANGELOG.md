@@ -8,7 +8,16 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ## [Unreleased]
 
-## [v1.2.0]
+## [v1.3.0] - 2019-03-14
+1.3.0 is a backwards compatible feature release. This module release supports Forseti v2.13.0.
+
+### ADDED
+- Added server service account to the `roles/bigquery.metadataViewer` role. [#71]
+
+### CHANGED
+- Changed `forseti_version` default to v2.13.0. [#73]
+
+## [v1.2.0] - 2019-02-28
 1.2.0 is a backwards compatible feature and bugfix release. This module release supports Forseti v2.12.0.
 
 ### ADDED
@@ -22,13 +31,13 @@ Extending the adopted spec, each change should have a link to its corresponding 
 - `terraform destroy` now removes non-empty CAI export buckets [#56]
 - Add missing `kms_rules.yaml` rules file. [#64]
 
-## [v1.1.1]
+## [v1.1.1] - 2019-02-15
 1.1.1 is a backward compatible feature release. This module release supports Forseti v2.11.1.
 
 ### CHANGED
 - Update forseti_version to v2.11.1. [#59]
 
-## [v1.1.0]
+## [v1.1.0] - 2019-02-15
 1.1.0 is a backward compatible feature release. This module release supports Forseti v2.11.0.
 
 ### ADDED
@@ -43,21 +52,24 @@ Extending the adopted spec, each change should have a link to its corresponding 
 - Fix cron default frequency to be every 2 hours. [#47]
 - Update forseti_version to v2.11.0. [#58]
 
-## [v1.0.0]
+## [v1.0.0] - 2019-01-29
 1.0.0 is a backwards incompatible release and is a full rewrite of the module.
 ### CHANGED
 - Terraform now installs and manages all Forseti resources instead of using the Deployment Manager. [#33]
 
-## [v0.1.0]
+## [v0.1.0] - 2018-09-13
 ### ADDED
 - This is the initial release of the Forseti module.
 
-[Unreleased]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.3.0...HEAD
 [v1.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v0.1.0...v1.0.0
 [v1.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.0.0...v1.1.0
 [v1.1.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.1.0...v1.1.1
 [v1.2.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.1.1...v1.2.0
+[v1.3.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.2.0...v1.3.0
 
+[#73]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/73
+[#71]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/71
 [#67]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/67
 [#61]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/61
 [#64]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/64
