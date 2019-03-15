@@ -73,3 +73,28 @@ output "credentials_path" {
   description = "Pass through the `credentials_path` variable so that InSpec can reuse the credentials"
   value       = "${var.credentials_path}"
 }
+
+output "org_id" {
+  description = "A forwarded copy of `org_id` for InSpec"
+  value       = "${var.org_id}"
+}
+
+output "forseti-client-storage-bucket" {
+  description = "Forseti Client storage bucket"
+  value       = "${module.forseti-shared-vpc.forseti-client-storage-bucket}"
+}
+
+output "forseti-server-storage-bucket" {
+  description = "Forseti Server storage bucket"
+  value       = "${module.forseti-shared-vpc.forseti-server-storage-bucket}"
+}
+
+output "forseti-client-service-account" {
+  description = "Forseti Client service account"
+  value       = "${module.forseti-shared-vpc.forseti-client-service-account}"
+}
+
+output "forseti-server-service-account" {
+  description = "Forseti Server service account"
+  value       = "${module.forseti-shared-vpc.forseti-server-service-account}"
+}
