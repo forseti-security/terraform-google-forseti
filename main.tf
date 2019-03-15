@@ -169,6 +169,7 @@ module "server" {
   firewall_rule_enabled                               = "${var.firewall_rule_enabled}",
   enabled_apis_enabled                                = "${var.enabled_apis_enabled}",
   cloudsql_acl_enabled                                = "${var.cloudsql_acl_enabled}",
+  config_validator_enabled                            = "${var.config_validator_enabled}"
   bucket_acl_enabled                                  = "${var.bucket_acl_enabled}",
   blacklist_enabled                                   = "${var.blacklist_enabled}",
   bigquery_enabled                                     = "${var.bigquery_enabled}",
@@ -196,6 +197,7 @@ module "server" {
   cscc_violations_enabled                             = "${var.cscc_violations_enabled}",
   cscc_source_id                                      = "${var.cscc_source_id}",
   cloudsql_acl_violations_should_notify               = "${var.cloudsql_acl_violations_should_notify}",
+  config_validator_violations_should_notify           = "${var.config_validator_violations_should_notify}",
   buckets_acl_violations_should_notify                = "${var.buckets_acl_violations_should_notify}",
   blacklist_violations_should_notify                  = "${var.blacklist_violations_should_notify}",
   bigquery_acl_violations_should_notify               = "${var.bigquery_acl_violations_should_notify}",
