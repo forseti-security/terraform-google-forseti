@@ -230,7 +230,7 @@ Remember to activate the Domain Wide Delegation on the Service Account that Fors
 
 The service account has the form `forseti-server-gcp-<number>@<project_id>.iam.gserviceaccount.com`.
 
-Please refer to [the Forseti documentation](https://forsetisecurity.org/docs/howto/configure/gsuite-group-collection.html) for step by step directions.
+Please refer to [the Forseti documentation](https://forsetisecurity.org/docs/latest/configure/inventory/gsuite.html) for step by step directions.
 
 More information about Domain Wide Delegation can be found [here](https://developers.google.com/admin-sdk/directory/v1/guides/delegation).
 
