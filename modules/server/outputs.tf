@@ -26,7 +26,7 @@ output "forseti-server-vm-ip" {
 
 output "forseti-server-vm-public-ip" {
   description = "Forseti Server VM public IP address"
-  value       = "${google_compute_instance.forseti-server.network_interface.0.access_config.0.nat_ip}"
+  value       = "${join("", google_compute_instance.forseti-server.network_interface.0.access_config.0.nat_ip)}"
 }
 
 output "forseti-server-service-account" {

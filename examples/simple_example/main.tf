@@ -39,4 +39,8 @@ module "forseti-install-simple" {
   domain                   = "${var.domain}"
   client_instance_metadata = "${var.instance_metadata}"
   server_instance_metadata = "${var.instance_metadata}"
+  client_tags              = "${var.instance_tags}"
+  server_tags              = "${var.instance_tags}"
+  client_private           = "${var.private}"
+  server_private           = "${var.private}"
 }

@@ -71,6 +71,19 @@ locals {
   server_cscc_roles = [
     "roles/securitycenter.findingsEditor",
   ]
+  network_interface_base = {
+    private = {
+      subnetwork_project = "${local.network_project}"
+      subnetwork         = "${var.subnetwork}"
+    }
+
+    public = {
+      subnetwork_project = "${local.network_project}"
+      subnetwork         = "${var.subnetwork}"
+      access_config      = {}
+    }
+  }
+  network_interface = "${local.network_interface_base[var.server_private ? "private" : "public"]}"
 }
 
 #-------------------#
@@ -390,9 +403,8 @@ resource "google_storage_bucket" "cai_export" {
 # Forseti server instance #
 #-------------------------#
 resource "google_compute_instance" "forseti-server" {
-  count = "${var.server_private ? 0 : 1}"
-  name  = "${local.server_name}"
-  zone  = "${local.server_zone}"
+  name = "${local.server_name}"
+  zone = "${local.server_zone}"
 
   project                   = "${var.project_id}"
   machine_type              = "${var.server_type}"
@@ -405,49 +417,7 @@ resource "google_compute_instance" "forseti-server" {
     }
   }
 
-  network_interface {
-    subnetwork_project = "${local.network_project}"
-    subnetwork         = "${var.subnetwork}"
-
-    access_config {}
-  }
-
-  metadata = "${var.server_instance_metadata}"
-
-  metadata_startup_script = "${data.template_file.forseti_server_startup_script.rendered}"
-
-  service_account {
-    email  = "${google_service_account.forseti_server.email}"
-    scopes = ["cloud-platform"]
-  }
-
-  depends_on = [
-    "google_service_account.forseti_server",
-    "module.server_rules",
-    "null_resource.services-dependency",
-  ]
-}
-
-resource "google_compute_instance" "forseti-server" {
-  count = "${var.server_private ? 1 : 0}"
-  name  = "${local.server_name}"
-  zone  = "${local.server_zone}"
-
-  project                   = "${var.project_id}"
-  machine_type              = "${var.server_type}"
-  tags                      = "${var.server_tags}"
-  allow_stopping_for_update = true
-
-  boot_disk {
-    initialize_params {
-      image = "${var.server_boot_image}"
-    }
-  }
-
-  network_interface {
-    subnetwork_project = "${local.network_project}"
-    subnetwork         = "${var.subnetwork}"
-  }
+  network_interface = ["${local.network_interface}"]
 
   metadata = "${var.server_instance_metadata}"
 

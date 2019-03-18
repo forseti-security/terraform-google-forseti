@@ -39,3 +39,14 @@ variable "instance_metadata" {
   type        = "map"
   default     = {}
 }
+
+variable "instance_tags" {
+  description = "Tags to assign the client and server instances."
+  type        = "list"
+  default     = []
+}
+
+variable "private" {
+  description = "Private client and server instances (no public IPs)"
+  default     = false
+}
