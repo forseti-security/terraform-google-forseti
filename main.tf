@@ -73,6 +73,8 @@ module "client" {
   client_region            = "${var.client_region}"
   client_instance_metadata = "${var.client_instance_metadata}"
   client_ssh_allow_ranges  = "${var.client_ssh_allow_ranges}"
+  client_tags              = "${var.client_tags}"
+  client_private           = "${var.client_private}"
 
   services = "${google_project_service.main.*.service}"
 }
@@ -92,6 +94,8 @@ module "server" {
   server_type                                         = "${var.server_type}"
   server_region                                       = "${var.server_region}"
   server_boot_image                                   = "${var.server_boot_image}"
+  server_tags                                         = "${var.server_tags}"
+  server_private                                      = "${var.server_private}"
   cloudsql_region                                     = "${var.cloudsql_region}"
   cloudsql_db_name                                    = "${var.cloudsql_db_name}"
   cloudsql_db_port                                    = "${var.cloudsql_db_port}"

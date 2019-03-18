@@ -70,10 +70,12 @@ data "template_file" "forseti_client_config" {
 # Forseti client VM #
 #-------------------#
 resource "google_compute_instance" "forseti-client" {
+  count                     = "${var.client_private ? 0 : 1}"
   name                      = "${local.client_name}"
   zone                      = "${local.client_zone}"
   project                   = "${var.project_id}"
   machine_type              = "${var.client_type}"
+  tags                      = "${var.client_tags}"
   allow_stopping_for_update = true
 
   boot_disk {
@@ -87,6 +89,41 @@ resource "google_compute_instance" "forseti-client" {
     subnetwork         = "${var.subnetwork}"
 
     access_config {}
+  }
+
+  metadata = "${var.client_instance_metadata}"
+
+  metadata_startup_script = "${data.template_file.forseti_client_startup_script.rendered}"
+
+  service_account {
+    email  = "${google_service_account.forseti_client.email}"
+    scopes = ["cloud-platform"]
+  }
+
+  depends_on = [
+    "null_resource.services-dependency",
+    "google_storage_bucket_object.forseti_client_config",
+  ]
+}
+
+resource "google_compute_instance" "forseti-client" {
+  count                     = "${var.client_private ? 1 : 0}"
+  name                      = "${local.client_name}"
+  zone                      = "${local.client_zone}"
+  project                   = "${var.project_id}"
+  machine_type              = "${var.client_type}"
+  tags                      = "${var.client_tags}"
+  allow_stopping_for_update = true
+
+  boot_disk {
+    initialize_params {
+      image = "${var.client_boot_image}"
+    }
+  }
+
+  network_interface {
+    subnetwork_project = "${var.network_project}"
+    subnetwork         = "${var.subnetwork}"
   }
 
   metadata = "${var.client_instance_metadata}"

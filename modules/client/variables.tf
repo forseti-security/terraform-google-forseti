@@ -89,6 +89,17 @@ variable "client_instance_metadata" {
   default     = {}
 }
 
+variable "client_tags" {
+  description = "VM instance tags"
+  type        = "list"
+  default     = []
+}
+
+variable "client_private" {
+  description = "Enable private Forseti client VM (no public IP)"
+  default     = false
+}
+
 variable "suffix" {
   description = "The random suffix to append to all Forseti resources"
 }
