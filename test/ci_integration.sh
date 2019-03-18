@@ -18,7 +18,7 @@
 DELETE_AT_EXIT="$(mktemp -d)"
 finish() {
   echo 'BEGIN: finish() trap handler' >&2
-  kitchen destroy
+  kitchen destroy "$SUITE"
   [[ -d "${DELETE_AT_EXIT}" ]] && rm -rf "${DELETE_AT_EXIT}"
   echo 'END: finish() trap handler' >&2
 }
@@ -48,6 +48,7 @@ setup_environment() {
 }
 
 main() {
+  SUITE="${SUITE:-}"
   set -eu
   # Setup trap handler to auto-cleanup
   export TMPDIR="${DELETE_AT_EXIT}"
@@ -58,9 +59,9 @@ main() {
   set -x
 
   # Execute the test lifecycle
-  kitchen create
-  kitchen converge
-  kitchen verify
+  kitchen create "$SUITE"
+  kitchen converge "$SUITE"
+  kitchen verify "$SUITE"
 }
 
 # if script is being executed and not sourced.

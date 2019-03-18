@@ -1,0 +1,23 @@
+---
+
+platform: linux
+
+inputs:
+- name: pull-request
+  path: terraform-google-forseti
+
+run:
+  path: make
+  args: ["test_integration"]
+  dir: terraform-google-forseti
+
+params:
+  SUITE: "shared-vpc-local"
+  PROJECT_ID: PROJECT_ID
+  ORG_ID: ORG_ID
+  DOMAIN: DOMAIN
+  GSUITE_ADMIN_EMAIL: GSUITE_ADMIN_EMAIL
+  SERVICE_ACCOUNT_JSON: SERVICE_ACCOUNT_JSON
+  NETWORK_PROJECT: NETWORK_PROJECT
+  NETWORK: NETWORK
+  SUBNETWORK: SUBNETWORK
