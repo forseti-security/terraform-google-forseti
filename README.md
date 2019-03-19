@@ -55,6 +55,9 @@ Then perform the following commands on the config folder:
 | client\_region | GCE Forseti Client role region size | string | `"us-central1"` | no |
 | client\_ssh\_allow\_ranges | List of CIDRs that will be allowed ssh access to forseti client | list | `<list>` | no |
 | client\_type | GCE Forseti Client role instance size | string | `"n1-standard-2"` | no |
+| client\_tags | GCE Forseti Client VM Tags | list | `[]` | no |
+| client\_access_config | Client instance 'access_config' block | map | `{}` | no |
+| client\_private | Private GCE Forseti Client VM (no public IP) | boolean | true | no |
 | cloudasset\_disable\_polling | Whether to disable polling for Cloud Asset API | string | `"False"` | no |
 | cloudasset\_max\_calls | Maximum calls that can be made to Cloud Asset API | string | `"1"` | no |
 | cloudasset\_period | The period of max calls for the Cloud Asset API (in seconds) | string | `"1.0"` | no |
@@ -149,6 +152,9 @@ Then perform the following commands on the config folder:
 | server\_region | GCP region where Forseti will be deployed | string | `"us-central1"` | no |
 | server\_ssh\_allow\_ranges | List of CIDRs that will be allowed ssh access to forseti server | list | `<list>` | no |
 | server\_type | GCE Forseti Server role instance size | string | `"n1-standard-2"` | no |
+| server\_tags | GCE Forseti Server VM Tags | list | `[]` | no |
+| server\_access_config | Server instance 'access_config' block | map | `{}` | no |
+| server\_private | Private GCE Forseti Server VM (no public IP) | boolean | true | no |
 | service\_account\_key\_enabled | Service account key scanner enabled. | string | `"true"` | no |
 | service\_account\_key\_violations\_should\_notify | Notify for service account key violations | string | `"true"` | no |
 | servicemanagement\_disable\_polling | Whether to disable polling for Service Management API | string | `"False"` | no |
