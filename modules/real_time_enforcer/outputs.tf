@@ -38,3 +38,8 @@ output "forseti-rt-enforcer-storage-bucket" {
   description = "Forseti Enforcer storage bucket"
   value       = "${google_storage_bucket.main.name}"
 }
+
+output "forseti-rt-enforcer-topic" {
+  description = "The Forseti Enforcer events topic"
+  value       = "${google_pubsub_topic.main.name}"
+}

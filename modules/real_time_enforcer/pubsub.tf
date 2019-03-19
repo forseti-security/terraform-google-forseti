@@ -19,7 +19,7 @@
 #----------------------------------#
 
 resource "google_pubsub_topic" "main" {
-  name    = "real-time-enforcer-events-topic"
+  name    = "real-time-enforcer-events-topic-${var.suffix}"
   project = "${var.project_id}"
 }
 
@@ -29,7 +29,7 @@ resource "google_pubsub_topic" "main" {
 
 resource "google_pubsub_subscription" "main" {
   project = "${var.project_id}"
-  name    = "real-time-enforcer-events-subscription"
+  name    = "real-time-enforcer-events-subscription-${var.suffix}"
   topic   = "${google_pubsub_topic.main.name}"
 }
 

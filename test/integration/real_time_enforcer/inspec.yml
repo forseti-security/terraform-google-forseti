@@ -62,6 +62,9 @@ attributes:
 - name: forseti-rt-enforcer-service-account
   required: true
   type: string
+- name: forseti-rt-enforcer-topic
+  required: true
+  type: string
 
 depends:
   - name: inspec-gcp

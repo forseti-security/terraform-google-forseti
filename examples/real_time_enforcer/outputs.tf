@@ -100,3 +100,8 @@ output "forseti-rt-enforcer-storage-bucket" {
   description = "Forseti Enforcer storage bucket"
   value       = "${module.real_time_enforcer.forseti-rt-enforcer-storage-bucket}"
 }
+
+output "forseti-rt-enforcer-topic" {
+  description = "The Forseti Enforcer events topic"
+  value       = "${module.real_time_enforcer.forseti-rt-enforcer-topic}"
+}
