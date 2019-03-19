@@ -14,7 +14,8 @@ This example illustrates how to set up a minimal Forseti installation.
 | instance\_metadata | Metadata key/value pairs to make available from within the client and server instances. | map | `<map>` | no |
 | org\_id | GCP Organization ID that Forseti will have purview over | string | n/a | yes |
 | project\_id | The ID of an existing Google project where Forseti will be installed | string | n/a | yes |
-| private | Private client and server instances (no public IPs) | boolean | true | yes |
+| region | Region where forseti subnetwork will be deployed | string | us-central1 | no |
+| public\_ptr\_domain\_name | Forseti server DNS name | string | ""| no |
 
 ## Outputs
 
@@ -24,10 +25,11 @@ This example illustrates how to set up a minimal Forseti installation.
 | forseti-client-storage-bucket | Forseti Client storage bucket |
 | forseti-client-vm-ip | Forseti Client VM private IP address |
 | forseti-client-vm-name | Forseti Client VM name |
+| forseti-client-vm-public-ip | Forseti Client VM public IP address |
 | forseti-server-service-account | Forseti Server service account |
 | forseti-server-storage-bucket | Forseti Server storage bucket |
 | forseti-server-vm-ip | Forseti Server VM private IP address |
 | forseti-server-vm-name | Forseti Server VM name |
-| suffix | The random suffix appended to Forseti resources |
+| forseti-server-vm-public-ip | Forseti Client VM public IP address |
 
 [^]: (autogen_docs_end)

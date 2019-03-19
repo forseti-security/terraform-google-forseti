@@ -97,6 +97,12 @@ variable "server_tags" {
   default     = [""]
 }
 
+variable "server_access_config" {
+  description = "Server instance 'access_config' block"
+  type        = "map"
+  default     = {}
+}
+
 variable "server_private" {
   description = "Private GCE Forseti Server VM (no public IP)"
   default     = false
@@ -629,6 +635,12 @@ variable "client_tags" {
   description = "GCE Forseti Client VM Tags"
   type        = "list"
   default     = [""]
+}
+
+variable "client_access_config" {
+  description = "Client instance 'access_config' block"
+  type        = "map"
+  default     = {}
 }
 
 variable "client_private" {

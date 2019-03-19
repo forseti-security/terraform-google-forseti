@@ -28,12 +28,10 @@ This example illustrates how to set up a Forseti installation with shared VPC.
 | forseti-client-storage-bucket | Forseti Client storage bucket |
 | forseti-client-vm-ip | Forseti Client VM private IP address |
 | forseti-client-vm-name | Forseti Client VM name |
-| forseti-client-vm-public-ip | Forseti Client VM public IP address |
 | forseti-server-service-account | Forseti Server service account |
 | forseti-server-storage-bucket | Forseti Server storage bucket |
 | forseti-server-vm-ip | Forseti Server VM private IP address |
 | forseti-server-vm-name | Forseti Server VM name |
-| forseti-server-vm-public-ip | Forseti Server VM public IP address |
 | network | Network where server and client will be deployed |
 | network\_project | ID of the network project holding shared VPC |
 | project\_id | ID of the service project |

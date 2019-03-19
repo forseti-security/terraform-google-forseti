@@ -72,16 +72,16 @@ locals {
     "roles/securitycenter.findingsEditor",
   ]
   network_interface_base = {
-    private = {
+    private = [{
       subnetwork_project = "${local.network_project}"
       subnetwork         = "${var.subnetwork}"
-    }
+    }]
 
-    public = {
+    public = [{
       subnetwork_project = "${local.network_project}"
       subnetwork         = "${var.subnetwork}"
-      access_config      = {}
-    }
+      access_config      = ["${var.server_access_config}"]
+    }]
   }
   network_interface = "${local.network_interface_base[var.server_private ? "private" : "public"]}"
 }
@@ -403,25 +403,21 @@ resource "google_storage_bucket" "cai_export" {
 # Forseti server instance #
 #-------------------------#
 resource "google_compute_instance" "forseti-server" {
-  name = "${local.server_name}"
-  zone = "${local.server_zone}"
-
+  name                      = "${local.server_name}"
+  zone                      = "${local.server_zone}"
   project                   = "${var.project_id}"
   machine_type              = "${var.server_type}"
   tags                      = "${var.server_tags}"
   allow_stopping_for_update = true
+  metadata                  = "${var.server_instance_metadata}"
+  metadata_startup_script   = "${data.template_file.forseti_server_startup_script.rendered}"
+  network_interface         = ["${local.network_interface}"]
 
   boot_disk {
     initialize_params {
       image = "${var.server_boot_image}"
     }
   }
-
-  network_interface = ["${local.network_interface}"]
-
-  metadata = "${var.server_instance_metadata}"
-
-  metadata_startup_script = "${data.template_file.forseti_server_startup_script.rendered}"
 
   service_account {
     email  = "${google_service_account.forseti_server.email}"

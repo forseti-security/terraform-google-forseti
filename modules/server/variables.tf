@@ -549,9 +549,15 @@ variable "server_tags" {
   default     = [""]
 }
 
+variable "server_access_config" {
+  description = "Server instance 'access_config' block"
+  type        = "map"
+  default     = {}
+}
+
 variable "server_private" {
   description = "Enable private Forseti server VM (no public IP)"
-  default     = false
+  default     = true
 }
 
 #------------#

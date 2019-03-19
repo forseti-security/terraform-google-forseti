@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 
-output "suffix" {
-  description = "The random suffix appended to Forseti resources"
-  value       = "${module.forseti-install-simple.suffix}"
-}
-
 output "forseti-client-vm-name" {
   description = "Forseti Client VM name"
   value       = "${module.forseti-install-simple.forseti-client-vm-name}"
@@ -28,6 +23,11 @@ output "forseti-client-vm-ip" {
   description = "Forseti Client VM private IP address"
   value       = "${module.forseti-install-simple.forseti-client-vm-ip}"
 }
+
+# output "forseti-client-public-ip" {
+#   description = "Forseti Client VM public IP address"
+#   value       = "${google_compute_address.forseti_client_ip.address}"
+# }
 
 output "forseti-client-service-account" {
   description = "Forseti Client service account"
@@ -43,6 +43,11 @@ output "forseti-server-vm-ip" {
   description = "Forseti Server VM private IP address"
   value       = "${module.forseti-install-simple.forseti-server-vm-ip}"
 }
+
+# output "forseti-server-public-ip" {
+#   description = "Forseti Server VM public IP address"
+#   value       = "${google_compute_address.forseti_server_ip.address}"
+# }
 
 output "forseti-server-service-account" {
   description = "Forseti Server service account"

@@ -35,16 +35,16 @@ locals {
   network_project = "${var.network_project != "" ? var.network_project : var.project_id}"
 
   network_interface_base = {
-    private = {
+    private = [{
       subnetwork_project = "${local.network_project}"
       subnetwork         = "${var.subnetwork}"
-    }
+    }]
 
-    public = {
+    public = [{
       subnetwork_project = "${local.network_project}"
       subnetwork         = "${var.subnetwork}"
-      access_config      = {}
-    }
+      access_config      = ["${var.client_access_config}"]
+    }]
   }
 
   network_interface = "${local.network_interface_base[var.client_private ? "private" : "public"]}"
@@ -93,16 +93,15 @@ resource "google_compute_instance" "forseti-client" {
   machine_type              = "${var.client_type}"
   tags                      = "${var.client_tags}"
   allow_stopping_for_update = true
+  metadata                  = "${var.client_instance_metadata}"
+  metadata_startup_script   = "${data.template_file.forseti_client_startup_script.rendered}"
+  network_interface         = ["${local.network_interface}"]
 
   boot_disk {
     initialize_params {
       image = "${var.client_boot_image}"
     }
   }
-
-  network_interface       = ["${local.network_interface}"]
-  metadata                = "${var.client_instance_metadata}"
-  metadata_startup_script = "${data.template_file.forseti_client_startup_script.rendered}"
 
   service_account {
     email  = "${google_service_account.forseti_client.email}"

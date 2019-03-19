@@ -84,7 +84,7 @@ variable "client_ssh_allow_ranges" {
 }
 
 variable "client_instance_metadata" {
-  description = "Metadata key/value pairs to make available from within the client instance."
+  description = "Metadata key/value pairs to make available from within the client instance"
   type        = "map"
   default     = {}
 }
@@ -95,9 +95,15 @@ variable "client_tags" {
   default     = []
 }
 
+variable "client_access_config" {
+  description = "Client instance 'access_config' block"
+  type        = "map"
+  default     = {}
+}
+
 variable "client_private" {
   description = "Enable private Forseti client VM (no public IP)"
-  default     = false
+  default     = true
 }
 
 variable "suffix" {
