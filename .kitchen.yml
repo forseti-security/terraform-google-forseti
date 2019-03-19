@@ -125,6 +125,7 @@ suites:
           backend: gcp
           controls:
             - forseti
+            - real-time-enforcer-gcp
 
         - name: server
           backend: ssh
