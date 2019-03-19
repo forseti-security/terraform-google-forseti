@@ -148,16 +148,16 @@ suites:
           shell: true
           shell_options: "--login"
 
-          #- name: forseti-real-time-enforcer
-          #  backend: ssh
-          #  controls:
-          #    - client
-          #  hosts_output: forseti-rt-enforcer-vm-public-ip
-          #  user: ubuntu
-          #  key_files:
-          #    - test/fixtures/real_time_enforcer/sshkey
-          #  shell: true
-          #  shell_options: "--login"
+        - name: real-time-enforcer
+          backend: ssh
+          controls:
+            - real-time-enforcer-host
+          hosts_output: forseti-rt-enforcer-vm-public-ip
+          user: ubuntu
+          key_files:
+            - test/fixtures/real_time_enforcer/sshkey
+          shell: true
+          shell_options: "--login"
 
         - name: org-iam
           backend: local

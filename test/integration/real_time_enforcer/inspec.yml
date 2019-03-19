@@ -20,30 +20,49 @@ attributes:
 - name: org_id
   required: true
   type: string
+
+# Forseti client attributes
 - name: forseti-client-vm-name
   required: true
   type: string
 - name: forseti-client-vm-ip
   required: true
   type: string
+- name: forseti-client-storage-bucket
+  required: true
+  type: string
+- name: forseti-client-service-account
+  required: true
+  type: string
+
+# Forseti server attributes
 - name: forseti-server-vm-name
   required: true
   type: string
 - name: forseti-server-vm-ip
   required: true
   type: string
-- name: forseti-client-storage-bucket
-  required: true
-  type: string
 - name: forseti-server-storage-bucket
-  required: true
-  type: string
-- name: forseti-client-service-account
   required: true
   type: string
 - name: forseti-server-service-account
   required: true
   type: string
+
+# Forseti real time enforcer attributes
+- name: forseti-rt-enforcer-vm-name
+  required: true
+  type: string
+- name: forseti-rt-enforcer-vm-ip
+  required: true
+  type: string
+- name: forseti-rt-enforcer-storage-bucket
+  required: true
+  type: string
+- name: forseti-rt-enforcer-service-account
+  required: true
+  type: string
+
 depends:
   - name: inspec-gcp
     git: https://github.com/inspec/inspec-gcp.git
