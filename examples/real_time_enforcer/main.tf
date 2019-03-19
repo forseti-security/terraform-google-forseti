@@ -31,7 +31,7 @@ provider "random" {
   version = "~> 2.0"
 }
 
-module "forseti-install-simple" {
+module "forseti" {
   source                   = "../../"
   project_id               = "${var.project_id}"
   gsuite_admin_email       = "${var.gsuite_admin_email}"
@@ -39,4 +39,13 @@ module "forseti-install-simple" {
   domain                   = "${var.domain}"
   client_instance_metadata = "${var.instance_metadata}"
   server_instance_metadata = "${var.instance_metadata}"
+}
+
+module "real_time_enforcer" {
+  source = "../../modules/real_time_enforcer"
+
+  project_id                 = "${var.project_id}"
+  enforcer_instance_metadata = "${var.instance_metadata}"
+
+  suffix = "${module.forseti.suffix}"
 }

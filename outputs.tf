@@ -63,3 +63,8 @@ output "forseti-server-storage-bucket" {
   description = "Forseti Server storage bucket"
   value       = "${module.server.forseti-server-storage-bucket}"
 }
+
+output "suffix" {
+  description = "The random suffix appended to Forseti resources"
+  value       = "${local.random_hash}"
+}
