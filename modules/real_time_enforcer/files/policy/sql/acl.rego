@@ -1,10 +1,22 @@
 package gcp.sqladmin.instances.policy.acl
 
+#####
+# Policy evaluation
+#####
+
 default valid=true
 
 valid = false {
+  # Check for bad acl
   input.settings.ipConfiguration.authorizedNetworks[_].value == "0.0.0.0/0"
+
+  # Also, this must be false
+  not data.exclusions.label_exclude(input.settings.userLabels)
 }
+
+#####
+# Remediation
+#####
 
 remediate[key] = value {
  key != "settings"

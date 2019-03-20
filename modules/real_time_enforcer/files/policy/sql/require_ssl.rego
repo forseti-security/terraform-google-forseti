@@ -1,14 +1,24 @@
 package gcp.sqladmin.instances.policy.require_ssl
 
+#####
+# Policy evaluation
+#####
+
 default valid=false
 
+# Check if non-ssl connections are allowed
 valid = true {
   input.settings.ipConfiguration.requireSsl == true
 }
 
+# Check for a global exclusion based on resource labels
 valid = true {
-  input.settings.userLabels["policy-override-ssl"] == true
+  data.exclusions.label_exclude(input.settings.userLabels)
 }
+
+#####
+# Remediation
+#####
 
 remediate[key] = value {
  key != "settings"
@@ -39,3 +49,4 @@ _ipConfiguration[key]=value{
   key := "requireSsl"
   value := true
 }
+

@@ -23,8 +23,12 @@ locals {
   enforcer_zone        = "${var.enforcer_region}-c"
 
   real_time_enforcer_policy_files = [
-    "policy/policies.rego",
     "policy/bigquery/common.rego",
+    "policy/bigquery/dataset_no_public_access.rego",
+    "policy/bigquery/dataset_no_public_authenticated_access.rego",
+    "policy/cloudresourcemanager/common_iam.rego",
+    "policy/exclusions.rego",
+    "policy/policies.rego",
     "policy/sql/acl.rego",
     "policy/sql/backups.rego",
     "policy/sql/common.rego",

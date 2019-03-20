@@ -49,6 +49,10 @@ control 'real-time-enforcer-gcp' do
     # don't silently drop a policy file.
     expected_files = %w[
       policy/bigquery/common.rego
+      policy/bigquery/dataset_no_public_access.rego
+      policy/bigquery/dataset_no_public_authenticated_access.rego
+      policy/cloudresourcemanager/common_iam.rego
+      policy/exclusions.rego
       policy/policies.rego
       policy/sql/acl.rego
       policy/sql/backups.rego
