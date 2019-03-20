@@ -14,6 +14,7 @@
 
 suffix                              = attribute('suffix')
 project_id                          = attribute('project_id')
+enforcer_project_id                 = attribute('enforcer_project_id')
 forseti_rt_enforcer_vm_name         = attribute('forseti-rt-enforcer-vm-name')
 forseti_rt_enforcer_service_account = attribute('forseti-rt-enforcer-service-account')
 forseti_rt_enforcer_topic           = attribute('forseti-rt-enforcer-topic')
@@ -98,6 +99,14 @@ control 'real-time-enforcer-gcp' do
         {ip_protocol: "tcp"},
         {ip_protocol: "udp"}
       )
+    end
+  end
+end
+
+control 'real-time-enforcer-target-gcp' do
+  google_storage_buckets(project: enforcer_project_id).bucket_names.each do |bucket_name|
+    describe google_storage_bucket_acl(bucket: bucket_name, entity: 'allAuthenticatedUsers') do
+      it { should_not exist }
     end
   end
 end

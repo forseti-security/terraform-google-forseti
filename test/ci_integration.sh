@@ -45,6 +45,7 @@ setup_environment() {
   export TF_VAR_network_project="${NETWORK_PROJECT}"
   export TF_VAR_network="${NETWORK}"
   export TF_VAR_subnetwork="${SUBNETWORK}"
+  export TF_VAR_enforcer_project_id="${ENFORCER_PROJECT}"
 }
 
 main() {

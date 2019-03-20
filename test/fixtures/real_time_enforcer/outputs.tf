@@ -29,6 +29,11 @@ output "suffix" {
   value       = "${module.real_time_enforcer.suffix}"
 }
 
+output "enforcer_project_id" {
+  description = "A forwarded copy of `enforcer_project_id` for InSpec"
+  value       = "${var.enforcer_project_id}"
+}
+
 #------------------------#
 # Forseti client outputs #
 #------------------------#

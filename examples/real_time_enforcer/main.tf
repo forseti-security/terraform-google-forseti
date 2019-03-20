@@ -49,3 +49,23 @@ module "real_time_enforcer" {
 
   suffix = "${module.forseti.suffix}"
 }
+
+resource "google_logging_project_sink" "real-time-enforcer-log-sink" {
+  name                   = "real-time-enforcer-log-sink"
+  project                = "${var.enforcer_project_id}"
+  destination            = "pubsub.googleapis.com/projects/${var.project_id}/topics/${module.real_time_enforcer.forseti-rt-enforcer-topic}"
+  filter                 = <<EOD
+protoPayload.@type=type.googleapis.com/google.cloud.audit.AuditLog
+severity != ERROR
+protoPayload.serviceName != "k8s.io"
+NOT protoPayload.methodName: "delete"
+EOD
+  unique_writer_identity = true
+}
+
+resource "google_pubsub_topic_iam_member" "publisher" {
+  topic   = "${module.real_time_enforcer.forseti-rt-enforcer-topic}"
+  role    = "roles/pubsub.publisher"
+  project = "${var.project_id}"
+  member  = "${google_logging_project_sink.real-time-enforcer-log-sink.writer_identity}"
+}
