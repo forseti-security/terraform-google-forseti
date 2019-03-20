@@ -12,7 +12,7 @@ run:
   dir: terraform-google-forseti
 
 params:
-  SUITE: "shared-vpc-local"
+  SUITE: "simple-example-local"
   PROJECT_ID: PROJECT_ID
   ORG_ID: ORG_ID
   DOMAIN: DOMAIN
