@@ -154,6 +154,8 @@ function check_headers() {
   while read -r path; do
     if [[ $path =~ "modules/rules/templates/rules" ]]; then
       echo "Skipping Forseti rules file $path" 1>&2
+    elif [[ $path =~ "modules/real_time_enforcer/files/policy" ]]; then
+      echo "Skipping Forseti real time enforcer policy file $path" 1>&2
     else
       echo -ne "$path\0"
     fi
