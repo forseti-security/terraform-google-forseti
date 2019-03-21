@@ -108,5 +108,9 @@ control 'real-time-enforcer-target-gcp' do
     describe google_storage_bucket_acl(bucket: bucket_name, entity: 'allAuthenticatedUsers') do
       it { should_not exist }
     end
+
+    describe google_storage_bucket_acl(bucket: bucket_name, entity: 'allUsers') do
+      it { should_not exist }
+    end
   end
 end
