@@ -1,4 +1,5 @@
 #!/bin/bash
+set -eu
 
 # Env variables
 USER=ubuntu
@@ -11,8 +12,7 @@ sudo apt-get update -y
 sudo apt-get --assume-yes install google-cloud-sdk git unzip
 
 # Install fluentd if necessary.
-FLUENTD=$(ls /usr/sbin/google-fluentd)
-if [ -z "$FLUENTD" ]; then
+if [ -e "/usr/sbin/google-fluentd" ]; then
     cd $USER_HOME
     curl -sSO https://dl.google.com/cloudagents/install-logging-agent.sh
     bash install-logging-agent.sh
@@ -36,10 +36,8 @@ pip install --upgrade pip==9.0.3
 pip install -q --upgrade setuptools wheel
 pip install -q --upgrade -r requirements.txt
 
-# Install tracing libraries
-pip install .[tracing]
-
 # Install Forseti
+echo "Installing Forseti"
 python setup.py install
 
 # Set ownership of the forseti project to $USER
