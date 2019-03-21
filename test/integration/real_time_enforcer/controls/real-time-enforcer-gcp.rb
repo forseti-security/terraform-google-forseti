@@ -68,7 +68,7 @@ control 'real-time-enforcer-gcp' do
     # Enumerate the files present in the policy directory. This fixture ensures that
     # we actually upload all files in the policy directory.
     template_dir = File.expand_path("../../../../modules/real_time_enforcer/files", __dir__)
-    present_files = Dir.glob("#{template_dir}/policy/*.rego").map { |path| path.sub(/\A#{template_dir}\//, '') }
+    present_files = Dir.glob("#{template_dir}/policy/**/*.*").map { |path| path.sub(/\A#{template_dir}\//, '') }
 
     files = expected_files | present_files
 

@@ -27,6 +27,7 @@ locals {
     "policy/bigquery/dataset_no_public_access.rego",
     "policy/bigquery/dataset_no_public_authenticated_access.rego",
     "policy/cloudresourcemanager/common_iam.rego",
+    "policy/config.yaml",
     "policy/exclusions.rego",
     "policy/policies.rego",
     "policy/sql/acl.rego",
