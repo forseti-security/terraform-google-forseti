@@ -26,6 +26,7 @@ This example illustrates how to set up a Forseti installation with real-time pol
 | forseti-client-vm-public-ip | Forseti Client VM public IP address |
 | forseti-rt-enforcer-service-account | Forseti Enforcer service account |
 | forseti-rt-enforcer-storage-bucket | Forseti Enforcer storage bucket |
+| forseti-rt-enforcer-topic | The Forseti Enforcer events topic |
 | forseti-rt-enforcer-vm-ip | Forseti Enforcer VM private IP address |
 | forseti-rt-enforcer-vm-name | Forseti Enforcer VM name |
 | forseti-rt-enforcer-vm-public-ip | Forseti Enforcer VM public IP address |
@@ -33,6 +34,6 @@ This example illustrates how to set up a Forseti installation with real-time pol
 | forseti-server-storage-bucket | Forseti Server storage bucket |
 | forseti-server-vm-ip | Forseti Server VM private IP address |
 | forseti-server-vm-name | Forseti Server VM name |
-| forseti-server-vm-public-ip | Forseti Client VM public IP address |
+| forseti-server-vm-public-ip | Forseti Server VM public IP address |
 
 [^]: (autogen_docs_end)

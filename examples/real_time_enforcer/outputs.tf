@@ -58,7 +58,7 @@ output "forseti-server-vm-ip" {
 }
 
 output "forseti-server-vm-public-ip" {
-  description = "Forseti Client VM public IP address"
+  description = "Forseti Server VM public IP address"
   value       = "${module.forseti.forseti-server-vm-public-ip}"
 }
 
