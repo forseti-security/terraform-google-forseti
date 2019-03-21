@@ -45,6 +45,7 @@ module "real_time_enforcer" {
   source = "../../modules/real_time_enforcer"
 
   project_id                 = "${var.project_id}"
+  org_id                     = "${var.org_id}"
   enforcer_instance_metadata = "${var.instance_metadata}"
 
   suffix = "${module.forseti.suffix}"

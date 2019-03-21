@@ -40,6 +40,13 @@ locals {
     "policy/storage/common_iam.rego",
     "policy/storage/versioning.rego",
   ]
+
+  # todo: switch to custom IAM roles
+  real_time_enforcer_roles = [
+    "roles/storage.admin",
+    "roles/logging.logWriter", # todo: verify that the forseti-policy-enforcer logs directly to stackdriver
+    "roles/serviceusage.serviceUsageAdmin"
+  ]
 }
 
 #--------------------------#
@@ -159,4 +166,11 @@ resource "google_compute_firewall" "rt-enforcer-ssh-external" {
     protocol = "tcp"
     ports    = ["22"]
   }
+}
+
+resource "google_organization_iam_member" "main" {
+  count  = "${length(local.real_time_enforcer_roles)}"
+  org_id = "${var.org_id}"
+  role   = "${element(local.real_time_enforcer_roles, count.index)}"
+  member = "serviceAccount:${google_service_account.main.email}"
 }

@@ -21,6 +21,10 @@ variable "project_id" {
   description = "Google Project ID that you want Forseti deployed into"
 }
 
+variable "org_id" {
+  description = "GCP Organization ID that Forseti will have purview over"
+}
+
 #----------------------------#
 # Forseti real time enforcer #
 #----------------------------#
