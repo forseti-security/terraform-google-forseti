@@ -1,1 +1,1 @@
-../../simple_example/scripts/wait-for-forseti.sh
+../../shared/scripts/wait-for-forseti.sh
