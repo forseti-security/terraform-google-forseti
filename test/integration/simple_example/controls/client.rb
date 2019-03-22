@@ -38,13 +38,7 @@ control 'client' do
 
   describe command('pip show forseti-security|grep Version') do
     its('exit_status') { should eq 0 }
-
-    let(:formated_stdout) do
-      subject.stdout.chomp
-    end
-    it 'version should match' do
-      expect(formated_stdout).to match("Version: #{forseti_version[1..-1]}")
-    end
+    its('stdout.chomp') { should eq "Version: #{forseti_version[1..-1]}" }
   end
 
   describe file('/home/ubuntu/forseti-security/configs/forseti_conf_client.yaml') do
