@@ -63,3 +63,8 @@ output "forseti-server-storage-bucket" {
   description = "Forseti Server storage bucket"
   value       = "${module.forseti-install-simple.forseti-server-storage-bucket}"
 }
+
+output "forseti-version" {
+  description = "Installed Forseti Version"
+  value       = "${module.forseti-install-simple.forseti-version}"
+}

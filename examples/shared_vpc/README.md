@@ -34,6 +34,7 @@ This example illustrates how to set up a Forseti installation with shared VPC.
 | forseti-server-vm-ip | Forseti Server VM private IP address |
 | forseti-server-vm-name | Forseti Server VM name |
 | forseti-server-vm-public-ip | Forseti Server VM public IP address |
+| forseti-version | Installed Forseti Version |
 | network | Network where server and client will be deployed |
 | network\_project | ID of the network project holding shared VPC |
 | project\_id | ID of the service project |

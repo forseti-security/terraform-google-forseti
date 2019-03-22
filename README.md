@@ -170,6 +170,7 @@ Then perform the following commands on the config folder:
 | forseti-server-vm-ip | Forseti Server VM private IP address |
 | forseti-server-vm-name | Forseti Server VM name |
 | forseti-server-vm-public-ip | Forseti Server VM public IP address |
+| forseti-version | Installed Forseti Version |
 | suffix | The random suffix appended to Forseti resources |
 
 [^]: (autogen_docs_end)

@@ -73,3 +73,6 @@ attributes:
   - name: forseti-server-service-account
     required: true
     description: "Forseti Server Service Account"
+  - name: forseti-version
+    required: true
+    description: "Installed Forseti Version"

@@ -14,6 +14,8 @@
 
 require 'yaml'
 
+forseti_version = attribute("forseti-version")
+
 control 'server' do
   title "Forseti server instance resources"
   describe command('forseti') do
@@ -34,6 +36,17 @@ control 'server' do
 
   describe command('forseti_enforcer') do
     it { should exist }
+  end
+
+  describe command('pip show forseti-security|grep Version') do
+    its('exit_status') { should eq 0 }
+
+    let(:formated_stdout) do
+      subject.stdout.chomp
+    end
+    it 'version should match' do
+      expect(formated_stdout).to match("Version: #{forseti_version[1..-1]}")
+    end
   end
 
   describe file("/home/ubuntu/forseti-security/configs/forseti_conf_server.yaml") do

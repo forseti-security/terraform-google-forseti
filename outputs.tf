@@ -66,5 +66,10 @@ output "forseti-server-storage-bucket" {
 
 output "suffix" {
   description = "The random suffix appended to Forseti resources"
-  value       = "${local.random_hash}"
+  value = "${local.random_hash}"
+}
+
+output "forseti-version" {
+  description = "Installed Forseti Version"
+  value       = "${var.forseti_version}"
 }

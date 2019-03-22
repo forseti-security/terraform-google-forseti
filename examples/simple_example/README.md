@@ -29,5 +29,6 @@ This example illustrates how to set up a minimal Forseti installation.
 | forseti-server-vm-ip | Forseti Server VM private IP address |
 | forseti-server-vm-name | Forseti Server VM name |
 | forseti-server-vm-public-ip | Forseti Client VM public IP address |
+| forseti-version | Installed Forseti Version |
 
 [^]: (autogen_docs_end)
