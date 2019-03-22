@@ -20,11 +20,15 @@ echo "Waiting for up to 300 seconds for Forseti to be ready."
 
 for _ in {1..300}; do
   if [[ -f /etc/profile.d/forseti_environment.sh ]]; then
-    echo "Forseti is ready."
-    exit 0
-  else
-    sleep 1
+    #shellcheck source=/dev/null
+    source /etc/profile.d/forseti_environment.sh
+    if command forseti inventory list 1>/dev/null 2>&1; then
+      echo "Forseti is ready."
+      exit 0
+    fi
   fi
+
+  sleep 1
 done
 
 echo "Forseti was not ready after 300 seconds!"
