@@ -32,10 +32,6 @@ control 'client' do
     its('exit_status') { should eq 0 }
   end
 
-  describe command('forseti inventory list') do
-    its('exit_status') { should eq 0 }
-  end
-
   describe command('pip show forseti-security|grep Version') do
     its('exit_status') { should eq 0 }
     its('stdout.chomp') { should eq "Version: #{forseti_version[1..-1]}" }
