@@ -42,10 +42,17 @@ setup_environment() {
   export TF_VAR_domain="${DOMAIN}"
   export TF_VAR_gsuite_admin_email="${GSUITE_ADMIN_EMAIL}"
   export TF_VAR_credentials_path="${CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE}"
+
+  # shared_vpc test suite
   export TF_VAR_network_project="${NETWORK_PROJECT}"
   export TF_VAR_network="${NETWORK}"
   export TF_VAR_subnetwork="${SUBNETWORK}"
+
+  # real_time_enforcer test suite
   export TF_VAR_enforcer_project_id="${ENFORCER_PROJECT}"
+
+  # real_time_enforcer_sinks test suite
+  export TF_VAR_pubsub_project_id="${PROJECT_ID}"
 }
 
 main() {
