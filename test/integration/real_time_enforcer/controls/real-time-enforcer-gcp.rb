@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+suffix                              = attribute('suffix')
 project_id                          = attribute('project_id')
 forseti_rt_enforcer_vm_name         = attribute('forseti-rt-enforcer-vm-name')
 forseti_rt_enforcer_service_account = attribute('forseti-rt-enforcer-service-account')
@@ -74,6 +75,29 @@ control 'real-time-enforcer-gcp' do
 
     files.each do |file|
       its('object_names') { should include(file) }
+    end
+  end
+
+  describe google_compute_firewall(project: project_id, name: "forseti-rt-enforcer-ssh-external-#{suffix}") do
+    its('source_ranges') { should eq ["0.0.0.0/0"] }
+    its('direction') { should eq 'INGRESS' }
+    its('allowed_ssh?') { should be true }
+    its('priority') { should eq 100 }
+  end
+
+  describe google_compute_firewall(project: project_id, name: "forseti-rt-enforcer-deny-all-#{suffix}") do
+    let(:denied) { subject.denied.map(&:item) }
+
+    its('source_ranges') { should eq ["0.0.0.0/0"] }
+    its('direction') { should eq 'INGRESS' }
+    its('priority') { should eq 200 }
+
+    it "denies TCP, UDP, and ICMP" do
+      expect(denied).to contain_exactly(
+        {ip_protocol: "icmp"},
+        {ip_protocol: "tcp"},
+        {ip_protocol: "udp"}
+      )
     end
   end
 end

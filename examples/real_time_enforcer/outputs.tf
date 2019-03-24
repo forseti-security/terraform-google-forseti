@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+output "suffix" {
+  description = "The random suffix appended to Forseti resources"
+  value       = "${module.forseti.suffix}"
+}
+
 #------------------------#
 # Forseti client outputs #
 #------------------------#
