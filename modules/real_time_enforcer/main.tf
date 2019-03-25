@@ -42,6 +42,10 @@ locals {
   ]
 }
 
+#--------------------------#
+# Enforcer Service Account #
+#--------------------------#
+
 resource "google_service_account" "main" {
   account_id   = "${local.enforcer_sa_name}"
   project      = "${var.project_id}"
