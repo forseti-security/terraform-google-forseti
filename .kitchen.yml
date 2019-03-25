@@ -112,6 +112,18 @@ suites:
     provisioner:
       name: terraform
 
+  - name: real_time_enforcer_roles
+    driver:
+      name: terraform
+      root_module_directory: test/fixtures/real_time_enforcer_roles
+      command_timeout: 1800
+    verifier:
+      name: terraform
+      color: false
+      systems:
+        - name: local
+          backend: local
+
   - name: real_time_enforcer
     driver:
       name: terraform
