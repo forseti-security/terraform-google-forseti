@@ -168,7 +168,8 @@ suites:
           shell: true
           shell_options: "--login"
 
-        - name: org-iam
+        - name: gcloud
           backend: local
           controls:
             - forseti-org-iam
+            - real-time-enforcer-gcloud
