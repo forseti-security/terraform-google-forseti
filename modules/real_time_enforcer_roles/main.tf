@@ -50,7 +50,7 @@ resource "google_organization_iam_custom_role" "forseti-enforcer-writer" {
 
 // Use an optional resource to prevent the destruction of the viewer and writer resources.
 //
-// Due to [#3116] resources cannot interpolate variables within the `lifecycle` block,
+// Due to [3116] resources cannot interpolate variables within the `lifecycle` block,
 // So we use an optional resource to contain the lifecycle expression and propagate the
 // lifecycle behavior via a dependency to the protected resources.
 //
