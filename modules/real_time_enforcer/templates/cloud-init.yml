@@ -63,6 +63,7 @@ write_files:
                                   -e SUBSCRIPTION_NAME="${subscription_name}" \
                                   -e OPA_URL="http://opa-server:8181/v1/data" \
                                   -e ENFORCE=true \
+                                  -e STACKDRIVER_LOGGING=true \
                                   cleardata/forseti-policy-enforcer
 
     ExecStopPost=-/usr/bin/docker stop enforcer

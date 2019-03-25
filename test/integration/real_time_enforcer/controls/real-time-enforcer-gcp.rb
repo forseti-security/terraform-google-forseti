@@ -101,6 +101,10 @@ control 'real-time-enforcer-gcp' do
       )
     end
   end
+
+  describe google_project_iam_binding(project: project_id, role: 'roles/logging.logWriter') do
+    its('members') { should include "serviceAccount:#{forseti_rt_enforcer_service_account}" }
+  end
 end
 
 control 'real-time-enforcer-target-gcp' do
