@@ -9,7 +9,8 @@ inputs:
 run:
   # The real-time enforcer roles module is not yet implemented. When the module is
   # ready this should be changed to run `make test_integration`
-  path: true
+  path: make
+  args: ['test_integration']
   dir: terraform-google-forseti
 
 params:
