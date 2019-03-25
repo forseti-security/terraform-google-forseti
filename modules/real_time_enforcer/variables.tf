@@ -64,6 +64,12 @@ variable "network_project" {
   default     = ""
 }
 
+variable "enforcer_ssh_allow_ranges" {
+  description = "List of CIDRs that will be allowed ssh access to forseti real time enforcer"
+  type        = "list"
+  default     = ["0.0.0.0/0"]
+}
+
 variable "enforcer_instance_metadata" {
   description = "Metadata key/value pairs to make available from within the real time enforcer instance."
   type        = "map"

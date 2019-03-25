@@ -20,6 +20,9 @@ attributes:
 - name: org_id
   required: true
   type: string
+- name: suffix
+  required: true
+  type: string
 
 # Forseti client attributes
 - name: forseti-client-vm-name

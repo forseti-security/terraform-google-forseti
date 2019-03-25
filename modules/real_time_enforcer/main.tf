@@ -118,3 +118,41 @@ resource "google_compute_instance" "main" {
     scopes = ["cloud-platform"]
   }
 }
+
+#-------------------------#
+# Enforcer Firewall Rules #
+#-------------------------#
+resource "google_compute_firewall" "rt-enforcer-deny-all" {
+  name                    = "forseti-rt-enforcer-deny-all-${local.random_hash}"
+  project                 = "${local.network_project}"
+  network                 = "${var.network}"
+  target_service_accounts = ["${google_service_account.main.email}"]
+  source_ranges           = ["0.0.0.0/0"]
+  priority                = "200"
+
+  deny {
+    protocol = "icmp"
+  }
+
+  deny {
+    protocol = "udp"
+  }
+
+  deny {
+    protocol = "tcp"
+  }
+}
+
+resource "google_compute_firewall" "rt-enforcer-ssh-external" {
+  name                    = "forseti-rt-enforcer-ssh-external-${local.random_hash}"
+  project                 = "${local.network_project}"
+  network                 = "${var.network}"
+  target_service_accounts = ["${google_service_account.main.email}"]
+  source_ranges           = "${var.enforcer_ssh_allow_ranges}"
+  priority                = "100"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+}

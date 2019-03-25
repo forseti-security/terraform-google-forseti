@@ -24,6 +24,11 @@ output "org_id" {
   value       = "${var.org_id}"
 }
 
+output "suffix" {
+  description = "The random suffix appended to Forseti resources"
+  value       = "${module.real_time_enforcer.suffix}"
+}
+
 #------------------------#
 # Forseti client outputs #
 #------------------------#
