@@ -23,6 +23,9 @@ attributes:
 - name: suffix
   required: true
   type: string
+- name: enforcer_project_id
+  required: true
+  type: string
 
 # Forseti client attributes
 - name: forseti-client-vm-name

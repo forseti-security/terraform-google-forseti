@@ -27,11 +27,12 @@ resource "local_file" "gce-keypair-pk" {
 module "real_time_enforcer" {
   source = "../../../examples/real_time_enforcer"
 
-  credentials_path   = "${var.credentials_path}"
-  gsuite_admin_email = "${var.gsuite_admin_email}"
-  project_id         = "${var.project_id}"
-  org_id             = "${var.org_id}"
-  domain             = "${var.domain}"
+  credentials_path    = "${var.credentials_path}"
+  gsuite_admin_email  = "${var.gsuite_admin_email}"
+  project_id          = "${var.project_id}"
+  org_id              = "${var.org_id}"
+  domain              = "${var.domain}"
+  enforcer_project_id = "${var.enforcer_project_id}"
 
   instance_metadata {
     sshKeys = "ubuntu:${tls_private_key.main.public_key_openssh}"

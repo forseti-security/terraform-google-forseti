@@ -39,3 +39,7 @@ variable "instance_metadata" {
   type        = "map"
   default     = {}
 }
+
+variable "enforcer_project_id" {
+  description = "A project to be managed by the real time enforcer"
+}

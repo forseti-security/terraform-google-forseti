@@ -26,6 +26,10 @@ variable "project_id" {
   description = "The ID of an existing Google project where Forseti will be installed"
 }
 
+variable "enforcer_project_id" {
+  description = "A project to be managed by the real time enforcer"
+}
+
 variable "org_id" {
   description = "GCP Organization ID that Forseti will have purview over"
 }

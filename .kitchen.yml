@@ -125,6 +125,13 @@ suites:
           backend: local
 
   - name: real_time_enforcer
+    lifecycle:
+      pre_verify:
+        - local: test/fixtures/real_time_enforcer/modules/enforcer_target/helpers/create-enforcer-fixtures.sh
+      post_verify:
+        - local: test/fixtures/real_time_enforcer/modules/enforcer_target/helpers/destroy-enforcer-fixtures.sh
+      pre_destroy:
+        - local: test/fixtures/real_time_enforcer/modules/enforcer_target/helpers/destroy-enforcer-fixtures.sh
     driver:
       name: terraform
       root_module_directory: test/fixtures/real_time_enforcer
@@ -138,6 +145,7 @@ suites:
           controls:
             - forseti
             - real-time-enforcer-gcp
+            - real-time-enforcer-target-gcp
 
         - name: server
           backend: ssh
@@ -172,7 +180,8 @@ suites:
           shell: true
           shell_options: "--login"
 
-        - name: org-iam
+        - name: gcloud
           backend: local
           controls:
             - forseti-org-iam
+            - real-time-enforcer-gcloud

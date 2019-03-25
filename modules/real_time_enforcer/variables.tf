@@ -21,6 +21,10 @@ variable "project_id" {
   description = "Google Project ID that you want Forseti deployed into"
 }
 
+variable "org_id" {
+  description = "GCP Organization ID that Forseti will have purview over"
+}
+
 #----------------------------#
 # Forseti real time enforcer #
 #----------------------------#
@@ -84,4 +88,14 @@ variable "services" {
   description = "An artificial dependency to bypass #10462"
   type        = "list"
   default     = [""]
+}
+
+variable "enforcer_writer_role" {
+  description = "And IAM role granting the enforcer service account the rights to enforce policy. The default value uses a custom role created by the real_time_enforcer_roles module."
+  default     = "custom"
+}
+
+variable "enforcer_viewer_role" {
+  description = "And IAM role granting the enforcer service account the rights to check for policy violations. The default value uses a custom role created by the real_time_enforcer_roles module."
+  default     = "custom"
 }
