@@ -1,6 +1,12 @@
 package gcp.sqladmin.instances.policy.backups
 
 #####
+# Resource metadata
+#####
+
+labels = input.settings.userLabels
+
+#####
 # Policy evaluation
 #####
 
@@ -13,14 +19,14 @@ valid = true {
 
 # Check for a global exclusion based on resource labels
 valid = true {
-  data.exclusions.label_exclude(input.settings.userLabels)
+  data.exclusions.label_exclude(labels)
 }
 
 #####
 # Remediation
 #####
 
-# Copy the input object minus, the settings key
+# Copy the input object, omitting the settings key
 remediate[key] = value {
  key != "settings"
  input[key]=value

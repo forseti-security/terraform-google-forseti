@@ -11,6 +11,7 @@ package exclusions
 #   exclusions:
 #     labels:
 #       forseti-enforcer: disable
-label_exclude(res_labels) {
+
+label_exclude(res_labels) = true {
   res_labels[key] == data.config.exclusions.labels[key]
 }

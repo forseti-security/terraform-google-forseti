@@ -56,6 +56,7 @@ control 'real-time-enforcer-gcp' do
       policy/cloudresourcemanager/common_iam.rego
       policy/exclusions.rego
       policy/policies.rego
+      policy/config.yaml
       policy/sql/acl.rego
       policy/sql/backups.rego
       policy/sql/common.rego
