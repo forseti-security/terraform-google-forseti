@@ -51,7 +51,7 @@ resource "null_resource" "wait_for_server" {
 
     connection {
       user        = "ubuntu"
-      host        = "${module.forseti-shared-vpc.forseti-server-vm-public-ip}"
+      host        = "${module.forseti-shared-vpc.forseti-server-vm-ip}"
       private_key = "${tls_private_key.main.private_key_pem}"
     }
   }
@@ -67,7 +67,7 @@ resource "null_resource" "wait_for_client" {
 
     connection {
       user        = "ubuntu"
-      host        = "${module.forseti-shared-vpc.forseti-client-vm-public-ip}"
+      host        = "${module.forseti-shared-vpc.forseti-client-vm-ip}"
       private_key = "${tls_private_key.main.private_key_pem}"
     }
   }

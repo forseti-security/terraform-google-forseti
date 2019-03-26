@@ -37,7 +37,7 @@ suites:
           backend: ssh
           controls:
             - server
-          hosts_output: forseti-server-vm-public-ip
+          hosts_output: forseti-server-vm-ip
           user: ubuntu
           key_files:
             - test/fixtures/simple_example/sshkey
@@ -48,7 +48,7 @@ suites:
           backend: ssh
           controls:
             - client
-          hosts_output: forseti-client-vm-public-ip
+          hosts_output: forseti-client-vm-ip
           user: ubuntu
           key_files:
             - test/fixtures/simple_example/sshkey
@@ -92,7 +92,7 @@ suites:
           controls:
             - forseti-command-server
             - server
-          hosts_output: forseti-server-vm-public-ip
+          hosts_output: forseti-server-vm-ip
           user: ubuntu
           key_files:
             - test/fixtures/shared_vpc/sshkey
@@ -103,7 +103,7 @@ suites:
           controls:
             - forseti-command-client
             - client
-          hosts_output: forseti-client-vm-public-ip
+          hosts_output: forseti-client-vm-ip
           user: ubuntu
           key_files:
             - test/fixtures/shared_vpc/sshkey
