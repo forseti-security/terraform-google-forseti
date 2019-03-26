@@ -185,3 +185,15 @@ suites:
           controls:
             - forseti-org-iam
             - real-time-enforcer-gcloud
+
+  - name: real_time_enforcer_sinks
+    driver:
+      name: terraform
+      command_timeout: 1800
+      root_module_directory: test/fixtures/real_time_enforcer_sinks
+    verifier:
+      name: terraform
+      color: false
+      systems:
+        - name: shared_vpc
+          backend: local
