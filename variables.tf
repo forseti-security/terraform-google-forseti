@@ -94,7 +94,7 @@ variable "server_ssh_allow_ranges" {
 variable "server_tags" {
   description = "GCE Forseti Server VM Tags"
   type        = "list"
-  default     = [""]
+  default     = []
 }
 
 variable "server_access_config" {
@@ -634,7 +634,7 @@ variable "client_ssh_allow_ranges" {
 variable "client_tags" {
   description = "GCE Forseti Client VM Tags"
   type        = "list"
-  default     = [""]
+  default     = []
 }
 
 variable "client_access_config" {
