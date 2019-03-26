@@ -15,24 +15,52 @@
 
 show_help() {
   cat <<EOF
-Usage: ${0##*/} PROJECT_ID ORG_ID
+Usage: ${0##*/} -p PROJECT_ID -o ORG_ID [-e]
+       ${0##*/} -h
 
 Generate a service account with the IAM roles needed to run the Forseti Terraform module.
 
-Arguments:
+Options:
 
-    PROJECT_ID    The project ID where Forseti resources will be created.
-    ORG_ID        The organization ID that Forseti will be monitoring.
+    -p PROJECT_ID The project ID where Forseti resources will be created.
+    -o ORG_ID     The organization ID that Forseti will be monitoring.
+    -e            Add additional IAM roles for running the real time policy enforcer.
 
 Examples:
 
-    ${0##*/} forseti-235k 22592784945
+    ${0##*/} -p forseti-235k -o 22592784945
+    ${0##*/} -p forseti-enforcer-99e4 -o 22592784945 -e
 
 EOF
 }
 
-PROJECT_ID="$1"
-ORG_ID="$2"
+PROJECT_ID=""
+ORG_ID=""
+WITH_ENFORCER=""
+
+OPTIND=1
+while getopts ":hep:o:" opt; do
+  case "$opt" in
+    h)
+      show_help
+      exit 0
+      ;;
+    e)
+      WITH_ENFORCER=1
+      ;;
+    p)
+      PROJECT_ID="$OPTARG"
+      ;;
+    o)
+      ORG_ID="$OPTARG"
+      ;;
+    *)
+      echo "Unhandled option: -$opt" >&2
+      show_help >&2
+      exit 1
+      ;;
+  esac
+done
 
 if [[ -z "$PROJECT_ID" ]]; then
   echo "ERROR: PROJECT_ID must be set."
@@ -120,5 +148,26 @@ gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
     --role="roles/cloudsql.admin" \
     --user-output-enabled false
+
+if [[ -n "$WITH_ENFORCER" ]]; then
+  org_roles=("roles/logging.configWriter" "roles/iam.organizationRoleAdmin")
+  project_roles=("roles/pubsub.admin")
+
+  echo "Granting real time policy enforcer roles on organization $ORG_ID..."
+  for org_role in "${org_roles[@]}"; do
+    gcloud organizations add-iam-policy-binding "${ORG_ID}" \
+        --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
+        --role="$org_role" \
+        --user-output-enabled false
+  done
+
+  echo "Granting real time policy enforcer roles on project $PROJECT_ID..."
+  for project_role in "${project_roles[@]}"; do
+    gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
+        --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
+        --role="$project_role" \
+        --user-output-enabled false
+  done
+fi
 
 echo "All done."

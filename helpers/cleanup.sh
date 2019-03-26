@@ -15,26 +15,58 @@
 
 show_help() {
   cat <<EOF
-Usage: ${0##*/} PROJECT_ID ORG_ID SERVICE_ACCOUNT_NAME
+Usage: ${0##*/} -p PROJECT_ID -o ORG_ID -s SERVICE_ACCOUNT_NAME [-e]
+       ${0##*/} -h
 
 Clean up resources created by the Forseti setup script.
 
-Arguments:
+Options:
 
-    PROJECT_ID            The project ID where Forseti resources will be deleted.
-    ORG_ID                The organization ID to remove roles from the Forseti service account.
-    SERVICE_ACCOUNT_NAME  The service account to remove from the project and organization IAM roles.
+    -p PROJECT_ID           The project ID where Forseti resources will be deleted.
+    -o ORG_ID               The organization ID to remove roles from the Forseti service account.
+    -s SERVICE_ACCOUNT_NAME The service account to remove from the project and organization IAM roles.
+    -e                      Add additional IAM roles for running the real time policy enforcer.
 
 Examples:
 
-    ${0##*/} forseti-235k 22592784945 cloud-foundation-forseti-28047
+    ${0##*/} -p forseti-235k -o 22592784945 -s cloud-foundation-forseti-28047
+    ${0##*/} -p forseti-enforcer-99e4 -o 22592784945 -s cloud-foundation-forseti-28047 -e
 
 EOF
 }
 
-PROJECT_ID="$1"
-ORG_ID="$2"
-SERVICE_ACCOUNT_NAME="$3"
+PROJECT_ID=""
+ORG_ID=""
+SERVICE_ACCOUNT_NAME=""
+WITH_ENFORCER=""
+
+OPTIND=1
+while getopts ":hep:o:s:" opt; do
+  case "$opt" in
+    h)
+      show_help
+      exit 0
+      ;;
+    e)
+      WITH_ENFORCER=1
+      ;;
+    p)
+      PROJECT_ID="$OPTARG"
+      ;;
+    o)
+      ORG_ID="$OPTARG"
+      ;;
+    s)
+      SERVICE_ACCOUNT_NAME="$OPTARG"
+      ;;
+    *)
+      echo "Unhandled option: -$opt" >&2
+      show_help >&2
+      exit 1
+      ;;
+  esac
+done
+
 
 if [[ -z "$PROJECT_ID" ]]; then
   echo "ERROR: PROJECT_ID must be set."
@@ -118,6 +150,27 @@ gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
     --role="roles/storage.admin" \
     --user-output-enabled false
+
+if [[ -n "$WITH_ENFORCER" ]]; then
+  org_roles=("roles/logging.configWriter" "roles/iam.organizationRoleAdmin")
+  project_roles=("roles/pubsub.admin")
+
+  echo "Revoking real time policy enforcer roles on organization $ORG_ID..."
+  for org_role in "${org_roles[@]}"; do
+    gcloud organizations add-iam-policy-binding "${ORG_ID}" \
+        --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
+        --role="$org_role" \
+        --user-output-enabled false
+  done
+
+  echo "Granting real time policy enforcer roles on project $PROJECT_ID..."
+  for project_role in "${project_roles[@]}"; do
+    gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
+        --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
+        --role="$project_role" \
+        --user-output-enabled false
+  done
+fi
 
 gcloud iam service-accounts delete "${SERVICE_ACCOUNT_EMAIL}" \
     --quiet
