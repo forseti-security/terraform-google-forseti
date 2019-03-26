@@ -18,6 +18,10 @@ variable "pubsub_project_id" {
   description = "The project ID to create a test pubsub topic."
 }
 
+variable "sink_project_id" {
+  description = "A test project to export logs from"
+}
+
 variable "org_id" {
   description = "A test organization to export logs from"
 }

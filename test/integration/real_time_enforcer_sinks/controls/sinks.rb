@@ -12,13 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-enforcer_topic    = attribute('enforcer_topic')
 pubsub_project_id = attribute('pubsub_project_id')
 org_id            = attribute('org_id')
-org_id_sink_name  = attribute('org_id_sink_name')
+sink_project_id   = attribute('sink_project_id')
+org_sink_name     = attribute('org_sink_name')
+org_topic         = attribute('org_topic')
+project_sink_name = attribute('project_sink_name')
+project_topic     = attribute('project_topic')
 
 control 'sinks' do
-  describe command("gcloud logging sinks list --organization #{org_id} --filter='name:#{org_id_sink_name}' --format=json") do
+  describe command("gcloud logging sinks list --organization #{org_id} --filter='name:#{org_sink_name}' --format=json") do
     its(:exit_status) { should eq 0 }
     its(:stderr) { should eq '' }
 
@@ -31,7 +34,24 @@ control 'sinks' do
     end
 
     it "exports logs to the enforcer topic" do
-      expect(data[:destination]).to eq "pubsub.googleapis.com/projects/thebo-forseti-svc-d296/topics/#{enforcer_topic}"
+      expect(data[:destination]).to eq "pubsub.googleapis.com/projects/#{pubsub_project_id}/topics/#{org_topic}"
+    end
+  end
+
+  describe command("gcloud logging sinks list --project #{sink_project_id} --filter='name:#{project_sink_name}' --format=json") do
+    its(:exit_status) { should eq 0 }
+    its(:stderr) { should eq '' }
+
+    let(:data) do
+      if subject.exit_status == 0
+        JSON.parse(subject.stdout, symbolize_names: true).first
+      else
+        {}
+      end
+    end
+
+    it "exports logs to the enforcer topic" do
+      expect(data[:destination]).to eq "pubsub.googleapis.com/projects/#{pubsub_project_id}/topics/#{project_topic}"
     end
   end
 end

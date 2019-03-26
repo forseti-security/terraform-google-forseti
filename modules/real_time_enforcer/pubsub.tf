@@ -14,15 +14,6 @@
  * limitations under the License.
  */
 
-#----------------------------------#
-# Real Time Enforcer Pub/Sub topic #
-#----------------------------------#
-
-resource "google_pubsub_topic" "main" {
-  name    = "real-time-enforcer-events-topic-${var.suffix}"
-  project = "${var.project_id}"
-}
-
 #-----------------------------------------#
 # Real Time Enforcer Pub/Sub subscription #
 #-----------------------------------------#
@@ -30,7 +21,7 @@ resource "google_pubsub_topic" "main" {
 resource "google_pubsub_subscription" "main" {
   project = "${var.project_id}"
   name    = "real-time-enforcer-events-subscription-${var.suffix}"
-  topic   = "${google_pubsub_topic.main.name}"
+  topic   = "${var.topic}"
 }
 
 resource "google_pubsub_subscription_iam_member" "subscriber" {

@@ -14,10 +14,6 @@
  * limitations under the License.
  */
 
-variable "enforcer_topic" {
-  description = "The pubsub topic that the Forseti enforcer is monitoring. Project logs will be exported to this topic."
-}
-
 variable "pubsub_project_id" {
  description = "The project ID containing the Enforcer pubsub topic."
 }
@@ -25,4 +21,3 @@ variable "pubsub_project_id" {
 variable "sink_project_id" {
   description = "The project ID where logs will be exported from."
 }
-

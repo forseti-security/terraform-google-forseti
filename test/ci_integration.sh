@@ -53,6 +53,7 @@ setup_environment() {
 
   # real_time_enforcer_sinks test suite
   export TF_VAR_pubsub_project_id="${PROJECT_ID}"
+  export TF_VAR_sink_project_id="${ENFORCER_PROJECT}"
 }
 
 main() {

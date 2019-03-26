@@ -18,3 +18,8 @@ output "sink_name" {
  description = "The organization log sink name."
  value       = "${google_logging_organization_sink.main.name}"
 }
+
+output "topic" {
+  description = "The pubsub topic receiving exported logs."
+  value       = "${google_pubsub_topic.main.name}"
+}

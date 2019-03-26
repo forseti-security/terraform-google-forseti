@@ -14,15 +14,30 @@
 
 name: real_time_enforcer_sinks
 attributes:
-- name: enforcer_topic
-  required: true
-  type: string
 - name: pubsub_project_id
   required: true
   type: string
+
 - name: org_id
   required: true
   type: string
-- name: org_id_sink_name
+
+- name: sink_project_id
+  required: true
+  type: string
+
+- name: org_sink_name
+  required: true
+  type: string
+
+- name: org_topic
+  required: true
+  type: string
+
+- name: project_sink_name
+  required: true
+  type: string
+
+- name: project_topic
   required: true
   type: string
