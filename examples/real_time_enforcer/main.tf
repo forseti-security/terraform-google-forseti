@@ -41,20 +41,20 @@ module "forseti" {
   server_instance_metadata = "${var.instance_metadata}"
 }
 
+module "real_time_enforcer_project_sink" {
+  source = "../../modules/real_time_enforcer_project_sink"
+
+  pubsub_project_id = "${var.project_id}"
+  sink_project_id   = "${var.enforcer_project_id}"
+}
+
 module "real_time_enforcer" {
   source = "../../modules/real_time_enforcer"
 
   project_id                 = "${var.project_id}"
   org_id                     = "${var.org_id}"
   enforcer_instance_metadata = "${var.instance_metadata}"
+  topic                      = "${module.real_time_enforcer_project_sink.topic}"
 
   suffix = "${module.forseti.suffix}"
-}
-
-module "real_time_enforcer_project_sink" {
-  source = "../../modules/real_time_enforcer_project_sink"
-
-  enforcer_topic    = "${module.real_time_enforcer.forseti-rt-enforcer-topic}"
-  pubsub_project_id = "${var.project_id}"
-  sink_project_id   = "${var.enforcer_project_id}"
 }

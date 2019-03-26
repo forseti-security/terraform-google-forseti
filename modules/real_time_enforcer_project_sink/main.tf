@@ -14,17 +14,26 @@
  * limitations under the License.
  */
 
-resource "random_string" "sink-suffix" {
+resource "random_string" "main" {
   upper   = "false"
   lower   = "true"
   special = "false"
   length  = 4
 }
 
+#----------------------------------#
+# Real Time Enforcer Pub/Sub topic #
+#----------------------------------#
+
+resource "google_pubsub_topic" "main" {
+  name    = "real-time-enforcer-events-topic-${random_string.main.result}"
+  project = "${var.pubsub_project_id}"
+}
+
 resource "google_logging_project_sink" "main" {
-  name                   = "real-time-enforcer-log-sink-${random_string.sink-suffix.result}"
+  name                   = "real-time-enforcer-log-sink-${random_string.main.result}"
   project                = "${var.sink_project_id}"
-  destination            = "pubsub.googleapis.com/projects/${var.pubsub_project_id}/topics/${var.enforcer_topic}"
+  destination            = "pubsub.googleapis.com/projects/${var.pubsub_project_id}/topics/${google_pubsub_topic.main.name}"
   filter                 = <<EOD
 protoPayload.@type=type.googleapis.com/google.cloud.audit.AuditLog
 severity != ERROR
@@ -35,7 +44,7 @@ EOD
 }
 
 resource "google_pubsub_topic_iam_member" "publisher" {
-  topic   = "${var.enforcer_topic}"
+  topic   = "${google_pubsub_topic.main.name}"
   role    = "roles/pubsub.publisher"
   project = "${var.pubsub_project_id}"
   member  = "${google_logging_project_sink.main.writer_identity}"

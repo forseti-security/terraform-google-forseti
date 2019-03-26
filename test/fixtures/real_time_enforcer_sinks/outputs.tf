@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 
-output "enforcer_topic" {
-  description = "A test topic normally attached to the forseti policy enforcer"
-  value       = "${google_pubsub_topic.main.name}"
-}
-
 output "pubsub_project_id" {
   description = "A forwarded copy of 'pubsub_project_id' for inspec"
   value       = "${var.pubsub_project_id}"
@@ -29,7 +24,27 @@ output "org_id" {
   value       = "${var.org_id}"
 }
 
-output "org_id_sink_name" {
+output "sink_project_id" {
+  description = "A forwarded copy of 'sink_project_id' for inspec"
+  value       = "${var.sink_project_id}"
+}
+
+output "org_sink_name" {
   description = "The organization logging sink name"
-  value = "${module.real_time_enforcer_organization_sink.sink_name}"
+  value       = "${module.real_time_enforcer_organization_sink.sink_name}"
+}
+
+output "org_topic" {
+  description = "The organization pubsub logging topic"
+  value       = "${module.real_time_enforcer_organization_sink.topic}"
+}
+
+output "project_sink_name" {
+  description = "The project logging sink name"
+  value       = "${module.real_time_enforcer_project_sink.sink_name}"
+}
+
+output "project_topic" {
+  description = "The project pubsub logging topic"
+  value = "${module.real_time_enforcer_project_sink.topic}"
 }
