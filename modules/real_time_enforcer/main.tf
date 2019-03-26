@@ -25,20 +25,28 @@ locals {
   real_time_enforcer_policy_files = [
     "policy/bigquery/common.rego",
     "policy/bigquery/dataset_no_public_access.rego",
+    "policy/bigquery/dataset_no_public_access_test.rego",
     "policy/bigquery/dataset_no_public_authenticated_access.rego",
+    "policy/bigquery/dataset_no_public_authenticated_access_test.rego",
     "policy/cloudresourcemanager/common_iam.rego",
     "policy/config.yaml",
     "policy/exclusions.rego",
     "policy/policies.rego",
     "policy/sql/acl.rego",
+    "policy/sql/acl_test.rego",
     "policy/sql/backups.rego",
+    "policy/sql/backups_test.rego",
     "policy/sql/common.rego",
     "policy/sql/require_ssl.rego",
+    "policy/sql/require_ssl_test.rego",
     "policy/storage/bucket_iam_disallow_allauthenticatedusers.rego",
+    "policy/storage/bucket_iam_disallow_allauthenticatedusers_test.rego",
     "policy/storage/bucket_iam_disallow_allusers.rego",
+    "policy/storage/bucket_iam_disallow_allusers_test.rego",
     "policy/storage/common.rego",
     "policy/storage/common_iam.rego",
     "policy/storage/versioning.rego",
+    "policy/storage/versioning_test.rego",
   ]
 
   real_time_enforcer_project_roles = [

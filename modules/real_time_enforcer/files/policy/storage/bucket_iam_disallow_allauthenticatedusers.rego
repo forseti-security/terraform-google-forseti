@@ -1,11 +1,35 @@
 package gcp.storage.buckets.iam.policy.disallow_allauthenticatedusers
 
+#####
+# Resource metadata
+#####
+
+labels = input._resource.labels
+
+#####
+# Policy evaluation
+#####
+
 default valid = true
 
 # Check if there is a binding for *allAuthenticatedUsers*
 valid = false {
+  # Check for bad policy
   input.bindings[_].members[_] == "allAuthenticatedUsers"
+
+  # Just in case labels are not in the input
+  not labels
+} else = false {
+  # Check for bad policy
+  input.bindings[_].members[_] == "allAuthenticatedUsers"
+
+  # Also, make sure this resource isn't excluded by label
+  not data.exclusions.label_exclude(labels)
 }
+
+#####
+# Remediation
+#####
 
 # Make a copy of the input, omitting the bindings
 remediate[key] = value {
@@ -22,13 +46,13 @@ remediate[key] = value {
   ]
 }
 
-# Basically pass all bindings through the
+# Pass all binding through the fix_binding function
 _bindings = [_fix_binding(binding) | binding := input.bindings[_]]
 
 # The fixed bindings are just the expected fields with members filtered
 _fix_binding(b) = {"members": _remove_bad_members(b.members), "role": b.role}
 
-# Given a list of members, remove the bad one
+# Given a list of members, remove the bad one(s)
 _remove_bad_members(members) = m {
   m = [member | member := members[_]
     member != "allAuthenticatedUsers"

@@ -1,5 +1,15 @@
 package gcp.storage.buckets.policy.versioning
 
+#####
+# Resource metadata
+#####
+
+labels = input.labels
+
+#####
+# Policy evaluation
+#####
+
 default valid = false
 
 # Check if versioning is enabled
@@ -7,10 +17,14 @@ valid = true {
   input.versioning.enabled = true
 }
 
-# Even if versioning is disabled, allow override via bucket label
+# Check for a global exclusion based on resource labels
 valid = true {
-  input.labels["policy-override-versioning"] = true
+  data.exclusions.label_exclude(labels)
 }
+
+#####
+# Remediation
+#####
 
 # Make a copy of the input, omitting the versioning field
 remediate[key] = value {
@@ -22,8 +36,4 @@ remediate[key] = value {
 remediate[key] = value {
   key:="versioning"
   value:={"enabled":true}
-}
-
-overrides = o {
-  split(input.labels["cleardata-override"], ",", o)
 }
