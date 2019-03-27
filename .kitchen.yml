@@ -195,5 +195,5 @@ suites:
       name: terraform
       color: false
       systems:
-        - name: shared_vpc
+        - name: gcloud
           backend: local

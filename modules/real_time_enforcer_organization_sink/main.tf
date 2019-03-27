@@ -31,9 +31,11 @@ resource "google_pubsub_topic" "main" {
 }
 
 resource "google_logging_organization_sink" "main" {
-  name                   = "real-time-enforcer-log-sink-${random_string.main.result}"
-  org_id                 = "${var.org_id}"
-  destination            = "pubsub.googleapis.com/projects/${var.pubsub_project_id}/topics/${google_pubsub_topic.main.name}"
+  name             = "real-time-enforcer-log-sink-${random_string.main.result}"
+  org_id           = "${var.org_id}"
+  destination      = "pubsub.googleapis.com/projects/${var.pubsub_project_id}/topics/${google_pubsub_topic.main.name}"
+  include_children = "true"
+
   filter                 = <<EOD
 protoPayload.@type=type.googleapis.com/google.cloud.audit.AuditLog
 severity != ERROR
