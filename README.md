@@ -211,10 +211,22 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 You can create the service account manually, or by running the following command:
 
 ```bash
-./helpers/setup.sh <project_id>
+./helpers/setup.sh -p PROJECT_ID -o ORG_ID
 ```
 
-This will create a service account called `cloud-foundation-forseti-<random_numbers>`, give it the proper roles, and download it to your current directory. Note, that using this script assumes that you are currently authenticated as a user that can create/authorize service accounts at both the organization and project levels.
+This will create a service account called `cloud-foundation-forseti-<suffix>`,
+give it the proper roles, and download service account credentials to
+`${PWD}/credentials.json`. Note, that using this script assumes that you are
+currently authenticated as a user that can create/authorize service accounts at
+both the organization and project levels.
+
+If you are using the real time policy enforcer, you will need to generate a
+service account with a few extra roles. This can be enabled with the `-e`
+flag:
+
+```bash
+./helpers/setup.sh -p PROJECT_ID -o ORG_ID -e
+```
 
 ### Terraform
 Be sure you have the correct Terraform version (0.11.x), you can choose the binary here:
@@ -237,9 +249,18 @@ More information about Domain Wide Delegation can be found [here](https://develo
 ### Cleanup
 Remember to cleanup the service account used to install Forseti either manually, or by running the command:
 
-`./scripts/cleanup.sh <project_id> <service_account_id>`
+```bash
+./scripts/cleanup.sh -p PROJECT_ID -o ORG_ID -S cloud-foundation-forseti-<suffix>
+```
 
 This will deprovision and delete the service account, and then delete the credentials file.
+
+If the service account was provisioned with the roles needed for the real time
+policy enforcer, you can set the `-e` flag to clean up those roles as well:
+
+```bash
+./scripts/cleanup.sh -p PROJECT_ID -o ORG_ID -S cloud-foundation-forseti-<suffix> -e
+```
 
 ## Autogeneration of documentation from .tf files
 Run

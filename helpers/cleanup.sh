@@ -25,7 +25,7 @@ Options:
     -p PROJECT_ID           The project ID where Forseti resources will be deleted.
     -o ORG_ID               The organization ID to remove roles from the Forseti service account.
     -s SERVICE_ACCOUNT_NAME The service account to remove from the project and organization IAM roles.
-    -e                      Add additional IAM roles for running the real time policy enforcer.
+    -e                      Remove additional IAM roles for running the real time policy enforcer.
 
 Examples:
 
