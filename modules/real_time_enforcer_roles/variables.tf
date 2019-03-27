@@ -15,15 +15,9 @@
  */
 
 variable "suffix" {
-  description = "An optional suffix to append to the role IDs. Role ID suffixes are only needed if the roles are being recreated within 40 days of their deletion."
-  default     = ""
+  description = "A suffix to append to the role IDs."
 }
 
 variable "org_id" {
   description = "The organization ID where the custom Forseti roles will be created."
-}
-
-variable "prevent_destroy" {
-  description = "Prevent the destruction of the IAM roles. IAM roles have a soft delete that prevent names from being reused, so this should only be set to false if the roles are being permanently torn down."
-  default     = "true"
 }

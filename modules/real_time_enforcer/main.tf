@@ -44,11 +44,6 @@ locals {
   real_time_enforcer_project_roles = [
     "roles/logging.logWriter" // Permit the forseti-policy enforcer container to log to stackdriver
   ]
-
-  real_time_enforcer_org_roles = [
-    "${var.enforcer_viewer_role == "custom" ? "organizations/${var.org_id}/roles/forseti.enforcerViewer" : var.enforcer_viewer_role}",
-    "${var.enforcer_writer_role == "custom" ? "organizations/${var.org_id}/roles/forseti.enforcerWriter" : var.enforcer_writer_role}",
-  ]
 }
 
 resource "google_service_account" "main" {
@@ -57,10 +52,15 @@ resource "google_service_account" "main" {
   display_name = "Forseti Real Time Enforcer"
 }
 
-resource "google_organization_iam_member" "main" {
-  count  = "${length(local.real_time_enforcer_org_roles)}"
+resource "google_organization_iam_member" "enforcer-viewer" {
   org_id = "${var.org_id}"
-  role   = "${element(local.real_time_enforcer_org_roles, count.index)}"
+  role   = "${var.enforcer_viewer_role}"
+  member = "serviceAccount:${google_service_account.main.email}"
+}
+
+resource "google_organization_iam_member" "enforcer-writer" {
+  org_id = "${var.org_id}"
+  role   = "${var.enforcer_writer_role}"
   member = "serviceAccount:${google_service_account.main.email}"
 }
 

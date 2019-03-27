@@ -41,6 +41,13 @@ module "forseti" {
   server_instance_metadata = "${var.instance_metadata}"
 }
 
+module "real_time_enforcer_roles" {
+  source = "../../modules/real_time_enforcer_roles"
+
+  org_id = "${var.org_id}"
+  suffix = "${module.forseti.suffix}"
+}
+
 module "real_time_enforcer_project_sink" {
   source = "../../modules/real_time_enforcer_project_sink"
 
@@ -55,6 +62,9 @@ module "real_time_enforcer" {
   org_id                     = "${var.org_id}"
   enforcer_instance_metadata = "${var.instance_metadata}"
   topic                      = "${module.real_time_enforcer_project_sink.topic}"
+
+  enforcer_viewer_role = "${module.real_time_enforcer_roles.forseti-rt-enforcer-viewer-role-id}"
+  enforcer_writer_role = "${module.real_time_enforcer_roles.forseti-rt-enforcer-writer-role-id}"
 
   suffix = "${module.forseti.suffix}"
 }

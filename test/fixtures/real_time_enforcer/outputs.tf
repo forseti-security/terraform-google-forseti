@@ -125,3 +125,13 @@ output "forseti-rt-enforcer-topic" {
   description = "The Forseti Enforcer events topic"
   value       = "${module.real_time_enforcer.forseti-rt-enforcer-topic}"
 }
+
+output "forseti-rt-enforcer-viewer-role-id" {
+  description = "The forseti real time enforcer viewer Role ID."
+  value       = "${module.real_time_enforcer.forseti-rt-enforcer-viewer-role-id}"
+}
+
+output "forseti-rt-enforcer-writer-role-id" {
+  description = "The forseti real time enforcer writer Role ID."
+  value       = "${module.real_time_enforcer.forseti-rt-enforcer-writer-role-id}"
+}

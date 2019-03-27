@@ -17,7 +17,11 @@ forseti_rt_enforcer_viewer_role_id = attribute("forseti-rt-enforcer-viewer-role-
 forseti_rt_enforcer_writer_role_id = attribute("forseti-rt-enforcer-writer-role-id")
 
 control 'roles' do
-  describe command("gcloud iam roles describe --organization #{org_id} #{forseti_rt_enforcer_viewer_role_id} --format=json") do
+  # Extract the role ID to match the requirements of `gcloud iam roles describe`
+  viewer_role_id = forseti_rt_enforcer_viewer_role_id.split("/").last
+  writer_role_id = forseti_rt_enforcer_writer_role_id.split("/").last
+
+  describe command("gcloud iam roles describe --organization #{org_id} #{viewer_role_id} --format=json") do
     its(:exit_status) { should eq 0 }
     its(:stderr) { should eq '' }
 
@@ -42,7 +46,7 @@ control 'roles' do
     end
   end
 
-  describe command("gcloud iam roles describe --organization #{org_id} #{forseti_rt_enforcer_writer_role_id} --format=json") do
+  describe command("gcloud iam roles describe --organization #{org_id} #{writer_role_id} --format=json") do
     its(:exit_status) { should eq 0 }
     its(:stderr) { should eq '' }
 
