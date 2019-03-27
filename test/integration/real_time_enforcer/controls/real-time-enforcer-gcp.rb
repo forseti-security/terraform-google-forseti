@@ -47,37 +47,37 @@ control 'real-time-enforcer-gcp' do
   end
 
   describe google_storage_bucket_objects(bucket: forseti_rt_enforcer_storage_bucket) do
-    # Enumerate the files that we expect to be present. This fixture ensures that we
-    # don't silently drop a policy file.
-    expected_files = %w[
-      policy/bigquery/common.rego
-      policy/bigquery/dataset_no_public_access.rego
-      policy/bigquery/dataset_no_public_authenticated_access.rego
-      policy/cloudresourcemanager/common_iam.rego
-      policy/exclusions.rego
-      policy/policies.rego
-      policy/config.yaml
-      policy/sql/acl.rego
-      policy/sql/backups.rego
-      policy/sql/common.rego
-      policy/sql/require_ssl.rego
-      policy/storage/bucket_iam_disallow_allauthenticatedusers.rego
-      policy/storage/bucket_iam_disallow_allusers.rego
-      policy/storage/common.rego
-      policy/storage/common_iam.rego
-      policy/storage/versioning.rego
-    ]
+    let(:files) do
+      # Enumerate the files that we expect to be present. This fixture ensures that we
+      # don't silently drop a policy file.
+      expected_files = %w[
+        policy/bigquery/common.rego
+        policy/bigquery/dataset_no_public_access.rego
+        policy/bigquery/dataset_no_public_authenticated_access.rego
+        policy/cloudresourcemanager/common_iam.rego
+        policy/exclusions.rego
+        policy/policies.rego
+        policy/config.yaml
+        policy/sql/acl.rego
+        policy/sql/backups.rego
+        policy/sql/common.rego
+        policy/sql/require_ssl.rego
+        policy/storage/bucket_iam_disallow_allauthenticatedusers.rego
+        policy/storage/bucket_iam_disallow_allusers.rego
+        policy/storage/common.rego
+        policy/storage/common_iam.rego
+        policy/storage/versioning.rego
+      ]
 
-    # Enumerate the files present in the policy directory. This fixture ensures that
-    # we actually upload all files in the policy directory.
-    template_dir = File.expand_path("../../../../modules/real_time_enforcer/files", __dir__)
-    present_files = Dir.glob("#{template_dir}/policy/**/*.*").map { |path| path.sub(/\A#{template_dir}\//, '') }
+      # Enumerate the files present in the policy directory. This fixture ensures that
+      # we actually upload all files in the policy directory.
+      template_dir = File.expand_path("../../../../modules/real_time_enforcer/files", __dir__)
+      present_files = Dir.glob("#{template_dir}/policy/**/*.*").map { |path| path.sub(/\A#{template_dir}\//, '') }
 
-    files = expected_files | present_files
-
-    files.each do |file|
-      its('object_names') { should include(file) }
+      expected_files | present_files
     end
+
+    its('object_names') { should contain_exactly(*files) }
   end
 
   describe google_compute_firewall(project: project_id, name: "forseti-rt-enforcer-ssh-external-#{suffix}") do
