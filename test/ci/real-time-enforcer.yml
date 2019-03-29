@@ -7,8 +7,6 @@ inputs:
   path: terraform-google-forseti
 
 run:
-  # The real-time enforcer module is not yet implemented. When the module is
-  # ready this should be changed to run `SUITE=real-time-enforcer make test_integration`
   path: make
   args: ['test_integration']
   dir: terraform-google-forseti
