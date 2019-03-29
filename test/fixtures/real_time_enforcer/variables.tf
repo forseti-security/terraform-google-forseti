@@ -34,12 +34,6 @@ variable "domain" {
   description = "The domain associated with the GCP Organization ID"
 }
 
-variable "instance_metadata" {
-  description = "Metadata key/value pairs to make available from within the client and server instances."
-  type        = "map"
-  default     = {}
-}
-
 variable "enforcer_project_id" {
   description = "A project to be managed by the real time enforcer"
 }
