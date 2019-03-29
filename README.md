@@ -206,9 +206,10 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 
 - compute.googleapis.com
 - serviceusage.googleapis.com
+- cloudresourcemanager.googleapis.com
 
 ## Install
-### Create the Service Account
+### Create the Service Account and enable required APIs
 You can create the service account manually, or by running the following command:
 
 ```bash
@@ -221,12 +222,20 @@ give it the proper roles, and download service account credentials to
 currently authenticated as a user that can create/authorize service accounts at
 both the organization and project levels.
 
+This script will also activate necessary APIs required for terraform to run.
+
 If you are using the real time policy enforcer, you will need to generate a
 service account with a few extra roles. This can be enabled with the `-e`
 flag:
 
 ```bash
 ./helpers/setup.sh -p PROJECT_ID -o ORG_ID -e
+```
+
+Utilizing a shared VPC via a host project is supported with the `-f` flag:
+
+```bash
+./helpers/setup.sh -p PROJECT_ID -f HOST_PROJECT_ID -o ORG_ID
 ```
 
 ### Terraform
@@ -251,7 +260,7 @@ More information about Domain Wide Delegation can be found [here](https://develo
 Remember to cleanup the service account used to install Forseti either manually, or by running the command:
 
 ```bash
-./scripts/cleanup.sh -p PROJECT_ID -o ORG_ID -S cloud-foundation-forseti-<suffix>
+./scripts/cleanup.sh -p PROJECT_ID -o ORG_ID -s cloud-foundation-forseti-<suffix>
 ```
 
 This will deprovision and delete the service account, and then delete the credentials file.

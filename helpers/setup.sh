@@ -15,16 +15,17 @@
 
 show_help() {
   cat <<EOF
-Usage: ${0##*/} -p PROJECT_ID -o ORG_ID [-e]
+Usage: ${0##*/} -p PROJECT_ID -o ORG_ID [-e] [-f HOST_PROJECT]
        ${0##*/} -h
 
 Generate a service account with the IAM roles needed to run the Forseti Terraform module.
 
 Options:
 
-    -p PROJECT_ID The project ID where Forseti resources will be created.
-    -o ORG_ID     The organization ID that Forseti will be monitoring.
-    -e            Add additional IAM roles for running the real time policy enforcer.
+    -p PROJECT_ID    The project ID where Forseti resources will be created.
+    -o ORG_ID        The organization ID that Forseti will be monitoring.
+    -e               Add additional IAM roles for running the real time policy enforcer.
+    -f HOST_PROJECT_ID  ID of a project holding shared vpc.
 
 Examples:
 
@@ -37,9 +38,10 @@ EOF
 PROJECT_ID=""
 ORG_ID=""
 WITH_ENFORCER=""
+HOST_PROJECT_ID=""
 
 OPTIND=1
-while getopts ":hep:o:" opt; do
+while getopts ":h:e:p:f:o:" opt; do
   case "$opt" in
     h)
       show_help
@@ -50,6 +52,9 @@ while getopts ":hep:o:" opt; do
       ;;
     p)
       PROJECT_ID="$OPTARG"
+      ;;
+    f)
+      HOST_PROJECT_ID="$OPTARG"
       ;;
     o)
       ORG_ID="$OPTARG"
@@ -91,6 +96,11 @@ SERVICE_ACCOUNT_EMAIL="${SERVICE_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount
 STAGING_DIR="${PWD}"
 KEY_FILE="${STAGING_DIR}/credentials.json"
 
+echo "Enabling services"
+gcloud services enable \
+    cloudresourcemanager.googleapis.com \
+    serviceusage.googleapis.com \
+    --project "${PROJECT_ID}"
 
 gcloud iam service-accounts \
     --project "${PROJECT_ID}" create ${SERVICE_ACCOUNT_NAME} \
@@ -107,6 +117,11 @@ echo "Applying permissions for org $ORG_ID and project $PROJECT_ID..."
 gcloud organizations add-iam-policy-binding "${ORG_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
     --role="roles/resourcemanager.organizationAdmin" \
+    --user-output-enabled false
+
+gcloud organizations add-iam-policy-binding "${ORG_ID}" \
+    --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
+    --role="roles/iam.securityReviewer" \
     --user-output-enabled false
 
 gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
@@ -170,4 +185,23 @@ if [[ -n "$WITH_ENFORCER" ]]; then
   done
 fi
 
+if [[ $HOST_PROJECT_ID != "" ]];
+then
+    echo "Enabling services on host project"
+    gcloud services enable \
+        cloudresourcemanager.googleapis.com \
+        compute.googleapis.com \
+        serviceusage.googleapis.com \
+        --project "${HOST_PROJECT_ID}"
+
+    gcloud projects add-iam-policy-binding "${HOST_PROJECT_ID}" \
+        --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
+        --role="roles/compute.securityAdmin" \
+        --user-output-enabled false
+
+    gcloud projects add-iam-policy-binding "${HOST_PROJECT_ID}" \
+        --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
+        --role="roles/compute.networkAdmin" \
+        --user-output-enabled false
+fi
 echo "All done."

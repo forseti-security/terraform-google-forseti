@@ -15,7 +15,7 @@
 
 show_help() {
   cat <<EOF
-Usage: ${0##*/} -p PROJECT_ID -o ORG_ID -s SERVICE_ACCOUNT_NAME [-e]
+Usage: ${0##*/} -p PROJECT_ID -o ORG_ID -s SERVICE_ACCOUNT_NAME [-f HOST_PROJECT_ID] [-e]
        ${0##*/} -h
 
 Clean up resources created by the Forseti setup script.
@@ -26,6 +26,7 @@ Options:
     -o ORG_ID               The organization ID to remove roles from the Forseti service account.
     -s SERVICE_ACCOUNT_NAME The service account to remove from the project and organization IAM roles.
     -e                      Remove additional IAM roles for running the real time policy enforcer.
+    -f HOST_PROJECT_ID      ID of a project holding shared VPC.
 
 Examples:
 
@@ -39,9 +40,10 @@ PROJECT_ID=""
 ORG_ID=""
 SERVICE_ACCOUNT_NAME=""
 WITH_ENFORCER=""
+HOST_PROJECT_ID=""
 
 OPTIND=1
-while getopts ":hep:o:s:" opt; do
+while getopts ":h:e:p:o:s:" opt; do
   case "$opt" in
     h)
       show_help
@@ -49,6 +51,10 @@ while getopts ":hep:o:s:" opt; do
       ;;
     e)
       WITH_ENFORCER=1
+      ;;
+      
+    f)
+      HOST_PROJECT_ID=$OPTARG
       ;;
     p)
       PROJECT_ID="$OPTARG"
@@ -67,7 +73,6 @@ while getopts ":hep:o:s:" opt; do
   esac
 done
 
-
 if [[ -z "$PROJECT_ID" ]]; then
   echo "ERROR: PROJECT_ID must be set."
   show_help >&2
@@ -76,6 +81,12 @@ fi
 
 if [[ -z "$ORG_ID" ]]; then
   echo "ERROR: ORG_ID must be set."
+  show_help >&2
+  exit 1
+fi
+
+if [[ -z "$SERVICE_ACCOUNT_NAME" ]]; then
+  echo "ERROR: SERVICE_ACCOUNT_NAME must be set."
   show_help >&2
   exit 1
 fi
@@ -112,6 +123,11 @@ echo "Removing permissions from $SERVICE_ACCOUNT_EMAIL on organization $ORG_ID .
 gcloud organizations remove-iam-policy-binding "${ORG_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
     --role="roles/resourcemanager.organizationAdmin" \
+    --user-output-enabled false
+    
+gcloud organizations remove-iam-policy-binding "${ORG_ID}" \
+    --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
+    --role="roles/iam.securityReviewer" \
     --user-output-enabled false
 
 echo "Removing permissions from $SERVICE_ACCOUNT_EMAIL on project $PROJECT_ID ..."
@@ -172,9 +188,26 @@ if [[ -n "$WITH_ENFORCER" ]]; then
   done
 fi
 
+gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
+    --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
+    --role="roles/cloudsql.admin" \
+    --user-output-enabled false
+
+if [[ $HOST_PROJECT_ID != "" ]];
+then
+    gcloud projects remove-iam-policy-binding "${HOST_PROJECT_ID}" \
+        --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
+        --role="roles/compute.securityAdmin" \
+        --user-output-enabled false
+
+    gcloud projects remove-iam-policy-binding "${HOST_PROJECT_ID}" \
+        --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
+        --role="roles/compute.networkAdmin" \
+        --user-output-enabled false
+fi
+
 gcloud iam service-accounts delete "${SERVICE_ACCOUNT_EMAIL}" \
     --quiet
-
 rm -rf "$KEY_FILE"
 
 echo "All done."
