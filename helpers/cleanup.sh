@@ -43,7 +43,7 @@ WITH_ENFORCER=""
 HOST_PROJECT_ID=""
 
 OPTIND=1
-while getopts ":h:e:p:o:s:" opt; do
+while getopts ":h:e:f:p:o:s:" opt; do
   case "$opt" in
     h)
       show_help
@@ -52,7 +52,6 @@ while getopts ":h:e:p:o:s:" opt; do
     e)
       WITH_ENFORCER=1
       ;;
-      
     f)
       HOST_PROJECT_ID=$OPTARG
       ;;
