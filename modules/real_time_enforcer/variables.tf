@@ -91,13 +91,11 @@ variable "services" {
 }
 
 variable "enforcer_writer_role" {
-  description = "And IAM role granting the enforcer service account the rights to enforce policy. The default value uses a custom role created by the real_time_enforcer_roles module."
-  default     = "custom"
+  description = "An IAM role granting the enforcer service account the rights to enforce policy."
 }
 
 variable "enforcer_viewer_role" {
-  description = "And IAM role granting the enforcer service account the rights to check for policy violations. The default value uses a custom role created by the real_time_enforcer_roles module."
-  default     = "custom"
+  description = "An IAM role granting the enforcer service account the rights to check for policy violations."
 }
 
 variable "topic" {

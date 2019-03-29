@@ -71,6 +71,12 @@ attributes:
 - name: forseti-rt-enforcer-topic
   required: true
   type: string
+- name: forseti-rt-enforcer-viewer-role-id
+  required: true
+  type: string
+- name: forseti-rt-enforcer-writer-role-id
+  required: true
+  type: string
 
 depends:
   - name: inspec-gcp

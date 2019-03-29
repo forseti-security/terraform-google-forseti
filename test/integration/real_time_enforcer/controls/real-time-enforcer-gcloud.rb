@@ -14,6 +14,8 @@
 
 org_id = attribute('org_id')
 forseti_rt_enforcer_service_account = attribute('forseti-rt-enforcer-service-account')
+forseti_rt_enforcer_viewer_role_id = attribute('forseti-rt-enforcer-viewer-role-id')
+forseti_rt_enforcer_writer_role_id = attribute('forseti-rt-enforcer-writer-role-id')
 
 control 'real-time-enforcer-gcloud' do
   describe command("gcloud organizations get-iam-policy #{org_id} --filter='bindings.members:#{forseti_rt_enforcer_service_account}' --flatten='bindings[].members' --format='json(bindings.role)'") do
@@ -28,15 +30,8 @@ control 'real-time-enforcer-gcloud' do
       end
     end
 
-    let(:expected_roles) do
-      [
-        "organizations/#{org_id}/roles/forseti.enforcerViewer",
-        "organizations/#{org_id}/roles/forseti.enforcerWriter"
-      ]
-    end
-
-    it 'permits the enforcer to view and enforce policy' do
-      expect(roles).to contain_exactly(*expected_roles)
+    it 'permits the enforcer to view and enforcer policy' do
+      expect(roles).to contain_exactly(forseti_rt_enforcer_viewer_role_id, forseti_rt_enforcer_writer_role_id)
     end
   end
 end
