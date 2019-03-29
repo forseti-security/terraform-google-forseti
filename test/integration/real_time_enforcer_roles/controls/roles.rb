@@ -63,8 +63,10 @@ control 'roles' do
         "storage.buckets.setIamPolicy",
         "storage.buckets.update",
         "bigquery.datasets.setIamPolicy",
+        "bigquery.datasets.update",
         "cloudsql.instances.update",
-        "resourcemanager.projects.setIamPolicy"
+        "resourcemanager.projects.setIamPolicy",
+        "serviceusage.services.use"
       )
     end
   end

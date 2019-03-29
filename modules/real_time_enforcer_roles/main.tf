@@ -39,7 +39,9 @@ resource "google_organization_iam_custom_role" "forseti-enforcer-writer" {
     "storage.buckets.setIamPolicy",
     "storage.buckets.update",
     "bigquery.datasets.setIamPolicy",
+    "bigquery.datasets.update",
     "cloudsql.instances.update",
-    "resourcemanager.projects.setIamPolicy"
+    "resourcemanager.projects.setIamPolicy",
+    "serviceusage.services.use"
   ]
 }
