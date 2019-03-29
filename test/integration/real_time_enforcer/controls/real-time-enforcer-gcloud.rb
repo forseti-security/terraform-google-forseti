@@ -24,7 +24,7 @@ control 'real-time-enforcer-gcloud' do
 
     let(:roles) do
       if subject.exit_status == 0
-        JSON.parse(subject.stdout, symbolize_names: true).map { |a| a[:bindings][:role] }
+        JSON.parse(subject.stdout, symbolize_names: true).map { |policy| policy[:bindings][:role] }
       else
         []
       end
