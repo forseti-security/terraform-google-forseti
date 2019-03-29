@@ -1,0 +1,24 @@
+---
+
+platform: linux
+
+inputs:
+- name: pull-request
+  path: terraform-google-forseti
+
+run:
+  # The real-time enforcer module is not yet implemented. When the module is
+  # ready this should be changed to run `SUITE=real-time-enforcer make test_integration`
+  path: true
+  dir: terraform-google-forseti
+
+params:
+  SUITE: "real-time-enforcer-local"
+  PROJECT_ID: PROJECT_ID
+  ORG_ID: ORG_ID
+  DOMAIN: DOMAIN
+  GSUITE_ADMIN_EMAIL: GSUITE_ADMIN_EMAIL
+  SERVICE_ACCOUNT_JSON: SERVICE_ACCOUNT_JSON
+  NETWORK_PROJECT: NETWORK_PROJECT
+  NETWORK: NETWORK
+  SUBNETWORK: SUBNETWORK
