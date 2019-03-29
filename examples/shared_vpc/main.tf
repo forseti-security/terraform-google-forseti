@@ -21,6 +21,7 @@ provider "google-beta" {
 
 module "forseti" {
   source                   = "../../"
+  forseti_version          = "${var.forseti_version}"
   project_id               = "${var.project_id}"
   client_region            = "${var.region}"
   gsuite_admin_email       = "${var.gsuite_admin_email}"
