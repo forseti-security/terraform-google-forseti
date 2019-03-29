@@ -123,7 +123,7 @@ gcloud organizations remove-iam-policy-binding "${ORG_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
     --role="roles/resourcemanager.organizationAdmin" \
     --user-output-enabled false
-    
+
 gcloud organizations remove-iam-policy-binding "${ORG_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
     --role="roles/iam.securityReviewer" \
