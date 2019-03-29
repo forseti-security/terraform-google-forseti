@@ -68,8 +68,6 @@ write_files:
 
     ExecStopPost=-/usr/bin/docker stop enforcer
     ExecStopPost=-/usr/bin/docker rm enforcer
-    Restart=always
-    RestartSec=1
 
 runcmd:
 - systemctl daemon-reload
