@@ -84,12 +84,6 @@ variable "suffix" {
   description = "The random suffix to append to all Forseti resources"
 }
 
-variable "services" {
-  description = "An artificial dependency to bypass #10462"
-  type        = "list"
-  default     = [""]
-}
-
 variable "enforcer_writer_role" {
   description = "An IAM role granting the enforcer service account the rights to enforce policy."
 }
