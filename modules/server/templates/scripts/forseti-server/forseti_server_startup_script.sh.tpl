@@ -81,8 +81,9 @@ echo "${forseti_environment}" > /etc/profile.d/forseti_environment.sh | sudo sh
 gsutil cp gs://${storage_bucket_name}/configs/forseti_conf_server.yaml ${forseti_server_conf_path}
 gsutil cp -r gs://${storage_bucket_name}/rules ${forseti_home}/
 
-# Download the Config Validator constraints from GCS
-gsutil cp -r gs://${storage_bucket_name}/config_validator_constraints /home/ubuntu/
+# Download the Newest Config Validator constraints from GCS
+rm -rf /home/ubuntu/policy-library
+gsutil cp -r gs://{scanner_bucket}/policy-library /home/ubuntu/
 
 # Start Forseti service depends on vars defined above.
 bash ./install/gcp/scripts/initialize_forseti_services.sh
