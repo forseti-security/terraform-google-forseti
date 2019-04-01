@@ -1,4 +1,4 @@
-# Simple Example
+# Real time enforcer
 
 This example illustrates how to set up a Forseti installation with real-time policy enforcer.
 
