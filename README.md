@@ -93,7 +93,7 @@ Then perform the following commands on the config folder:
 | forseti\_home | Forseti installation directory | string | `"$USER_HOME/forseti-security"` | no |
 | forseti\_repo\_url | Git repo for the Forseti installation | string | `"https://github.com/GoogleCloudPlatform/forseti-security"` | no |
 | forseti\_run\_frequency | Schedule of running the Forseti scans | string | `"0 */2 * * *"` | no |
-| forseti\_version | The version of Forseti to install | string | `"v2.12.0"` | no |
+| forseti\_version | The version of Forseti to install | string | `"v2.13.0"` | no |
 | forwarding\_rule\_enabled | Forwarding rule scanner enabled. | string | `"false"` | no |
 | forwarding\_rule\_violations\_should\_notify | Notify for forwarding rule violations | string | `"true"` | no |
 | group\_enabled | Group scanner enabled. | string | `"true"` | no |
@@ -205,16 +205,21 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 
 - compute.googleapis.com
 - serviceusage.googleapis.com
+- cloudresourcemanager.googleapis.com
 
 ## Install
-### Create the Service Account
+### Create the Service Account and enable required APIs
 You can create the service account manually, or by running the following command:
 
 ```bash
-./helpers/setup.sh <project_id>
+# Standard setup
+./helpers/setup.sh -p <project_id> -o <org_name>
+# Shared VPC setup
+./helpers/setup.sh -p <project_id> -f <host_project_id> -o <org_name>
 ```
 
 This will create a service account called `cloud-foundation-forseti-<random_numbers>`, give it the proper roles, and download it to your current directory. Note, that using this script assumes that you are currently authenticated as a user that can create/authorize service accounts at both the organization and project levels.
+This script will also activate necessary APIs required for terraform to run.
 
 ### Terraform
 Be sure you have the correct Terraform version (0.11.x), you can choose the binary here:
@@ -237,7 +242,12 @@ More information about Domain Wide Delegation can be found [here](https://develo
 ### Cleanup
 Remember to cleanup the service account used to install Forseti either manually, or by running the command:
 
-`./scripts/cleanup.sh <project_id> <service_account_id>`
+```bash
+# Standard setup
+./helpers/cleanup.sh -p <project_id> -s <service_account_name>
+# Shared VPC setup
+./helpers/cleanup.sh -p <project_id> -f <host_project_id> -s <service_account_name>
+```
 
 This will deprovision and delete the service account, and then delete the credentials file.
 
