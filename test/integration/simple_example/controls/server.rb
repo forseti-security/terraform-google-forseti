@@ -142,6 +142,18 @@ control 'server' do
           expect(config["inventory"]["api_quota"]["crm"]["disable_polling"]).to eq false
         end
 
+        it "configures groups_settings_max_calls" do
+          expect(config["inventory"]["api_quota"]["groupssettings"]["max_calls"]).to eq 5
+        end
+
+        it "configures groups_settings_period" do
+          expect(config["inventory"]["api_quota"]["groupssettings"]["period"]).to eq 1.1
+        end
+
+        it "configures groups_settings_disable_polling" do
+          expect(config["inventory"]["api_quota"]["groupssettings"]["disable_polling"]).to eq false
+        end
+
         it "configures iam_max_calls" do
           expect(config["inventory"]["api_quota"]["iam"]["max_calls"]).to eq 90
         end
