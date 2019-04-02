@@ -26,6 +26,7 @@ locals {
     "rules/firewall_rules.yaml",
     "rules/forwarding_rules.yaml",
     "rules/group_rules.yaml",
+    "rules/groups_settings_rules.yaml",
     "rules/iam_rules.yaml",
     "rules/iap_rules.yaml",
     "rules/instance_network_interface_rules.yaml",

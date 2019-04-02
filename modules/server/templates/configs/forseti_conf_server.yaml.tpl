@@ -76,6 +76,10 @@ inventory:
           max_calls: ${CRM_MAX_CALLS}
           period: ${CRM_PERIOD}
           disable_polling: ${CRM_DISABLE_POLLING}
+        groupssettings:
+          max_calls: ${GROUPS_SETTINGS_MAX_CALLS}
+          period: ${GROUPS_SETTINGS_PERIOD}
+          disable_polling: ${GROUPS_SETTINGS_DISABLE_POLLING}
         iam:
           max_calls: ${IAM_MAX_CALLS}
           period: ${IAM_PERIOD}
@@ -219,6 +223,8 @@ scanner:
           enabled: ${FORWARDING_RULE_ENABLED}
         - name: group
           enabled: ${GROUP_ENABLED}
+        - name: groups_settings
+          enabled: ${GROUPS_SETTINGS_ENABLED}
         - name: iam_policy
           enabled: ${IAM_POLICY_ENABLED}
         - name: iap
@@ -373,6 +379,18 @@ notifier:
                 data_format: csv
                 # gcs_path should begin with "gs://"
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+
+        - resource: groups_settings_violations
+          should_notify: ${GROUPS_SETTINGS_VIOLATIONS_SHOULD_NOTIFY}
+          notifiers:
+            # Email violations
+            - name: email_violations
+            # Upload violations to GCS.
+            - name: gcs_violations
+              configuration:
+                data_format: csv
+                # gcs_path should begin with "gs://"
+                gcs_path: gs://{FORSETI_BUCKET}/scanner_violations
 
         - resource: ke_version_violations
           should_notify: ${KE_VERSION_VIOLATIONS_SHOULD_NOTIFY}
