@@ -1,0 +1,75 @@
+#cloud-config
+
+users:
+- name: opa
+  uid: 2000
+- name: enforcer
+  uid: 2001
+
+write_files:
+- path: /etc/systemd/system/opa-policy.service
+  permissions: 0644
+  owner: root
+  content: |
+    [Unit]
+    Description=OPA policy synchronization
+    Wants=docker.service
+    After=network.target docker.service
+
+    [Service]
+    Type=oneshot
+    RemainAfterExit=yes
+    ExecStartPre=/bin/mkdir -p /var/lib/opa
+    ExecStart=/usr/bin/docker run --rm \
+                              --mount type=bind,source=/var/lib/opa,target=/media/opa \
+                              gcr.io/cloud-builders/gsutil \
+                              cp -r gs://${enforcer_bucket}/policy /media/opa/
+
+- path: /etc/systemd/system/opa-server.service
+  permissions: 0644
+  owner: root
+  content: |
+    [Unit]
+    Description=OPA server for Forseti real time enforcer
+    Wants=opa-policy.service docker.service
+    After=network.target opa-policy.service
+
+    [Service]
+    ExecStartPre=/bin/mkdir -p /var/lib/opa
+    ExecStartPre=-/usr/bin/docker rm opa-server
+    ExecStart=/usr/bin/docker run --tty -u 2000 --name=opa-server \
+                                  -v /var/lib/opa/policy:/opt/opa/policy \
+                                  openpolicyagent/opa \
+                                  run --server /opt/opa/policy
+    ExecStopPost=-/usr/bin/docker stop opa-server
+    ExecStopPost=-/usr/bin/docker rm opa-server
+    Restart=always
+
+- path: /etc/systemd/system/enforcer.service
+  permissions: 0644
+  owner: root
+  content: |
+    [Unit]
+    Description=Forseti real time policy enforcer
+    Wants=opa-server.service docker.service
+    After=opa-server.service docker.service
+
+    [Install]
+    WantedBy=multi-user.target
+
+    [Service]
+    ExecStart=/usr/bin/docker run --tty --rm -u 2001 --name=enforcer --link=opa-server \
+                                  -e PROJECT_ID=${project_id} \
+                                  -e SUBSCRIPTION_NAME="${subscription_name}" \
+                                  -e OPA_URL="http://opa-server:8181/v1/data" \
+                                  -e ENFORCE=true \
+                                  -e STACKDRIVER_LOGGING=true \
+                                  cleardata/forseti-policy-enforcer
+
+    ExecStopPost=-/usr/bin/docker stop enforcer
+    ExecStopPost=-/usr/bin/docker rm enforcer
+
+runcmd:
+- systemctl daemon-reload
+- systemctl enable enforcer.service
+- systemctl start enforcer.service
