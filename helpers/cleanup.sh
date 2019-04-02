@@ -13,153 +13,199 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Usage info
 show_help() {
-cat << EOF
-Usage: ${0##*/} [-p PROJECT_ID] [-f HOST_PROJECT] [-o ORG_ID]
-Remove service account created by setup.sh script.
+  cat <<EOF
+Usage: ${0##*/} -p PROJECT_ID -o ORG_ID -s SERVICE_ACCOUNT_NAME [-f HOST_PROJECT_ID] [-e]
+       ${0##*/} -h
 
-    -p PROJECT_ID         project id where service account will be created.
-    -s SERVICE ACCOUNT    service account name.
-    -f HOST_PROJECT       id of a project holding shared vpc.
-    -o ORG_ID             organization id.
-    -h                    this help.
-Example: ./cleanup.sh -p test-project-1 -s cloud-foundation-forseti -o organization.com
+Clean up resources created by the Forseti setup script.
+
+Options:
+
+    -p PROJECT_ID           The project ID where Forseti resources will be deleted.
+    -o ORG_ID               The organization ID to remove roles from the Forseti service account.
+    -s SERVICE_ACCOUNT_NAME The service account to remove from the project and organization IAM roles.
+    -e                      Remove additional IAM roles for running the real time policy enforcer.
+    -f HOST_PROJECT_ID      ID of a project holding shared VPC.
+
+Examples:
+
+    ${0##*/} -p forseti-235k -o 22592784945 -s cloud-foundation-forseti-28047
+    ${0##*/} -p forseti-enforcer-99e4 -o 22592784945 -s cloud-foundation-forseti-28047 -e
+
 EOF
 }
 
-# Initialize opt variables:
-project_id=""
-host_project=""
-service_account_id=""
+PROJECT_ID=""
+ORG_ID=""
+SERVICE_ACCOUNT_NAME=""
+WITH_ENFORCER=""
+HOST_PROJECT_ID=""
 
 OPTIND=1
-while getopts ":h:p:s:f:o:" opt; do
-    case $opt in
-        h)
-            show_help
-            exit 0
-            ;;
-        p)  project_id=$OPTARG
-            ;;
-        s)  service_account_id=$OPTARG
-            ;;
-        f)  host_project=$OPTARG
-            ;;
-        *)
-            show_help >&2
-            exit 1
-            ;;
-    esac
+while getopts ":h:e:f:p:o:s:" opt; do
+  case "$opt" in
+    h)
+      show_help
+      exit 0
+      ;;
+    e)
+      WITH_ENFORCER=1
+      ;;
+    f)
+      HOST_PROJECT_ID=$OPTARG
+      ;;
+    p)
+      PROJECT_ID="$OPTARG"
+      ;;
+    o)
+      ORG_ID="$OPTARG"
+      ;;
+    s)
+      SERVICE_ACCOUNT_NAME="$OPTARG"
+      ;;
+    *)
+      echo "Unhandled option: -$opt" >&2
+      show_help >&2
+      exit 1
+      ;;
+  esac
 done
-shift "$((OPTIND-1))"   # Discard the options and sentinel --
 
-if [[ $project_id == "" ]];
-then
-    echo "ERROR -p option is mandatory"
-    exit 1
+if [[ -z "$PROJECT_ID" ]]; then
+  echo "ERROR: PROJECT_ID must be set."
+  show_help >&2
+  exit 1
 fi
 
-if [[ $service_account_id == "" ]];
-then
-    echo "ERROR -s option is mandatory"
-    exit 1
+if [[ -z "$ORG_ID" ]]; then
+  echo "ERROR: ORG_ID must be set."
+  show_help >&2
+  exit 1
 fi
 
-PROJECT_ID="$(gcloud projects list --format="value(projectId)" --filter="${project_id}")"
-
-if [[ $PROJECT_ID == "" ]];
-then
-    echo "ERROR The specified project wasn't found."
-    exit 1;
+if [[ -z "$SERVICE_ACCOUNT_NAME" ]]; then
+  echo "ERROR: SERVICE_ACCOUNT_NAME must be set."
+  show_help >&2
+  exit 1
 fi
 
-ORG_ID="$(gcloud projects describe "${PROJECT_ID}" --flatten=parent.id | grep -Eo "\d+")"
-SERVICE_ACCOUNT_ID="$(gcloud iam service-accounts list --format="value(email)" --project="${PROJECT_ID}" | grep -Eo "${service_account_id}@${PROJECT_ID}.iam.gserviceaccount.com")"
+if [[ -z "$SERVICE_ACCOUNT_NAME" ]]; then
+  echo "ERROR: SERVICE_ACCOUNT_NAME must be set."
+  show_help >&2
+  exit 1
+fi
+
+SERVICE_ACCOUNT_EMAIL="$SERVICE_ACCOUNT_NAME@${PROJECT_ID}.iam.gserviceaccount.com"
 KEY_FILE="${PWD}/credentials.json"
 
-if [[ $SERVICE_ACCOUNT_ID == "" ]];
-then
-    echo "ERROR The specified service account wasn't found."
-    exit 1;
+# Ensure that we can fetch the IAM policy on the Forseti project.
+if ! gcloud projects get-iam-policy "$PROJECT_ID" 2>&- 1>&-; then
+  echo "ERROR: Unable to fetch IAM policy on project $PROJECT_ID."
+  exit 1
 fi
 
-if [[ ${host_project} != "" ]];
-then
-    HOST_PROJECT_ID="$(gcloud projects list --format="value(projectId)" --filter="$host_project")"
-    if [[ ${HOST_PROJECT_ID} == "" ]];
-    then
-        echo  "ERROR the specified host project wasn't found."
-        exit 1
-    fi
+# Ensure that we can fetch the IAM policy on the GCP organization.
+if ! gcloud organizations get-iam-policy "$ORG_ID" 2>&- 1>&-; then
+  echo "ERROR: Unable to fetch IAM policy on organization $ORG_ID."
+  exit 1
 fi
 
-echo "Removing permissions..."
+# Ensure that we can query the service account.
+if ! gcloud iam service-accounts describe "$SERVICE_ACCOUNT_EMAIL" 2>&- 1>&-; then
+  echo "ERROR: Unable to fetch service account $SERVICE_ACCOUNT_EMAIL."
+  exit 1
+fi
+
+echo "Removing permissions from $SERVICE_ACCOUNT_EMAIL on organization $ORG_ID ..."
 
 gcloud organizations remove-iam-policy-binding "${ORG_ID}" \
-    --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
+    --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
     --role="roles/resourcemanager.organizationAdmin" \
     --user-output-enabled false
 
 gcloud organizations remove-iam-policy-binding "${ORG_ID}" \
-    --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
+    --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
     --role="roles/iam.securityReviewer" \
     --user-output-enabled false
 
+echo "Removing permissions from $SERVICE_ACCOUNT_EMAIL on project $PROJECT_ID ..."
+
 gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
-    --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
+    --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
     --role="roles/compute.instanceAdmin" \
     --user-output-enabled false
 
 gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
-    --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
+    --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
     --role="roles/compute.networkViewer" \
     --user-output-enabled false
 
 gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
-    --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
+    --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
     --role="roles/compute.securityAdmin" \
     --user-output-enabled false
 
 gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
-    --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
-    --role="roles/iam.serviceAccountAdmin" \
-    --user-output-enabled false
-
-gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
-    --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
+    --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
     --role="roles/serviceusage.serviceUsageAdmin" \
     --user-output-enabled false
 
 gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
-    --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
+    --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
+    --role="roles/iam.serviceAccountAdmin" \
+    --user-output-enabled false
+
+gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
+    --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
     --role="roles/iam.serviceAccountUser" \
     --user-output-enabled false
 
 gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
-    --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
+    --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
     --role="roles/storage.admin" \
     --user-output-enabled false
 
+if [[ -n "$WITH_ENFORCER" ]]; then
+  org_roles=("roles/logging.configWriter" "roles/iam.organizationRoleAdmin")
+  project_roles=("roles/pubsub.admin")
+
+  echo "Revoking real time policy enforcer roles on organization $ORG_ID..."
+  for org_role in "${org_roles[@]}"; do
+    gcloud organizations add-iam-policy-binding "${ORG_ID}" \
+        --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
+        --role="$org_role" \
+        --user-output-enabled false
+  done
+
+  echo "Granting real time policy enforcer roles on project $PROJECT_ID..."
+  for project_role in "${project_roles[@]}"; do
+    gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
+        --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
+        --role="$project_role" \
+        --user-output-enabled false
+  done
+fi
+
 gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
-    --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
+    --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
     --role="roles/cloudsql.admin" \
     --user-output-enabled false
 
 if [[ $HOST_PROJECT_ID != "" ]];
 then
     gcloud projects remove-iam-policy-binding "${HOST_PROJECT_ID}" \
-        --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
+        --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
         --role="roles/compute.securityAdmin" \
         --user-output-enabled false
 
     gcloud projects remove-iam-policy-binding "${HOST_PROJECT_ID}" \
-        --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
+        --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
         --role="roles/compute.networkAdmin" \
         --user-output-enabled false
 fi
 
-gcloud iam service-accounts delete "${SERVICE_ACCOUNT_ID}" \
+gcloud iam service-accounts delete "${SERVICE_ACCOUNT_EMAIL}" \
     --quiet
 rm -rf "$KEY_FILE"
 
