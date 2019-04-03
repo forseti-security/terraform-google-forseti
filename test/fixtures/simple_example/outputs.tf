@@ -73,8 +73,3 @@ output "org_id" {
   description = "A forwarded copy of `org_id` for InSpec"
   value       = "${var.org_id}"
 }
-
-output "forseti-version" {
-  description = "A forwarded copy of `forseti_version` for InSpec"
-  value       = "${module.forseti-install-simple.forseti-version}"
-}

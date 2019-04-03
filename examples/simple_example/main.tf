@@ -33,7 +33,6 @@ provider "random" {
 
 module "forseti-install-simple" {
   source                   = "../../"
-  forseti_version          = "${var.forseti_version}"
   project_id               = "${var.project_id}"
   gsuite_admin_email       = "${var.gsuite_admin_email}"
   org_id                   = "${var.org_id}"

@@ -57,7 +57,3 @@ variable "instance_metadata" {
   default     = {}
 }
 
-variable "forseti_version" {
-  description = "The version of Forseti to install"
-  default     = "v2.13.0"
-}

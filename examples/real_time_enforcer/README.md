@@ -28,9 +28,11 @@ This example illustrates how to set up a Forseti installation with real-time pol
 | forseti-rt-enforcer-service-account | Forseti Enforcer service account |
 | forseti-rt-enforcer-storage-bucket | Forseti Enforcer storage bucket |
 | forseti-rt-enforcer-topic | The Forseti Enforcer events topic |
+| forseti-rt-enforcer-viewer-role-id | The forseti real time enforcer viewer Role ID. |
 | forseti-rt-enforcer-vm-ip | Forseti Enforcer VM private IP address |
 | forseti-rt-enforcer-vm-name | Forseti Enforcer VM name |
 | forseti-rt-enforcer-vm-public-ip | Forseti Enforcer VM public IP address |
+| forseti-rt-enforcer-writer-role-id | The forseti real time enforcer writer Role ID. |
 | forseti-server-service-account | Forseti Server service account |
 | forseti-server-storage-bucket | Forseti Server storage bucket |
 | forseti-server-vm-ip | Forseti Server VM private IP address |

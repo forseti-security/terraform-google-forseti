@@ -12,36 +12,36 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'yaml'
+require "yaml"
 
-forseti_version = attribute("forseti-version")
+forseti_version = "2.14.0"
 
-control 'server' do
+control "server" do
   title "Forseti server instance resources"
-  describe command('forseti') do
+  describe command("forseti") do
     it { should exist }
   end
 
   describe command("forseti server configuration get") do
-    its('exit_status') { should eq 0 }
+    its("exit_status") { should eq 0 }
   end
 
   describe command("forseti inventory list") do
-    its('exit_status') { should eq 0 }
+    its("exit_status") { should eq 0 }
   end
 
-  describe command('forseti_server') do
+  describe command("forseti_server") do
     it { should exist }
   end
 
-  describe command('forseti_enforcer') do
+  describe command("forseti_enforcer") do
     it { should exist }
   end
 
-  describe command('pip show forseti-security|grep Version') do
-    its('exit_status') { should eq 0 }
+  describe command("pip show forseti-security|grep Version") do
+    its("exit_status") { should eq 0 }
     let(:forseti_version_formated) {
-      forseti_version.sub(/\Av/, '')
+      forseti_version.sub(/\Av/, "")
     }
     let(:installed_version) {
       subject.stdout.chomp.split(":")[1].strip
@@ -333,7 +333,7 @@ control 'server' do
               "resource" => "iam_policy_violations",
               "should_notify" => true,
               # This extra bit of verification tests the `iam_policy_violations_slack_webhook` variable
-              "notifiers" => including("name" => "slack_webhook", "configuration" => {"data_format" => "json", "webhook_url" => nil})
+              "notifiers" => including("name" => "slack_webhook", "configuration" => { "data_format" => "json", "webhook_url" => nil }),
             )
           )
         end
@@ -384,7 +384,7 @@ control 'server' do
               "resource" => "kms_violations",
               "should_notify" => true,
               # This extra bit of verification tests the `kms_violations_slack_webhook` variable
-              "notifiers" => including("name" => "slack_webhook", "configuration" => {"data_format" => "json", "webhook_url" => nil})
+              "notifiers" => including("name" => "slack_webhook", "configuration" => { "data_format" => "json", "webhook_url" => nil }),
             )
           )
         end
@@ -474,7 +474,7 @@ control 'server' do
 
   # Enumerate the files that are present in the rules directory. This fixture ensures
   # that we don't miss an included rules file.
-  present_files = Dir.glob("#{template_dir}/*.yaml").map {|file| File.basename(file) }
+  present_files = Dir.glob("#{template_dir}/*.yaml").map { |file| File.basename(file) }
 
   files = expected_files | present_files
 

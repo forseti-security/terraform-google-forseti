@@ -12,30 +12,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'yaml'
+require "yaml"
 
 forseti_server_vm_ip = attribute("forseti-server-vm-ip")
-forseti_version = attribute("forseti-version")
+forseti_version = "2.14.0"
 
-control 'client' do
+control "client" do
   title "Forseti client instance resources"
-  describe command('forseti') do
+  describe command("forseti") do
     it { should exist }
   end
 
-  describe command('forseti config show') do
-    its('exit_status') { should eq 0 }
-    its('stdout') { should match(/#{forseti_server_vm_ip}:50051/) }
+  describe command("forseti config show") do
+    its("exit_status") { should eq 0 }
+    its("stdout") { should match(/#{forseti_server_vm_ip}:50051/) }
   end
 
-  describe command('forseti inventory list') do
-    its('exit_status') { should eq 0 }
+  describe command("forseti inventory list") do
+    its("exit_status") { should eq 0 }
   end
 
-  describe command('pip show forseti-security|grep Version') do
-    its('exit_status') { should eq 0 }
+  describe command("pip show forseti-security|grep Version") do
+    its("exit_status") { should eq 0 }
     let(:forseti_version_formated) {
-      forseti_version.sub(/\Av/, '')
+      forseti_version.sub(/\Av/, "")
     }
     let(:installed_version) {
       subject.stdout.chomp.split(":")[1].strip
@@ -45,7 +45,7 @@ control 'client' do
     end
   end
 
-  describe file('/home/ubuntu/forseti-security/configs/forseti_conf_client.yaml') do
+  describe file("/home/ubuntu/forseti-security/configs/forseti_conf_client.yaml") do
     it { should exist }
 
     it "sets the hostname to the Forseti server IP" do

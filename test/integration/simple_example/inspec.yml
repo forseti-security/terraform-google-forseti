@@ -44,9 +44,6 @@ attributes:
 - name: forseti-server-service-account
   required: true
   type: string
-- name: forseti-version
-  required: true
-  type: string
 depends:
   - name: inspec-gcp
     git: https://github.com/inspec/inspec-gcp.git

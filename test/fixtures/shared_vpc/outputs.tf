@@ -99,7 +99,3 @@ output "forseti-server-service-account" {
   value       = "${module.forseti-shared-vpc.forseti-server-service-account}"
 }
 
-output "forseti-version" {
-  description = "A forwarded copy of `forseti_version` for InSpec"
-  value       = "${module.forseti-shared-vpc.forseti-version}"
-}

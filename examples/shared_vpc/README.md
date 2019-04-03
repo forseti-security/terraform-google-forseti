@@ -10,7 +10,6 @@ This example illustrates how to set up a Forseti installation with shared VPC.
 |------|-------------|:----:|:-----:|:-----:|
 | credentials\_path | Path to service account json | string | n/a | yes |
 | domain | Organization domain | string | n/a | yes |
-| forseti\_version | The version of Forseti to install | string | `"v2.13.0"` | no |
 | gsuite\_admin\_email | G Suite admin email | string | n/a | yes |
 | instance\_metadata | Metadata key/value pairs to make available from within the client and server instances. | map | `<map>` | no |
 | network | Name of the shared VPC | string | n/a | yes |
@@ -35,7 +34,6 @@ This example illustrates how to set up a Forseti installation with shared VPC.
 | forseti-server-vm-ip | Forseti Server VM private IP address |
 | forseti-server-vm-name | Forseti Server VM name |
 | forseti-server-vm-public-ip | Forseti Server VM public IP address |
-| forseti-version | Installed Forseti Version |
 | network | Network where server and client will be deployed |
 | network\_project | ID of the network project holding shared VPC |
 | project\_id | ID of the service project |
