@@ -170,6 +170,7 @@ Then perform the following commands on the config folder:
 | forseti-server-vm-ip | Forseti Server VM private IP address |
 | forseti-server-vm-name | Forseti Server VM name |
 | forseti-server-vm-public-ip | Forseti Server VM public IP address |
+| suffix | The random suffix appended to Forseti resources |
 
 [^]: (autogen_docs_end)
 
@@ -205,16 +206,37 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 
 - compute.googleapis.com
 - serviceusage.googleapis.com
+- cloudresourcemanager.googleapis.com
 
 ## Install
-### Create the Service Account
+### Create the Service Account and enable required APIs
 You can create the service account manually, or by running the following command:
 
 ```bash
-./helpers/setup.sh <project_id>
+./helpers/setup.sh -p PROJECT_ID -o ORG_ID
 ```
 
-This will create a service account called `cloud-foundation-forseti-<random_numbers>`, give it the proper roles, and download it to your current directory. Note, that using this script assumes that you are currently authenticated as a user that can create/authorize service accounts at both the organization and project levels.
+This will create a service account called `cloud-foundation-forseti-<suffix>`,
+give it the proper roles, and download service account credentials to
+`${PWD}/credentials.json`. Note, that using this script assumes that you are
+currently authenticated as a user that can create/authorize service accounts at
+both the organization and project levels.
+
+This script will also activate necessary APIs required for terraform to run.
+
+If you are using the real time policy enforcer, you will need to generate a
+service account with a few extra roles. This can be enabled with the `-e`
+flag:
+
+```bash
+./helpers/setup.sh -p PROJECT_ID -o ORG_ID -e
+```
+
+Utilizing a shared VPC via a host project is supported with the `-f` flag:
+
+```bash
+./helpers/setup.sh -p PROJECT_ID -f HOST_PROJECT_ID -o ORG_ID
+```
 
 ### Terraform
 Be sure you have the correct Terraform version (0.11.x), you can choose the binary here:
@@ -237,9 +259,18 @@ More information about Domain Wide Delegation can be found [here](https://develo
 ### Cleanup
 Remember to cleanup the service account used to install Forseti either manually, or by running the command:
 
-`./scripts/cleanup.sh <project_id> <service_account_id>`
+```bash
+./scripts/cleanup.sh -p PROJECT_ID -o ORG_ID -s cloud-foundation-forseti-<suffix>
+```
 
 This will deprovision and delete the service account, and then delete the credentials file.
+
+If the service account was provisioned with the roles needed for the real time
+policy enforcer, you can set the `-e` flag to clean up those roles as well:
+
+```bash
+./scripts/cleanup.sh -p PROJECT_ID -o ORG_ID -S cloud-foundation-forseti-<suffix> -e
+```
 
 ## Autogeneration of documentation from .tf files
 Run

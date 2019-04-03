@@ -21,7 +21,8 @@ summary: An InSpec Compliance Profile For Forseti in GCP
 
 depends:
   - name: inspec-gcp
-    url: https://github.com/inspec/inspec-gcp/archive/master.tar.gz
+    git: https://github.com/inspec/inspec-gcp.git
+    tag: v0.10.0
 
 attributes:
   - name: network_project

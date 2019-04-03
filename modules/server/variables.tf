@@ -650,3 +650,32 @@ variable "services" {
   type        = "list"
   default     = [""]
 }
+
+#---------------------------------------#
+# Groups Settings scanner configuration #
+#---------------------------------------#
+
+variable "groups_settings_max_calls" {
+  description = "Maximum calls that can be made to the G Suite Groups API"
+  default     = "5"
+}
+
+variable "groups_settings_period" {
+  description = "the period of max calls to the G Suite Groups API"
+  default     = "1.1"
+}
+
+variable "groups_settings_disable_polling" {
+  description = "Whether to disable polling for the G Suite Groups API"
+  default     = "False"
+}
+
+variable "groups_settings_enabled" {
+  description = "Groups settings scanner enabled."
+  default     = "true"
+}
+
+variable "groups_settings_violations_should_notify" {
+  description = "Notify for groups settings violations"
+  default     = "true"
+}
