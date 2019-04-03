@@ -120,7 +120,7 @@ gcloud organizations add-iam-policy-binding "${ORG_ID}" \
     --user-output-enabled false
 
 gcloud organizations add-iam-policy-binding "${ORG_ID}" \
-    --member="serviceAccount:${SERVICE_ACCOUNT_ID}" \
+    --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
     --role="roles/iam.securityReviewer" \
     --user-output-enabled false
 
