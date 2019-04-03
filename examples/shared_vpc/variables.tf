@@ -56,4 +56,3 @@ variable "instance_metadata" {
   type        = "map"
   default     = {}
 }
-

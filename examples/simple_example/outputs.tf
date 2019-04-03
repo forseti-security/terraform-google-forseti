@@ -63,4 +63,3 @@ output "forseti-server-storage-bucket" {
   description = "Forseti Server storage bucket"
   value       = "${module.forseti-install-simple.forseti-server-storage-bucket}"
 }
-

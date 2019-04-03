@@ -40,15 +40,7 @@ control "server" do
 
   describe command("pip show forseti-security|grep Version") do
     its("exit_status") { should eq 0 }
-    let(:forseti_version_formated) {
-      forseti_version.sub(/\Av/, "")
-    }
-    let(:installed_version) {
-      subject.stdout.chomp.split(":")[1].strip
-    }
-    it "version should match" do
-      expect(installed_version).to match(forseti_version_formated)
-    end
+    its("stdout") { should match("Version: #{forseti_version}") }
   end
 
   describe file("/home/ubuntu/forseti-security/configs/forseti_conf_server.yaml") do
