@@ -448,7 +448,7 @@ variable "cloudsql_acl_violations_should_notify" {
   default     = "true"
 }
 
-variable "config_validator_violations_should_notify"{
+variable "config_validator_violations_should_notify" {
   description = "Notify for Config Validator violations."
   default     = "true"
 }
