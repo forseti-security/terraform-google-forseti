@@ -97,6 +97,11 @@ Then perform the following commands on the config folder:
 | forwarding\_rule\_enabled | Forwarding rule scanner enabled. | string | `"false"` | no |
 | forwarding\_rule\_violations\_should\_notify | Notify for forwarding rule violations | string | `"true"` | no |
 | group\_enabled | Group scanner enabled. | string | `"true"` | no |
+| groups\_settings\_disable\_polling | Whether to disable polling for the G Suite Groups API | string | `"False"` | no |
+| groups\_settings\_enabled | Groups settings scanner enabled. | string | `"true"` | no |
+| groups\_settings\_max\_calls | Maximum calls that can be made to the G Suite Groups API | string | `"5"` | no |
+| groups\_settings\_period | the period of max calls to the G Suite Groups API | string | `"1.1"` | no |
+| groups\_settings\_violations\_should\_notify | Notify for groups settings violations | string | `"true"` | no |
 | groups\_violations\_should\_notify | Notify for Groups violations | string | `"true"` | no |
 | gsuite\_admin\_email | G-Suite administrator email address to manage your Forseti installation | string | n/a | yes |
 | iam\_disable\_polling | Whether to disable polling for IAM API | string | `"False"` | no |
