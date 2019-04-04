@@ -1,4 +1,5 @@
 #!/bin/bash
+set -eu
 
 # Env variables
 USER=ubuntu
@@ -14,17 +15,14 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confd
 sudo apt-get update -y
 sudo apt-get --assume-yes install google-cloud-sdk git unzip
 
-# Install fluentd if necessary.
-FLUENTD=$(ls /usr/sbin/google-fluentd)
-if [ -z "$FLUENTD" ]; then
+if ! [ -e "/usr/sbin/google-fluentd" ]; then
     cd $USER_HOME
     curl -sSO https://dl.google.com/cloudagents/install-logging-agent.sh
     bash install-logging-agent.sh
 fi
 
 # Check whether Cloud SQL proxy is installed.
-CLOUD_SQL_PROXY=$(which cloud_sql_proxy)
-if [ -z "$CLOUD_SQL_PROXY" ]; then
+if [ -z "$(which cloud_sql_proxy)" ]; then
       cd $USER_HOME
       wget https://dl.google.com/cloudsql/cloud_sql_proxy.${cloudsql_proxy_arch}
       sudo mv cloud_sql_proxy.${cloudsql_proxy_arch} /usr/local/bin/cloud_sql_proxy
@@ -61,10 +59,8 @@ logrotate /etc/logrotate.conf
 # Change the access level of configs/ rules/ and run_forseti.sh
 chmod -R ug+rwx ${forseti_home}/configs ${forseti_home}/rules ${forseti_home}/install/gcp/scripts/run_forseti.sh
 
-# Install tracing libraries
-pip install .[tracing]
-
 # Install Forseti
+echo "Installing Forseti"
 python setup.py install
 
 # Export variables required by initialize_forseti_services.sh.
