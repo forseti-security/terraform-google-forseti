@@ -37,6 +37,9 @@ attributes:
     required: true
     description: 'Forseti project id. This is a service project.'
     type: string
+  - name: suffix
+    required: true
+    type: string
   - name: forseti-server-vm-name
     required: true
     description: "Forseti server name"

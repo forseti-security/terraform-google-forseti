@@ -73,3 +73,8 @@ output "org_id" {
   description = "A forwarded copy of `org_id` for InSpec"
   value       = "${var.org_id}"
 }
+
+output "suffix" {
+  description = "The random suffix appended to Forseti resources"
+  value       = "${module.forseti-install-simple.suffix}"
+}

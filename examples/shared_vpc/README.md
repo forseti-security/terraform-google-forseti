@@ -39,5 +39,6 @@ This example illustrates how to set up a Forseti installation with shared VPC.
 | project\_id | ID of the service project |
 | region | Region in which server and client will be deployed |
 | subnetwork | Subnetwork where server and client will be deployed |
+| suffix | The random suffix appended to Forseti resources |
 
 [^]: (autogen_docs_end)

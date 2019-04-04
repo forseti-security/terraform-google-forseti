@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+output "suffix" {
+  description = "The random suffix appended to Forseti resources"
+  value       = "${module.forseti.suffix}"
+}
+
 output "project_id" {
   description = "ID of the service project"
   value       = "${var.project_id}"
