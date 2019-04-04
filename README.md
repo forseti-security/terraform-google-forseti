@@ -93,7 +93,7 @@ Then perform the following commands on the config folder:
 | forseti\_home | Forseti installation directory | string | `"$USER_HOME/forseti-security"` | no |
 | forseti\_repo\_url | Git repo for the Forseti installation | string | `"https://github.com/GoogleCloudPlatform/forseti-security"` | no |
 | forseti\_run\_frequency | Schedule of running the Forseti scans | string | `"0 */2 * * *"` | no |
-| forseti\_version | The version of Forseti to install | string | `"v2.13.0"` | no |
+| forseti\_version | The version of Forseti to install | string | `"v2.14.0"` | no |
 | forwarding\_rule\_enabled | Forwarding rule scanner enabled. | string | `"false"` | no |
 | forwarding\_rule\_violations\_should\_notify | Notify for forwarding rule violations | string | `"true"` | no |
 | group\_enabled | Group scanner enabled. | string | `"true"` | no |
@@ -175,7 +175,6 @@ Then perform the following commands on the config folder:
 | forseti-server-vm-ip | Forseti Server VM private IP address |
 | forseti-server-vm-name | Forseti Server VM name |
 | forseti-server-vm-public-ip | Forseti Server VM public IP address |
-| forseti-version | Installed Forseti Version |
 | suffix | The random suffix appended to Forseti resources |
 
 [^]: (autogen_docs_end)
