@@ -17,7 +17,14 @@ attributes:
 - name: project_id
   required: true
   type: string
+- name: network_project
+  required: false
+  type: string
+  default: ''
 - name: org_id
+  required: true
+  type: string
+- name: suffix
   required: true
   type: string
 - name: forseti-client-vm-name

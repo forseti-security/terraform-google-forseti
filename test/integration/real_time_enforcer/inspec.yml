@@ -26,6 +26,10 @@ attributes:
 - name: enforcer_project_id
   required: true
   type: string
+- name: network_project
+  required: false
+  type: string
+  default: ''
 
 # Forseti client attributes
 - name: forseti-client-vm-name

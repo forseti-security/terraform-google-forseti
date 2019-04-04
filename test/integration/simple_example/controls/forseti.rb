@@ -17,6 +17,8 @@
 
 org_id = attribute('org_id')
 project_id = attribute('project_id')
+network_project = attribute('network_project').empty? ? project_id : attribute('network_project')
+suffix = attribute('suffix')
 forseti_client_vm_name = attribute('forseti-client-vm-name')
 forseti_server_vm_name = attribute('forseti-server-vm-name')
 forseti_client_storage_bucket = attribute('forseti-client-storage-bucket')
@@ -136,54 +138,61 @@ control 'forseti' do
     its(:display_name) { should eq "Forseti Server Service Account" }
   end
 
-  describe google_compute_firewalls(project: project_id) do
-    its('firewall_names') { should include(/forseti-server-ssh-external/) }
-    its('firewall_names') { should include(/forseti-server-allow-grpc/) }
-    its('firewall_names') { should include(/forseti-server-deny-all/) }
-    its('firewall_names') { should include(/forseti-client-ssh-external/) }
-    its('firewall_names') { should include(/forseti-client-deny-all/) }
+  describe google_compute_firewall(project: network_project, name: "forseti-server-ssh-external-#{suffix}") do
+    its('source_ranges') { should eq ["0.0.0.0/0"] }
+    its('direction') { should eq 'INGRESS' }
+    its('allowed_ssh?') { should be true }
+    its('priority') { should eq 100 }
   end
 
-  google_compute_firewalls(project: project_id).where(firewall_name: /forseti-(server|client)-ssh-external/).firewall_names.each do |firewall_name|
-    describe google_compute_firewall(project: project_id, name: firewall_name) do
-      its('direction') { should eq "INGRESS" }
-      its('allowed_ssh?')  { should be true }
-      its('allowed_https?') { should be false }
-      its('allowed_http?') { should be false }
-      its('priority') { should eq 100 }
-      it { should_not allow_port_protocol("21", "tcp") }
-      it { should_not allow_port_protocol("8080", "tcp") }
+  describe google_compute_firewall(project: network_project, name: "forseti-server-allow-grpc-#{suffix}") do
+    let(:allowed) { subject.allowed.map(&:item) }
+
+    its('source_ranges') { should eq ["10.128.0.0/9"] }
+    its('direction') { should eq 'INGRESS' }
+    its('priority') { should eq 100 }
+
+    it "allows gRPC traffic" do
+      expect(allowed).to contain_exactly({ip_protocol: "tcp", ports: ["50051"]})
     end
   end
 
-  google_compute_firewalls(project: project_id).where(firewall_name: /forseti-server-allow-grpc/).firewall_names.each do |firewall_name|
-    describe google_compute_firewall(project: project_id, name: firewall_name) do
-      its('direction') { should eq "INGRESS" }
-      its('allowed_ssh?')  { should be false }
-      its('allowed_https?') { should be false }
-      its('allowed_http?') { should be false }
-      its('priority') { should eq 100 }
-      it { should_not allow_port_protocol("21", "tcp") }
-      it { should_not allow_port_protocol("8080", "tcp") }
+  describe google_compute_firewall(project: network_project, name: "forseti-server-deny-all-#{suffix}") do
+    let(:denied) { subject.denied.map(&:item) }
+
+    its('source_ranges') { should eq ["0.0.0.0/0"] }
+    its('direction') { should eq 'INGRESS' }
+    its('priority') { should eq 200 }
+
+    it "denies TCP, UDP, and ICMP" do
+      expect(denied).to contain_exactly(
+        {ip_protocol: "icmp"},
+        {ip_protocol: "tcp"},
+        {ip_protocol: "udp"}
+      )
     end
   end
 
-  google_compute_firewalls(project: project_id).where(firewall_name: /forseti-(client|server)-deny-all/).firewall_names.each do |firewall_name|
-    describe google_compute_firewall(project: project_id, name: firewall_name) do
-      its('direction') { should eq "INGRESS" }
-      its('priority') { should eq 200 }
-      its('source_ranges') { should eq ["0.0.0.0/0"] }
-      its('denied.first.ip_protocol') { should eq 'icmp' }
+  describe google_compute_firewall(project: network_project, name: "forseti-client-ssh-external-#{suffix}") do
+    its('source_ranges') { should eq ["0.0.0.0/0"] }
+    its('direction') { should eq 'INGRESS' }
+    its('allowed_ssh?') { should be true }
+    its('priority') { should eq 100 }
+  end
 
-      let(:denied) do
-        subject.denied
-      end
-      it 'denied.second.ip_protocol should eq udp' do
-        expect(denied[1].ip_protocol).to eq('udp')
-      end
-      it 'denied.third.ip_protocol should eq tcp' do
-        expect(denied[2].ip_protocol).to eq('tcp')
-      end
+  describe google_compute_firewall(project: network_project, name: "forseti-client-deny-all-#{suffix}") do
+    let(:denied) { subject.denied.map(&:item) }
+
+    its('source_ranges') { should eq ["0.0.0.0/0"] }
+    its('direction') { should eq 'INGRESS' }
+    its('priority') { should eq 200 }
+
+    it "denies TCP, UDP, and ICMP" do
+      expect(denied).to contain_exactly(
+        {ip_protocol: "icmp"},
+        {ip_protocol: "tcp"},
+        {ip_protocol: "udp"}
+      )
     end
   end
 end
