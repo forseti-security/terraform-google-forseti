@@ -79,7 +79,7 @@ gsutil cp -r gs://${storage_bucket_name}/rules ${forseti_home}/
 
 # Download the Newest Config Validator constraints from GCS
 rm -rf ${forseti_home}/policy-library
-gsutil cp -r gs://${storage_bucket_name}/policy-library ${forseti_home}/policy-library
+gsutil cp -r gs://${storage_bucket_name}/policy-library ${forseti_home}/
 
 # Start Forseti service depends on vars defined above.
 bash ./install/gcp/scripts/initialize_forseti_services.sh
