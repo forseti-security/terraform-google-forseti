@@ -98,3 +98,8 @@ output "forseti-server-service-account" {
   description = "Forseti Server service account"
   value       = "${module.forseti-shared-vpc.forseti-server-service-account}"
 }
+
+output "suffix" {
+  description = "The random suffix appended to Forseti resources"
+  value       = "${module.forseti-shared-vpc.suffix}"
+}
