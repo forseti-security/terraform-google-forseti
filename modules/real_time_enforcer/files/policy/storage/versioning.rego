@@ -43,12 +43,15 @@ valid = true {
 
 # Make a copy of the input, omitting the versioning field
 remediate[key] = value {
- key != "versioning"
- input[key]=value
+  # If there is a retentionPolicy, we cant enable versioning, theres no remediation steps
+  not input.retentionPolicy
+  key != "versioning"
+  input[key]=value
 }
 
 # Set the versioning field such that the bucket adheres to the policy
 remediate[key] = value {
+  not input.retentionPolicy
   key:="versioning"
   value:={"enabled":true}
 }
