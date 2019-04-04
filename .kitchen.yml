@@ -111,3 +111,89 @@ suites:
           shell_options: "--login"
     provisioner:
       name: terraform
+
+  - name: real_time_enforcer_roles
+    driver:
+      name: terraform
+      root_module_directory: test/fixtures/real_time_enforcer_roles
+      command_timeout: 1800
+    verifier:
+      name: terraform
+      color: false
+      systems:
+        - name: local
+          backend: local
+
+  - name: real_time_enforcer
+    lifecycle:
+      pre_verify:
+        - local: test/fixtures/real_time_enforcer/modules/enforcer_target/helpers/create-enforcer-fixtures.sh
+      post_verify:
+        - local: test/fixtures/real_time_enforcer/modules/enforcer_target/helpers/destroy-enforcer-fixtures.sh
+      pre_destroy:
+        - local: test/fixtures/real_time_enforcer/modules/enforcer_target/helpers/destroy-enforcer-fixtures.sh
+    driver:
+      name: terraform
+      root_module_directory: test/fixtures/real_time_enforcer
+      command_timeout: 1800
+    verifier:
+      name: terraform
+      color: false
+      systems:
+        - name: gcp
+          backend: gcp
+          controls:
+            - forseti
+            - real-time-enforcer-gcp
+            - real-time-enforcer-target-gcp
+
+        - name: server
+          backend: ssh
+          controls:
+            - server
+          hosts_output: forseti-server-vm-public-ip
+          user: ubuntu
+          key_files:
+            - test/fixtures/real_time_enforcer/sshkey
+          shell: true
+          shell_options: "--login"
+
+        - name: forseti-client
+          backend: ssh
+          controls:
+            - client
+          hosts_output: forseti-client-vm-public-ip
+          user: ubuntu
+          key_files:
+            - test/fixtures/real_time_enforcer/sshkey
+          shell: true
+          shell_options: "--login"
+
+        - name: real-time-enforcer
+          backend: ssh
+          controls:
+            - real-time-enforcer-host
+          hosts_output: forseti-rt-enforcer-vm-public-ip
+          user: ubuntu
+          key_files:
+            - test/fixtures/real_time_enforcer/sshkey
+          shell: true
+          shell_options: "--login"
+
+        - name: gcloud
+          backend: local
+          controls:
+            - forseti-org-iam
+            - real-time-enforcer-gcloud
+
+  - name: real_time_enforcer_sinks
+    driver:
+      name: terraform
+      command_timeout: 1800
+      root_module_directory: test/fixtures/real_time_enforcer_sinks
+    verifier:
+      name: terraform
+      color: false
+      systems:
+        - name: gcloud
+          backend: local

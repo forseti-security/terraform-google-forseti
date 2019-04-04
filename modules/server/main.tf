@@ -215,6 +215,12 @@ data "template_file" "forseti_server_config" {
     BLACKLIST_VIOLATIONS_SHOULD_NOTIFY                  = "${var.blacklist_violations_should_notify ? "true" : "false"}",
     BIGQUERY_ACL_VIOLATIONS_SHOULD_NOTIFY               = "${var.bigquery_acl_violations_should_notify ? "true" : "false"}",
     AUDIT_LOGGING_VIOLATIONS_SHOULD_NOTIFY              = "${var.audit_logging_violations_should_notify ? "true" : "false"}"
+
+    GROUPS_SETTINGS_MAX_CALLS                = "${var.groups_settings_max_calls}"
+    GROUPS_SETTINGS_PERIOD                   = "${var.groups_settings_period}"
+    GROUPS_SETTINGS_DISABLE_POLLING          = "${var.groups_settings_disable_polling ? "true" : "false"}"
+    GROUPS_SETTINGS_ENABLED                  = "${var.groups_settings_enabled ? "true" : "false"}"
+    GROUPS_SETTINGS_VIOLATIONS_SHOULD_NOTIFY = "${var.groups_settings_violations_should_notify ? "true" : "false"}"
   }
 }
 

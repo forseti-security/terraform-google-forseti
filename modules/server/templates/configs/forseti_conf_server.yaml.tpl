@@ -76,6 +76,10 @@ inventory:
           max_calls: ${CRM_MAX_CALLS}
           period: ${CRM_PERIOD}
           disable_polling: ${CRM_DISABLE_POLLING}
+        groupssettings:
+          max_calls: ${GROUPS_SETTINGS_MAX_CALLS}
+          period: ${GROUPS_SETTINGS_PERIOD}
+          disable_polling: ${GROUPS_SETTINGS_DISABLE_POLLING}
         iam:
           max_calls: ${IAM_MAX_CALLS}
           period: ${IAM_PERIOD}
@@ -221,6 +225,8 @@ scanner:
           enabled: ${FORWARDING_RULE_ENABLED}
         - name: group
           enabled: ${GROUP_ENABLED}
+        - name: groups_settings
+          enabled: ${GROUPS_SETTINGS_ENABLED}
         - name: iam_policy
           enabled: ${IAM_POLICY_ENABLED}
         - name: iap
@@ -388,6 +394,18 @@ notifier:
                 # gcs_path should begin with "gs://"
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
 
+        - resource: groups_settings_violations
+          should_notify: ${GROUPS_SETTINGS_VIOLATIONS_SHOULD_NOTIFY}
+          notifiers:
+            # Email violations
+            - name: email_violations
+            # Upload violations to GCS.
+            - name: gcs_violations
+              configuration:
+                data_format: csv
+                # gcs_path should begin with "gs://"
+                gcs_path: gs://{FORSETI_BUCKET}/scanner_violations
+
         - resource: ke_version_violations
           should_notify: ${KE_VERSION_VIOLATIONS_SHOULD_NOTIFY}
           notifiers:
@@ -540,20 +558,11 @@ notifier:
                 # gcs_path should begin with "gs://"
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
 
-
     violation:
       cscc:
         enabled: ${CSCC_VIOLATIONS_ENABLED}
-        mode: api
-        # Alpha API
-        organization_id: ${ROOT_RESOURCE_ID}
-        # gcs_path should begin with "gs://"
-        gcs_path:
-        # Beta API
-        # Cloud SCC Beta API uses a new source_id.  It is unique per
+        # Cloud SCC uses a source_id. It is unique per
         # organization and must be generated via a self-registration process.
-        # If source_id is used, then it will activate the Beta API,
-        # and the Beta API will take precedence over the Alpha API.
         # The format is: organizations/ORG_ID/sources/SOURCE_ID
         source_id: ${CSCC_SOURCE_ID}
 

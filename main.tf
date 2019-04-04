@@ -203,5 +203,11 @@ module "server" {
   bigquery_acl_violations_should_notify               = "${var.bigquery_acl_violations_should_notify}",
   audit_logging_violations_should_notify              = "${var.audit_logging_violations_should_notify}"
 
+  groups_settings_max_calls                = "${var.groups_settings_max_calls}"
+  groups_settings_period                   = "${var.groups_settings_period}"
+  groups_settings_disable_polling          = "${var.groups_settings_disable_polling}"
+  groups_settings_enabled                  = "${var.groups_settings_enabled}"
+  groups_settings_violations_should_notify = "${var.groups_settings_violations_should_notify}"
+
   services = "${google_project_service.main.*.service}"
 }
