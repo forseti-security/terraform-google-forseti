@@ -77,10 +77,19 @@ echo "${forseti_environment}" > /etc/profile.d/forseti_environment.sh | sudo sh
 gsutil cp gs://${storage_bucket_name}/configs/forseti_conf_server.yaml ${forseti_server_conf_path}
 gsutil cp -r gs://${storage_bucket_name}/rules ${forseti_home}/
 
+# Download the Newest Config Validator constraints from GCS
+rm -rf ${forseti_home}/policy-library
+
+# Attempt to download the config-validator policy and gracefully handle the absence
+# of policy files.  The config-validator is not required for the rest of Forseti
+# and should not halt installation.
+gsutil cp -r gs://${storage_bucket_name}/policy-library ${forseti_home}/ || echo "No policy available, continuing with Forseti installation"
+
 # Start Forseti service depends on vars defined above.
 bash ./install/gcp/scripts/initialize_forseti_services.sh
 echo "Starting services."
 systemctl start cloudsqlproxy
+systemctl start config-validator
 sleep 5
 
 echo "Attempting to update database schema, if necessary."

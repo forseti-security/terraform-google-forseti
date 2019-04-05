@@ -213,6 +213,8 @@ scanner:
           enabled: ${BLACKLIST_ENABLED}
         - name: bucket_acl
           enabled: ${BUCKET_ACL_ENABLED}
+        - name: config_validator
+          enabled: ${CONFIG_VALIDATOR_ENABLED}
         - name: cloudsql_acl
           enabled: ${CLOUDSQL_ACL_ENABLED}
         - name: enabled_apis
@@ -322,6 +324,18 @@ notifier:
 
         - resource: buckets_acl_violations
           should_notify: ${BUCKETS_ACL_VIOLATIONS_SHOULD_NOTIFY}
+          notifiers:
+            # Email violations
+            - name: email_violations
+            # Upload violations to GCS.
+            - name: gcs_violations
+              configuration:
+                data_format: csv
+                # gcs_path should begin with "gs://"
+                gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+
+        - resource: config_validator_violations
+          should_notify: ${CONFIG_VALIDATOR_VIOLATIONS_SHOULD_NOTIFY}
           notifiers:
             # Email violations
             - name: email_violations

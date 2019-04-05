@@ -330,6 +330,11 @@ variable "cloudsql_acl_enabled" {
   default     = "true"
 }
 
+variable "config_validator_enabled" {
+  description = "Config Validator scanner enabled."
+  default     = "false"
+}
+
 variable "enabled_apis_enabled" {
   description = "Enabled APIs scanner enabled."
   default     = "false"
@@ -440,6 +445,11 @@ variable "buckets_acl_violations_should_notify" {
 
 variable "cloudsql_acl_violations_should_notify" {
   description = "Notify for CloudSQL ACL violations"
+  default     = "true"
+}
+
+variable "config_validator_violations_should_notify" {
+  description = "Notify for Config Validator violations."
   default     = "true"
 }
 
