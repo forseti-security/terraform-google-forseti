@@ -26,38 +26,6 @@ attributes:
 - name: enforcer_project_id
   required: true
   type: string
-- name: network_project
-  required: false
-  type: string
-  default: ''
-
-# Forseti client attributes
-- name: forseti-client-vm-name
-  required: true
-  type: string
-- name: forseti-client-vm-ip
-  required: true
-  type: string
-- name: forseti-client-storage-bucket
-  required: true
-  type: string
-- name: forseti-client-service-account
-  required: true
-  type: string
-
-# Forseti server attributes
-- name: forseti-server-vm-name
-  required: true
-  type: string
-- name: forseti-server-vm-ip
-  required: true
-  type: string
-- name: forseti-server-storage-bucket
-  required: true
-  type: string
-- name: forseti-server-service-account
-  required: true
-  type: string
 
 # Forseti real time enforcer attributes
 - name: forseti-rt-enforcer-vm-name

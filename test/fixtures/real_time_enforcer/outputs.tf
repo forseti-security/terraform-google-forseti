@@ -34,64 +34,6 @@ output "enforcer_project_id" {
   value       = "${var.enforcer_project_id}"
 }
 
-#------------------------#
-# Forseti client outputs #
-#------------------------#
-
-output "forseti-client-vm-name" {
-  description = "Forseti Client VM name"
-  value       = "${module.real_time_enforcer.forseti-client-vm-name}"
-}
-
-output "forseti-client-vm-ip" {
-  description = "Forseti Client VM private IP address"
-  value       = "${module.real_time_enforcer.forseti-client-vm-ip}"
-}
-
-output "forseti-client-vm-public-ip" {
-  description = "Forseti Client VM public IP address"
-  value       = "${module.real_time_enforcer.forseti-client-vm-public-ip}"
-}
-
-output "forseti-client-service-account" {
-  description = "Forseti Client service account"
-  value       = "${module.real_time_enforcer.forseti-client-service-account}"
-}
-
-output "forseti-client-storage-bucket" {
-  description = "Forseti Client storage bucket"
-  value       = "${module.real_time_enforcer.forseti-client-storage-bucket}"
-}
-
-#------------------------#
-# Forseti server outputs #
-#------------------------#
-
-output "forseti-server-vm-name" {
-  description = "Forseti Server VM name"
-  value       = "${module.real_time_enforcer.forseti-server-vm-name}"
-}
-
-output "forseti-server-vm-ip" {
-  description = "Forseti Server VM private IP address"
-  value       = "${module.real_time_enforcer.forseti-server-vm-ip}"
-}
-
-output "forseti-server-vm-public-ip" {
-  description = "Forseti Server VM public IP address"
-  value       = "${module.real_time_enforcer.forseti-server-vm-public-ip}"
-}
-
-output "forseti-server-service-account" {
-  description = "Forseti Server service account"
-  value       = "${module.real_time_enforcer.forseti-server-service-account}"
-}
-
-output "forseti-server-storage-bucket" {
-  description = "Forseti Server storage bucket"
-  value       = "${module.real_time_enforcer.forseti-server-storage-bucket}"
-}
-
 #--------------------------#
 # Forseti enforcer outputs #
 #--------------------------#

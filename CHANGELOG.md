@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Extending the adopted spec, each change should have a link to its corresponding pull request appended.
 
+## [Unreleased]
+
+### Changed
+
+- Removed Forseti resources from real time enforcer example. [#119]
+
 ## [v1.4.0] - 2019-04-04
 
 ### Added
@@ -99,6 +105,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 [v1.3.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.2.0...v1.3.0
 [v1.4.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.3.0...v1.4.0
 
+[#119]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/119
 [#116]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/114
 [#115]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/114
 [#114]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/114
