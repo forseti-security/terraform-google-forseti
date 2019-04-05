@@ -34,6 +34,9 @@ write_files:
     Wants=opa-policy.service docker.service
     After=network.target opa-policy.service
 
+    StartLimitInterval=120
+    StartLimitBurst=5
+
     [Service]
     ExecStartPre=/bin/mkdir -p /var/lib/opa
     ExecStartPre=-/usr/bin/docker rm opa-server
@@ -44,6 +47,7 @@ write_files:
     ExecStopPost=-/usr/bin/docker stop opa-server
     ExecStopPost=-/usr/bin/docker rm opa-server
     Restart=always
+    RestartSec=5
 
 - path: /etc/systemd/system/enforcer.service
   permissions: 0644
@@ -53,6 +57,9 @@ write_files:
     Description=Forseti real time policy enforcer
     Wants=opa-server.service docker.service
     After=opa-server.service docker.service
+
+    StartLimitInterval=120
+    StartLimitBurst=5
 
     [Install]
     WantedBy=multi-user.target
@@ -68,6 +75,8 @@ write_files:
 
     ExecStopPost=-/usr/bin/docker stop enforcer
     ExecStopPost=-/usr/bin/docker rm enforcer
+    Restart=always
+    RestartSec=5
 
 runcmd:
 - systemctl daemon-reload
