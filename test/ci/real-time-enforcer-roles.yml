@@ -7,8 +7,10 @@ inputs:
   path: terraform-google-forseti
 
 run:
-  path: make
-  args: ['test_integration']
+  # Disable the real-time-enforcer-roles test. This test was useful when the real time enforcer
+  # expected the custom roles to exist as a precondition, but now the real-time-enforcer suite
+  # creates roles as well - causing us to exhaust the test organization custom role quota.
+  path: true
   dir: terraform-google-forseti
 
 params:
