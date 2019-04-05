@@ -6,22 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Extending the adopted spec, each change should have a link to its corresponding pull request appended.
 
-<<<<<<< HEAD
 ## [Unreleased]
 
 ### Changed
 
 - Removed Forseti resources from real time enforcer example. [#119]
-
-||||||| merged common ancestors
-=======
-## [Unreleased]
+- Update Forseti to v2.14.1. [#123]
 
 ### Fixed
 
 - Real time enforcer containers will restart when encountering errors. [#120]
 
->>>>>>> Add limited retries to real time enforcer services
 ## [v1.4.0] - 2019-04-04
 
 ### Added
@@ -115,6 +110,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 [v1.3.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.2.0...v1.3.0
 [v1.4.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.3.0...v1.4.0
 
+[#123]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/123
 [#120]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/120
 [#119]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/119
 [#116]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/116
