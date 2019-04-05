@@ -12,7 +12,7 @@ inventory:
 
     # Root resource to start crawling from, formatted as
     # <resource_type>/<resource_id>, (e.g. "organizations/12345677890")
-    root_resource_id: ${ROOT_RESOURCE_ID}
+    ${ROOT_RESOURCE_ID}
 
     # Composite root resources: combines multiple resource roots into a single
     # inventory, for use across all Forseti modules. Can contain one or more
@@ -31,6 +31,8 @@ inventory:
     #    - "folders/45678"
     #    - "projects/98765"
     #    - "organizations/56789"
+    ${COMPOSITE_ROOT_RESOURCES}
+
 
     # gsuite access
     domain_super_admin_email: ${DOMAIN_SUPER_ADMIN_EMAIL}

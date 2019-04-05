@@ -19,7 +19,6 @@
 #--------#
 locals {
   random_hash             = "${var.suffix}"
-  root_resource_id        = "${var.folder_id != "" ? "folders/${var.folder_id}" : "organizations/${var.org_id}"}"
   network_project         = "${var.network_project != "" ? var.network_project : var.project_id}"
   server_zone             = "${var.server_region}-c"
   server_startup_script   = "${file("${path.module}/templates/scripts/forseti-server/forseti_server_startup_script.sh.tpl")}"
@@ -33,6 +32,15 @@ locals {
   storage_bucket_name     = "forseti-server-${local.random_hash}"
   storage_cai_bucket_name = "forseti-cai-export-${local.random_hash}"
   server_bucket_name      = "forseti-server-${local.random_hash}"
+
+  # Determine the root resource. If a composite root resource list is available
+  # then it will take precedence, otherwise we'll fall back to a singular root
+  # resource.
+
+  # If composite root resources are present, set the root_resource_id to the empty string. This
+  # mitigates issues in the Forseti explainer that requires `root_resource_id` to be of type `str`.
+  root_resource_id         = "root_resource_id: ${length(var.composite_root_resources) > 0 ? "\"\"" : (var.folder_id != "" ? "folders/${var.folder_id}" : "organizations/${var.org_id}")}"
+  composite_root_resources = "${length(var.composite_root_resources) > 0 ? "composite_root_resources: [${join(", ", formatlist("\"%s\"", var.composite_root_resources))}]" : ""}"
 
   server_project_roles = [
     "roles/storage.objectViewer",
@@ -117,6 +125,7 @@ data "template_file" "forseti_server_config" {
   # Terraform templates.
   vars {
     ROOT_RESOURCE_ID                                    = "${local.root_resource_id}"
+    COMPOSITE_ROOT_RESOURCES                            = "${local.composite_root_resources}"
     DOMAIN_SUPER_ADMIN_EMAIL                            = "${var.gsuite_admin_email}"
     CAI_ENABLED                                         = "${var.enable_cai_bucket ? "true" : "false"}"
     FORSETI_CAI_BUCKET                                  = "${google_storage_bucket.cai_export.name}"

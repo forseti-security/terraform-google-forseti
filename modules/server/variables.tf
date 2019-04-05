@@ -646,6 +646,12 @@ variable "folder_id" {
   default     = ""
 }
 
+variable "composite_root_resources" {
+  description = "A list of root resources that Forseti will monitor. This supersedes the root_resource_id when set."
+  type        = "list"
+  default     = [""]
+}
+
 variable "sendgrid_api_key" {
   description = "Sendgrid.com API key to enable email notifications"
   default     = ""
