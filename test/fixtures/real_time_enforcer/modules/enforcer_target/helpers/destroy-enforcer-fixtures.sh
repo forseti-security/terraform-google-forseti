@@ -19,13 +19,26 @@ destroy_enforcer_fixtures() {
 
   cd "$enforcer_target_dir" || exit 1
 
+  # The real time enforcer will be modifying resources while Terraform is
+  # tearing down test fixtures, so we may need to make multiple attempts to
+  # get a successful destroy.
   echo "Tearing down test fixtures for real-time-enforcer"
-  terraform init
-  terraform destroy -auto-approve -input=false -no-color
+  terraform init || exit 1
+
+  for attempt in {1..3}; do
+    echo "Destroying test fixtures, attempt $attempt of 3"
+    if terraform apply -auto-approve -input=false -no-color; then
+      echo "Terraform applied successfully."
+      exit 0
+    fi
+  done
+
+  echo "Terraform was not able to destroy after 3 attempts!"
+  exit 1
 }
 
 main() {
-  set -eu
+  set -u
   destroy_enforcer_fixtures
 }
 
