@@ -32,4 +32,8 @@ module "forseti" {
   domain                   = "${var.domain}"
   client_instance_metadata = "${var.instance_metadata}"
   server_instance_metadata = "${var.instance_metadata}"
+
+  composite_root_resources = [
+    "organizations/${var.org_id}",
+  ]
 }
