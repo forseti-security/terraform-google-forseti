@@ -143,33 +143,10 @@ suites:
         - name: gcp
           backend: gcp
           controls:
-            - forseti
             - real-time-enforcer-gcp
             - real-time-enforcer-target-gcp
 
-        - name: server
-          backend: ssh
-          controls:
-            - server
-          hosts_output: forseti-server-vm-public-ip
-          user: ubuntu
-          key_files:
-            - test/fixtures/real_time_enforcer/sshkey
-          shell: true
-          shell_options: "--login"
-
-        - name: forseti-client
-          backend: ssh
-          controls:
-            - client
-          hosts_output: forseti-client-vm-public-ip
-          user: ubuntu
-          key_files:
-            - test/fixtures/real_time_enforcer/sshkey
-          shell: true
-          shell_options: "--login"
-
-        - name: real-time-enforcer
+        - name: real-time-enforcer-host
           backend: ssh
           controls:
             - real-time-enforcer-host
@@ -183,7 +160,6 @@ suites:
         - name: gcloud
           backend: local
           controls:
-            - forseti-org-iam
             - real-time-enforcer-gcloud
 
   - name: real_time_enforcer_sinks

@@ -31,21 +31,19 @@ provider "random" {
   version = "~> 2.0"
 }
 
-module "forseti" {
-  source                   = "../../"
-  project_id               = "${var.project_id}"
-  gsuite_admin_email       = "${var.gsuite_admin_email}"
-  org_id                   = "${var.org_id}"
-  domain                   = "${var.domain}"
-  client_instance_metadata = "${var.instance_metadata}"
-  server_instance_metadata = "${var.instance_metadata}"
+resource "random_string" "suffix" {
+  upper   = "false"
+  lower   = "true"
+  number  = "true"
+  special = "false"
+  length  = 6
 }
 
 module "real_time_enforcer_roles" {
   source = "../../modules/real_time_enforcer_roles"
 
   org_id = "${var.org_id}"
-  suffix = "${module.forseti.suffix}"
+  suffix = "${random_string.suffix.result}"
 }
 
 module "real_time_enforcer_project_sink" {
@@ -66,5 +64,5 @@ module "real_time_enforcer" {
   enforcer_viewer_role = "${module.real_time_enforcer_roles.forseti-rt-enforcer-viewer-role-id}"
   enforcer_writer_role = "${module.real_time_enforcer_roles.forseti-rt-enforcer-writer-role-id}"
 
-  suffix = "${module.forseti.suffix}"
+  suffix = "${random_string.suffix.result}"
 }

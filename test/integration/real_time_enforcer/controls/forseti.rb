@@ -1,1 +1,0 @@
-../../simple_example/controls/forseti.rb

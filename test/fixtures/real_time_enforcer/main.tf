@@ -28,45 +28,14 @@ module "real_time_enforcer" {
   source = "../../../examples/real_time_enforcer"
 
   credentials_path    = "${var.credentials_path}"
-  gsuite_admin_email  = "${var.gsuite_admin_email}"
   project_id          = "${var.project_id}"
   org_id              = "${var.org_id}"
-  domain              = "${var.domain}"
   enforcer_project_id = "${var.enforcer_project_id}"
 
   instance_metadata {
+    # This username is a little bit silly because the enforcer VM is COS, but for
+    # the sake of consistency with the Forseti client and server we use the same
+    # hostname.
     sshKeys = "ubuntu:${tls_private_key.main.public_key_openssh}"
-  }
-}
-
-resource "null_resource" "wait_for_server" {
-  triggers = {
-    always_run = "${uuid()}"
-  }
-
-  provisioner "remote-exec" {
-    script = "${path.module}/scripts/wait-for-forseti.sh"
-
-    connection {
-      user        = "ubuntu"
-      host        = "${module.real_time_enforcer.forseti-server-vm-public-ip}"
-      private_key = "${tls_private_key.main.private_key_pem}"
-    }
-  }
-}
-
-resource "null_resource" "wait_for_client" {
-  triggers = {
-    always_run = "${uuid()}"
-  }
-
-  provisioner "remote-exec" {
-    script = "${path.module}/scripts/wait-for-forseti.sh"
-
-    connection {
-      user        = "ubuntu"
-      host        = "${module.real_time_enforcer.forseti-client-vm-public-ip}"
-      private_key = "${tls_private_key.main.private_key_pem}"
-    }
   }
 }

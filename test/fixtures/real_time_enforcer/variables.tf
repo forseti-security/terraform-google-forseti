@@ -18,20 +18,12 @@ variable "credentials_path" {
   description = "Path to service account json"
 }
 
-variable "gsuite_admin_email" {
-  description = "The email of a GSuite super admin, used for pulling user directory information *and* sending notifications."
-}
-
 variable "project_id" {
   description = "The ID of an existing Google project where Forseti will be installed"
 }
 
 variable "org_id" {
   description = "GCP Organization ID that Forseti will have purview over"
-}
-
-variable "domain" {
-  description = "The domain associated with the GCP Organization ID"
 }
 
 variable "enforcer_project_id" {
