@@ -6,11 +6,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Extending the adopted spec, each change should have a link to its corresponding pull request appended.
 
-## [Unreleased]
+## [v1.4.0] - 2019-04-04
 
 ### Added
 
 - Checks for errors in the client and server startup scripts. [#79]
+- Database migration script is invoked in forseti server startup script. [#77]
+- `helpers/setup.sh` activates required services in project. [#66]
+- Added real_time_enforcer submodule. [#75] [#90]
+- Added real_time_enforcer_roles submodule. [#80]
+- Added real_time_enforcer_organization_sink. [#86]
+- Added real time enforcer roles to `helpers/setup.sh` and `helpers/cleanup.sh` [#91]
+- Added groups_settings scanner. [#100]
+- Added licensing information to real time enforcer policies. [#107] [#111]
+
+### Changed
+
+- `helpers/setup.sh` and `helpers/cleanup.sh` now use flags for setting arguments. [#66]
+- Optionally send real time enforcer logs to stackdriver. [#85]
+- Updated real time enforcer policy from upstream. [#89]
+- Move real time enforcer pubsub sink definition into sink modules. [#88]
+- Update ke_scanner_rules.yaml [#102]
+- Update cscc violations to use GA API. [#103]
+- Update real time enforcer versioning policy. [#112]
+- Update forseti_version to v2.14.0
+- Refreshed Terraform variables and outputs documentation. [#115]
+
+### Fixed
+
+- Fix misnamed variable in `helpers/setup.sh`. [#108]
+- Fix getopts option string in `helpers/setup.sh` and `helpers/cleanup.sh`. [#114]
 
 ## [v1.3.0] - 2019-03-14
 1.3.0 is a backwards compatible feature release. This module release supports Forseti v2.13.0.
@@ -71,8 +96,25 @@ Extending the adopted spec, each change should have a link to its corresponding 
 [v1.1.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.1.0...v1.1.1
 [v1.2.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.1.1...v1.2.0
 [v1.3.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.2.0...v1.3.0
+[v1.4.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.3.0...v1.4.0
 
+[#115]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/114
+[#114]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/114
+[#112]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/112
+[#111]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/111
+[#108]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/108
+[#107]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/107
+[#103]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/103
+[#102]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/102
+[#100]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/100
+[#88]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/88
+[#86]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/86
+[#85]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/85
+[#80]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/80
+[#75]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/75
+[#66]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/66
 [#79]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/79
+[#77]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/77
 [#73]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/73
 [#71]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/71
 [#67]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/67
