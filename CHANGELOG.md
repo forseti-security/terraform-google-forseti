@@ -19,6 +19,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 - Added real time enforcer roles to `helpers/setup.sh` and `helpers/cleanup.sh` [#91]
 - Added groups_settings scanner. [#100]
 - Added licensing information to real time enforcer policies. [#107] [#111]
+- Added config validator. [#116]
 
 ### Changed
 
@@ -98,6 +99,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 [v1.3.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.2.0...v1.3.0
 [v1.4.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.3.0...v1.4.0
 
+[#116]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/114
 [#115]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/114
 [#114]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/114
 [#112]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/112
