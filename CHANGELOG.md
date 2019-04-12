@@ -16,6 +16,8 @@ Extending the adopted spec, each change should have a link to its corresponding 
 ### Fixed
 
 - Real time enforcer containers will restart when encountering errors. [#120]
+- `var.config_validator_violations_should_notify` would not disable
+  notifications when set to `false`. [#126]
 
 ## [v1.4.0] - 2019-04-04
 
@@ -110,6 +112,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 [v1.3.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.2.0...v1.3.0
 [v1.4.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.3.0...v1.4.0
 
+[#126]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/126
 [#123]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/123
 [#120]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/120
 [#119]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/119
