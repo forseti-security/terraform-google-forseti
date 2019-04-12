@@ -215,7 +215,7 @@ data "template_file" "forseti_server_config" {
     CSCC_VIOLATIONS_ENABLED                             = "${var.cscc_violations_enabled ? "true" : "false"}"
     CSCC_SOURCE_ID                                      = "${var.cscc_source_id}"
     CLOUDSQL_ACL_VIOLATIONS_SHOULD_NOTIFY               = "${var.cloudsql_acl_violations_should_notify ? "true" : "false"}"
-    CONFIG_VALIDATOR_VIOLATIONS_SHOULD_NOTIFY           = "${var.config_validator_violations_should_notify ? "true": "true"}"
+    CONFIG_VALIDATOR_VIOLATIONS_SHOULD_NOTIFY           = "${var.config_validator_violations_should_notify ? "true": "false"}"
     BUCKETS_ACL_VIOLATIONS_SHOULD_NOTIFY                = "${var.buckets_acl_violations_should_notify ? "true" : "false"}"
     BLACKLIST_VIOLATIONS_SHOULD_NOTIFY                  = "${var.blacklist_violations_should_notify ? "true" : "false"}"
     BIGQUERY_ACL_VIOLATIONS_SHOULD_NOTIFY               = "${var.bigquery_acl_violations_should_notify ? "true" : "false"}"
