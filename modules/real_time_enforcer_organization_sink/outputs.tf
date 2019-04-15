@@ -15,8 +15,8 @@
  */
 
 output "sink_name" {
- description = "The organization log sink name."
- value       = "${google_logging_organization_sink.main.name}"
+  description = "The organization log sink name."
+  value       = "${google_logging_organization_sink.main.name}"
 }
 
 output "topic" {

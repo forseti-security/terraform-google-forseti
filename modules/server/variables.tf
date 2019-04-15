@@ -192,6 +192,7 @@ variable "iam_disable_polling" {
   description = "Whether to disable polling for IAM API"
   default     = "False"
 }
+
 variable "logging_max_calls" {
   description = "Maximum calls that can be made to Logging API"
   default     = "9"
@@ -206,6 +207,7 @@ variable "logging_disable_polling" {
   description = "Whether to disable polling for Logging API"
   default     = "False"
 }
+
 variable "securitycenter_max_calls" {
   description = "Maximum calls that can be made to Security Center API"
   default     = "1"

@@ -46,5 +46,5 @@ output "project_sink_name" {
 
 output "project_topic" {
   description = "The project pubsub logging topic"
-  value = "${module.real_time_enforcer_project_sink.topic}"
+  value       = "${module.real_time_enforcer_project_sink.topic}"
 }

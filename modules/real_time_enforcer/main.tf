@@ -42,7 +42,8 @@ locals {
   ]
 
   real_time_enforcer_project_roles = [
-    "roles/logging.logWriter" // Permit the forseti-policy enforcer container to log to stackdriver
+    # Permit the forseti-policy enforcer container to log to stackdriver
+    "roles/logging.logWriter",
   ]
 }
 
@@ -82,10 +83,10 @@ resource "google_storage_bucket_iam_member" "service_account_read" {
 }
 
 resource "google_storage_bucket_object" "enforcer_policy" {
-  count   = "${length(local.real_time_enforcer_policy_files)}"
-  name    = "${element(local.real_time_enforcer_policy_files, count.index)}"
-  source  = "${path.module}/files/${element(local.real_time_enforcer_policy_files, count.index)}"
-  bucket  = "${google_storage_bucket.main.name}"
+  count  = "${length(local.real_time_enforcer_policy_files)}"
+  name   = "${element(local.real_time_enforcer_policy_files, count.index)}"
+  source = "${path.module}/files/${element(local.real_time_enforcer_policy_files, count.index)}"
+  bucket = "${google_storage_bucket.main.name}"
 
   lifecycle {
     ignore_changes = ["content", "detect_md5hash"]
