@@ -36,7 +36,7 @@ resource "google_logging_organization_sink" "main" {
   destination      = "pubsub.googleapis.com/projects/${var.pubsub_project_id}/topics/${google_pubsub_topic.main.name}"
   include_children = "true"
 
-  filter                 = <<EOD
+  filter = <<EOD
 protoPayload.@type=type.googleapis.com/google.cloud.audit.AuditLog
 severity != ERROR
 protoPayload.serviceName != "k8s.io"

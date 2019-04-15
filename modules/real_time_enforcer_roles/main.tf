@@ -15,10 +15,11 @@
  */
 
 resource "google_organization_iam_custom_role" "forseti-enforcer-viewer" {
-  org_id  = "${var.org_id}"
-  role_id = "forseti.enforcerViewer${var.suffix}"
-  title   = "Forseti real time enforcer viewer"
+  org_id      = "${var.org_id}"
+  role_id     = "forseti.enforcerViewer${var.suffix}"
+  title       = "Forseti real time enforcer viewer"
   description = "Read-only access to check for policy violations with the Forseti real time enforcer."
+
   permissions = [
     "storage.buckets.get",
     "storage.buckets.getIamPolicy",
@@ -26,7 +27,7 @@ resource "google_organization_iam_custom_role" "forseti-enforcer-viewer" {
     "bigquery.datasets.getIamPolicy",
     "cloudsql.instances.get",
     "resourcemanager.projects.get",
-    "resourcemanager.projects.getIamPolicy"
+    "resourcemanager.projects.getIamPolicy",
   ]
 }
 
@@ -35,6 +36,7 @@ resource "google_organization_iam_custom_role" "forseti-enforcer-writer" {
   role_id     = "forseti.enforcerWriter${var.suffix}"
   title       = "Forseti real time enforcer writer"
   description = "Write access to remediate policy violations with the Forseti real time enforcer."
+
   permissions = [
     "storage.buckets.setIamPolicy",
     "storage.buckets.update",
@@ -42,6 +44,6 @@ resource "google_organization_iam_custom_role" "forseti-enforcer-writer" {
     "bigquery.datasets.update",
     "cloudsql.instances.update",
     "resourcemanager.projects.setIamPolicy",
-    "serviceusage.services.use"
+    "serviceusage.services.use",
   ]
 }

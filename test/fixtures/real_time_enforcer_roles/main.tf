@@ -30,6 +30,6 @@ resource "random_string" "main" {
 module "real_time_enforcer_roles" {
   source = "../../../modules/real_time_enforcer_roles"
 
-  org_id          = "${var.org_id}"
-  suffix          = "${random_string.main.result}"
+  org_id = "${var.org_id}"
+  suffix = "${random_string.main.result}"
 }
