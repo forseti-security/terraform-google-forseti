@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+provider "tls" {
+  version = "~> 1.2"
+}
+
 resource "tls_private_key" "main" {
   algorithm = "RSA"
   rsa_bits  = 4096
