@@ -21,7 +21,7 @@ output "host" {
 
 output "port" {
   description = "The port to use when connecting to the bastion host."
-  value       = 22
+  value       = "22"
 }
 
 output "private_key" {
