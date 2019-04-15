@@ -24,6 +24,14 @@ resource "local_file" "gce-keypair-pk" {
   filename = "${path.module}/sshkey"
 }
 
+module "bastion" {
+  source = "../bastion"
+
+  project_id = "${var.project_id}"
+  subnetwork = "default"
+  zone       = "us-central1-f"
+}
+
 module "forseti-install-simple" {
   source = "../../../examples/simple_example"
 
@@ -47,9 +55,14 @@ resource "null_resource" "wait_for_server" {
     script = "${path.module}/scripts/wait-for-forseti.sh"
 
     connection {
-      user        = "ubuntu"
-      host        = "${module.forseti-install-simple.forseti-server-vm-ip}"
-      private_key = "${tls_private_key.main.private_key_pem}"
+      type                = "ssh"
+      user                = "ubuntu"
+      host                = "${module.forseti-install-simple.forseti-server-vm-ip}"
+      private_key         = "${tls_private_key.main.private_key_pem}"
+      bastion_host        = "${module.bastion.host}"
+      bastion_port        = "${module.bastion.port}"
+      bastion_private_key = "${module.bastion.private_key}"
+      bastion_user        = "${module.bastion.user}"
     }
   }
 }
@@ -63,9 +76,14 @@ resource "null_resource" "wait_for_client" {
     script = "${path.module}/scripts/wait-for-forseti.sh"
 
     connection {
-      user        = "ubuntu"
-      host        = "${module.forseti-install-simple.forseti-client-vm-ip}"
-      private_key = "${tls_private_key.main.private_key_pem}"
+      type                = "ssh"
+      user                = "ubuntu"
+      host                = "${module.forseti-install-simple.forseti-client-vm-ip}"
+      private_key         = "${tls_private_key.main.private_key_pem}"
+      bastion_host        = "${module.bastion.host}"
+      bastion_port        = "${module.bastion.port}"
+      bastion_private_key = "${module.bastion.private_key}"
+      bastion_user        = "${module.bastion.user}"
     }
   }
 }
