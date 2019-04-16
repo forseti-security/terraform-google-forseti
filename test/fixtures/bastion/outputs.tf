@@ -16,7 +16,7 @@
 
 output "host" {
   description = "The external IP address of the bastion host."
-  value       = "${google_compute_instance.main.network_interfaces.0.access_config.0.nat_ip}"
+  value       = "${google_compute_instance.main.network_interface.0.access_config.0.nat_ip}"
 }
 
 output "port" {
