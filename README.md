@@ -6,6 +6,10 @@ The Terraform Forseti module can be used to quickly install and configure [Forse
 A simple setup is provided in the examples folder; however, the usage of the module within your own main.tf file is as follows:
 
 ```hcl
+    provider "google" {
+      credentials = "${file("/path/to/credentials.json")}"
+    }
+    
     module "forseti" {
       source  = "terraform-google-modules/forseti/google"
       version = "~> 1.2"
@@ -207,6 +211,14 @@ On the organization:
 
 On the project:
 - `roles/owner`
+- `roles/compute.instanceAdmin`
+- `roles/compute.networkViewer`
+- `roles/compute.securityAdmin`
+- `roles/iam.serviceAccountAdmin`
+- `roles/serviceusage.serviceUsageAdmin`
+- `roles/iam.serviceAccountUser`
+- `roles/storage.admin`
+- `roles/cloudsql.admin`
 
 On the host project (when using shared VPC)
 - `roles/compute.securityAdmin`
