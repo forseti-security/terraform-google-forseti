@@ -9,7 +9,7 @@ A simple setup is provided in the examples folder; however, the usage of the mod
     provider "google" {
       credentials = "${file("/path/to/credentials.json")}"
     }
-    
+
     module "forseti" {
       source  = "terraform-google-modules/forseti/google"
       version = "~> 1.2"
