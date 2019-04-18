@@ -113,7 +113,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 [v1.3.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.2.0...v1.3.0
 [v1.4.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.3.0...v1.4.0
 
-]#131]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/131
+[#131]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/131
 [#126]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/126
 [#123]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/123
 [#120]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/120
