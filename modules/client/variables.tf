@@ -96,5 +96,5 @@ variable "suffix" {
 variable "services" {
   description = "An artificial dependency to bypass #10462"
   type        = "list"
-  default     = [""]
+  default     = []
 }
