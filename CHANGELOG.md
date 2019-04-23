@@ -8,6 +8,18 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ## [Unreleased]
 
+## [v1.4.2] - 2019-04-23
+
+### Fixed
+
+- `var.config_validator_violations_should_notify` would not disable
+  notifications when set to `false`. [#126]
+- Add CSCC findings IAM role. [#131]
+- `var.composite_root_resources` and `var.services` default to empty
+  lists. [#132]
+
+## [v1.4.1] - 2019-04-05
+
 ### Changed
 
 - Removed Forseti resources from real time enforcer example. [#119]
@@ -16,11 +28,6 @@ Extending the adopted spec, each change should have a link to its corresponding 
 ### Fixed
 
 - Real time enforcer containers will restart when encountering errors. [#120]
-- `var.config_validator_violations_should_notify` would not disable
-  notifications when set to `false`. [#126]
-- Add CSCC findings IAM role. [#131]
-- `var.composite_root_resources` and `var.services` default to empty
-  lists. [#132]
 
 ## [v1.4.0] - 2019-04-04
 
@@ -107,13 +114,15 @@ Extending the adopted spec, each change should have a link to its corresponding 
 ### ADDED
 - This is the initial release of the Forseti module.
 
-[Unreleased]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.4.0...HEAD
+[Unreleased]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.4.2...HEAD
 [v1.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v0.1.0...v1.0.0
 [v1.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.0.0...v1.1.0
 [v1.1.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.1.0...v1.1.1
 [v1.2.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.1.1...v1.2.0
 [v1.3.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.2.0...v1.3.0
 [v1.4.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.3.0...v1.4.0
+[v1.4.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.4.0...v1.4.1
+[v1.4.2]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.4.1...v1.4.2
 
 [#132]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/132
 [#131]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/131
