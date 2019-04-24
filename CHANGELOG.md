@@ -8,6 +8,10 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ## [Unreleased]
 
+### Fixed
+
+- Add `groupssettings.googleapis.com` API. [#137]
+
 ## [v1.4.2] - 2019-04-23
 
 ### Fixed
@@ -124,6 +128,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 [v1.4.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.4.0...v1.4.1
 [v1.4.2]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.4.1...v1.4.2
 
+[#137]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/137
 [#132]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/132
 [#131]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/131
 [#126]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/126
