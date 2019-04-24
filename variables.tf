@@ -69,7 +69,7 @@ variable "server_region" {
 }
 
 variable "server_boot_image" {
-  description = "GCE instance image that is being used, currently Debian only support is available"
+  description = "GCE instance image that is being used, currently Ubuntu only support is available"
   default     = "ubuntu-os-cloud/ubuntu-1804-lts"
 }
 
