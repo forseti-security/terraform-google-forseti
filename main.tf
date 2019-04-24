@@ -41,6 +41,7 @@ locals {
     "logging.googleapis.com",
     "cloudasset.googleapis.com",
     "storage-api.googleapis.com",
+    "groupssettings.googleapis.com",
   ]
 }
 
