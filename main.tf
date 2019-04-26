@@ -97,6 +97,7 @@ module "server" {
   cloudsql_db_port                                    = "${var.cloudsql_db_port}"
   cloudsql_proxy_arch                                 = "${var.cloudsql_proxy_arch}"
   cloudsql_type                                       = "${var.cloudsql_type}"
+  cloudsql_private                                    = "${var.cloudsql_private}"
   storage_bucket_location                             = "${var.storage_bucket_location}"
   bucket_cai_location                                 = "${var.bucket_cai_location}"
   bucket_cai_lifecycle_age                            = "${var.bucket_cai_lifecycle_age}"

@@ -429,6 +429,22 @@ resource "google_compute_instance" "forseti-server" {
 #----------------------#
 # Forseti SQL database #
 #----------------------#
+
+provider "google-beta" {
+}
+
+data "google_compute_network" "cloudsql-private-network" {
+  name    = "${var.network}"
+  project = "${local.network_project}" 
+}
+
+resource "google_project_service" "service-networking" {
+  count         = "${var.cloudsql_private ? 1: 0}"
+  project       = "${var.project_id}"
+  service       = "servicenetworking.googleapis.com"
+  disable_on_destroy = "false"
+}
+
 resource "google_sql_database_instance" "master" {
   name             = "${local.cloudsql_name}"
   project          = "${var.project_id}"
@@ -447,13 +463,14 @@ resource "google_sql_database_instance" "master" {
     }
 
     ip_configuration = {
-      ipv4_enabled        = true
+      ipv4_enabled        = "${var.cloudsql_private ? "false" : "true"}"
       authorized_networks = []
       require_ssl         = true
+      private_network     = "${var.cloudsql_private ? data.google_compute_network.cloudsql-private-network.self_link : "" }"
     }
   }
 
-  depends_on = ["null_resource.services-dependency"]
+  depends_on = ["null_resource.services-dependency", "google_project_service.service-networking"]
 }
 
 resource "google_sql_database" "forseti-db" {
@@ -473,3 +490,4 @@ resource "null_resource" "services-dependency" {
     services = "${jsonencode(var.services)}"
   }
 }
+

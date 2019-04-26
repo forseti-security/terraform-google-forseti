@@ -571,6 +571,11 @@ variable "cloudsql_type" {
   default     = "db-n1-standard-1"
 }
 
+variable "cloudsql_private" {
+  description = "Whether to enable private network and not to create public IP for CloudSQL Instance"
+  default     = "false"
+}
+
 #----------------#
 # Forseti bucket #
 #----------------#

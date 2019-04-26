@@ -68,6 +68,7 @@ Then perform the following commands on the config folder:
 | cloudsql\_proxy\_arch | CloudSQL Proxy architecture | string | `"linux.amd64"` | no |
 | cloudsql\_region | CloudSQL region | string | `"us-central1"` | no |
 | cloudsql\_type | CloudSQL Instance size | string | `"db-n1-standard-1"` | no |
+| cloudsql\_private | Whether to enable private network and not to create public IP for CloudSQL Instance, assuming [environment requirements](https://cloud.google.com/sql/docs/mysql/private-ip#environment_requirements) are met when this is "true"  | string | `"false"` | no |
 | compute\_disable\_polling | Whether to disable polling for Compute API | string | `"False"` | no |
 | compute\_max\_calls | Maximum calls that can be made to Compute API | string | `"18"` | no |
 | compute\_period | The period of max calls for the Compute API (in seconds) | string | `"1.0"` | no |
