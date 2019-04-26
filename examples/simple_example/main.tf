@@ -35,6 +35,34 @@ provider "random" {
   version = "~> 2.0"
 }
 
+resource "random_pet" "main" {
+  length    = "1"
+  prefix    = "forseti-simple-example"
+  separator = "-"
+}
+
+resource "google_compute_router" "main" {
+  name    = "${random_pet.main.id}"
+  network = "default"
+
+  bgp {
+    asn = "64514"
+  }
+
+  region  = "us-central1"
+  project = "${var.project_id}"
+}
+
+module "cloud_nat" {
+  source = "github.com/terraform-google-modules/terraform-google-cloud-nat"
+
+  project_id = "${var.project_id}"
+  region     = "${google_compute_router.main.region}"
+  router     = "${google_compute_router.main.name}"
+
+  name = "${random_pet.main.id}"
+}
+
 module "forseti-install-simple" {
   source                   = "../../"
   project_id               = "${var.project_id}"
@@ -47,4 +75,7 @@ module "forseti-install-simple" {
   server_tags              = "${var.instance_tags}"
   client_private           = "${var.private}"
   server_private           = "${var.private}"
+  server_region            = "${module.cloud_nat.region}"
+  client_region            = "${module.cloud_nat.region}"
+  network                  = "${google_compute_router.main.network}"
 }
