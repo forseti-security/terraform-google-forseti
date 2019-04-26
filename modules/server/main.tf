@@ -435,7 +435,7 @@ provider "google-beta" {
 
 data "google_compute_network" "cloudsql-private-network" {
   name    = "${var.network}"
-  project = "${local.network_project}" 
+  project = "${local.network_project}"
 }
 
 resource "google_project_service" "service-networking" {
