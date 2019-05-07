@@ -8,6 +8,13 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ## [Unreleased]
 
+## [v1.5.0] - 2019-05-07
+
+### Added
+
+- `var.client_private` and `var.server_private` toggle the existence of
+  public IP addresses for the client and server VMs. [#76]
+
 ### Fixed
 
 - Add `groupssettings.googleapis.com` API. [#137]
@@ -118,7 +125,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 ### ADDED
 - This is the initial release of the Forseti module.
 
-[Unreleased]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.4.2...HEAD
+[Unreleased]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.5.0...HEAD
 [v1.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v0.1.0...v1.0.0
 [v1.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.0.0...v1.1.0
 [v1.1.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.1.0...v1.1.1
@@ -127,6 +134,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 [v1.4.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.3.0...v1.4.0
 [v1.4.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.4.0...v1.4.1
 [v1.4.2]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.4.1...v1.4.2
+[v1.5.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.4.2...v1.5.0
 
 [#137]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/137
 [#132]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/132
@@ -152,6 +160,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 [#75]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/75
 [#66]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/66
 [#79]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/79
+[#76]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/76
 [#77]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/77
 [#73]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/73
 [#71]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/71

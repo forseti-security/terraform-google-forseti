@@ -26,6 +26,11 @@ variable "project_id" {
   description = "The ID of an existing Google project where Forseti will be installed"
 }
 
+variable "region" {
+  description = "Region where forseti subnetwork will be deployed"
+  default     = "us-central1"
+}
+
 variable "org_id" {
   description = "GCP Organization ID that Forseti will have purview over"
 }
@@ -46,7 +51,7 @@ variable "instance_tags" {
   default     = []
 }
 
-variable "private" {
-  description = "Private client and server instances (no public IPs)"
-  default     = true
+variable "public_ptr_domain_name" {
+  description = "Forseti server DNS name"
+  default     = ""
 }

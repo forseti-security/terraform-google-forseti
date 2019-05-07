@@ -47,3 +47,5 @@ credentials.json
 
 # InteliJ IDE files
 .idea/
+
+**/tls_private_key

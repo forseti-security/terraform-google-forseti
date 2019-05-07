@@ -19,10 +19,6 @@ provider "google" {
   version     = "~> 1.20"
 }
 
-provider "local" {
-  version = "~> 1.2"
-}
-
 provider "null" {
   version = "~> 2.0"
 }
@@ -35,32 +31,18 @@ provider "random" {
   version = "~> 2.0"
 }
 
-resource "random_pet" "main" {
-  length    = "1"
-  prefix    = "forseti-simple-example"
-  separator = "-"
+resource "google_compute_address" "forseti_client_ip" {
+  name         = "forseti-client-ip"
+  project      = "${var.project_id}"
+  region       = "${var.region}"
+  address_type = "EXTERNAL"
 }
 
-resource "google_compute_router" "main" {
-  name    = "${random_pet.main.id}"
-  network = "default"
-
-  bgp {
-    asn = "64514"
-  }
-
-  region  = "us-central1"
-  project = "${var.project_id}"
-}
-
-module "cloud_nat" {
-  source = "github.com/terraform-google-modules/terraform-google-cloud-nat"
-
-  project_id = "${var.project_id}"
-  region     = "${google_compute_router.main.region}"
-  router     = "${google_compute_router.main.name}"
-
-  name = "${random_pet.main.id}"
+resource "google_compute_address" "forseti_server_ip" {
+  name         = "forseti-server-ip"
+  project      = "${var.project_id}"
+  region       = "${var.region}"
+  address_type = "EXTERNAL"
 }
 
 module "forseti-install-simple" {
@@ -73,9 +55,21 @@ module "forseti-install-simple" {
   server_instance_metadata = "${var.instance_metadata}"
   client_tags              = "${var.instance_tags}"
   server_tags              = "${var.instance_tags}"
-  client_private           = "${var.private}"
-  server_private           = "${var.private}"
-  server_region            = "${module.cloud_nat.region}"
-  client_region            = "${module.cloud_nat.region}"
-  network                  = "${google_compute_router.main.network}"
+  client_private           = false                       # enable client public IP
+  server_private           = false                       # enable server public IP
+
+  # These optional blocks allow to override the default `access_config` block
+  # (empty by default) for the client and server VMs.
+  # This allows e.g: to customize the external IPs or assign DNS names to the
+  # VMs.
+  # If those blocks are omitted, external IPs will be automatically created
+  # and assigned to the VMs.
+  client_access_config = {
+    nat_ip = "${google_compute_address.forseti_client_ip.address}"
+  }
+
+  server_access_config = {
+    nat_ip                 = "${google_compute_address.forseti_server_ip.address}"
+    public_ptr_domain_name = "${var.public_ptr_domain_name}"
+  }
 }
