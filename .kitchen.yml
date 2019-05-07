@@ -41,6 +41,7 @@ suites:
           user: ubuntu
           key_files:
             - test/fixtures/simple_example/sshkey
+          proxy_command: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o LogLevel=ERROR -o ForwardAgent=no -i test/fixtures/bastion/tls_private_key ubuntu@<%= `terraform output -state test/fixtures/simple_example/terraform.tfstate.d/kitchen-terraform-simple-example-local/terraform.tfstate bastion_host`.strip %> -p 22 -W %h:%p
           shell: true
           shell_options: "--login"
 
@@ -52,6 +53,7 @@ suites:
           user: ubuntu
           key_files:
             - test/fixtures/simple_example/sshkey
+          proxy_command: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o LogLevel=ERROR -o ForwardAgent=no -i test/fixtures/bastion/tls_private_key ubuntu@<%= `terraform output -state test/fixtures/simple_example/terraform.tfstate.d/kitchen-terraform-simple-example-local/terraform.tfstate bastion_host`.strip %> -p 22 -W %h:%p
           shell: true
           shell_options: "--login"
 
@@ -59,9 +61,9 @@ suites:
           backend: local
           controls:
             - forseti-org-iam
-
-      provisioner:
-        name: terraform
+    lifecycle:
+      pre_verify:
+      - chmod go-rwx test/fixtures/bastion/tls_private_key
 
   - name: shared_vpc
     driver:

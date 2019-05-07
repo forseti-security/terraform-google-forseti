@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+output "bastion_host" {
+  value = "${module.bastion.host}"
+}
+
 output "forseti-client-vm-name" {
   description = "Forseti Client VM name"
   value       = "${module.forseti-install-simple.forseti-client-vm-name}"
