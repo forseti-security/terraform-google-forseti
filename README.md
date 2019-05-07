@@ -53,7 +53,7 @@ Then perform the following commands on the config folder:
 | client\_access\_config | Client instance 'access_config' block | map | `<map>` | no |
 | client\_boot\_image | GCE Forseti Client role instance size | string | `"ubuntu-os-cloud/ubuntu-1804-lts"` | no |
 | client\_instance\_metadata | Metadata key/value pairs to make available from within the client instance. | map | `<map>` | no |
-| client\_private | Private GCE Forseti Client VM (no public IP) | string | `"true"` | no |
+| client\_private | Private GCE Forseti Client VM (no public IP) | string | `"false"` | no |
 | client\_region | GCE Forseti Client role region size | string | `"us-central1"` | no |
 | client\_ssh\_allow\_ranges | List of CIDRs that will be allowed ssh access to forseti client | list | `<list>` | no |
 | client\_tags | GCE Forseti Client VM Tags | list | `<list>` | no |
@@ -150,10 +150,10 @@ Then perform the following commands on the config folder:
 | securitycenter\_period | The period of max calls for the Security Center API (in seconds) | string | `"1.1"` | no |
 | sendgrid\_api\_key | Sendgrid.com API key to enable email notifications | string | `""` | no |
 | server\_access\_config | Server instance 'access_config' block | map | `<map>` | no |
-| server\_boot\_image | GCE instance image that is being used, currently Debian only support is available | string | `"ubuntu-os-cloud/ubuntu-1804-lts"` | no |
+| server\_boot\_image | GCE instance image that is being used, currently Ubuntu only support is available | string | `"ubuntu-os-cloud/ubuntu-1804-lts"` | no |
 | server\_grpc\_allow\_ranges | List of CIDRs that will be allowed gRPC access to forseti server | list | `<list>` | no |
 | server\_instance\_metadata | Metadata key/value pairs to make available from within the server instance. | map | `<map>` | no |
-| server\_private | Private GCE Forseti Server VM (no public IP) | string | `"true"` | no |
+| server\_private | Private GCE Forseti Server VM (no public IP) | string | `"false"` | no |
 | server\_region | GCP region where Forseti will be deployed | string | `"us-central1"` | no |
 | server\_ssh\_allow\_ranges | List of CIDRs that will be allowed ssh access to forseti server | list | `<list>` | no |
 | server\_tags | GCE Forseti Server VM Tags | list | `<list>` | no |
