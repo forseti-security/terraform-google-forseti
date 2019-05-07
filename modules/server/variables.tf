@@ -557,7 +557,7 @@ variable "server_access_config" {
 
 variable "server_private" {
   description = "Enable private Forseti server VM (no public IP)"
-  default     = true
+  default     = "false"
 }
 
 #------------#

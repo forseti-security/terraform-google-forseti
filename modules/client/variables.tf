@@ -103,7 +103,7 @@ variable "client_access_config" {
 
 variable "client_private" {
   description = "Enable private Forseti client VM (no public IP)"
-  default     = true
+  default     = "false"
 }
 
 variable "suffix" {

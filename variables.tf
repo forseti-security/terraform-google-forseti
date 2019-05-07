@@ -105,7 +105,7 @@ variable "server_access_config" {
 
 variable "server_private" {
   description = "Private GCE Forseti Server VM (no public IP)"
-  default     = true
+  default     = "false"
 }
 
 #---------------------------------#
@@ -645,7 +645,7 @@ variable "client_access_config" {
 
 variable "client_private" {
   description = "Private GCE Forseti Client VM (no public IP)"
-  default     = true
+  default     = "false"
 }
 
 #------------#
