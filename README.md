@@ -6,6 +6,10 @@ The Terraform Forseti module can be used to quickly install and configure [Forse
 A simple setup is provided in the examples folder; however, the usage of the module within your own main.tf file is as follows:
 
 ```hcl
+    provider "google" {
+      credentials = "${file("/path/to/credentials.json")}"
+    }
+
     module "forseti" {
       source  = "terraform-google-modules/forseti/google"
       version = "~> 1.2"
@@ -178,10 +182,12 @@ Then perform the following commands on the config folder:
 | forseti-client-storage-bucket | Forseti Client storage bucket |
 | forseti-client-vm-ip | Forseti Client VM private IP address |
 | forseti-client-vm-name | Forseti Client VM name |
+| forseti-client-vm-public-ip | Forseti Server VM public IP address |
 | forseti-server-service-account | Forseti Server service account |
 | forseti-server-storage-bucket | Forseti Server storage bucket |
 | forseti-server-vm-ip | Forseti Server VM private IP address |
 | forseti-server-vm-name | Forseti Server VM name |
+| forseti-server-vm-public-ip | Forseti Server VM public IP address |
 | suffix | The random suffix appended to Forseti resources |
 
 [^]: (autogen_docs_end)
@@ -205,6 +211,14 @@ On the organization:
 
 On the project:
 - `roles/owner`
+- `roles/compute.instanceAdmin`
+- `roles/compute.networkViewer`
+- `roles/compute.securityAdmin`
+- `roles/iam.serviceAccountAdmin`
+- `roles/serviceusage.serviceUsageAdmin`
+- `roles/iam.serviceAccountUser`
+- `roles/storage.admin`
+- `roles/cloudsql.admin`
 
 On the host project (when using shared VPC)
 - `roles/compute.securityAdmin`

@@ -8,6 +8,17 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ## [Unreleased]
 
+## [v1.5.1] - 2019-05-09
+
+### Added
+
+- The required roles are documented in the README. [#134]
+
+### Fixed
+
+- The `forseti-server-vm-public-ip` output and the
+  `forseti-client-vm-public-ip` output are restored. [#146]
+
 ## [v1.5.0] - 2019-05-07
 
 ### Added
@@ -126,6 +137,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 - This is the initial release of the Forseti module.
 
 [Unreleased]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.5.0...HEAD
+[v0.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/releases/tag/v0.1.0
 [v1.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v0.1.0...v1.0.0
 [v1.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.0.0...v1.1.0
 [v1.1.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.1.0...v1.1.1
@@ -135,8 +147,11 @@ Extending the adopted spec, each change should have a link to its corresponding 
 [v1.4.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.4.0...v1.4.1
 [v1.4.2]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.4.1...v1.4.2
 [v1.5.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.4.2...v1.5.0
+[v1.5.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.5.0...v1.5.1
 
+[#146]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/146
 [#137]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/137
+[#134]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/134
 [#132]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/132
 [#131]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/131
 [#126]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/126
