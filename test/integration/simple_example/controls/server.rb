@@ -459,6 +459,7 @@ control "server" do
     log_sink_rules.yaml
     resource_rules.yaml
     retention_rules.yaml
+    role_rules.yaml
     service_account_key_rules.yaml
   ]
 
