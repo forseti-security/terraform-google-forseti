@@ -46,7 +46,6 @@ setup_environment() {
   # shared_vpc test suite
   export TF_VAR_network_project="${NETWORK_PROJECT}"
   export TF_VAR_network="${NETWORK}"
-  export TF_VAR_region="${REGION}"
   export TF_VAR_subnetwork="${SUBNETWORK}"
 
   # real_time_enforcer test suite
