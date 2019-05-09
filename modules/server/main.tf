@@ -462,7 +462,7 @@ resource "google_sql_database_instance" "master" {
 }
 
 resource "google_sql_database" "forseti-db" {
-  name     = "forseti_security"
+  name     = "${var.cloudsql_db_name}"
   project  = "${var.project_id}"
   instance = "${google_sql_database_instance.master.name}"
 }
