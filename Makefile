@@ -89,107 +89,89 @@ version:
 .PHONY: docker_run
 docker_run:
 	docker run --rm -it \
+		-e PROJECT_ID \
+		-e ORG_ID \
 		-e DOMAIN \
 		-e ENFORCER_PROJECT \
 		-e GSUITE_ADMIN_EMAIL \
-		-e NETWORK \
-		-e NETWORK_PROJECT \
-		-e ORG_ID \
-		-e PROJECT_ID \
-		-e SUBNETWORK \
 		-e SERVICE_ACCOUNT_JSON \
 		-e CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=${CREDENTIALS_PATH} \
 		-e GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_PATH} \
 		-v $(CURDIR):/cft/workdir \
 		${DOCKER_REPO_BASE_KITCHEN_TERRAFORM} \
-		/bin/bash -c "source test/ci_integration.sh && setup_environment && exec /bin/bash"
+		/bin/bash
 
 .PHONY: docker_create
 docker_create:
 	docker run --rm -it \
+		-e PROJECT_ID \
+		-e ORG_ID \
 		-e DOMAIN \
 		-e ENFORCER_PROJECT \
 		-e GSUITE_ADMIN_EMAIL \
-		-e NETWORK \
-		-e NETWORK_PROJECT \
-		-e ORG_ID \
-		-e PROJECT_ID \
-		-e SUBNETWORK \
 		-e SERVICE_ACCOUNT_JSON \
 		-e CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=${CREDENTIALS_PATH} \
 		-e GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_PATH} \
 		-v $(CURDIR):/cft/workdir \
 		${DOCKER_REPO_BASE_KITCHEN_TERRAFORM} \
-		/bin/bash -c "source test/ci_integration.sh && setup_environment && kitchen create"
+		/bin/bash -c "kitchen create"
 
 .PHONY: docker_converge
 docker_converge:
 	docker run --rm -it \
+		-e PROJECT_ID \
+		-e ORG_ID \
 		-e DOMAIN \
 		-e ENFORCER_PROJECT \
 		-e GSUITE_ADMIN_EMAIL \
-		-e NETWORK \
-		-e NETWORK_PROJECT \
-		-e ORG_ID \
-		-e PROJECT_ID \
-		-e SUBNETWORK \
 		-e SERVICE_ACCOUNT_JSON \
 		-e CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=${CREDENTIALS_PATH} \
 		-e GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_PATH} \
 		-v $(CURDIR):/cft/workdir \
 		${DOCKER_REPO_BASE_KITCHEN_TERRAFORM} \
-		/bin/bash -c "source test/ci_integration.sh && setup_environment && kitchen converge"
+		/bin/bash -c "kitchen converge && kitchen converge"
 
 .PHONY: docker_verify
 docker_verify:
 	docker run --rm -it \
+		-e PROJECT_ID \
+		-e ORG_ID \
 		-e DOMAIN \
 		-e ENFORCER_PROJECT \
 		-e GSUITE_ADMIN_EMAIL \
-		-e NETWORK \
-		-e NETWORK_PROJECT \
-		-e ORG_ID \
-		-e PROJECT_ID \
-		-e SUBNETWORK \
 		-e SERVICE_ACCOUNT_JSON \
 		-e CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=${CREDENTIALS_PATH} \
 		-e GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_PATH} \
 		-v $(CURDIR):/cft/workdir \
 		${DOCKER_REPO_BASE_KITCHEN_TERRAFORM} \
-		/bin/bash -c "source test/ci_integration.sh && setup_environment && kitchen verify"
+		/bin/bash -c "kitchen verify"
 
 .PHONY: docker_destroy
 docker_destroy:
 	docker run --rm -it \
+		-e PROJECT_ID \
+		-e ORG_ID \
 		-e DOMAIN \
 		-e ENFORCER_PROJECT \
 		-e GSUITE_ADMIN_EMAIL \
-		-e NETWORK \
-		-e NETWORK_PROJECT \
-		-e ORG_ID \
-		-e PROJECT_ID \
-		-e SUBNETWORK \
 		-e SERVICE_ACCOUNT_JSON \
 		-e CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=${CREDENTIALS_PATH} \
 		-e GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_PATH} \
 		-v $(CURDIR):/cft/workdir \
 		${DOCKER_REPO_BASE_KITCHEN_TERRAFORM} \
-		/bin/bash -c "source test/ci_integration.sh && setup_environment && kitchen destroy"
+		/bin/bash -c "kitchen destroy"
 
 .PHONY: test_integration_docker
 test_integration_docker:
 	docker run --rm -it \
-		-e DOMAIN \
-		-e ENFORCER_PROJECT \
-		-e GSUITE_ADMIN_EMAIL \
-		-e NETWORK \
-		-e NETWORK_PROJECT \
-		-e ORG_ID \
 		-e PROJECT_ID \
-		-e SUBNETWORK \
+		-e ORG_ID \
+		-e DOMAIN \
+		-e GSUITE_ADMIN_EMAIL \
+		-e ENFORCER_PROJECT \
 		-e SERVICE_ACCOUNT_JSON \
 		-e CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=${CREDENTIALS_PATH} \
 		-e GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_PATH} \
 		-v $(CURDIR):/cft/workdir \
 		${DOCKER_REPO_BASE_KITCHEN_TERRAFORM} \
-		make test_integration
+		test/ci_integration.sh
