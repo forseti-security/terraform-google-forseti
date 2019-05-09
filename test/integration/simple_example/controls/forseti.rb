@@ -109,6 +109,7 @@ control 'forseti' do
         rules/log_sink_rules.yaml
         rules/resource_rules.yaml
         rules/retention_rules.yaml
+        rules/role_rules.yaml
         rules/service_account_key_rules.yaml
       ]
     end
