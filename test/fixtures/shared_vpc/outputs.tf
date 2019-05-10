@@ -29,14 +29,14 @@ output "forseti-server-vm-ip" {
   value       = "${module.forseti-shared-vpc.forseti-server-vm-ip}"
 }
 
-output "forseti-server-vm-name" {
-  description = "Forseti Server VM name"
-  value       = "${module.forseti-shared-vpc.forseti-server-vm-name}"
-}
-
 output "forseti-server-vm-public-ip" {
   description = "Forseti Server VM public IP address"
   value       = "${module.forseti-shared-vpc.forseti-server-vm-public-ip}"
+}
+
+output "forseti-server-vm-name" {
+  description = "Forseti Server VM name"
+  value       = "${module.forseti-shared-vpc.forseti-server-vm-name}"
 }
 
 output "forseti-client-vm-ip" {
@@ -44,14 +44,14 @@ output "forseti-client-vm-ip" {
   value       = "${module.forseti-shared-vpc.forseti-client-vm-ip}"
 }
 
-output "forseti-client-vm-name" {
-  description = "Forseti Client VM name"
-  value       = "${module.forseti-shared-vpc.forseti-client-vm-name}"
-}
-
 output "forseti-client-vm-public-ip" {
   description = "Forseti Client VM public IP address"
   value       = "${module.forseti-shared-vpc.forseti-client-vm-public-ip}"
+}
+
+output "forseti-client-vm-name" {
+  description = "Forseti Client VM name"
+  value       = "${module.forseti-shared-vpc.forseti-client-vm-name}"
 }
 
 output "region" {

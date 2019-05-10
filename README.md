@@ -6,6 +6,10 @@ The Terraform Forseti module can be used to quickly install and configure [Forse
 A simple setup is provided in the examples folder; however, the usage of the module within your own main.tf file is as follows:
 
 ```hcl
+    provider "google" {
+      credentials = "${file("/path/to/credentials.json")}"
+    }
+
     module "forseti" {
       source  = "terraform-google-modules/forseti/google"
       version = "~> 1.2"
@@ -50,10 +54,13 @@ Then perform the following commands on the config folder:
 | bucket\_cai\_location | GCS CAI storage bucket location | string | `"us-central1"` | no |
 | buckets\_acl\_violations\_should\_notify | Notify for Buckets ACL violations | string | `"true"` | no |
 | cai\_api\_timeout | Timeout in seconds to wait for the exportAssets API to return success. | string | `"3600"` | no |
+| client\_access\_config | Client instance 'access_config' block | map | `<map>` | no |
 | client\_boot\_image | GCE Forseti Client role instance size | string | `"ubuntu-os-cloud/ubuntu-1804-lts"` | no |
 | client\_instance\_metadata | Metadata key/value pairs to make available from within the client instance. | map | `<map>` | no |
+| client\_private | Private GCE Forseti Client VM (no public IP) | string | `"false"` | no |
 | client\_region | GCE Forseti Client role region size | string | `"us-central1"` | no |
 | client\_ssh\_allow\_ranges | List of CIDRs that will be allowed ssh access to forseti client | list | `<list>` | no |
+| client\_tags | GCE Forseti Client VM Tags | list | `<list>` | no |
 | client\_type | GCE Forseti Client role instance size | string | `"n1-standard-2"` | no |
 | cloudasset\_disable\_polling | Whether to disable polling for Cloud Asset API | string | `"False"` | no |
 | cloudasset\_max\_calls | Maximum calls that can be made to Cloud Asset API | string | `"1"` | no |
@@ -69,9 +76,12 @@ Then perform the following commands on the config folder:
 | cloudsql\_region | CloudSQL region | string | `"us-central1"` | no |
 | cloudsql\_type | CloudSQL Instance size | string | `"db-n1-standard-1"` | no |
 | cloudsql\_private | Whether to enable private network and not to create public IP for CloudSQL Instance, assuming [environment requirements](https://cloud.google.com/sql/docs/mysql/private-ip#environment_requirements) are met when this is "true"  | string | `"false"` | no |
+| composite\_root\_resources | A list of root resources that Forseti will monitor. This supersedes the root_resource_id when set. | list | `<list>` | no |
 | compute\_disable\_polling | Whether to disable polling for Compute API | string | `"False"` | no |
 | compute\_max\_calls | Maximum calls that can be made to Compute API | string | `"18"` | no |
 | compute\_period | The period of max calls for the Compute API (in seconds) | string | `"1.0"` | no |
+| config\_validator\_enabled | Config Validator scanner enabled. | string | `"false"` | no |
+| config\_validator\_violations\_should\_notify | Notify for Config Validator violations. | string | `"true"` | no |
 | container\_disable\_polling | Whether to disable polling for Container API | string | `"False"` | no |
 | container\_max\_calls | Maximum calls that can be made to Container API | string | `"9"` | no |
 | container\_period | The period of max calls for the Container API (in seconds) | string | `"1.0"` | no |
@@ -144,11 +154,14 @@ Then perform the following commands on the config folder:
 | securitycenter\_max\_calls | Maximum calls that can be made to Security Center API | string | `"1"` | no |
 | securitycenter\_period | The period of max calls for the Security Center API (in seconds) | string | `"1.1"` | no |
 | sendgrid\_api\_key | Sendgrid.com API key to enable email notifications | string | `""` | no |
-| server\_boot\_image | GCE instance image that is being used, currently Debian only support is available | string | `"ubuntu-os-cloud/ubuntu-1804-lts"` | no |
+| server\_access\_config | Server instance 'access_config' block | map | `<map>` | no |
+| server\_boot\_image | GCE instance image that is being used, currently Ubuntu only support is available | string | `"ubuntu-os-cloud/ubuntu-1804-lts"` | no |
 | server\_grpc\_allow\_ranges | List of CIDRs that will be allowed gRPC access to forseti server | list | `<list>` | no |
 | server\_instance\_metadata | Metadata key/value pairs to make available from within the server instance. | map | `<map>` | no |
+| server\_private | Private GCE Forseti Server VM (no public IP) | string | `"false"` | no |
 | server\_region | GCP region where Forseti will be deployed | string | `"us-central1"` | no |
 | server\_ssh\_allow\_ranges | List of CIDRs that will be allowed ssh access to forseti server | list | `<list>` | no |
+| server\_tags | GCE Forseti Server VM Tags | list | `<list>` | no |
 | server\_type | GCE Forseti Server role instance size | string | `"n1-standard-2"` | no |
 | service\_account\_key\_enabled | Service account key scanner enabled. | string | `"true"` | no |
 | service\_account\_key\_violations\_should\_notify | Notify for service account key violations | string | `"true"` | no |
@@ -199,6 +212,14 @@ On the organization:
 
 On the project:
 - `roles/owner`
+- `roles/compute.instanceAdmin`
+- `roles/compute.networkViewer`
+- `roles/compute.securityAdmin`
+- `roles/iam.serviceAccountAdmin`
+- `roles/serviceusage.serviceUsageAdmin`
+- `roles/iam.serviceAccountUser`
+- `roles/storage.admin`
+- `roles/cloudsql.admin`
 
 On the host project (when using shared VPC)
 - `roles/compute.securityAdmin`

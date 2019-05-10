@@ -543,6 +543,23 @@ variable "server_instance_metadata" {
   default     = {}
 }
 
+variable "server_tags" {
+  description = "VM instance tags"
+  type        = "list"
+  default     = []
+}
+
+variable "server_access_config" {
+  description = "Server instance 'access_config' block"
+  type        = "map"
+  default     = {}
+}
+
+variable "server_private" {
+  description = "Enable private Forseti server VM (no public IP)"
+  default     = "false"
+}
+
 #------------#
 # Forseti db #
 #------------#
