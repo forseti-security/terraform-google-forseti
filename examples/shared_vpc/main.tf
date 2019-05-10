@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+provider "google" {
+  credentials = "${file(var.credentials_path)}"
+  version     = "~> 1.20"
+}
+
 provider "google-beta" {
   credentials = "${file(var.credentials_path)}"
   version     = "~> 1.20"
