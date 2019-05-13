@@ -23,7 +23,7 @@ variable "project_id" {
 
 variable "forseti_version" {
   description = "The version of Forseti to install"
-  default     = "v2.14.1"
+  default     = "v2.15.0"
 }
 
 variable "forseti_repo_url" {
