@@ -14,7 +14,7 @@
 
 require "yaml"
 
-forseti_version = "2.14.1"
+forseti_version = "2.15.0"
 
 control "server" do
   title "Forseti server instance resources"
@@ -459,6 +459,7 @@ control "server" do
     log_sink_rules.yaml
     resource_rules.yaml
     retention_rules.yaml
+    role_rules.yaml
     service_account_key_rules.yaml
   ]
 
