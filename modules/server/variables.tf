@@ -379,6 +379,11 @@ variable "service_account_key_enabled" {
 #-------------------------#
 # Forseti config notifier #
 #-------------------------#
+variable "violations_slack_webhook" {
+  description = "Slack webhook for any violation. Will apply to all scanner violation notifiers."
+  default     = ""
+}
+
 variable "iam_policy_violations_should_notify" {
   description = "Notify for IAM Policy violations"
   default     = "true"
