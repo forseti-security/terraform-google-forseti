@@ -330,6 +330,15 @@ control "server" do
           )
         end
 
+        it "configures violations_slack_webhook" do
+          expect(config["notifier"]["resources"]).to include(
+            including(
+              "resource" => "config_validator_violations",
+              "notifiers" => including("name" => "slack_webhook", "configuration" => { "data_format" => "json", "webhook_url" => nil }),
+            )
+          )
+        end
+
         it "configures audit_logging_violations_should_notify" do
           expect(config["notifier"]["resources"]).to include(including("resource" => "audit_logging_violations", "should_notify" => true))
         end
