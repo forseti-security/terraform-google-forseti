@@ -21,6 +21,7 @@ provisioner:
 verifier:
   name: terraform
   color: false
+  fail_fast: false
 
 suites:
   - name: simple_example
