@@ -68,8 +68,8 @@ control 'forseti-command-server' do
   impact 1.0
   title 'Check that forseti server is running'
   describe command("sudo systemctl status forseti --no-page") do
-    its(:exit_status) { should be(0).or be(3) }
-    its(:stderr) { should eq "" }
+    its(:exit_status) { should eq 0 }
+    its(:stderr) { should eq '' }
   end
 
   describe command("forseti config show") do
