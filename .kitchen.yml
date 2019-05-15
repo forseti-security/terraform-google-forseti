@@ -18,6 +18,10 @@ platforms:
 provisioner:
   name: terraform
 
+verifier:
+  name: terraform
+  color: false
+
 suites:
   - name: simple_example
     driver:
@@ -25,8 +29,6 @@ suites:
       root_module_directory: test/fixtures/simple_example
       command_timeout: 1800
     verifier:
-      name: terraform
-      color: false
       systems:
         - name: gcp
           backend: gcp
@@ -71,8 +73,6 @@ suites:
       command_timeout: 1800
       root_module_directory: test/fixtures/shared_vpc
     verifier:
-      name: terraform
-      color: false
       systems:
         - name: shared_vpc
           backend: gcp
@@ -122,8 +122,6 @@ suites:
       root_module_directory: test/fixtures/real_time_enforcer_roles
       command_timeout: 1800
     verifier:
-      name: terraform
-      color: false
       systems:
         - name: local
           backend: local
@@ -141,8 +139,6 @@ suites:
       root_module_directory: test/fixtures/real_time_enforcer
       command_timeout: 1800
     verifier:
-      name: terraform
-      color: false
       systems:
         - name: gcp
           backend: gcp
@@ -172,8 +168,6 @@ suites:
       command_timeout: 1800
       root_module_directory: test/fixtures/real_time_enforcer_sinks
     verifier:
-      name: terraform
-      color: false
       systems:
         - name: gcloud
           backend: local
