@@ -17,6 +17,7 @@
 resource "random_id" "random_hash_suffix" {
   byte_length = 4
 }
+
 resource "null_resource" "org_id_and_folder_id_are_both_empty" {
   count = "${var.org_id == "" && var.folder_id == "" ? 1 : 0}"
 
@@ -25,6 +26,7 @@ resource "null_resource" "org_id_and_folder_id_are_both_empty" {
     interpreter = ["bash", "-c"]
   }
 }
+
 #--------#
 # Locals #
 #--------#
@@ -50,6 +52,10 @@ locals {
     "storage-api.googleapis.com",
     "groupssettings.googleapis.com",
   ]
+
+  cscc_violations_enabled_services_list = [
+    "securitycenter.googleapis.com",
+  ]
 }
 
 #-------------------#
@@ -59,6 +65,13 @@ resource "google_project_service" "main" {
   count              = "${length(local.services_list)}"
   project            = "${var.project_id}"
   service            = "${local.services_list[count.index]}"
+  disable_on_destroy = "false"
+}
+
+resource "google_project_service" "cscc_violations" {
+  count              = "${var.cscc_violations_enabled ? length(local.cscc_violations_enabled_services_list) : 0}"
+  project            = "${var.project_id}"
+  service            = "${local.cscc_violations_enabled_services_list[count.index]}"
   disable_on_destroy = "false"
 }
 
