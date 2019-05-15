@@ -53,14 +53,25 @@ resource "google_compute_router" "main" {
   project = "${var.project_id}"
 }
 
-module "cloud_nat" {
-  source = "github.com/terraform-google-modules/terraform-google-cloud-nat"
+data "google_compute_subnetwork" "main" {
+  name    = "default"
+  project = "${var.project_id}"
+  region  = "${google_compute_router.main.region}"
+}
 
-  project_id = "${var.project_id}"
-  region     = "${google_compute_router.main.region}"
-  router     = "${google_compute_router.main.name}"
+resource "google_compute_router_nat" "main" {
+  name                               = "${random_pet.main.id}"
+  router                             = "${google_compute_router.main.name}"
+  nat_ip_allocate_option             = "AUTO_ONLY"
+  source_subnetwork_ip_ranges_to_nat = "LIST_OF_SUBNETWORKS"
 
-  name = "${random_pet.main.id}"
+  subnetwork {
+    name                    = "${data.google_compute_subnetwork.main.self_link}"
+    source_ip_ranges_to_nat = ["ALL_IP_RANGES"]
+  }
+
+  project = "${var.project_id}"
+  region  = "${google_compute_router.main.region}"
 }
 
 module "forseti-install-simple" {
@@ -75,7 +86,8 @@ module "forseti-install-simple" {
   server_tags              = "${var.instance_tags}"
   client_private           = "${var.private}"
   server_private           = "${var.private}"
-  server_region            = "${module.cloud_nat.region}"
-  client_region            = "${module.cloud_nat.region}"
+  server_region            = "${google_compute_router_nat.main.region}"
+  client_region            = "${google_compute_router_nat.main.region}"
   network                  = "${google_compute_router.main.network}"
+  subnetwork               = "${data.google_compute_subnetwork.main.name}"
 }
