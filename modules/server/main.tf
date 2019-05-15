@@ -348,7 +348,7 @@ resource "google_compute_firewall" "forseti-server-allow-grpc" {
 
   allow {
     protocol = "tcp"
-    ports    = ["50051"]
+    ports    = ["50051", "50052"]
   }
 
   depends_on = ["null_resource.services-dependency"]
