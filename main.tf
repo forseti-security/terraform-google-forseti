@@ -99,6 +99,7 @@ module "server" {
   forseti_email_sender                                = "${var.forseti_email_sender}"
   forseti_home                                        = "${var.forseti_home}"
   forseti_run_frequency                               = "${var.forseti_run_frequency}"
+  client_service_account_email                        = "${module.client.forseti-client-service-account}"
   server_type                                         = "${var.server_type}"
   server_region                                       = "${var.server_region}"
   server_boot_image                                   = "${var.server_boot_image}"
