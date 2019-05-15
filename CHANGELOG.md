@@ -8,6 +8,10 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ## [Unreleased]
 
+### Added
+
+ - Check for both empty values org_id and folder_id [#152]
+
 ## [v1.6.0] - 2019-05-14
 
 ### Added
