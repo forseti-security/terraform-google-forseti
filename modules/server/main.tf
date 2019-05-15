@@ -469,6 +469,7 @@ resource "google_sql_database" "forseti-db" {
 
 resource "google_sql_user" "root" {
   name     = "root"
+  host     = "${google_compute_instance.forseti-server.network_interface.0.network_ip}"
   instance = "${google_sql_database_instance.master.name}"
   project  = "${var.project_id}"
 }
