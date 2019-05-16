@@ -11,7 +11,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 ### Added
 
 - Add 50052 port in Firewall rule for Config Validator. [#155]
-- Check for both empty values org_id and folder_id [#152]
+- Check for both empty values org_id and folder_id. [#152]
 
 ## [v1.6.0] - 2019-05-14
 
@@ -162,6 +162,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 [v1.6.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.5.1...v1.6.0
 
 [#155]: https://github.com/forseti-security/terraform-google-forseti/pull/155
+[#152]: https://github.com/forseti-security/terraform-google-forseti/pull/152
 [#146]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/146
 [#145]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/145
 [#137]: https://github.com/terraform-google-modules/terraform-google-forseti/pull/137
