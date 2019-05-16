@@ -154,7 +154,7 @@ control 'forseti' do
     its('priority') { should eq 100 }
 
     it "allows gRPC traffic" do
-      expect(allowed).to contain_exactly({ip_protocol: "tcp", ports: ["50051"]})
+      expect(allowed).to contain_exactly({ip_protocol: "tcp", ports: ["50051", "50052"]})
     end
   end
 
