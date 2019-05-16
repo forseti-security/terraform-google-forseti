@@ -24,9 +24,9 @@ output "forseti-client-vm-ip" {
   value       = "${google_compute_instance.forseti-client.network_interface.0.network_ip}"
 }
 
-output "forseti-client-vm-public-ip" {
-  description = "Forseti Client VM public IP address"
-  value       = "${google_compute_instance.forseti-client.network_interface.0.access_config.0.nat_ip}"
+output "forseti-client-vm-access-config" {
+  description = "Forseti Server VM access config"
+  value       = "${google_compute_instance.forseti-client.network_interface.0.access_config}"
 }
 
 output "forseti-client-service-account" {

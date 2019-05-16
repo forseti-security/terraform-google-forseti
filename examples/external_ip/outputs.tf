@@ -24,9 +24,9 @@ output "forseti-client-vm-ip" {
   value       = "${module.forseti-install-simple.forseti-client-vm-ip}"
 }
 
-output "forseti-client-public-ip" {
-  description = "Forseti Client VM public IP address"
-  value       = "${google_compute_address.forseti_client_ip.address}"
+output "forseti-client-access-config" {
+  description = "Forseti Client VM access config"
+  value       = "${module.forseti-install-simple.forseti-client-vm-access-config}"
 }
 
 output "forseti-client-service-account" {
@@ -44,9 +44,9 @@ output "forseti-server-vm-ip" {
   value       = "${module.forseti-install-simple.forseti-server-vm-ip}"
 }
 
-output "forseti-server-public-ip" {
-  description = "Forseti Server VM public IP address"
-  value       = "${google_compute_address.forseti_server_ip.address}"
+output "forseti-server-access-config" {
+  description = "Forseti Server VM access config"
+  value       = "${module.forseti-install-simple.forseti-server-vm-access-config}"
 }
 
 output "forseti-server-service-account" {

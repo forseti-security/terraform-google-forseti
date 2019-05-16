@@ -24,8 +24,8 @@ output "forseti-rt-enforcer-vm-ip" {
   value       = "${google_compute_instance.main.network_interface.0.network_ip}"
 }
 
-output "forseti-rt-enforcer-vm-public-ip" {
-  description = "Forseti Enforcer VM public IP address"
+output "forseti-rt-enforcer-vm-access-config" {
+  description = "Forseti Enforcer VM access config"
   value       = "${google_compute_instance.main.network_interface.0.access_config.0.nat_ip}"
 }
 

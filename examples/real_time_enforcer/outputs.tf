@@ -33,9 +33,9 @@ output "forseti-rt-enforcer-vm-ip" {
   value       = "${module.real_time_enforcer.forseti-rt-enforcer-vm-ip}"
 }
 
-output "forseti-rt-enforcer-vm-public-ip" {
-  description = "Forseti Enforcer VM public IP address"
-  value       = "${module.real_time_enforcer.forseti-rt-enforcer-vm-public-ip}"
+output "forseti-rt-enforcer-vm-access-config" {
+  description = "Forseti Enforcer VM access config"
+  value       = "${module.real_time_enforcer.forseti-rt-enforcer-vm-access-config}"
 }
 
 output "forseti-rt-enforcer-service-account" {
