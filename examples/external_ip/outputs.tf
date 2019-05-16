@@ -39,6 +39,11 @@ output "forseti-server-vm-ip" {
   value       = "${module.forseti-install-simple.forseti-server-vm-ip}"
 }
 
+output "forseti-server-public-ip" {
+  description = "Forseti Server VM public IP address"
+  value       = "${google_compute_address.forseti_server_ip.address}"
+}
+
 output "forseti-server-service-account" {
   description = "Forseti Server service account"
   value       = "${module.forseti-install-simple.forseti-server-service-account}"
