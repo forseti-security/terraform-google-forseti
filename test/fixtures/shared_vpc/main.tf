@@ -29,9 +29,10 @@ resource "local_file" "gce-keypair-pk" {
 }
 
 module "bastion" {
-  source     = "../bastion"
-  project_id = "${var.project_id}"
-  subnetwork = "default"
+  source = "../bastion"
+
+  project_id = "${var.network_project}"
+  subnetwork = "${var.subnetwork}"
   zone       = "us-central1-f"
 }
 

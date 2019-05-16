@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+output "bastion_host" {
+  value = "${module.bastion.host}"
+}
+
 output "project_id" {
   description = "ID of the service project"
   value       = "${var.project_id}"
