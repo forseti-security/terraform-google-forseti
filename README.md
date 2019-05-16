@@ -182,12 +182,10 @@ Then perform the following commands on the config folder:
 | forseti-client-storage-bucket | Forseti Client storage bucket |
 | forseti-client-vm-ip | Forseti Client VM private IP address |
 | forseti-client-vm-name | Forseti Client VM name |
-| forseti-client-vm-public-ip | Forseti Server VM public IP address |
 | forseti-server-service-account | Forseti Server service account |
 | forseti-server-storage-bucket | Forseti Server storage bucket |
 | forseti-server-vm-ip | Forseti Server VM private IP address |
 | forseti-server-vm-name | Forseti Server VM name |
-| forseti-server-vm-public-ip | Forseti Server VM public IP address |
 | suffix | The random suffix appended to Forseti resources |
 
 [^]: (autogen_docs_end)
