@@ -24,11 +24,6 @@ output "forseti-server-vm-ip" {
   value       = "${module.server.forseti-server-vm-ip}"
 }
 
-output "forseti-server-vm-public-ip" {
-  description = "Forseti Server VM public IP address"
-  value       = "${module.server.forseti-server-vm-public-ip}"
-}
-
 output "forseti-client-vm-name" {
   description = "Forseti Client VM name"
   value       = "${module.client.forseti-client-vm-name}"
@@ -37,11 +32,6 @@ output "forseti-client-vm-name" {
 output "forseti-client-vm-ip" {
   description = "Forseti Client VM private IP address"
   value       = "${module.client.forseti-client-vm-ip}"
-}
-
-output "forseti-client-vm-public-ip" {
-  description = "Forseti Server VM public IP address"
-  value       = "${module.client.forseti-client-vm-public-ip}"
 }
 
 output "forseti-server-service-account" {
