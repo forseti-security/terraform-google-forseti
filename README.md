@@ -12,7 +12,7 @@ A simple setup is provided in the examples folder; however, the usage of the mod
 
     module "forseti" {
       source  = "terraform-google-modules/forseti/google"
-      version = "~> 1.2"
+      version = "~> 2.0.0"
 
       gsuite_admin_email = "superadmin@yourdomain.com"
       domain             = "yourdomain.com"
