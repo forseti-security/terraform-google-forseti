@@ -114,8 +114,6 @@ suites:
           proxy_command: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o LogLevel=ERROR -o ForwardAgent=no -i test/fixtures/bastion/tls_private_key ubuntu@<%= `terraform output -state test/fixtures/shared_vpc/terraform.tfstate.d/kitchen-terraform-shared-vpc-local/terraform.tfstate bastion_host`.strip %> -p 22 -W %h:%p
           shell: true
           shell_options: "--login"
-    provisioner:
-      name: terraform
 
   - name: real_time_enforcer_roles
     driver:
