@@ -344,6 +344,7 @@ resource "google_compute_firewall" "forseti-server-allow-grpc" {
   network                 = "${var.network}"
   target_service_accounts = ["${google_service_account.forseti_server.email}"]
   source_ranges           = "${var.server_grpc_allow_ranges}"
+  source_service_accounts = ["${var.client_service_account_email}"]
   priority                = "100"
 
   allow {
