@@ -8,6 +8,12 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ## [Unreleased]
 
+## [v2.0.0] - 2019-05-16
+
+### Changed
+
+- Removed public IP address outputs. [#163]
+
 ### Added
 
 - Enable CSCC API when violations are enabled. [#158]
@@ -152,7 +158,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 ### ADDED
 - This is the initial release of the Forseti module.
 
-[Unreleased]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.6.0...HEAD
+[Unreleased]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v2.0.0...HEAD
 [v0.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/releases/tag/v0.1.0
 [v1.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v0.1.0...v1.0.0
 [v1.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.0.0...v1.1.0
@@ -165,7 +171,9 @@ Extending the adopted spec, each change should have a link to its corresponding 
 [v1.5.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.4.2...v1.5.0
 [v1.5.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.5.0...v1.5.1
 [v1.6.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.5.1...v1.6.0
+[v2.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.6.0...v2.0.0
 
+[#163]: https://github.com/forseti-security/terraform-google-forseti/pull/163
 [#157]: https://github.com/forseti-security/terraform-google-forseti/pull/157
 [#158]: https://github.com/forseti-security/terraform-google-forseti/pull/158
 [#155]: https://github.com/forseti-security/terraform-google-forseti/pull/155
