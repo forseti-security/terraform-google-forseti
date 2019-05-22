@@ -32,13 +32,13 @@ git checkout ${forseti_version}
 sudo apt-get install -y $(cat install/dependencies/apt_packages.txt | grep -v "#" | xargs)
 
 # Forseti dependencies
-pip install --upgrade pip==9.0.3
-pip install -q --upgrade setuptools wheel
-pip install -q --upgrade -r requirements.txt
+pip3 install --upgrade pip==19.1.1
+pip3 install -q --upgrade setuptools wheel
+pip3 install -q --upgrade -r requirements.txt
 
 # Install Forseti
 echo "Installing Forseti"
-python setup.py install
+python3 setup.py install
 
 # Set ownership of the forseti project to $USER
 chown -R $USER ${forseti_home}
