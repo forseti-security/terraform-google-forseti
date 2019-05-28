@@ -324,8 +324,6 @@ control "server" do
             including(
               "resource" => "iam_policy_violations",
               "should_notify" => true,
-              # This extra bit of verification tests the `iam_policy_violations_slack_webhook` variable
-              "notifiers" => including("name" => "slack_webhook", "configuration" => { "data_format" => "json", "webhook_url" => nil }),
             )
           )
         end

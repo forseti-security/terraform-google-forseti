@@ -232,6 +232,8 @@ module "server" {
   bigquery_acl_violations_should_notify               = "${var.bigquery_acl_violations_should_notify}"
   audit_logging_violations_should_notify              = "${var.audit_logging_violations_should_notify}"
 
+  violations_slack_webhook                            = "${var.violations_slack_webhook}"
+
   groups_settings_max_calls                = "${var.groups_settings_max_calls}"
   groups_settings_period                   = "${var.groups_settings_period}"
   groups_settings_disable_polling          = "${var.groups_settings_disable_polling}"
