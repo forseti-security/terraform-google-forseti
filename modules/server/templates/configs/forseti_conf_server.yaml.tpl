@@ -289,7 +289,7 @@ notifier:
             - name: slack_webhook
               configuration:
                 data_format: json  # slack only supports json
-                webhook_url: %{ if IAM_POLICY_VIOLATIONS_SLACK_WEBHOOK != "" }${IAM_POLICY_VIOLATIONS_SLACK_WEBHOOK}{ else }${VIOLATIONS_SLACK_WEBHOOK}%{ endif }
+                webhook_url: %{ if IAM_POLICY_VIOLATIONS_SLACK_WEBHOOK != "" }${IAM_POLICY_VIOLATIONS_SLACK_WEBHOOK}%{ else }${VIOLATIONS_SLACK_WEBHOOK}%{ endif }
             %{ endif }
 
         - resource: audit_logging_violations
@@ -527,7 +527,7 @@ notifier:
             - name: slack_webhook
               configuration:
                 data_format: json  # slack only supports json
-                webhook_url: %{ if KMS_VIOLATIONS_SLACK_WEBHOOK != "" }${KMS_VIOLATIONS_SLACK_WEBHOOK}{ else }${VIOLATIONS_SLACK_WEBHOOK}%{ endif }
+                webhook_url: %{ if KMS_VIOLATIONS_SLACK_WEBHOOK != "" }${KMS_VIOLATIONS_SLACK_WEBHOOK}%{ else }${VIOLATIONS_SLACK_WEBHOOK}%{ endif }
             %{ endif }
 
         - resource: groups_violations
