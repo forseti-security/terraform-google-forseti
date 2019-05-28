@@ -18,7 +18,9 @@
 DELETE_AT_EXIT="$(mktemp -d)"
 finish() {
   echo 'BEGIN: finish() trap handler' >&2
+  set +e
   kitchen destroy "$SUITE"
+  set -e
   [[ -d "${DELETE_AT_EXIT}" ]] && rm -rf "${DELETE_AT_EXIT}"
   echo 'END: finish() trap handler' >&2
 }

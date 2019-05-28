@@ -18,6 +18,11 @@ platforms:
 provisioner:
   name: terraform
 
+verifier:
+  name: terraform
+  color: false
+  fail_fast: false
+
 suites:
   - name: simple_example
     driver:
@@ -25,8 +30,6 @@ suites:
       root_module_directory: test/fixtures/simple_example
       command_timeout: 1800
     verifier:
-      name: terraform
-      color: false
       systems:
         - name: gcp
           backend: gcp
@@ -71,8 +74,6 @@ suites:
       command_timeout: 1800
       root_module_directory: test/fixtures/shared_vpc
     verifier:
-      name: terraform
-      color: false
       systems:
         - name: shared_vpc
           backend: gcp
@@ -113,8 +114,9 @@ suites:
           proxy_command: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o LogLevel=ERROR -o ForwardAgent=no -i test/fixtures/bastion/tls_private_key ubuntu@<%= `terraform output -state test/fixtures/shared_vpc/terraform.tfstate.d/kitchen-terraform-shared-vpc-local/terraform.tfstate bastion_host`.strip %> -p 22 -W %h:%p
           shell: true
           shell_options: "--login"
-    provisioner:
-      name: terraform
+    lifecycle:
+      pre_verify:
+      - chmod go-rwx test/fixtures/bastion/tls_private_key
 
   - name: real_time_enforcer_roles
     driver:
@@ -122,8 +124,6 @@ suites:
       root_module_directory: test/fixtures/real_time_enforcer_roles
       command_timeout: 1800
     verifier:
-      name: terraform
-      color: false
       systems:
         - name: local
           backend: local
@@ -141,8 +141,6 @@ suites:
       root_module_directory: test/fixtures/real_time_enforcer
       command_timeout: 1800
     verifier:
-      name: terraform
-      color: false
       systems:
         - name: gcp
           backend: gcp
@@ -172,8 +170,6 @@ suites:
       command_timeout: 1800
       root_module_directory: test/fixtures/real_time_enforcer_sinks
     verifier:
-      name: terraform
-      color: false
       systems:
         - name: gcloud
           backend: local
