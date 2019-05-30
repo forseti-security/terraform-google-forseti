@@ -8,6 +8,12 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ## [Unreleased]
 
+## [v1.6.0] - 2019-05-14
+
+### Added
+
+- Support for Forseti v2.16.0. [#]
+
 ## [v2.0.0] - 2019-05-16
 
 ### Changed
