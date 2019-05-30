@@ -178,6 +178,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 [v1.5.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.5.0...v1.5.1
 [v1.6.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.5.1...v1.6.0
 [v2.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.6.0...v2.0.0
+[v2.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v2.0.0...v2.1.0
 
 [#163]: https://github.com/forseti-security/terraform-google-forseti/pull/163
 [#157]: https://github.com/forseti-security/terraform-google-forseti/pull/157
