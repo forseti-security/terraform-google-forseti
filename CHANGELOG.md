@@ -12,7 +12,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ### Added
 
-- Support for Forseti v2.16.0. [#]
+- Support for Forseti v2.16.0. [#170]
 
 ## [v2.0.0] - 2019-05-16
 
