@@ -8,7 +8,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ## [Unreleased]
 
-## [v1.6.0] - 2019-05-14
+## [v2.1.0] - 2019-05-14
 
 ### Added
 
