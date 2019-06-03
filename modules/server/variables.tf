@@ -379,6 +379,11 @@ variable "service_account_key_enabled" {
 #-------------------------#
 # Forseti config notifier #
 #-------------------------#
+variable "email_violations_enabled" {
+  description = "Enable email violations"
+  default     = "false"
+}
+
 variable "iam_policy_violations_should_notify" {
   description = "Notify for IAM Policy violations"
   default     = "true"

@@ -90,4 +90,8 @@ module "forseti-install-simple" {
   client_region            = "${google_compute_router_nat.main.region}"
   network                  = "${google_compute_router.main.network}"
   subnetwork               = "${data.google_compute_subnetwork.main.name}"
+  email_violations_enabled = "${var.email_violations_enabled}"
+  sendgrid_api_key         = "${var.sendgrid_api_key}"
+  forseti_email_sender     = "${var.forseti_email_sender}"
+  forseti_email_recipient  = "${var.forseti_email_recipient}"
 }

@@ -50,3 +50,23 @@ variable "private" {
   description = "Private client and server instances (no public IPs)"
   default     = true
 }
+
+variable "email_violations_enabled" {
+  description = "Send email notifications."
+  default     = "false"
+}
+
+variable "sendgrid_api_key" {
+  description = "Sendgrid API key (if `email_violations_enabled` is set)"
+  default     = ""
+}
+
+variable "forseti_email_sender" {
+  description = "Forseti email sender (if `email_violations_enabled` is set)"
+  default     = ""
+}
+
+variable "forseti_email_recipient" {
+  description = "Forseti email recipient (if `email_violations_enabled` is set)"
+  default     = ""
+}
