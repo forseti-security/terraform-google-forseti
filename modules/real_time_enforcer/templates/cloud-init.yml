@@ -71,7 +71,7 @@ write_files:
                                   -e OPA_URL="http://opa-server:8181/v1/data" \
                                   -e ENFORCE=true \
                                   -e STACKDRIVER_LOGGING=true \
-                                  cleardata/forseti-policy-enforcer
+                                  forsetisecurity/real-time-enforcer
 
     ExecStopPost=-/usr/bin/docker stop enforcer
     ExecStopPost=-/usr/bin/docker rm enforcer
