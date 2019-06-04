@@ -38,9 +38,10 @@ control "server" do
     it { should exist }
   end
 
-  describe command("pip show forseti-security|grep Version") do
+  describe command("python3 -m pip show forseti-security|grep Version") do
     its("exit_status") { should eq 0 }
     its("stdout") { should match("Version: #{forseti_version}") }
+    its("stderr") { should cmp "" }
   end
 
   describe file("/home/ubuntu/forseti-security/configs/forseti_conf_server.yaml") do
