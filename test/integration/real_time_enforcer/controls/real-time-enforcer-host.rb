@@ -15,22 +15,22 @@
 control 'real-time-enforcer-host' do
   title "Real time enforcer host resources"
 
-  describe command('systemctl is-active opa-policy') do
-    its('exit_status') { should be_zero }
-    its('stdout.chomp') { should eq 'active' }
-    its('stderr') { should eq '' }
+  describe command("systemctl is-active opa-policy") do
+    its("exit_status") { should be(0).or be(3) }
+    its("stdout.chomp") { should cmp("active").or cmp("activating").or cmp("inactive") }
+    its("stderr") { should eq "" }
   end
 
-  describe command('systemctl is-active opa-server') do
-    its('exit_status') { should be_zero }
-    its('stdout.chomp') { should eq 'active' }
-    its('stderr') { should eq '' }
+  describe command("systemctl is-active opa-server") do
+    its("exit_status") { should be(0).or be(3) }
+    its("stdout.chomp") { should cmp("active").or cmp("activating").or cmp("inactive") }
+    its("stderr") { should eq "" }
   end
 
-  describe command('systemctl is-active enforcer') do
-    its('exit_status') { should be_zero }
-    its('stdout.chomp') { should eq 'active' }
-    its('stderr') { should eq '' }
+  describe command("systemctl is-active enforcer") do
+    its("exit_status") { should be(0).or be(3) }
+    its("stdout.chomp") { should cmp("active").or cmp("activating").or cmp("inactive") }
+    its("stderr") { should eq "" }
   end
 
   describe command('systemctl is-enabled enforcer') do

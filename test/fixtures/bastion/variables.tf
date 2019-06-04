@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+variable "network" {
+  description = "The name of the network in which the bastion host will be deployed."
+  type        = "string"
+}
+
 variable "project_id" {
   description = "The ID of the project in which resources will be created."
   type        = "string"
