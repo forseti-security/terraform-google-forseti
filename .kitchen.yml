@@ -132,9 +132,7 @@ suites:
     lifecycle:
       pre_verify:
         - local: test/fixtures/real_time_enforcer/modules/enforcer_target/helpers/create-enforcer-fixtures.sh
-      post_verify:
-        - local: test/fixtures/real_time_enforcer/modules/enforcer_target/helpers/destroy-enforcer-fixtures.sh
-      pre_destroy:
+      post_destroy:
         - local: test/fixtures/real_time_enforcer/modules/enforcer_target/helpers/destroy-enforcer-fixtures.sh
     driver:
       name: terraform
