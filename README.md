@@ -90,7 +90,6 @@ Then perform the following commands on the config folder:
 | cscc\_source\_id | Source ID for CSCC Beta API | string | `""` | no |
 | cscc\_violations\_enabled | Notify for CSCC violations | string | `"false"` | no |
 | domain | The domain associated with the GCP Organization ID | string | n/a | yes |
-| email\_violations\_enabled | Enable email violations | string | `"false"` | no |
 | enable\_cai\_bucket | Create a GCS bucket for CAI exports | string | `"true"` | no |
 | enable\_write | Enabling/Disabling write actions | string | `"false"` | no |
 | enabled\_apis\_enabled | Enabled APIs scanner enabled. | string | `"false"` | no |
