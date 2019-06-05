@@ -21,6 +21,12 @@ if ! [ -e "/usr/sbin/google-fluentd" ]; then
     bash install-logging-agent.sh
 fi
 
+if ! [ -e "/opt/stackdriver/collectd/sbin/stackdriver-collectd" ]; then
+    cd $USER_HOME
+    curl -sSO https://dl.google.com/cloudagents/install-monitoring-agent.sh
+    bash install-monitoring-agent.sh
+fi
+
 # Check whether Cloud SQL proxy is installed.
 if [ -z "$(which cloud_sql_proxy)" ]; then
       cd $USER_HOME
