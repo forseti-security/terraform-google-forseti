@@ -233,8 +233,6 @@ module "server" {
   cscc_violations_enabled = "${var.cscc_violations_enabled}"
   cscc_source_id          = "${var.cscc_source_id}"
 
-  email_violations_enabled = "${var.email_violations_enabled}"
-
   groups_settings_max_calls                = "${var.groups_settings_max_calls}"
   groups_settings_period                   = "${var.groups_settings_period}"
   groups_settings_disable_polling          = "${var.groups_settings_disable_polling}"

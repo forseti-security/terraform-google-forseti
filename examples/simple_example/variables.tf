@@ -51,11 +51,6 @@ variable "private" {
   default     = true
 }
 
-variable "email_violations_enabled" {
-  description = "Send email notifications."
-  default     = "false"
-}
-
 variable "sendgrid_api_key" {
   description = "Sendgrid API key (if `email_violations_enabled` is set)"
   default     = ""

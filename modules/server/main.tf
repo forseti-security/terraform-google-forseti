@@ -83,22 +83,16 @@ locals {
       access_config      = ["${var.server_access_config}"]
     }]
   }
-  network_interface        = "${local.network_interface_base[var.server_private ? "private" : "public"]}"
-  missing_sendgrid_api_key = "${var.email_violations_enabled == "true" && var.sendgrid_api_key == "" ? 1 : 0}"
-  missing_emails           = "${var.email_violations_enabled == "true" && (var.forseti_email_sender == "" || var.forseti_email_recipient == "") ? 1 : 0}"
+  network_interface = "${local.network_interface_base[var.server_private ? "private" : "public"]}"
+  missing_emails    = "${var.sendgrid_api_key != "" && (var.forseti_email_sender == "" || var.forseti_email_recipient == "") ? 1 : 0}"
 }
 
 #------------------#
 # Input validation #
 #------------------#
-resource "null_resource" "missing_sendgrid_api_key" {
-  count                                                                                                                                                                      = "${local.missing_sendgrid_api_key}"
-  "ERROR: Variable `email_violations_enabled` was set to `true` but `sendgrid_api_key` is empty. Please fill in your `sendgrid_api_key` or unset `email_violations_enabled`" = true
-}
-
 resource "null_resource" "missing_emails" {
-  count                                                                                                                                                                                            = "${local.missing_emails}"
-  "ERROR: Variable `email_violations_enabled` was set to `true` but `forseti_email_sender` or `forseti_email_recipient` is empty. Please fill those variables or unset `email_violations_enabled`" = true
+  count                                                                                                                                                         = "${local.missing_emails}"
+  "ERROR: `sendgrid_api_key` is set but `forseti_email_sender` or `forseti_email_recipient` are not. Please set those variables to enable email notifications." = true
 }
 
 #-------------------#
@@ -252,10 +246,9 @@ data "template_file" "forseti_server_config" {
     CSCC_SOURCE_ID          = "${var.cscc_source_id}"
 
     # Email notifications
-    EMAIL_VIOLATIONS_ENABLED = "${var.email_violations_enabled ? "true" : "false"}"
-    EMAIL_SENDER             = "${var.forseti_email_sender}"
-    EMAIL_RECIPIENT          = "${var.forseti_email_recipient}"
-    SENDGRID_API_KEY         = "${var.sendgrid_api_key}"
+    EMAIL_SENDER     = "${var.forseti_email_sender}"
+    EMAIL_RECIPIENT  = "${var.forseti_email_recipient}"
+    SENDGRID_API_KEY = "${var.sendgrid_api_key}"
 
     # Group settings
     GROUPS_SETTINGS_MAX_CALLS                = "${var.groups_settings_max_calls}"

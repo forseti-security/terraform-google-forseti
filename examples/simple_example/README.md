@@ -10,7 +10,6 @@ This example illustrates how to set up a minimal Forseti installation.
 |------|-------------|:----:|:-----:|:-----:|
 | credentials\_path | Path to service account json | string | n/a | yes |
 | domain | The domain associated with the GCP Organization ID | string | n/a | yes |
-| email\_violations\_enabled | Send email notifications. | string | `"false"` | no |
 | forseti\_email\_recipient | Forseti email recipient (if `email_violations_enabled` is set) | string | `""` | no |
 | forseti\_email\_sender | Forseti email sender (if `email_violations_enabled` is set) | string | `""` | no |
 | gsuite\_admin\_email | The email of a GSuite super admin, used for pulling user directory information *and* sending notifications. | string | n/a | yes |
