@@ -286,7 +286,7 @@ enable the Forseti add-on in the CSCC.
 
 After activating the add-on, copy the integration's
 `source_id` and paste it into the `cscc_source_id` field in your Terraform
-automation.
+configuration.
 
 Run `terraform apply` again to complete the configuration.
 
