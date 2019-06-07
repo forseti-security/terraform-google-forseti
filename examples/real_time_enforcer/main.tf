@@ -63,6 +63,6 @@ module "real_time_enforcer" {
 
   enforcer_viewer_role = "${module.real_time_enforcer_roles.forseti-rt-enforcer-viewer-role-id}"
   enforcer_writer_role = "${module.real_time_enforcer_roles.forseti-rt-enforcer-writer-role-id}"
-
+  enforce_private_instance = "true"
   suffix = "${random_string.suffix.result}"
 }
