@@ -45,6 +45,21 @@ locals {
     # Permit the forseti-policy enforcer container to log to stackdriver
     "roles/logging.logWriter",
   ]
+
+  network_interface_base = {
+    private = [{
+      subnetwork_project = "${local.network_project}"
+      subnetwork         = "${var.subnetwork}"
+    }]
+
+    public = [{
+      subnetwork_project = "${local.network_project}"
+      subnetwork         = "${var.subnetwork}"
+      access_config      = ["${var.enforcer_instance_access_config}"]
+    }]
+  }
+
+  network_interface = "${local.network_interface_base[var.enforcer_instance_private ? "private" : "public"]}"
 }
 
 resource "google_service_account" "main" {
@@ -121,12 +136,7 @@ resource "google_compute_instance" "main" {
     }
   }
 
-  network_interface {
-    subnetwork_project = "${local.network_project}"
-    subnetwork         = "${var.subnetwork}"
-
-    access_config {}
-  }
+  network_interface = ["${local.network_interface}"]
 
   metadata = "${merge(var.enforcer_instance_metadata, map("user-data", "${data.template_file.cloud-init.rendered}"))}"
 

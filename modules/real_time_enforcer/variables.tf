@@ -80,6 +80,17 @@ variable "enforcer_instance_metadata" {
   default     = {}
 }
 
+variable "enforcer_instance_access_config" {
+  description = "Enforcer instance 'access_config' block"
+  type        = "map"
+  default     = {}
+}
+
+variable "enforcer_instance_private" {
+  description = "Enable enforcer instance private IP"
+  default     = "true"
+}
+
 variable "suffix" {
   description = "The random suffix to append to all Forseti resources"
 }
