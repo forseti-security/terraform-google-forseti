@@ -62,6 +62,6 @@ variable "forseti_email_sender" {
 }
 
 variable "forseti_email_recipient" {
-  description = "Forseti email recipient (if `email_violations_enabled` is set)"
+  description = "Forseti email recipient."
   default     = ""
 }
