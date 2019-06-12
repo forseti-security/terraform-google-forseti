@@ -52,7 +52,7 @@ variable "private" {
 }
 
 variable "sendgrid_api_key" {
-  description = "Sendgrid API key (if `email_violations_enabled` is set)"
+  description = "Sendgrid API key."
   default     = ""
 }
 
