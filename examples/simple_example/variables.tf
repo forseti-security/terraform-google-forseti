@@ -57,7 +57,7 @@ variable "sendgrid_api_key" {
 }
 
 variable "forseti_email_sender" {
-  description = "Forseti email sender (if `email_violations_enabled` is set)"
+  description = "Forseti email sender."
   default     = ""
 }
 
