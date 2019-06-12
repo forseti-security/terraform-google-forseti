@@ -8,6 +8,8 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ## [Unreleased]
 
+- Add Stackdriver monitoring agent to Forseti VMs [#177]
+
 ## [v2.1.0] - 2019-05-30
 
 ### Added
