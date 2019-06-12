@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+provider "tls" {
+  version = "~> 1.2"
+}
+
 resource "tls_private_key" "main" {
   algorithm = "RSA"
   rsa_bits  = 4096
@@ -22,6 +26,15 @@ resource "tls_private_key" "main" {
 resource "local_file" "gce-keypair-pk" {
   content  = "${tls_private_key.main.private_key_pem}"
   filename = "${path.module}/sshkey"
+}
+
+module "bastion" {
+  source = "../bastion"
+
+  network    = "default"
+  project_id = "${var.project_id}"
+  subnetwork = "default"
+  zone       = "us-central1-f"
 }
 
 module "real_time_enforcer" {
