@@ -8,6 +8,8 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ## [Unreleased]
 
+- Make email configuration optional if `sendgrid_api_key` is unset [#174]
+
 ## [v2.1.0] - 2019-05-30
 
 ### Added
