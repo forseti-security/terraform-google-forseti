@@ -8,6 +8,10 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ## [Unreleased]
 
+### Changed
+
+- Make Forseti Real-Time Enforcer VM have private IP by default
+
 ## [v2.1.0] - 2019-05-30
 
 ### Added
