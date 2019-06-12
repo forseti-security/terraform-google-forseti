@@ -48,11 +48,6 @@ output "forseti-rt-enforcer-vm-ip" {
   value       = "${module.real_time_enforcer.forseti-rt-enforcer-vm-ip}"
 }
 
-output "forseti-rt-enforcer-vm-public-ip" {
-  description = "Forseti Enforcer VM public IP address"
-  value       = "${module.real_time_enforcer.forseti-rt-enforcer-vm-public-ip}"
-}
-
 output "forseti-rt-enforcer-service-account" {
   description = "Forseti Enforcer service account"
   value       = "${module.real_time_enforcer.forseti-rt-enforcer-service-account}"
