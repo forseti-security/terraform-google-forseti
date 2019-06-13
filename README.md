@@ -271,14 +271,23 @@ Additionally, you will need to export `TF_WARN_OUTPUT_ERRORS=1` to work around a
 ### Manual steps
 The following steps need to be performed manually/outside of this module.
 
-#### Domain Wide Delegation
-Remember to activate the Domain Wide Delegation on the Service Account that Forseti creates for the server operations.
+#### GSuite Scanning
 
-The service account has the form `forseti-server-gcp-<number>@<project_id>.iam.gserviceaccount.com`.
+To **enable GSuite groups and users scanning**, you must activate [Domain Wide
+Delegation](https://developers.google.com/admin-sdk/directory/v1/guides/delegation) on the Service Account used for Forseti server VM: `forseti-server-gcp-<number>@<project_id>.iam.gserviceaccount.com`.
 
 Please refer to [the Forseti documentation](https://forsetisecurity.org/docs/latest/configure/inventory/gsuite.html) for step by step directions.
 
-More information about Domain Wide Delegation can be found [here](https://developers.google.com/admin-sdk/directory/v1/guides/delegation).
+#### CSCC Integration
+
+To **send Forseti notifications to the Cloud Security Command Center**, you need to
+enable the Forseti add-on in the CSCC.
+
+After activating the add-on, copy the integration's
+`source_id` and paste it into the `cscc_source_id` field in your Terraform
+configuration.
+
+Run `terraform apply` again to complete the configuration.
 
 ### Cleanup
 Remember to cleanup the service account used to install Forseti either manually, or by running the command:
