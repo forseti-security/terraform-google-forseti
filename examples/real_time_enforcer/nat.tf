@@ -28,7 +28,7 @@ resource "google_compute_router" "main" {
     asn = "64514"
   }
 
-  region  = "us-central1"
+  region  = "us-west1"
   project = "${var.project_id}"
 }
 
