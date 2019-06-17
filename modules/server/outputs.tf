@@ -24,11 +24,6 @@ output "forseti-server-vm-ip" {
   value       = "${google_compute_instance.forseti-server.network_interface.0.network_ip}"
 }
 
-output "forseti-server-vm-public-ip" {
-  description = "Forseti Server VM public IP address"
-  value       = "${google_compute_instance.forseti-server.network_interface.0.access_config.0.nat_ip}"
-}
-
 output "forseti-server-service-account" {
   description = "Forseti Server service account"
   value       = "${google_service_account.forseti_server.email}"
@@ -37,4 +32,9 @@ output "forseti-server-service-account" {
 output "forseti-server-storage-bucket" {
   description = "Forseti Server storage bucket"
   value       = "${google_storage_bucket.server_config.id}"
+}
+
+output "forseti-cloudsql-connection-name" {
+  description = "The connection string to the CloudSQL instance"
+  value       = "${google_sql_database_instance.master.connection_name}"
 }

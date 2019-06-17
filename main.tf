@@ -18,6 +18,15 @@ resource "random_id" "random_hash_suffix" {
   byte_length = 4
 }
 
+resource "null_resource" "org_id_and_folder_id_are_both_empty" {
+  count = "${var.org_id == "" && var.folder_id == "" ? 1 : 0}"
+
+  provisioner "local-exec" {
+    command     = "false"
+    interpreter = ["bash", "-c"]
+  }
+}
+
 #--------#
 # Locals #
 #--------#
@@ -43,6 +52,10 @@ locals {
     "storage-api.googleapis.com",
     "groupssettings.googleapis.com",
   ]
+
+  cscc_violations_enabled_services_list = [
+    "securitycenter.googleapis.com",
+  ]
 }
 
 #-------------------#
@@ -52,6 +65,13 @@ resource "google_project_service" "main" {
   count              = "${length(local.services_list)}"
   project            = "${var.project_id}"
   service            = "${local.services_list[count.index]}"
+  disable_on_destroy = "false"
+}
+
+resource "google_project_service" "cscc_violations" {
+  count              = "${var.cscc_violations_enabled ? length(local.cscc_violations_enabled_services_list) : 0}"
+  project            = "${var.project_id}"
+  service            = "${local.cscc_violations_enabled_services_list[count.index]}"
   disable_on_destroy = "false"
 }
 
@@ -92,6 +112,7 @@ module "server" {
   forseti_email_sender                                = "${var.forseti_email_sender}"
   forseti_home                                        = "${var.forseti_home}"
   forseti_run_frequency                               = "${var.forseti_run_frequency}"
+  client_service_account_email                        = "${module.client.forseti-client-service-account}"
   server_type                                         = "${var.server_type}"
   server_region                                       = "${var.server_region}"
   server_boot_image                                   = "${var.server_boot_image}"
@@ -203,14 +224,15 @@ module "server" {
   firewall_rule_violations_should_notify              = "${var.firewall_rule_violations_should_notify}"
   external_project_access_violations_should_notify    = "${var.external_project_access_violations_should_notify}"
   enabled_apis_violations_should_notify               = "${var.enabled_apis_violations_should_notify}"
-  cscc_violations_enabled                             = "${var.cscc_violations_enabled}"
-  cscc_source_id                                      = "${var.cscc_source_id}"
   cloudsql_acl_violations_should_notify               = "${var.cloudsql_acl_violations_should_notify}"
   config_validator_violations_should_notify           = "${var.config_validator_violations_should_notify}"
   buckets_acl_violations_should_notify                = "${var.buckets_acl_violations_should_notify}"
   blacklist_violations_should_notify                  = "${var.blacklist_violations_should_notify}"
   bigquery_acl_violations_should_notify               = "${var.bigquery_acl_violations_should_notify}"
   audit_logging_violations_should_notify              = "${var.audit_logging_violations_should_notify}"
+
+  cscc_violations_enabled = "${var.cscc_violations_enabled}"
+  cscc_source_id          = "${var.cscc_source_id}"
 
   groups_settings_max_calls                = "${var.groups_settings_max_calls}"
   groups_settings_period                   = "${var.groups_settings_period}"

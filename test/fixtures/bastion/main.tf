@@ -62,4 +62,21 @@ resource "google_compute_instance" "main" {
   }
 
   project = "${var.project_id}"
+  tags    = ["bastion"]
+}
+
+resource "google_compute_firewall" "main" {
+  name    = "${random_pet.main.id}"
+  network = "${var.network}"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+
+  direction     = "INGRESS"
+  priority      = "100"
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["bastion"]
+  project       = "${var.project_id}"
 }

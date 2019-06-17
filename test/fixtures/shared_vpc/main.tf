@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+provider "tls" {
+  version = "~> 1.2"
+}
+
 resource "tls_private_key" "main" {
   algorithm = "RSA"
   rsa_bits  = 4096
@@ -22,6 +26,15 @@ resource "tls_private_key" "main" {
 resource "local_file" "gce-keypair-pk" {
   content  = "${tls_private_key.main.private_key_pem}"
   filename = "${path.module}/sshkey"
+}
+
+module "bastion" {
+  source = "../bastion"
+
+  network    = "${var.network}"
+  project_id = "${var.network_project}"
+  subnetwork = "${var.subnetwork}"
+  zone       = "us-central1-f"
 }
 
 module "forseti-shared-vpc" {
@@ -50,9 +63,14 @@ resource "null_resource" "wait_for_server" {
     script = "${path.module}/scripts/wait-for-forseti.sh"
 
     connection {
-      user        = "ubuntu"
-      host        = "${module.forseti-shared-vpc.forseti-server-vm-public-ip}"
-      private_key = "${tls_private_key.main.private_key_pem}"
+      type                = "ssh"
+      user                = "ubuntu"
+      host                = "${module.forseti-shared-vpc.forseti-server-vm-ip}"
+      private_key         = "${tls_private_key.main.private_key_pem}"
+      bastion_host        = "${module.bastion.host}"
+      bastion_port        = "${module.bastion.port}"
+      bastion_private_key = "${module.bastion.private_key}"
+      bastion_user        = "${module.bastion.user}"
     }
   }
 }
@@ -66,9 +84,14 @@ resource "null_resource" "wait_for_client" {
     script = "${path.module}/scripts/wait-for-forseti.sh"
 
     connection {
-      user        = "ubuntu"
-      host        = "${module.forseti-shared-vpc.forseti-client-vm-public-ip}"
-      private_key = "${tls_private_key.main.private_key_pem}"
+      type                = "ssh"
+      user                = "ubuntu"
+      host                = "${module.forseti-shared-vpc.forseti-client-vm-ip}"
+      private_key         = "${tls_private_key.main.private_key_pem}"
+      bastion_host        = "${module.bastion.host}"
+      bastion_port        = "${module.bastion.port}"
+      bastion_private_key = "${module.bastion.private_key}"
+      bastion_user        = "${module.bastion.user}"
     }
   }
 }

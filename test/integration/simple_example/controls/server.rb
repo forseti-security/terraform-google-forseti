@@ -14,7 +14,7 @@
 
 require "yaml"
 
-forseti_version = "2.14.1"
+forseti_version = "2.16.0"
 
 control "server" do
   title "Forseti server instance resources"
@@ -38,9 +38,10 @@ control "server" do
     it { should exist }
   end
 
-  describe command("pip show forseti-security|grep Version") do
+  describe command("python3 -m pip show forseti-security|grep Version") do
     its("exit_status") { should eq 0 }
     its("stdout") { should match("Version: #{forseti_version}") }
+    its("stderr") { should cmp "" }
   end
 
   describe file("/home/ubuntu/forseti-security/configs/forseti_conf_server.yaml") do
@@ -459,6 +460,7 @@ control "server" do
     log_sink_rules.yaml
     resource_rules.yaml
     retention_rules.yaml
+    role_rules.yaml
     service_account_key_rules.yaml
   ]
 

@@ -22,7 +22,6 @@ This example illustrates how to set up a minimal Forseti installation.
 
 | Name | Description |
 |------|-------------|
-| forseti-client-public-ip | Forseti Client VM public IP address |
 | forseti-client-service-account | Forseti Client service account |
 | forseti-client-storage-bucket | Forseti Client storage bucket |
 | forseti-client-vm-ip | Forseti Client VM private IP address |
