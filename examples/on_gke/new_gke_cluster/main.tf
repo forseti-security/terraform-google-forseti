@@ -202,8 +202,6 @@ module "forseti-on-gke" {
     helm_repository_url              = "${var.helm_repository_url}"
     k8s_forseti_orchestrator_image   = "${var.k8s_forseti_orchestrator_image}"
     k8s_forseti_server_image         = "${var.k8s_forseti_server_image}"
-    k8s_endpoint                     = "${module.gke.endpoint}"
-    k8s_ca_certificate               = "${module.gke.ca_certificate}"
     project_id                       = "${var.project_id}"
 }
 
