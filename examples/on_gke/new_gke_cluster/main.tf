@@ -41,10 +41,14 @@ provider "kubernetes" {
 =======
   load_config_file = false
 
-  host = "https://${var.k8s_endpoint}"
+  host = "https://${module.gke.endpoint}"
   token = "${data.google_client_config.default.access_token}"
+<<<<<<< HEAD
   cluster_ca_certificate = "${base64decode(var.k8s_ca_certificate)}"
 >>>>>>> Fixes per aaron-lane
+=======
+  cluster_ca_certificate = "${base64decode(module.gke.ca_certificate)}"
+>>>>>>> Updating variables and such
 }
 
 //*****************************************
@@ -72,16 +76,20 @@ provider "helm" {
     namespace       = "${var.k8s_forseti_namespace}"
     kubernetes {
       load_config_file = false
-      host = "https://${var.k8s_endpoint}"
+      host = "https://${module.gke.endpoint}"
       token = "${data.google_client_config.default.access_token}"
-      cluster_ca_certificate = "${base64decode(var.k8s_ca_certificate)}"
+      cluster_ca_certificate = "${base64decode(module.gke.ca_certificate)}"
     }
     debug = true
     automount_service_account_token = true
     install_tiller = true
 }
 
+<<<<<<< HEAD
 >>>>>>> Fixes per aaron-lane
+=======
+
+>>>>>>> Updating variables and such
 //*****************************************
 //  Enable the GCR Service
 //*****************************************

@@ -71,6 +71,11 @@ variable "network_policy" {
   default     = "false"
 }
 
+variable "k8s_tiller_sa_name" {
+  description = "The Kubernetes Service Account used by Tiller"
+  default = "tiller"
+}
+
 variable "project_id" {
   description = "The ID of an existing Google project where Forseti will be installed"
 }

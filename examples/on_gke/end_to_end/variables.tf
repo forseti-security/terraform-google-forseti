@@ -66,6 +66,11 @@ variable "k8s_tiller_sa_name" {
   default     = "tiller"
 }
 
+variable "k8s_tiller_sa_name" {
+  description = "The Kubernetes Service Account used by Tiller"
+  default = "tiller"
+}
+
 variable "network_name" {
   description = "The name of the VPC being created"
   default     = "gke-network"
