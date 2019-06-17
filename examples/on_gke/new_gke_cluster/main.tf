@@ -32,17 +32,26 @@ provider "google-beta" {
 data "google_client_config" "default" {}
 
 provider "kubernetes" {
+<<<<<<< HEAD
   alias                  = "forseti"
   load_config_file       = false
   host                   = "https://${module.gke.endpoint}"
   token                  = "${data.google_client_config.default.access_token}"
   cluster_ca_certificate = "${base64decode(module.gke.ca_certificate)}"
+=======
+  load_config_file = false
+
+  host = "https://${var.k8s_endpoint}"
+  token = "${data.google_client_config.default.access_token}"
+  cluster_ca_certificate = "${base64decode(var.k8s_ca_certificate)}"
+>>>>>>> Fixes per aaron-lane
 }
 
 //*****************************************
 //  Setup Helm Provider
 //*****************************************
 provider "helm" {
+<<<<<<< HEAD
   alias           = "forseti"
   service_account = "${var.k8s_tiller_sa_name}"
   namespace       = "${var.k8s_forseti_namespace}-${var.suffix}"
@@ -58,6 +67,21 @@ provider "helm" {
 }
 
 
+=======
+    service_account = "${var.k8s_tiller_sa_name}"
+    namespace       = "${var.k8s_forseti_namespace}"
+    kubernetes {
+      load_config_file = false
+      host = "https://${var.k8s_endpoint}"
+      token = "${data.google_client_config.default.access_token}"
+      cluster_ca_certificate = "${base64decode(var.k8s_ca_certificate)}"
+    }
+    debug = true
+    automount_service_account_token = true
+    install_tiller = true
+}
+
+>>>>>>> Fixes per aaron-lane
 //*****************************************
 //  Enable the GCR Service
 //*****************************************
@@ -144,6 +168,7 @@ module "gke" {
 //*****************************************
 
 module "forseti-on-gke" {
+<<<<<<< HEAD
   providers = {
     kubernetes = "kubernetes.forseti"
     helm       = "helm.forseti"
@@ -158,5 +183,28 @@ module "forseti-on-gke" {
   k8s_forseti_namespace            = "${var.k8s_forseti_namespace}-${var.suffix}"
   project_id                       = "${var.project_id}"
   network_policy                   = "${module.gke.network_policy_enabled}"
+=======
+    source  = "../../../modules/on_gke"
+    forseti_client_service_account   = "${var.forseti_client_service_account}"
+    forseti_client_vm_ip             = "${var.forseti_client_vm_ip}"
+    forseti_cloudsql_connection_name = "${var.forseti_cloudsql_connection_name}"
+    forseti_server_service_account   = "${var.forseti_server_service_account}"
+    forseti_server_bucket            = "${var.forseti_server_storage_bucket}"
+    gke_service_account              = "${module.gke.service_account}"
+    helm_repository_url              = "${var.helm_repository_url}"
+    k8s_forseti_orchestrator_image   = "${var.k8s_forseti_orchestrator_image}"
+    k8s_forseti_server_image         = "${var.k8s_forseti_server_image}"
+    k8s_endpoint                     = "${module.gke.endpoint}"
+    k8s_ca_certificate               = "${module.gke.ca_certificate}"
+    project_id                       = "${var.project_id}"
+}
+
+
+
+
+
+
+
+>>>>>>> Fixes per aaron-lane
 
 }
