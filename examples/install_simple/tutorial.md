@@ -202,4 +202,6 @@ You have completed installing Forseti and saving your configuration!
 ### Here are some next steps:
 
 - [Learn to use Forseti](https://forsetisecurity.org/docs/latest/use/cli/index.html)
+- [Configure Forseti features](https://forsetisecurity.org/docs/latest/configure/)
+- [Customize Forseti inputs](https://github.com/forseti-security/terraform-google-forseti/blob/master/README.md)
 - [Enable G Suite data collection](https://forsetisecurity.org/docs/latest/configure/inventory/gsuite.html)
