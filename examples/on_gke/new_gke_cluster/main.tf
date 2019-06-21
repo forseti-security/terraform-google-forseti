@@ -32,30 +32,17 @@ provider "google-beta" {
 data "google_client_config" "default" {}
 
 provider "kubernetes" {
-<<<<<<< HEAD
   alias                  = "forseti"
   load_config_file       = false
   host                   = "https://${module.gke.endpoint}"
   token                  = "${data.google_client_config.default.access_token}"
   cluster_ca_certificate = "${base64decode(module.gke.ca_certificate)}"
-=======
-  load_config_file = false
-
-  host = "https://${module.gke.endpoint}"
-  token = "${data.google_client_config.default.access_token}"
-<<<<<<< HEAD
-  cluster_ca_certificate = "${base64decode(var.k8s_ca_certificate)}"
->>>>>>> Fixes per aaron-lane
-=======
-  cluster_ca_certificate = "${base64decode(module.gke.ca_certificate)}"
->>>>>>> Updating variables and such
 }
 
 //*****************************************
 //  Setup Helm Provider
 //*****************************************
 provider "helm" {
-<<<<<<< HEAD
   alias           = "forseti"
   service_account = "${var.k8s_tiller_sa_name}"
   namespace       = "${var.k8s_forseti_namespace}-${var.suffix}"
@@ -70,26 +57,6 @@ provider "helm" {
   install_tiller                  = true
 }
 
-
-=======
-    service_account = "${var.k8s_tiller_sa_name}"
-    namespace       = "${var.k8s_forseti_namespace}"
-    kubernetes {
-      load_config_file = false
-      host = "https://${module.gke.endpoint}"
-      token = "${data.google_client_config.default.access_token}"
-      cluster_ca_certificate = "${base64decode(module.gke.ca_certificate)}"
-    }
-    debug = true
-    automount_service_account_token = true
-    install_tiller = true
-}
-
-<<<<<<< HEAD
->>>>>>> Fixes per aaron-lane
-=======
-
->>>>>>> Updating variables and such
 //*****************************************
 //  Enable the GCR Service
 //*****************************************
