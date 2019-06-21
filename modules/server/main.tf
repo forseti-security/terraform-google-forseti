@@ -459,6 +459,11 @@ resource "google_sql_database_instance" "master" {
     }
   }
 
+  lifecycle {
+    ignore_changes = [
+      "settings.0.disk_size",
+    ]
+  }
   depends_on = ["null_resource.services-dependency"]
 }
 
