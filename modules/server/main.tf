@@ -84,6 +84,15 @@ locals {
     }]
   }
   network_interface = "${local.network_interface_base[var.server_private ? "private" : "public"]}"
+  missing_emails    = "${var.sendgrid_api_key != "" && (var.forseti_email_sender == "" || var.forseti_email_recipient == "") ? 1 : 0}"
+}
+
+#------------------#
+# Input validation #
+#------------------#
+resource "null_resource" "missing_emails" {
+  count                                                                                                                                                         = "${local.missing_emails}"
+  "ERROR: `sendgrid_api_key` is set but `forseti_email_sender` or `forseti_email_recipient` are not. Please set those variables to enable email notifications." = true
 }
 
 #-------------------#
@@ -142,9 +151,6 @@ data "template_file" "forseti_server_config" {
     CAI_ENABLED                                         = "${var.enable_cai_bucket ? "true" : "false"}"
     FORSETI_CAI_BUCKET                                  = "${google_storage_bucket.cai_export.name}"
     FORSETI_BUCKET                                      = "${local.server_bucket_name}"
-    SENDGRID_API_KEY                                    = "${var.sendgrid_api_key}"
-    EMAIL_SENDER                                        = "${var.forseti_email_sender}"
-    EMAIL_RECIPIENT                                     = "${var.forseti_email_recipient}"
     STORAGE_DISABLE_POLLING                             = "${var.storage_disable_polling ? "true" : "false"}"
     SQLADMIN_PERIOD                                     = "${var.sqladmin_period}"
     SQLADMIN_MAX_CALLS                                  = "${var.sqladmin_max_calls}"
@@ -228,8 +234,6 @@ data "template_file" "forseti_server_config" {
     FIREWALL_RULE_VIOLATIONS_SHOULD_NOTIFY              = "${var.firewall_rule_violations_should_notify ? "true" : "false"}"
     EXTERNAL_PROJECT_ACCESS_VIOLATIONS_SHOULD_NOTIFY    = "${var.external_project_access_violations_should_notify ? "true" : "false"}"
     ENABLED_APIS_VIOLATIONS_SHOULD_NOTIFY               = "${var.enabled_apis_violations_should_notify ? "true" : "false"}"
-    CSCC_VIOLATIONS_ENABLED                             = "${var.cscc_violations_enabled ? "true" : "false"}"
-    CSCC_SOURCE_ID                                      = "${var.cscc_source_id}"
     CLOUDSQL_ACL_VIOLATIONS_SHOULD_NOTIFY               = "${var.cloudsql_acl_violations_should_notify ? "true" : "false"}"
     CONFIG_VALIDATOR_VIOLATIONS_SHOULD_NOTIFY           = "${var.config_validator_violations_should_notify ? "true": "false"}"
     BUCKETS_ACL_VIOLATIONS_SHOULD_NOTIFY                = "${var.buckets_acl_violations_should_notify ? "true" : "false"}"
@@ -237,6 +241,16 @@ data "template_file" "forseti_server_config" {
     BIGQUERY_ACL_VIOLATIONS_SHOULD_NOTIFY               = "${var.bigquery_acl_violations_should_notify ? "true" : "false"}"
     AUDIT_LOGGING_VIOLATIONS_SHOULD_NOTIFY              = "${var.audit_logging_violations_should_notify ? "true" : "false"}"
 
+    # CSCC notifications
+    CSCC_VIOLATIONS_ENABLED = "${var.cscc_violations_enabled ? "true" : "false"}"
+    CSCC_SOURCE_ID          = "${var.cscc_source_id}"
+
+    # Email notifications
+    EMAIL_SENDER     = "${var.forseti_email_sender}"
+    EMAIL_RECIPIENT  = "${var.forseti_email_recipient}"
+    SENDGRID_API_KEY = "${var.sendgrid_api_key}"
+
+    # Group settings
     GROUPS_SETTINGS_MAX_CALLS                = "${var.groups_settings_max_calls}"
     GROUPS_SETTINGS_PERIOD                   = "${var.groups_settings_period}"
     GROUPS_SETTINGS_DISABLE_POLLING          = "${var.groups_settings_disable_polling ? "true" : "false"}"

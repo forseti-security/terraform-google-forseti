@@ -15,7 +15,7 @@
 require "yaml"
 
 forseti_server_vm_ip = attribute("forseti-server-vm-ip")
-forseti_version = "2.16.0"
+forseti_version = "2.17.0"
 
 control "client" do
   title "Forseti client instance resources"
@@ -32,9 +32,10 @@ control "client" do
     its("exit_status") { should eq 0 }
   end
 
-  describe command("pip show forseti-security|grep Version") do
+  describe command("python3 -m pip show forseti-security|grep Version") do
     its("exit_status") { should eq 0 }
     its("stdout") { should match("Version: #{forseti_version}") }
+    its("stderr") { should cmp "" }
   end
 
   describe file("/home/ubuntu/forseti-security/configs/forseti_conf_client.yaml") do
