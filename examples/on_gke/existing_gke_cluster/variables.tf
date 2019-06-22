@@ -76,6 +76,11 @@ variable "k8s_tiller_sa_name" {
   default = "tiller"
 }
 
+variable "network_policy" {
+  description = "Whether or not to apply Pod NetworkPolicies"
+  dafault     = "false"
+}
+
 variable "project_id" {
   description = "The ID of an existing Google project where Forseti will be installed"
 }

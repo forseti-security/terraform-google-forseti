@@ -144,6 +144,7 @@ module "gke" {
 
 module "forseti-on-gke" {
 <<<<<<< HEAD
+<<<<<<< HEAD
   providers = {
     kubernetes = "kubernetes.forseti"
     helm       = "helm.forseti"
@@ -170,6 +171,24 @@ module "forseti-on-gke" {
     k8s_forseti_orchestrator_image   = "${var.k8s_forseti_orchestrator_image}"
     k8s_forseti_server_image         = "${var.k8s_forseti_server_image}"
     project_id                       = "${var.project_id}"
+=======
+  providers = {
+    kubernetes  = "kubernetes.forseti"
+    helm        = "helm.forseti"
+  }
+  source                            = "../../../modules/on_gke"
+  forseti_client_service_account    = "${var.forseti_client_service_account}"
+  forseti_client_vm_ip              = "${var.forseti_client_vm_ip}"
+  forseti_cloudsql_connection_name  = "${var.forseti_cloudsql_connection_name}"
+  forseti_server_service_account    = "${var.forseti_server_service_account}"
+  forseti_server_bucket             = "${var.forseti_server_storage_bucket}"
+  gke_service_account               = "${module.gke.service_account}"
+  helm_repository_url               = "${var.helm_repository_url}"
+  k8s_forseti_orchestrator_image    = "${var.k8s_forseti_orchestrator_image}"
+  k8s_forseti_server_image          = "${var.k8s_forseti_server_image}"
+  project_id                        = "${var.project_id}"
+  network_policy                    = "${module.gke.network_policy_enabled}"
+>>>>>>> Fixed dependencies.  Also explicit about the k8s provider passed to the submodule
 }
 
 

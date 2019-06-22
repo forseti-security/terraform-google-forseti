@@ -78,6 +78,11 @@ variable "network_policy" {
   default     = "false"
 }
 
+variable "network_policy" {
+  description = "Apply pod network policies"
+  default = "false"
+}
+
 variable "project_id" {
   description = "The ID of the GCP project where Forseti is currently deployed."
 }
