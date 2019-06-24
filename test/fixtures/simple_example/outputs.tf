@@ -60,7 +60,7 @@ output "forseti-server-storage-bucket" {
 
 output "project_id" {
   description = "A forwarded copy of `project_id` for InSpec"
-  value       = "${var.project_id}"
+  value       = "${module.project.project_id}"
 }
 
 output "org_id" {
@@ -68,7 +68,15 @@ output "org_id" {
   value       = "${var.org_id}"
 }
 
+output "service_account_private_key" {
+  value = "${module.project.service_account_private_key}"
+
+  description = "The private key of the service account."
+  sensitive   = true
+}
+
 output "suffix" {
   description = "The random suffix appended to Forseti resources"
   value       = "${module.forseti-install-simple.suffix}"
 }
+

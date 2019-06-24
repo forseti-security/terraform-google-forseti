@@ -67,6 +67,10 @@ suites:
     lifecycle:
       pre_verify:
       - chmod go-rwx test/fixtures/bastion/tls_private_key
+      - mv "$GOOGLE_APPLICATION_CREDENTIALS" "$GOOGLE_APPLICATION_CREDENTIALS"-backup
+      - terraform output -state=test/fixtures/simple_example/terraform.tfstate.d/kitchen-terraform-simple-example-local/terraform.tfstate service_account_private_key > "$GOOGLE_APPLICATION_CREDENTIALS"
+      post_verify:
+      - mv "$GOOGLE_APPLICATION_CREDENTIALS"-backup "$GOOGLE_APPLICATION_CREDENTIALS"
 
   - name: shared_vpc
     driver:

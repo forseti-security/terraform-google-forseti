@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 
-provider "google" {
-  credentials = "${file(var.credentials_path)}"
-  version     = "~> 1.20"
-}
-
 provider "local" {
   version = "~> 1.2"
 }
@@ -43,20 +38,14 @@ resource "random_pet" "main" {
 
 resource "google_compute_router" "main" {
   name    = "${random_pet.main.id}"
-  network = "default"
+  network = "${var.network}"
 
   bgp {
     asn = "64514"
   }
 
-  region  = "us-central1"
+  region  = "${var.region}"
   project = "${var.project_id}"
-}
-
-data "google_compute_subnetwork" "main" {
-  name    = "default"
-  project = "${var.project_id}"
-  region  = "${google_compute_router.main.region}"
 }
 
 resource "google_compute_router_nat" "main" {
@@ -66,7 +55,7 @@ resource "google_compute_router_nat" "main" {
   source_subnetwork_ip_ranges_to_nat = "LIST_OF_SUBNETWORKS"
 
   subnetwork {
-    name                    = "${data.google_compute_subnetwork.main.self_link}"
+    name                    = "${var.subnetwork}"
     source_ip_ranges_to_nat = ["ALL_IP_RANGES"]
   }
 
@@ -89,7 +78,7 @@ module "forseti-install-simple" {
   server_region            = "${google_compute_router_nat.main.region}"
   client_region            = "${google_compute_router_nat.main.region}"
   network                  = "${google_compute_router.main.network}"
-  subnetwork               = "${data.google_compute_subnetwork.main.name}"
+  subnetwork               = "${var.subnetwork}"
   sendgrid_api_key         = "${var.sendgrid_api_key}"
   forseti_email_sender     = "${var.forseti_email_sender}"
   forseti_email_recipient  = "${var.forseti_email_recipient}"

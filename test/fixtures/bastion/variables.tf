@@ -25,7 +25,7 @@ variable "project_id" {
 }
 
 variable "subnetwork" {
-  description = "The name of the subnetwork in which the bastion host will be deployed."
+  description = "The self link of the subnetwork in which the bastion host will be deployed."
   type        = "string"
 }
 

@@ -14,6 +14,55 @@
  * limitations under the License.
  */
 
+provider "google" {
+  version = "~> 2.8.0"
+}
+
+provider "google-beta" {
+  version = "~> 2.8.0"
+}
+
+provider "local" {
+  version = "~> 1.2"
+}
+
+provider "null" {
+  version = "~> 2.1"
+}
+
+provider "random" {
+  version = "~> 2.1"
+}
+
+module "project" {
+  source = "../project"
+
+  providers {
+    google      = "google"
+    google-beta = "google-beta"
+  }
+
+  billing_account = "${var.billing_account}"
+  folder_id       = "${var.folder_id}"
+  org_id          = "${var.org_id}"
+}
+
+provider "google" {
+  version = "~> 2.8"
+
+  alias = "fixture"
+
+  credentials = "${module.project.service_account_private_key}"
+}
+
+provider "google-beta" {
+  version = "~> 2.8"
+
+  alias = "fixture"
+
+  credentials = "${module.project.service_account_private_key}"
+}
+
 provider "tls" {
   version = "~> 1.2"
 }
@@ -31,18 +80,30 @@ resource "local_file" "gce-keypair-pk" {
 module "bastion" {
   source = "../bastion"
 
-  network    = "default"
-  project_id = "${var.project_id}"
-  subnetwork = "default"
-  zone       = "us-central1-f"
+  providers {
+    google      = "google.fixture"
+    google-beta = "google-beta.fixture"
+  }
+
+  network    = "${module.project.network}"
+  project_id = "${module.project.project_id}"
+  subnetwork = "${module.project.subnetwork}"
+  zone       = "${module.project.zone}"
 }
 
 module "forseti-install-simple" {
   source = "../../../examples/simple_example"
 
-  credentials_path   = "${var.credentials_path}"
+  providers {
+    google      = "google.fixture"
+    google-beta = "google-beta.fixture"
+  }
+
   gsuite_admin_email = "${var.gsuite_admin_email}"
-  project_id         = "${var.project_id}"
+  network            = "${module.project.network}"
+  project_id         = "${module.project.project_id}"
+  region             = "${module.project.region}"
+  subnetwork         = "${module.project.subnetwork}"
   org_id             = "${var.org_id}"
   domain             = "${var.domain}"
 
@@ -92,3 +153,4 @@ resource "null_resource" "wait_for_client" {
     }
   }
 }
+

@@ -14,16 +14,27 @@
  * limitations under the License.
  */
 
-variable "credentials_path" {
-  description = "Path to service account json"
-}
-
 variable "gsuite_admin_email" {
   description = "The email of a GSuite super admin, used for pulling user directory information *and* sending notifications."
 }
 
+variable "network" {
+  description = "The name of the network which will be attached to resources."
+  type        = "string"
+}
+
 variable "project_id" {
   description = "The ID of an existing Google project where Forseti will be installed"
+}
+
+variable "region" {
+  description = "The region in which to provision resources."
+  type        = "string"
+}
+
+variable "subnetwork" {
+  description = "The self link of the subnetwork which will be attached to resources."
+  type        = "string"
 }
 
 variable "org_id" {
