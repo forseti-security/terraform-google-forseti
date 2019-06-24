@@ -78,7 +78,7 @@ variable "k8s_tiller_sa_name" {
 
 variable "network_policy" {
   description = "Whether or not to apply Pod NetworkPolicies"
-  dafault     = "false"
+  default     = "false"
 }
 
 variable "project_id" {
