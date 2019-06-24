@@ -223,8 +223,6 @@ module "server" {
   firewall_rule_violations_should_notify              = "${var.firewall_rule_violations_should_notify}"
   external_project_access_violations_should_notify    = "${var.external_project_access_violations_should_notify}"
   enabled_apis_violations_should_notify               = "${var.enabled_apis_violations_should_notify}"
-  cscc_violations_enabled                             = "${var.cscc_violations_enabled}"
-  cscc_source_id                                      = "${var.cscc_source_id}"
   cloudsql_acl_violations_should_notify               = "${var.cloudsql_acl_violations_should_notify}"
   config_validator_violations_should_notify           = "${var.config_validator_violations_should_notify}"
   buckets_acl_violations_should_notify                = "${var.buckets_acl_violations_should_notify}"
@@ -233,6 +231,8 @@ module "server" {
   audit_logging_violations_should_notify              = "${var.audit_logging_violations_should_notify}"
 
   violations_slack_webhook                            = "${var.violations_slack_webhook}"
+  cscc_violations_enabled                             = "${var.cscc_violations_enabled}"
+  cscc_source_id                                      = "${var.cscc_source_id}"
 
   groups_settings_max_calls                = "${var.groups_settings_max_calls}"
   groups_settings_period                   = "${var.groups_settings_period}"
