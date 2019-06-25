@@ -113,7 +113,7 @@ Then perform the following commands on the config folder:
 | groups\_settings\_period | the period of max calls to the G Suite Groups API | string | `"1.1"` | no |
 | groups\_settings\_violations\_should\_notify | Notify for groups settings violations | string | `"true"` | no |
 | groups\_violations\_should\_notify | Notify for Groups violations | string | `"true"` | no |
-| gsuite\_admin\_email | G-Suite administrator email address to manage your Forseti installation | string | n/a | yes |
+| gsuite\_admin\_email | G-Suite administrator email address to manage your Forseti installation | string | `""` | yes |
 | iam\_disable\_polling | Whether to disable polling for IAM API | string | `"false"` | no |
 | iam\_max\_calls | Maximum calls that can be made to IAM API | string | `"90"` | no |
 | iam\_period | The period of max calls for the IAM API (in seconds) | string | `"1.0"` | no |
@@ -145,7 +145,7 @@ Then perform the following commands on the config folder:
 | logging\_period | The period of max calls for the Logging API (in seconds) | string | `"1.0"` | no |
 | network | The VPC where the Forseti client and server will be created | string | `"default"` | no |
 | network\_project | The project containing the VPC and subnetwork where the Forseti client and server will be created | string | `""` | no |
-| org\_id | GCP Organization ID that Forseti will have purview over | string | n/a | yes |
+| org\_id | GCP Organization ID that Forseti will have purview over | string | `""` | yes |
 | project\_id | Google Project ID that you want Forseti deployed into | string | n/a | yes |
 | resource\_enabled | Resource scanner enabled. | string | `"true"` | no |
 | resource\_violations\_should\_notify | Notify for resource violations | string | `"true"` | no |
