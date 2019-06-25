@@ -45,8 +45,8 @@ This example deploys the following:
 | gke\_service\_ip\_range | The IP range of the Kubernetes services. | string | `"10.3.0.0/20"` | no |
 | helm\_repository\_url | The Helm repository containing the 'forseti-security' Helm charts | string | `"https://kubernetes-charts-incubator.storage.googleapis.com"` | no |
 | k8s\_forseti\_namespace | The Kubernetes namespace in which to deploy Forseti. | string | `"default"` | no |
-| k8s\_forseti\_orchestrator\_image | The container image for the Forseti orchestrator | string | `"gcr.io/forseti-security-containers/forseti:dev"` | no |
-| k8s\_forseti\_server\_image | The container image for the Forseti server | string | `"gcr.io/forseti-security-containers/forseti:dev"` | no |
+| k8s\_forseti\_orchestrator\_image | The container image for the Forseti orchestrator | string | `"gcr.io/forseti-containers/forseti:latest"` | no |
+| k8s\_forseti\_server\_image | The container image for the Forseti server | string | `"gcr.io/forseti-containers/forseti:latest"` | no |
 | k8s\_tiller\_sa\_name | The Kubernetes Service Account used by Tiller | string | `"tiller"` | no |
 | network\_name | The name of the VPC being created | string | `"gke-network"` | no |
 >>>>>>> Fixes per aaron-lane
