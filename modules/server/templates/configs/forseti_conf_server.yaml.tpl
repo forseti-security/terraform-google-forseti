@@ -495,7 +495,7 @@ notifier:
               configuration:
                 data_format: csv
                 # gcs_path should begin with "gs://"
-                gcs_path: gs://{FORSETI_BUCKET}/scanner_violations
+                gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
             %{ if VIOLATIONS_SLACK_WEBHOOK != "" }
             - name: slack_webhook
               configuration:
