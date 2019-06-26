@@ -61,7 +61,6 @@ variable "k8s_forseti_namespace" {
   default     = "forseti"
 }
 
-<<<<<<< HEAD
 variable "k8s_tiller_sa_name" {
   description = "The Kubernetes Service Account used by Tiller"
   default     = "tiller"
@@ -70,26 +69,6 @@ variable "k8s_tiller_sa_name" {
 variable "network_policy" {
   description = "Whether or not to apply Pod NetworkPolicies"
   default     = "false"
-=======
-variable k8s_forseti_orchestrator_image {
-  description = "The container image for the Forseti orchestrator"
-  default = "gcr.io/forseti-containers/forseti"
-}
-
-variable k8s_forseti_orchestrator_image_tag {
-  description = "The tag for the container image for the Forseti orchestrator"
-  default = "latest"
-}
-
-variable k8s_forseti_server_image {
-  description = "The container image for the Forseti server"
-  default = "gcr.io/forseti-containers/forseti"
-}
-
-variable k8s_forseti_server_image_tag {
-  description = "The tag for the container image for the Forseti server"
-  default = "latest"
->>>>>>> generate_docs.  Adjusted the image/tag variables
 }
 
 variable "k8s_tiller_sa_name" {
