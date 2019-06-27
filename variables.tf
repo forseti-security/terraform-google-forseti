@@ -23,6 +23,7 @@ variable "project_id" {
 
 variable "gsuite_admin_email" {
   description = "G-Suite administrator email address to manage your Forseti installation"
+  default = ""
 }
 
 variable "forseti_version" {
@@ -735,6 +736,7 @@ variable "enable_cai_bucket" {
 #--------#
 variable "org_id" {
   description = "GCP Organization ID that Forseti will have purview over"
+  default = ""
 }
 
 variable "domain" {

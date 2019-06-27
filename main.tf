@@ -19,7 +19,7 @@ resource "random_id" "random_hash_suffix" {
 }
 
 resource "null_resource" "org_id_and_folder_id_are_both_empty" {
-  count = "${var.org_id == "" && var.folder_id == "" ? 1 : 0}"
+  count = "${length(var.composite_root_resources) == 0 && var.org_id == "" && var.folder_id == "" ? 1 : 0}"
 
   provisioner "local-exec" {
     command     = "false"
