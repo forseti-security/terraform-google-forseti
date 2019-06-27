@@ -194,7 +194,8 @@ Then perform the following commands on the config folder:
 ### Installation Dependencies
 - [Terraform](https://www.terraform.io/downloads.html) 0.11.x
 - [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google) plugin v1.12.0
- - [Python 3.7.x](https://www.python.org/getit/)
+- [terraform-provider-template](https://github.com/terraform-providers/terraform-provider-template) plugin >= v2.0
+- [Python 3.7.x](https://www.python.org/getit/)
 - [terraform-docs](https://github.com/segmentio/terraform-docs/releases) (optional) 0.6.0
 
 ### Service Account
