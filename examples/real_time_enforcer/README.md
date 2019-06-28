@@ -2,6 +2,8 @@
 
 This example illustrates how to set up a Forseti installation with real-time policy enforcer.
 
+By default, terraform will use your application default credentials.  If you'd like to use a different service account key, set the environment variable `GOOGLE_APPLICATION_CREDENTIALS` to the desired key's path.  For more info on using the GCP provider, refer to the terraform documentation.
+
 [^]: (autogen_docs_start)
 
 ## Inputs
