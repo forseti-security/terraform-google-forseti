@@ -14,6 +14,18 @@
  * limitations under the License.
  */
 
+provider "null" {
+  version = "~> 2.0"
+}
+
+provider "template" {
+  version = "~> 2.0"
+}
+
+provider "random" {
+  version = "~> 2.0"
+}
+
 resource "random_id" "random_hash_suffix" {
   byte_length = 4
 }

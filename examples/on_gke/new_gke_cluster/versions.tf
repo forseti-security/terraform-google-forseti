@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /**
  * Copyright 2019 Google LLC
  *
@@ -15,8 +14,6 @@
  * limitations under the License.
  */
 
-=======
->>>>>>> partial Terraform 0.12.x #172
 
 terraform {
   required_version = ">= 0.12"

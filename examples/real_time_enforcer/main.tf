@@ -45,21 +45,38 @@ module "real_time_enforcer_roles" {
 }
 
 module "real_time_enforcer_project_sink" {
+<<<<<<< HEAD
   source            = "../../modules/real_time_enforcer_project_sink"
+=======
+  source = "../../modules/real_time_enforcer_project_sink"
+>>>>>>> partial Terraform 0.12.x #172
   pubsub_project_id = var.project_id
   sink_project_id   = var.enforcer_project_id
 }
 
 module "real_time_enforcer" {
+<<<<<<< HEAD
   source                     = "../../modules/real_time_enforcer"
+=======
+  source = "../../modules/real_time_enforcer"
+>>>>>>> partial Terraform 0.12.x #172
   project_id                 = var.project_id
   org_id                     = var.org_id
   enforcer_instance_metadata = var.instance_metadata
   topic                      = module.real_time_enforcer_project_sink.topic
+<<<<<<< HEAD
   enforcer_viewer_role       = module.real_time_enforcer_roles.forseti-rt-enforcer-viewer-role-id
   enforcer_writer_role       = module.real_time_enforcer_roles.forseti-rt-enforcer-writer-role-id
   enforcer_instance_private  = true
   suffix                     = random_string.suffix.result
   network                    = "default"
+=======
+  enforcer_viewer_role = module.real_time_enforcer_roles.forseti-rt-enforcer-viewer-role-id
+  enforcer_writer_role = module.real_time_enforcer_roles.forseti-rt-enforcer-writer-role-id
+  topic                      = module.real_time_enforcer_project_sink.topic
+  enforcer_instance_private  = true
+  suffix                     = random_string.suffix.result
+  network                    = google_compute_router.main.network
+>>>>>>> partial Terraform 0.12.x #172
   subnetwork                 = data.google_compute_subnetwork.main.name
 }
