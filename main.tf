@@ -19,7 +19,7 @@ resource "random_id" "random_hash_suffix" {
 }
 
 resource "null_resource" "org_id_and_folder_id_are_both_empty" {
-  count = "${var.org_id == "" && var.folder_id == "" ? 1 : 0}"
+  count = "${length(var.composite_root_resources) == 0 && var.org_id == "" && var.folder_id == "" ? 1 : 0}"
 
   provisioner "local-exec" {
     command     = "false"
@@ -230,8 +230,9 @@ module "server" {
   bigquery_acl_violations_should_notify               = "${var.bigquery_acl_violations_should_notify}"
   audit_logging_violations_should_notify              = "${var.audit_logging_violations_should_notify}"
 
-  cscc_violations_enabled = "${var.cscc_violations_enabled}"
-  cscc_source_id          = "${var.cscc_source_id}"
+  violations_slack_webhook                            = "${var.violations_slack_webhook}"
+  cscc_violations_enabled                             = "${var.cscc_violations_enabled}"
+  cscc_source_id                                      = "${var.cscc_source_id}"
 
   groups_settings_max_calls                = "${var.groups_settings_max_calls}"
   groups_settings_period                   = "${var.groups_settings_period}"

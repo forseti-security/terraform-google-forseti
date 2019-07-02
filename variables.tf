@@ -23,6 +23,7 @@ variable "project_id" {
 
 variable "gsuite_admin_email" {
   description = "G-Suite administrator email address to manage your Forseti installation"
+  default = ""
 }
 
 variable "forseti_version" {
@@ -432,6 +433,11 @@ variable "service_account_key_enabled" {
 #--------------------------------#
 # Forseti server config notifier #
 #--------------------------------#
+variable "violations_slack_webhook" {
+  description = "Slack webhook for any violation. Will apply to all scanner violation notifiers."
+  default     = ""
+}
+
 variable "iam_policy_violations_should_notify" {
   description = "Notify for IAM Policy violations"
   default     = "true"
@@ -730,6 +736,7 @@ variable "enable_cai_bucket" {
 #--------#
 variable "org_id" {
   description = "GCP Organization ID that Forseti will have purview over"
+  default = ""
 }
 
 variable "domain" {

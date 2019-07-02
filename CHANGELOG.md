@@ -6,9 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Extending the adopted spec, each change should have a link to its corresponding pull request appended.
 
-## Unreleased
+## [Unreleased]
 
-- Make Forseti Real-Time Enforcer VM have private IP by default. [#180]
+### Added
+
+- Support for Forseti Real-Time Enforcer VM private IP address. [#180]
 
 ## [v2.2.0] - 2019-06-20
 
@@ -177,7 +179,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 ### ADDED
 - This is the initial release of the Forseti module.
 
-[Unreleased]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v2.2.0...HEAD
 [v0.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/releases/tag/v0.1.0
 [v1.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v0.1.0...v1.0.0
 [v1.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.0.0...v1.1.0
@@ -192,6 +194,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 [v1.6.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.5.1...v1.6.0
 [v2.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.6.0...v2.0.0
 [v2.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v2.0.0...v2.1.0
+[v2.2.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v2.1.0...v2.2.0
 
 [#180]: https://github.com/forseti-security/terraform-google-forseti/pull/180
 [#174]: https://github.com/forseti-security/terraform-google-forseti/pull/174
