@@ -15,7 +15,7 @@
  */
 
 resource "google_organization_iam_custom_role" "forseti-enforcer-viewer" {
-  org_id      = "${var.org_id}"
+  org_id      = var.org_id
   role_id     = "forseti.enforcerViewer${var.suffix}"
   title       = "Forseti real time enforcer viewer"
   description = "Read-only access to check for policy violations with the Forseti real time enforcer."
@@ -32,7 +32,7 @@ resource "google_organization_iam_custom_role" "forseti-enforcer-viewer" {
 }
 
 resource "google_organization_iam_custom_role" "forseti-enforcer-writer" {
-  org_id      = "${var.org_id}"
+  org_id      = var.org_id
   role_id     = "forseti.enforcerWriter${var.suffix}"
   title       = "Forseti real time enforcer writer"
   description = "Write access to remediate policy violations with the Forseti real time enforcer."
@@ -47,3 +47,4 @@ resource "google_organization_iam_custom_role" "forseti-enforcer-writer" {
     "serviceusage.services.use",
   ]
 }
+

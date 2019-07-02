@@ -15,8 +15,8 @@
  */
 
 provider "google" {
-  credentials = "${file(var.credentials_path)}"
-  version     = "~> 1.20"
+  credentials = file(var.credentials_path)
+  version     = "~> 2.7"
 }
 
 provider "null" {
@@ -33,30 +33,30 @@ provider "random" {
 
 resource "google_compute_address" "forseti_client_ip" {
   name         = "forseti-client-ip"
-  project      = "${var.project_id}"
-  region       = "${var.region}"
+  project      = var.project_id
+  region       = var.region
   address_type = "EXTERNAL"
 }
 
 resource "google_compute_address" "forseti_server_ip" {
   name         = "forseti-server-ip"
-  project      = "${var.project_id}"
-  region       = "${var.region}"
+  project      = var.project_id
+  region       = var.region
   address_type = "EXTERNAL"
 }
 
 module "forseti-install-simple" {
   source                   = "../../"
-  project_id               = "${var.project_id}"
-  gsuite_admin_email       = "${var.gsuite_admin_email}"
-  org_id                   = "${var.org_id}"
-  domain                   = "${var.domain}"
-  client_instance_metadata = "${var.instance_metadata}"
-  server_instance_metadata = "${var.instance_metadata}"
-  client_tags              = "${var.instance_tags}"
-  server_tags              = "${var.instance_tags}"
-  client_private           = false                       # enable client public IP
-  server_private           = false                       # enable server public IP
+  project_id               = var.project_id
+  gsuite_admin_email       = var.gsuite_admin_email
+  org_id                   = var.org_id
+  domain                   = var.domain
+  client_instance_metadata = var.instance_metadata
+  server_instance_metadata = var.instance_metadata
+  client_tags              = var.instance_tags
+  server_tags              = var.instance_tags
+  client_private           = false # enable client public IP
+  server_private           = false # enable server public IP
 
   # These optional blocks allow to override the default `access_config` block
   # (empty by default) for the client and server VMs.
@@ -65,11 +65,12 @@ module "forseti-install-simple" {
   # If those blocks are omitted, external IPs will be automatically created
   # and assigned to the VMs.
   client_access_config = {
-    nat_ip = "${google_compute_address.forseti_client_ip.address}"
+    nat_ip = google_compute_address.forseti_client_ip.address
   }
 
   server_access_config = {
-    nat_ip                 = "${google_compute_address.forseti_server_ip.address}"
-    public_ptr_domain_name = "${var.public_ptr_domain_name}"
+    nat_ip                 = google_compute_address.forseti_server_ip.address
+    public_ptr_domain_name = var.public_ptr_domain_name
   }
 }
+

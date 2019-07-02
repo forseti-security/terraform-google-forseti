@@ -23,3 +23,4 @@ output "forseti-rt-enforcer-writer-role-id" {
   description = "The forseti real time enforcer writer Role ID."
   value       = "organizations/${var.org_id}/roles/${google_organization_iam_custom_role.forseti-enforcer-writer.role_id}"
 }
+

@@ -16,15 +16,16 @@
 
 output "org_id" {
   description = "The organization ID where the custom Forseti roles will be created."
-  value       = "${var.org_id}"
+  value       = var.org_id
 }
 
 output "forseti-rt-enforcer-viewer-role-id" {
   description = "The forseti real time enforcer viewer Role ID."
-  value       = "${module.real_time_enforcer_roles.forseti-rt-enforcer-viewer-role-id}"
+  value       = module.real_time_enforcer_roles.forseti-rt-enforcer-viewer-role-id
 }
 
 output "forseti-rt-enforcer-writer-role-id" {
   description = "The forseti real time enforcer writer Role ID."
-  value       = "${module.real_time_enforcer_roles.forseti-rt-enforcer-writer-role-id}"
+  value       = module.real_time_enforcer_roles.forseti-rt-enforcer-writer-role-id
 }
+

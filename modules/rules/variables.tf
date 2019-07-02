@@ -16,7 +16,7 @@
 
 variable "bucket" {
   description = "The GCS bucket where rules will be uploaded"
-  type        = "string"
+  type        = string
 }
 
 variable "org_id" {
@@ -26,3 +26,4 @@ variable "org_id" {
 variable "domain" {
   description = "The domain associated with the GCP Organization ID"
 }
+

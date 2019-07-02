@@ -79,25 +79,25 @@ variable "server_address" {
 
 variable "client_ssh_allow_ranges" {
   description = "List of CIDRs that will be allowed ssh access to forseti server"
-  type        = "list"
+  type        = list(string)
   default     = ["0.0.0.0/0"]
 }
 
 variable "client_instance_metadata" {
   description = "Metadata key/value pairs to make available from within the client instance"
-  type        = "map"
+  type        = map(string)
   default     = {}
 }
 
 variable "client_tags" {
   description = "VM instance tags"
-  type        = "list"
+  type        = list(string)
   default     = []
 }
 
 variable "client_access_config" {
   description = "Client instance 'access_config' block"
-  type        = "map"
+  type        = map(string)
   default     = {}
 }
 
@@ -112,6 +112,7 @@ variable "suffix" {
 
 variable "services" {
   description = "An artificial dependency to bypass #10462"
-  type        = "list"
+  type        = list(string)
   default     = []
 }
+
