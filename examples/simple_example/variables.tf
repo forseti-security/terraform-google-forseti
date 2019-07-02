@@ -50,3 +50,18 @@ variable "private" {
   description = "Private client and server instances (no public IPs)"
   default     = true
 }
+
+variable "sendgrid_api_key" {
+  description = "Sendgrid API key."
+  default     = ""
+}
+
+variable "forseti_email_sender" {
+  description = "Forseti email sender."
+  default     = ""
+}
+
+variable "forseti_email_recipient" {
+  description = "Forseti email recipient."
+  default     = ""
+}
