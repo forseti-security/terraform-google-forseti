@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+output "bastion_host" {
+  value       = "${module.bastion.host}"
+  description = "Bastion host"
+}
+
 output "project_id" {
   description = "A forwarded copy of `project_id` for InSpec"
   value       = "${var.project_id}"
