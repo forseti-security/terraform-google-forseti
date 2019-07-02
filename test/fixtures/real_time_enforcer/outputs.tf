@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+output "bastion_host" {
+  value       = "${module.bastion.host}"
+  description = "Bastion host"
+}
+
 output "project_id" {
   description = "A forwarded copy of `project_id` for InSpec"
   value       = "${var.project_id}"
@@ -46,11 +51,6 @@ output "forseti-rt-enforcer-vm-name" {
 output "forseti-rt-enforcer-vm-ip" {
   description = "Forseti Enforcer VM private IP address"
   value       = "${module.real_time_enforcer.forseti-rt-enforcer-vm-ip}"
-}
-
-output "forseti-rt-enforcer-vm-public-ip" {
-  description = "Forseti Enforcer VM public IP address"
-  value       = "${module.real_time_enforcer.forseti-rt-enforcer-vm-public-ip}"
 }
 
 output "forseti-rt-enforcer-service-account" {
