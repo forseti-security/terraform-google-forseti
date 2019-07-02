@@ -131,6 +131,7 @@ suites:
   - name: real_time_enforcer
     lifecycle:
       pre_verify:
+        - local: chmod go-rwx test/fixtures/bastion/tls_private_key
         - local: test/fixtures/real_time_enforcer/modules/enforcer_target/helpers/create-enforcer-fixtures.sh
       post_destroy:
         - local: test/fixtures/real_time_enforcer/modules/enforcer_target/helpers/destroy-enforcer-fixtures.sh
