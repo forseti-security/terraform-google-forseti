@@ -6,21 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Extending the adopted spec, each change should have a link to its corresponding pull request appended.
 
+## Unreleased
+
+- Make Forseti Real-Time Enforcer VM have private IP by default. [#180]
+- Do not add email configuration if `sendgrid_api_key` is unset [#174]
+
 ## [v2.2.0] - 2019-06-20
 
 ### Added
 
 - Support for Forseti v2.17.0 [#184]
 - Add Kubernetes resources to CAI asset inventory
-
-### Changed
-
-- Make Forseti Real-Time Enforcer VM have private IP by default. [#180]
-- Do not add email configuration if `sendgrid_api_key` is unset [#174]
-
-### Changed
-
-- Make Forseti Real-Time Enforcer VM have private IP by default
 
 ## [v2.1.0] - 2019-05-30
 
