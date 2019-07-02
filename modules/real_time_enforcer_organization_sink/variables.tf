@@ -21,3 +21,4 @@ variable "pubsub_project_id" {
 variable "org_id" {
   description = "The organization ID where logs will be exported from."
 }
+

@@ -26,25 +26,26 @@ resource "random_string" "main" {
 }
 
 resource "google_storage_bucket" "main" {
-  project = "${var.enforcer_project_id}"
+  project = var.enforcer_project_id
   name    = "forseti-enforcer-target-${random_string.main.result}"
 }
 
 data "google_project" "main" {
-  project_id = "${var.enforcer_project_id}"
+  project_id = var.enforcer_project_id
 }
 
 # Create a GCS bucket with overly permissive IAM members. The Forseti real time
 # enforcer should automatically remediate the bad permissions.
 
 resource "google_storage_bucket_iam_member" "allusers" {
-  bucket = "${google_storage_bucket.main.name}"
+  bucket = google_storage_bucket.main.name
   role   = "roles/storage.objectViewer"
   member = "allUsers"
 }
 
 resource "google_storage_bucket_iam_member" "allauthenticatedusers" {
-  bucket = "${google_storage_bucket.main.name}"
+  bucket = google_storage_bucket.main.name
   role   = "roles/storage.objectViewer"
   member = "allAuthenticatedUsers"
 }
+

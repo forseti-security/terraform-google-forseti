@@ -15,8 +15,8 @@
  */
 
 provider "google" {
-  credentials = "${file(var.credentials_path)}"
-  version     = "~> 1.20"
+  credentials = file(var.credentials_path)
+  version     = "~> 2.7"
 }
 
 resource "random_string" "main" {
@@ -30,6 +30,7 @@ resource "random_string" "main" {
 module "real_time_enforcer_roles" {
   source = "../../../modules/real_time_enforcer_roles"
 
-  org_id = "${var.org_id}"
-  suffix = "${random_string.main.result}"
+  org_id = var.org_id
+  suffix = random_string.main.result
 }
+

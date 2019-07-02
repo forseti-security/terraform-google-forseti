@@ -15,85 +15,86 @@
  */
 
 output "bastion_host" {
-  value = "${module.bastion.host}"
+  value = module.bastion.host
 }
 
 output "project_id" {
   description = "ID of the service project"
-  value       = "${var.project_id}"
+  value       = var.project_id
 }
 
 output "network_project" {
   description = "ID of the network project holding shared VPC"
-  value       = "${var.network_project}"
+  value       = var.network_project
 }
 
 output "forseti-server-vm-ip" {
   description = "Forseti Server VM private IP address"
-  value       = "${module.forseti-shared-vpc.forseti-server-vm-ip}"
+  value       = module.forseti-shared-vpc.forseti-server-vm-ip
 }
 
 output "forseti-server-vm-name" {
   description = "Forseti Server VM name"
-  value       = "${module.forseti-shared-vpc.forseti-server-vm-name}"
+  value       = module.forseti-shared-vpc.forseti-server-vm-name
 }
 
 output "forseti-client-vm-ip" {
   description = "Forseti Client VM private IP address"
-  value       = "${module.forseti-shared-vpc.forseti-client-vm-ip}"
+  value       = module.forseti-shared-vpc.forseti-client-vm-ip
 }
 
 output "forseti-client-vm-name" {
   description = "Forseti Client VM name"
-  value       = "${module.forseti-shared-vpc.forseti-client-vm-name}"
+  value       = module.forseti-shared-vpc.forseti-client-vm-name
 }
 
 output "region" {
   description = "Region in which server and client will be deployed"
-  value       = "${var.region}"
+  value       = var.region
 }
 
 output "subnetwork" {
   description = "Subnetwork where server and client will be deployed"
-  value       = "${var.subnetwork}"
+  value       = var.subnetwork
 }
 
 output "network" {
   description = "Network where server and client will be deployed"
-  value       = "${var.network}"
+  value       = var.network
 }
 
 output "credentials_path" {
   description = "Pass through the `credentials_path` variable so that InSpec can reuse the credentials"
-  value       = "${var.credentials_path}"
+  value       = var.credentials_path
 }
 
 output "org_id" {
   description = "A forwarded copy of `org_id` for InSpec"
-  value       = "${var.org_id}"
+  value       = var.org_id
 }
 
 output "forseti-client-storage-bucket" {
   description = "Forseti Client storage bucket"
-  value       = "${module.forseti-shared-vpc.forseti-client-storage-bucket}"
+  value       = module.forseti-shared-vpc.forseti-client-storage-bucket
 }
 
 output "forseti-server-storage-bucket" {
   description = "Forseti Server storage bucket"
-  value       = "${module.forseti-shared-vpc.forseti-server-storage-bucket}"
+  value       = module.forseti-shared-vpc.forseti-server-storage-bucket
 }
 
 output "forseti-client-service-account" {
   description = "Forseti Client service account"
-  value       = "${module.forseti-shared-vpc.forseti-client-service-account}"
+  value       = module.forseti-shared-vpc.forseti-client-service-account
 }
 
 output "forseti-server-service-account" {
   description = "Forseti Server service account"
-  value       = "${module.forseti-shared-vpc.forseti-server-service-account}"
+  value       = module.forseti-shared-vpc.forseti-server-service-account
 }
 
 output "suffix" {
   description = "The random suffix appended to Forseti resources"
-  value       = "${module.forseti-shared-vpc.suffix}"
+  value       = module.forseti-shared-vpc.suffix
 }
+

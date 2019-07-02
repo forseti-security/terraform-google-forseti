@@ -15,12 +15,12 @@
  */
 
 provider "google" {
-  credentials = "${file(var.credentials_path)}"
-  version     = "~> 1.20"
+  credentials = file(var.credentials_path)
+  version     = "~> 2.7"
 }
 
 provider "local" {
-  version = "~> 1.2"
+  version = "~> 1.3"
 }
 
 provider "null" {
@@ -42,7 +42,7 @@ resource "random_pet" "main" {
 }
 
 resource "google_compute_router" "main" {
-  name    = "${random_pet.main.id}"
+  name    = random_pet.main.id
   network = "default"
 
   bgp {
@@ -50,47 +50,48 @@ resource "google_compute_router" "main" {
   }
 
   region  = "us-central1"
-  project = "${var.project_id}"
+  project = var.project_id
 }
 
 data "google_compute_subnetwork" "main" {
   name    = "default"
-  project = "${var.project_id}"
-  region  = "${google_compute_router.main.region}"
+  project = var.project_id
+  region  = google_compute_router.main.region
 }
 
 resource "google_compute_router_nat" "main" {
-  name                               = "${random_pet.main.id}"
-  router                             = "${google_compute_router.main.name}"
+  name                               = random_pet.main.id
+  router                             = google_compute_router.main.name
   nat_ip_allocate_option             = "AUTO_ONLY"
   source_subnetwork_ip_ranges_to_nat = "LIST_OF_SUBNETWORKS"
 
   subnetwork {
-    name                    = "${data.google_compute_subnetwork.main.self_link}"
+    name                    = data.google_compute_subnetwork.main.self_link
     source_ip_ranges_to_nat = ["ALL_IP_RANGES"]
   }
 
-  project = "${var.project_id}"
-  region  = "${google_compute_router.main.region}"
+  project = var.project_id
+  region  = google_compute_router.main.region
 }
 
 module "forseti-install-simple" {
   source                   = "../../"
-  project_id               = "${var.project_id}"
-  gsuite_admin_email       = "${var.gsuite_admin_email}"
-  org_id                   = "${var.org_id}"
-  domain                   = "${var.domain}"
-  client_instance_metadata = "${var.instance_metadata}"
-  server_instance_metadata = "${var.instance_metadata}"
-  client_tags              = "${var.instance_tags}"
-  server_tags              = "${var.instance_tags}"
-  client_private           = "${var.private}"
-  server_private           = "${var.private}"
-  server_region            = "${google_compute_router_nat.main.region}"
-  client_region            = "${google_compute_router_nat.main.region}"
-  network                  = "${google_compute_router.main.network}"
-  subnetwork               = "${data.google_compute_subnetwork.main.name}"
-  sendgrid_api_key         = "${var.sendgrid_api_key}"
-  forseti_email_sender     = "${var.forseti_email_sender}"
-  forseti_email_recipient  = "${var.forseti_email_recipient}"
+  project_id               = var.project_id
+  gsuite_admin_email       = var.gsuite_admin_email
+  org_id                   = var.org_id
+  domain                   = var.domain
+  client_instance_metadata = var.instance_metadata
+  server_instance_metadata = var.instance_metadata
+  client_tags              = var.instance_tags
+  server_tags              = var.instance_tags
+  client_private           = var.private
+  server_private           = var.private
+  server_region            = google_compute_router_nat.main.region
+  client_region            = google_compute_router_nat.main.region
+  network                  = google_compute_router.main.network
+  subnetwork               = data.google_compute_subnetwork.main.name
+  sendgrid_api_key         = var.sendgrid_api_key
+  forseti_email_sender     = var.forseti_email_sender
+  forseti_email_recipient  = var.forseti_email_recipient
 }
+

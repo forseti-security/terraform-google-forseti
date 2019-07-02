@@ -16,5 +16,6 @@
 
 output "bucket_name" {
   description = "A GCS bucket with relaxed permissions"
-  value       = "${google_storage_bucket.main.name}"
+  value       = google_storage_bucket.main.name
 }
+
