@@ -241,6 +241,8 @@ data "template_file" "forseti_server_config" {
     BIGQUERY_ACL_VIOLATIONS_SHOULD_NOTIFY               = "${var.bigquery_acl_violations_should_notify ? "true" : "false"}"
     AUDIT_LOGGING_VIOLATIONS_SHOULD_NOTIFY              = "${var.audit_logging_violations_should_notify ? "true" : "false"}"
 
+    VIOLATIONS_SLACK_WEBHOOK                            = "${var.violations_slack_webhook}"
+
     # CSCC notifications
     CSCC_VIOLATIONS_ENABLED = "${var.cscc_violations_enabled ? "true" : "false"}"
     CSCC_SOURCE_ID          = "${var.cscc_source_id}"
