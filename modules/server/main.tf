@@ -80,19 +80,17 @@ locals {
     "roles/securitycenter.findingsEditor",
   ]
   network_interface_base = {
-    private = [
-      {
+    private = {
         subnetwork_project = local.network_project
         subnetwork         = var.subnetwork
       },
-    ]
-    public = [
-      {
+
+    public = {
         subnetwork_project = local.network_project
         subnetwork         = var.subnetwork
         access_config      = [var.server_access_config]
       },
-    ]
+
   }
   network_interface = local.network_interface_base[var.server_private ? "private" : "public"]
   missing_emails    = var.sendgrid_api_key != "" && var.forseti_email_sender == "" || var.forseti_email_recipient == "" ? 1 : 0
@@ -442,11 +440,6 @@ resource "google_compute_instance" "forseti-server" {
   dynamic "network_interface" {
     for_each = [local.network_interface]
     content {
-      # TF-UPGRADE-TODO: The automatic upgrade tool can't predict
-      # which keys might be set in maps assigned here, so it has
-      # produced a comprehensive set here. Consider simplifying
-      # this after confirming which keys can be set in practice.
-
       address            = lookup(network_interface.value, "address", null)
       network            = lookup(network_interface.value, "network", null)
       network_ip         = lookup(network_interface.value, "network_ip", null)
