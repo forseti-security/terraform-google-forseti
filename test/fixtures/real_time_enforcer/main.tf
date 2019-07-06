@@ -15,7 +15,7 @@
  */
 
 provider "tls" {
-  version = "~> 1.2"
+  version = "~> 2.0"
 }
 
 resource "tls_private_key" "main" {
