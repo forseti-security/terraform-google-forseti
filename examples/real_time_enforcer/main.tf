@@ -58,7 +58,6 @@ module "real_time_enforcer" {
   topic                      = module.real_time_enforcer_project_sink.topic
   enforcer_viewer_role = module.real_time_enforcer_roles.forseti-rt-enforcer-viewer-role-id
   enforcer_writer_role = module.real_time_enforcer_roles.forseti-rt-enforcer-writer-role-id
-  topic                      = module.real_time_enforcer_project_sink.topic
   enforcer_instance_private  = true
   suffix                     = random_string.suffix.result
   network                    = google_compute_router.main.network
