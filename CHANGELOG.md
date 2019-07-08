@@ -8,9 +8,16 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ## [Unreleased]
 
+## [v2.3.0] - 2019-07-10
+
 ### Added
 
+- Support for Forseti v2.18.0. [#200]
 - Support for Forseti Real-Time Enforcer VM private IP address. [#180]
+
+### Changed
+
+- Updated ke_rules.yaml file to scan for new vulnerabilities. [#200]
 
 ## [v2.2.0] - 2019-06-20
 
