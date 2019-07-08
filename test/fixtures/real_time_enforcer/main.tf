@@ -40,7 +40,6 @@ module "bastion" {
 module "real_time_enforcer" {
   source = "../../../examples/real_time_enforcer"
 
-  credentials_path    = "${var.credentials_path}"
   project_id          = "${var.project_id}"
   org_id              = "${var.org_id}"
   enforcer_project_id = "${var.enforcer_project_id}"

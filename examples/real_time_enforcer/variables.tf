@@ -14,10 +14,6 @@
  * limitations under the License.
  */
 
-variable "credentials_path" {
-  description = "Path to service account json"
-}
-
 variable "project_id" {
   description = "The ID of an existing Google project where Forseti will be installed"
 }

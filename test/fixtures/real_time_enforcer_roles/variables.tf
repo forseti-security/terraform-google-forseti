@@ -14,10 +14,6 @@
  * limitations under the License.
  */
 
-variable "credentials_path" {
-  description = "Path to service account json"
-}
-
 variable "org_id" {
   description = "The organization ID where the IAM roles will be created."
 }
