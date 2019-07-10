@@ -16,72 +16,66 @@
 
 variable "forseti_client_vm_ip" {
   description = "Forseti Client VM private IP address"
-  default = ""
 }
 
 variable "forseti_client_service_account" {
   description = "Forseti Client service account"
-  default = ""
 }
 
 variable "forseti_cloudsql_connection_name" {
   description = "Forseti CloudSQL Connection String"
-  default = ""
 }
 
-variable "forseti_server_bucket"  {
+variable "forseti_server_bucket" {
   description = "Forseti Server storage bucket"
-  default = ""
 }
 
 variable "forseti_server_service_account" {
   description = "Forseti Server service account"
-  default = ""
 }
 
 variable "gke_service_account" {
   description = "The name of the IAM service account attached to the GKE cluster node-pool"
-  default = ""
 }
 
 variable "helm_repository_url" {
   description = "The Helm repository containing the 'forseti-security' Helm charts"
-  default = "https://forseti-security-charts.storage.googleapis.com/release/"
+  default     = "https://forseti-security-charts.storage.googleapis.com/release/"
 }
 
 variable "k8s_forseti_namespace" {
   description = "The Kubernetes namespace in which to deploy Forseti."
-  default = "default"
+  default     = "default"
 }
 
 variable "k8s_forseti_orchestrator_image" {
   description = "The container image for the Forseti orchestrator"
-  default = "gcr.io/forseti-containers/forseti"
+  default     = "gcr.io/forseti-containers/forseti"
 }
 
 variable "k8s_forseti_orchestrator_image_tag" {
   description = "The tag for the container image for the Forseti orchestrator"
-  default = "latest"
+  default     = "v2.18.0"
 }
 
 variable "k8s_forseti_server_image" {
   description = "The container image for the Forseti server"
-  default = "gcr.io/forseti-containers/forseti"
+  default     = "gcr.io/forseti-containers/forseti"
 }
 
 variable "k8s_forseti_server_image_tag" {
   description = "The tag for the container image for the Forseti server"
-  default = "latest"
+  default     = "v2.18.0"
 }
 
 variable "k8s_tiller_sa_name" {
   description = "The Kubernetes Service Account used by Tiller"
-  default = "tiller"
+  default     = "tiller"
 }
 
 variable "network_policy" {
   description = "Apply pod network policies"
-  default = "false"
+  default     = "false"
 }
 
 variable "project_id" {
@@ -90,10 +84,10 @@ variable "project_id" {
 
 variable "production" {
   description = "Whether or not to deploy Forseti on GKE in a production configuration"
-  default = "true"
+  default     = "true"
 }
 
 variable "server_log_level" {
   description = "The log level of the Forseti server container."
-  default = "info"
+  default     = "info"
 }

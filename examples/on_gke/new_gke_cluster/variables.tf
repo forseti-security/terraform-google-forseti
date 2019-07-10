@@ -20,97 +20,97 @@ variable "credentials_path" {
 
 variable "forseti_client_service_account" {
   description = "Forseti Client service account"
-  default = ""
+  default     = ""
 }
 
 variable "forseti_client_vm_ip" {
   description = "Forseti Client VM private IP address"
-  default = ""
+  default     = ""
 }
 
 variable "forseti_cloudsql_connection_name" {
   description = "The connection string to the CloudSQL instance"
-  default = ""
+  default     = ""
 }
 
 variable "forseti_server_service_account" {
   description = "Forseti Server service account"
-  default = ""
+  default     = ""
 }
 
 variable "forseti_server_storage_bucket" {
   description = "Forseti Server storage bucket"
-  default = ""
+  default     = ""
 }
 
 variable "gke_cluster_name" {
   description = "The name of the GKE Cluster"
-  default = "forseti-cluster"
+  default     = "forseti-cluster"
 }
 
 variable "gke_node_ip_range" {
   description = "The IP range for the GKE nodes."
-  default = "10.1.0.0/20"
+  default     = "10.1.0.0/20"
 }
 
 variable "gke_pod_ip_range" {
   description = "The IP range of the Kubernetes pods"
-  default = "10.2.0.0/20"
+  default     = "10.2.0.0/20"
 }
 
 variable "gke_service_account" {
   description = "The service account to run nodes as if not overridden in node_pools. The default value will cause a cluster-specific service account to be created."
-  default = "create"
+  default     = "create"
 }
 
 variable "gke_service_ip_range" {
   description = "The IP range of the Kubernetes services."
-  default = "10.3.0.0/20"
+  default     = "10.3.0.0/20"
 }
 
 variable "helm_repository_url" {
   description = "The Helm repository containing the 'forseti-security' Helm charts"
-  default = "https://forseti-security-charts.storage.googleapis.com/release/"
+  default     = "https://forseti-security-charts.storage.googleapis.com/release/"
 }
 
 variable "k8s_forseti_namespace" {
   description = "The Kubernetes namespace in which to deploy Forseti."
-  default = "default"
+  default     = "default"
 }
 
 variable "k8s_forseti_orchestrator_image" {
   description = "The container image for the Forseti orchestrator"
-  default = "gcr.io/forseti-containers/forseti"
+  default     = "gcr.io/forseti-containers/forseti"
 }
 
 variable "k8s_forseti_orchestrator_image_tag" {
   description = "The tag for the container image for the Forseti orchestrator"
-  default = "latest"
+  default     = "latest"
 }
 
 variable "k8s_forseti_server_image" {
   description = "The container image for the Forseti server"
-  default = "gcr.io/forseti-containers/forseti"
+  default     = "gcr.io/forseti-containers/forseti"
 }
 
 variable "k8s_forseti_server_image_tag" {
   description = "The tag for the container image for the Forseti server"
-  default = "latest"
+  default     = "latest"
 }
 
 variable "k8s_tiller_sa_name" {
   description = "The Kubernetes Service Account used by Tiller"
-  default = "tiller"
+  default     = "tiller"
 }
 
 variable "network_name" {
   description = "The name of the VPC being created"
-  default = "gke-network"
+  default     = "gke-network"
 }
 
 variable "production" {
   description = "Whether or not to deploy Forseti on GKE in a production configuration"
-  default = "true"
+  default     = "true"
 }
 
 variable "project_id" {
@@ -123,7 +123,7 @@ variable "region" {
 
 variable "sub_network_name" {
   description = "The names of the subnet being created"
-  default = "gke-sub-network"
+  default     = "gke-sub-network"
 }
 
 variable "suffix" {
@@ -132,7 +132,7 @@ variable "suffix" {
 
 variable "zones" {
   description = "The zones to host the cluster in (optional if regional cluster / required if zonal)"
-  default = []
+  default     = []
 }
 
 

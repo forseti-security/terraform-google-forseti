@@ -33,12 +33,11 @@ provider "google-beta" {
 data "google_client_config" "default" {}
 
 provider "kubernetes" {
-  alias                   = "forseti"
-  load_config_file        = false
-
-  host                    = "https://${module.gke.endpoint}"
-  token                   = "${data.google_client_config.default.access_token}"
-  cluster_ca_certificate  = "${base64decode(module.gke.ca_certificate)}"
+  alias                  = "forseti"
+  load_config_file       = false
+  host                   = "https://${module.gke.endpoint}"
+  token                  = "${data.google_client_config.default.access_token}"
+  cluster_ca_certificate = "${base64decode(module.gke.ca_certificate)}"
 }
 
 //*****************************************
@@ -50,10 +49,10 @@ provider "helm" {
   service_account = "${var.k8s_tiller_sa_name}"
   namespace       = "${var.k8s_forseti_namespace}-${module.forseti.suffix}"
   kubernetes {
-    load_config_file        = false
-    host                    = "https://${module.gke.endpoint}"
-    token                   = "${data.google_client_config.default.access_token}"
-    cluster_ca_certificate  = "${base64decode(module.gke.ca_certificate)}"
+    load_config_file       = false
+    host                   = "https://${module.gke.endpoint}"
+    token                  = "${data.google_client_config.default.access_token}"
+    cluster_ca_certificate = "${base64decode(module.gke.ca_certificate)}"
   }
   debug                           = true
   automount_service_account_token = true
@@ -67,20 +66,16 @@ resource "google_project_service" "gcr" {
 }
 
 module "vpc" {
-  
-  source  = "terraform-google-modules/network/google"
-
+  source       = "terraform-google-modules/network/google"
   project_id   = "${var.project_id}"
   network_name = "${var.network_name}"
   routing_mode = "GLOBAL"
 
-  subnets = [
-      {
-          subnet_name           = "${var.sub_network_name}"
-          subnet_ip             = "${var.gke_node_ip_range}"
-          subnet_region         = "${var.region}"
-      },
-  ]
+  subnets = [{
+    subnet_name   = "${var.sub_network_name}"
+    subnet_ip     = "${var.gke_node_ip_range}"
+    subnet_region = "${var.region}"
+  }, ]
 
   secondary_ranges = {
     "${var.sub_network_name}" = [
@@ -97,55 +92,52 @@ module "vpc" {
 }
 
 module "forseti" {
-	source  = "../../../"
-
-	gsuite_admin_email = "${var.gsuite_admin_email}"
-	domain             = "${var.domain}"
-	project_id         = "${var.project_id}"
-	org_id             = "${var.org_id}"
+  source             = "../../../"
+  gsuite_admin_email = "${var.gsuite_admin_email}"
+  domain             = "${var.domain}"
+  project_id         = "${var.project_id}"
+  org_id             = "${var.org_id}"
   network            = "${module.vpc.network_name}"
   client_private     = true
   server_private     = true
 }
 
 module "gke" {
-  source                    = "terraform-google-modules/kubernetes-engine/google"
-  project_id                = "${var.project_id}"
-  name                      = "${var.gke_cluster_name}"
-  regional                  = false
-  region                    = "${var.region}"
-  zones                     = "${var.zones}"
-  network                   = "${module.vpc.network_name}"
-  subnetwork                = "${module.vpc.subnets_names[0]}"
-  ip_range_pods             = "gke-pod-ip-range"
-  ip_range_services         = "gke-service-ip-range"
-  service_account           = "${var.gke_service_account}"
-  network_policy            = true
-  remove_default_node_pool  = true
+  source                   = "terraform-google-modules/kubernetes-engine/google"
+  project_id               = "${var.project_id}"
+  name                     = "${var.gke_cluster_name}"
+  regional                 = false
+  region                   = "${var.region}"
+  zones                    = "${var.zones}"
+  network                  = "${module.vpc.network_name}"
+  subnetwork               = "${module.vpc.subnets_names[0]}"
+  ip_range_pods            = "gke-pod-ip-range"
+  ip_range_services        = "gke-service-ip-range"
+  service_account          = "${var.gke_service_account}"
+  network_policy           = true
+  remove_default_node_pool = true
 
 
-  node_pools = [
-    {
-        name               = "default-node-pool"
-        machine_type       = "n1-standard-2"
-        min_count          = 1
-        max_count          = 1
-        disk_size_gb       = 100
-        disk_type          = "pd-standard"
-        image_type         = "COS"
-        auto_repair        = true
-        auto_upgrade       = true
-        preemptible        = false
-        initial_node_count = 1
-    },
-  ]
+  node_pools = [{
+    name               = "default-node-pool"
+    machine_type       = "n1-standard-2"
+    min_count          = 1
+    max_count          = 1
+    disk_size_gb       = 100
+    disk_type          = "pd-standard"
+    image_type         = "COS"
+    auto_repair        = true
+    auto_upgrade       = true
+    preemptible        = false
+    initial_node_count = 1
+  }, ]
 
   node_pools_oauth_scopes = {
-      all = []
+    all = []
 
-      default-node-pool = [
-          "https://www.googleapis.com/auth/cloud-platform",
-      ]
+    default-node-pool = [
+      "https://www.googleapis.com/auth/cloud-platform",
+    ]
   }
 }
 
@@ -155,17 +147,17 @@ module "gke" {
 
 module "forseti-on-gke" {
   providers = {
-    kubernetes  = "kubernetes.forseti"
-    helm        = "helm.forseti"
+    kubernetes = "kubernetes.forseti"
+    helm       = "helm.forseti"
   }
-  source                                = "../../../modules/on_gke"
-  forseti_client_service_account        = "${module.forseti.forseti-client-service-account}"
-  forseti_client_vm_ip                  = "${module.forseti.forseti-client-vm-ip}"
-  forseti_cloudsql_connection_name      = "${module.forseti.forseti-cloudsql-connection-name}"
-  forseti_server_service_account        = "${module.forseti.forseti-server-service-account}"
-  forseti_server_bucket                 = "${module.forseti.forseti-server-storage-bucket}"
-  gke_service_account                   = "${module.gke.service_account}"
-  k8s_forseti_namespace                 = "${var.k8s_forseti_namespace}-${module.forseti.suffix}"
-  project_id                            = "${var.project_id}"
-  network_policy                        = "${module.gke.network_policy_enabled}"
+  source                           = "../../../modules/on_gke"
+  forseti_client_service_account   = "${module.forseti.forseti-client-service-account}"
+  forseti_client_vm_ip             = "${module.forseti.forseti-client-vm-ip}"
+  forseti_cloudsql_connection_name = "${module.forseti.forseti-cloudsql-connection-name}"
+  forseti_server_service_account   = "${module.forseti.forseti-server-service-account}"
+  forseti_server_bucket            = "${module.forseti.forseti-server-storage-bucket}"
+  gke_service_account              = "${module.gke.service_account}"
+  k8s_forseti_namespace            = "${var.k8s_forseti_namespace}-${module.forseti.suffix}"
+  project_id                       = "${var.project_id}"
+  network_policy                   = "${module.gke.network_policy_enabled}"
 }

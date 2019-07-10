@@ -19,7 +19,7 @@
 //*****************************************
 
 provider "google" {
-  version = "~> 2.7.0"
+  version     = "~> 2.7.0"
   credentials = "${file(var.credentials_path)}"
 }
 
@@ -30,10 +30,9 @@ provider "google" {
 data "google_client_config" "default" {}
 
 provider "kubernetes" {
-  load_config_file = false
-
-  host = "https://${var.k8s_endpoint}"
-  token = "${data.google_client_config.default.access_token}"
+  load_config_file       = false
+  host                   = "https://${var.k8s_endpoint}"
+  token                  = "${data.google_client_config.default.access_token}"
   cluster_ca_certificate = "${base64decode(var.k8s_ca_certificate)}"
 }
 
@@ -41,17 +40,17 @@ provider "kubernetes" {
 //  Setup Helm Provider
 //*****************************************
 provider "helm" {
-    service_account = "${var.k8s_tiller_sa_name}"
-    namespace       = "${var.k8s_forseti_namespace}"
-    kubernetes {
-      load_config_file = false
-      host = "https://${var.k8s_endpoint}"
-      token = "${data.google_client_config.default.access_token}"
-      cluster_ca_certificate = "${base64decode(var.k8s_ca_certificate)}"
-    }
-    debug = true
-    automount_service_account_token = true
-    install_tiller = true
+  service_account = "${var.k8s_tiller_sa_name}"
+  namespace       = "${var.k8s_forseti_namespace}"
+  kubernetes {
+    load_config_file       = false
+    host                   = "https://${var.k8s_endpoint}"
+    token                  = "${data.google_client_config.default.access_token}"
+    cluster_ca_certificate = "${base64decode(var.k8s_ca_certificate)}"
+  }
+  debug                           = true
+  automount_service_account_token = true
+  install_tiller                  = true
 }
 
 //*****************************************
@@ -69,18 +68,14 @@ resource "google_project_service" "gcr" {
 //*****************************************
 
 module "forseti-on-gke" {
-    source  = "../../../modules/on_gke"
-    forseti_client_service_account      = "${var.forseti_client_service_account}"
-    forseti_client_vm_ip                = "${var.forseti_client_vm_ip}"
-    forseti_cloudsql_connection_name    = "${var.forseti_cloudsql_connection_name}"
-    forseti_server_service_account      = "${var.forseti_server_service_account}"
-    forseti_server_bucket               = "${var.forseti_server_storage_bucket}"
-    gke_service_account                 = "${var.gke_service_account}"
-    helm_repository_url                 = "${var.helm_repository_url}"
-    k8s_forseti_orchestrator_image      = "${var.k8s_forseti_orchestrator_image}"
-    k8s_forseti_orchestrator_image_tag  = "${var.forseti_version}"
-    k8s_forseti_server_image            = "${var.k8s_forseti_server_image}"
-    k8s_forseti_server_image_tag        = "${var.forseti_version}"
-    project_id                          = "${var.project_id}"
-    network_policy                      = "${var.network_policy}"
+  source                           = "../../../modules/on_gke"
+  forseti_client_service_account   = "${var.forseti_client_service_account}"
+  forseti_client_vm_ip             = "${var.forseti_client_vm_ip}"
+  forseti_cloudsql_connection_name = "${var.forseti_cloudsql_connection_name}"
+  forseti_server_service_account   = "${var.forseti_server_service_account}"
+  forseti_server_bucket            = "${var.forseti_server_storage_bucket}"
+  gke_service_account              = "${var.gke_service_account}"
+  helm_repository_url              = "${var.helm_repository_url}"
+  project_id                       = "${var.project_id}"
+  network_policy                   = "${var.network_policy}"
 }

@@ -100,10 +100,6 @@ variable "server_tags" {
 
 variable "server_access_config" {
   description = "Server instance 'access_config' block"
-<<<<<<< HEAD
-=======
-  type        = map(string)
->>>>>>> partial Terraform 0.12.x #172
   default     = {}
   type        = map(any)
 }
@@ -664,10 +660,6 @@ variable "client_tags" {
 
 variable "client_access_config" {
   description = "Client instance 'access_config' block"
-<<<<<<< HEAD
-=======
-  type        = map(string)
->>>>>>> partial Terraform 0.12.x #172
   default     = {}
   type        = map(any)
 }

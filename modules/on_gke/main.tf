@@ -21,7 +21,6 @@
 
 resource "google_service_account_key" "server_key" {
   service_account_id = "${var.forseti_server_service_account}"
-  
 }
 
 resource "google_service_account_key" "client_key" {
@@ -43,14 +42,13 @@ resource "google_project_iam_member" "cluster_service_account-storage_reader" {
 //*****************************************
 
 data "google_storage_object_signed_url" "file_url" {
-  bucket  = "${var.forseti_server_bucket}"
-  path    = "configs/forseti_conf_server.yaml"
-  
+  bucket = "${var.forseti_server_bucket}"
+  path   = "configs/forseti_conf_server.yaml"
 }
 
 data "http" "server_config_contents" {
-  url         = "${data.google_storage_object_signed_url.file_url.signed_url}"
-  depends_on  = ["data.google_storage_object_signed_url.file_url"]
+  url        = "${data.google_storage_object_signed_url.file_url.signed_url}"
+  depends_on = ["data.google_storage_object_signed_url.file_url"]
 }
 
 //*****************************************
@@ -69,10 +67,9 @@ resource "kubernetes_namespace" "forseti" {
 
 resource "kubernetes_service_account" "tiller" {
   metadata {
-    name = "${var.k8s_tiller_sa_name}"
+    name      = "${var.k8s_tiller_sa_name}"
     namespace = "${var.k8s_forseti_namespace}"
   }
-
 }
 
 //*****************************************
@@ -81,51 +78,50 @@ resource "kubernetes_service_account" "tiller" {
 
 resource "kubernetes_role" "tiller" {
   metadata {
-    name = "tiller-manager"
+    name      = "tiller-manager"
     namespace = "${var.k8s_forseti_namespace}"
   }
 
   rule {
     api_groups = [""]
-    resources = ["pods", "services", "secrets", "configmaps", "namespaces", "persistentvolumeclaims"]
-    verbs     = ["get", "list", "create", "delete", "update", "patch"]
+    resources  = ["pods", "services", "secrets", "configmaps", "namespaces", "persistentvolumeclaims"]
+    verbs      = ["get", "list", "create", "delete", "update", "patch"]
   }
 
   rule {
     api_groups = ["extensions", "apps"]
-    resources = ["deployments", "replicasets"]
-    verbs     = ["get", "list", "create", "delete", "update", "patch"]
+    resources  = ["deployments", "replicasets"]
+    verbs      = ["get", "list", "create", "delete", "update", "patch"]
   }
 
   rule {
     api_groups = ["extensions", "batch/v1beta1", "batch"]
-    resources = ["jobs", "cronjobs"]
-    verbs     = ["get", "list", "create", "delete", "update", "patch"]
+    resources  = ["jobs", "cronjobs"]
+    verbs      = ["get", "list", "create", "delete", "update", "patch"]
   }
 
   rule {
     api_groups = ["networking.k8s.io"]
-    resources = ["networkpolicies"]
-    verbs     = ["get", "list", "create", "delete", "update", "patch"]
-
+    resources  = ["networkpolicies"]
+    verbs      = ["get", "list", "create", "delete", "update", "patch"]
   }
 }
 
 resource "kubernetes_role_binding" "tiller" {
-    metadata {
-        name = "tiller-binding"
-        namespace = "${var.k8s_forseti_namespace}"
-    }
-    role_ref {
-        api_group = "rbac.authorization.k8s.io"
-        kind = "Role"
-        name = "${kubernetes_role.tiller.metadata.0.name}"
-    }
-    subject {
-        kind = "ServiceAccount"
-        name = "${kubernetes_service_account.tiller.metadata.0.name}"
-        namespace = "${var.k8s_forseti_namespace}"
-    }
+  metadata {
+    name      = "tiller-binding"
+    namespace = "${var.k8s_forseti_namespace}"
+  }
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "Role"
+    name      = "${kubernetes_role.tiller.metadata.0.name}"
+  }
+  subject {
+    kind      = "ServiceAccount"
+    name      = "${kubernetes_service_account.tiller.metadata.0.name}"
+    namespace = "${var.k8s_forseti_namespace}"
+  }
 }
 
 //*****************************************
@@ -141,62 +137,62 @@ resource "helm_release" "forseti-security" {
   depends_on    = ["kubernetes_role_binding.tiller", "kubernetes_namespace.forseti"]
 
   set {
-      name = "cloudsqlConnection"
-      value = "${var.forseti_cloudsql_connection_name}"
+    name  = "cloudsqlConnection"
+    value = "${var.forseti_cloudsql_connection_name}"
   }
 
   set {
-    name = "orchestratorImage"
+    name  = "orchestratorImage"
     value = "${var.k8s_forseti_orchestrator_image}"
   }
 
   set {
-    name = "orchestratorImageTag"
+    name  = "orchestratorImageTag"
     value = "${var.k8s_forseti_orchestrator_image_tag}"
   }
 
-  set_sensitive  {
-      name = "orchestratorKeyContents"
-      value = "${google_service_account_key.client_key.private_key}"
+  set_sensitive {
+    name  = "orchestratorKeyContents"
+    value = "${google_service_account_key.client_key.private_key}"
   }
 
   set {
-    name = "serverImage"
+    name  = "serverImage"
     value = "${var.k8s_forseti_server_image}"
   }
 
   set {
-    name = "serverImageTag"
+    name  = "serverImageTag"
     value = "${var.k8s_forseti_server_image_tag}"
   }
 
   set {
-    name = "serverBucket"
+    name  = "serverBucket"
     value = "${var.forseti_server_bucket}"
   }
 
   set_string {
-    name = "serverConfigContents"
+    name  = "serverConfigContents"
     value = "${base64encode(data.http.server_config_contents.body)}"
   }
 
   set_sensitive {
-    name = "serverKeyContents"
+    name  = "serverKeyContents"
     value = "${google_service_account_key.server_key.private_key}"
   }
 
   set {
-    name = "serverLogLevel"
+    name  = "serverLogLevel"
     value = "${var.server_log_level}"
   }
 
   set {
-    name = "networkPolicyEnable"
+    name  = "networkPolicyEnable"
     value = "${var.network_policy}"
   }
 
   set {
-    name = "production"
+    name  = "production"
     value = "${var.production}"
   }
 
