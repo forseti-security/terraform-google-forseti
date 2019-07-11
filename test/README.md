@@ -17,7 +17,6 @@ cp test/fixtures/shared/terraform.tfvars.example test/fixtures/shared_vpc/terraf
 Update `terraform.tfvars` to match your environment:
 
 ```
-credentials_path = "/path/to/credentials.json"
 network_project = "sample-project-001"
 project_id = "service-project-001"
 org_id = 100000000000
@@ -31,6 +30,9 @@ subnetwork = "subnet-001"
 From the root of the module directory execute the following commands:
 
 ```
+# if necessary, point terraform to service account key
+export GOOGLE_APPLICATION_CREDENTIALS="/path/to/credentials.json"
+
 # Initialize the terraform providers and context
 bundle exec kitchen setup shared-vpc
 
@@ -63,7 +65,6 @@ cp test/fixtures/simple_example/terraform.tfvars.example test/fixtures/simple_ex
 Update `terraform.tfvars` to match your environment:
 
 ```bash
-credentials_path = "../../../credentials.json"`
 gsuite_admin_email = "admin@example.com"
 org_id = "000000000000"
 project_id = "forseti-test-f6bd"
@@ -74,6 +75,9 @@ project_id = "forseti-test-f6bd"
 From the root of the module directory execute the following commands:
 
 ```bash
+# if necessary, point terraform to service account key
+export GOOGLE_APPLICATION_CREDENTIALS="/path/to/credentials.json"
+
 # Initialize the terraform providers and context
 bundle exec kitchen setup simple-example
 
