@@ -95,10 +95,15 @@ variable "client_tags" {
   default     = []
 }
 
+
 variable "client_access_config" {
   description = "Client instance 'access_config' block"
-  type        = map(string)
-  default     = {}
+  default     = []
+  type = list(object({
+    nat_ip                 = string
+    network_tier           = string
+    public_ptr_domain_name = string
+  }))
 }
 
 variable "client_private" {
