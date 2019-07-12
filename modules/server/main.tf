@@ -100,8 +100,7 @@ locals {
 # Input validation #
 #------------------#
 resource "null_resource" "missing_emails" {
-  count = "${local.missing_emails}"
-  #  "ERROR : `sendgrid_api_key` is set but `forseti_email_sender` or `forseti_email_recipient` are not. Please set those variables to enable email notifications." = true
+  count = local.missing_emails
   provisioner "local-exec" {
     command     = "false"
     interpreter = ["bash", "-c"]
