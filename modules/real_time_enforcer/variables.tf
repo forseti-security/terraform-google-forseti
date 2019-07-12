@@ -82,8 +82,12 @@ variable "enforcer_instance_metadata" {
 
 variable "enforcer_instance_access_config" {
   description = "Enforcer instance 'access_config' block"
-  type        = "map"
-  default     = {}
+  default     = []
+  type = list(object({
+    nat_ip                 = string
+    network_tier           = string
+    public_ptr_domain_name = string
+  }))
 }
 
 variable "enforcer_instance_private" {

@@ -15,7 +15,7 @@
  */
 
 provider "google" {
-  version     = "~> 2.7"
+  version = "~> 2.7"
 }
 
 provider "null" {
@@ -45,19 +45,19 @@ module "real_time_enforcer_roles" {
 }
 
 module "real_time_enforcer_project_sink" {
-  source = "../../modules/real_time_enforcer_project_sink"
+  source            = "../../modules/real_time_enforcer_project_sink"
   pubsub_project_id = var.project_id
   sink_project_id   = var.enforcer_project_id
 }
 
 module "real_time_enforcer" {
-  source = "../../modules/real_time_enforcer"
+  source                     = "../../modules/real_time_enforcer"
   project_id                 = var.project_id
   org_id                     = var.org_id
   enforcer_instance_metadata = var.instance_metadata
   topic                      = module.real_time_enforcer_project_sink.topic
-  enforcer_viewer_role = module.real_time_enforcer_roles.forseti-rt-enforcer-viewer-role-id
-  enforcer_writer_role = module.real_time_enforcer_roles.forseti-rt-enforcer-writer-role-id
+  enforcer_viewer_role       = module.real_time_enforcer_roles.forseti-rt-enforcer-viewer-role-id
+  enforcer_writer_role       = module.real_time_enforcer_roles.forseti-rt-enforcer-writer-role-id
   enforcer_instance_private  = true
   suffix                     = random_string.suffix.result
   network                    = google_compute_router.main.network

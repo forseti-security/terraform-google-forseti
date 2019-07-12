@@ -81,15 +81,15 @@ locals {
   ]
   network_interface_base = {
     private = {
-        subnetwork_project = local.network_project
-        subnetwork         = var.subnetwork
-      },
+      subnetwork_project = local.network_project
+      subnetwork         = var.subnetwork
+    },
 
     public = {
-        subnetwork_project = local.network_project
-        subnetwork         = var.subnetwork
-        access_config      = [var.server_access_config]
-      },
+      subnetwork_project = local.network_project
+      subnetwork         = var.subnetwork
+      access_config      = [var.server_access_config]
+    },
 
   }
   network_interface = local.network_interface_base[var.server_private ? "private" : "public"]
@@ -101,11 +101,11 @@ locals {
 #------------------#
 resource "null_resource" "missing_emails" {
   count = "${local.missing_emails}"
-#  "ERROR : `sendgrid_api_key` is set but `forseti_email_sender` or `forseti_email_recipient` are not. Please set those variables to enable email notifications." = true
+  #  "ERROR : `sendgrid_api_key` is set but `forseti_email_sender` or `forseti_email_recipient` are not. Please set those variables to enable email notifications." = true
   provisioner "local-exec" {
-  command     = "false"
-  interpreter = ["bash", "-c"]
-}
+    command     = "false"
+    interpreter = ["bash", "-c"]
+  }
 }
 
 #-------------------#

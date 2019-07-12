@@ -267,7 +267,7 @@ variable "sqladmin_disable_polling" {
 
 variable "storage_disable_polling" {
   description = "Whether to disable polling for Storage API"
-  type        =  bool
+  type        = bool
   default     = false
 }
 
@@ -569,8 +569,12 @@ variable "server_tags" {
 
 variable "server_access_config" {
   description = "Server instance 'access_config' block"
-  type        = map(string)
-  default     = {}
+  default     = []
+  type = list(object({
+    nat_ip                 = string
+    network_tier           = string
+    public_ptr_domain_name = string
+  }))
 }
 
 variable "server_private" {

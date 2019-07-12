@@ -137,12 +137,31 @@ resource "google_compute_instance" "main" {
       image = var.enforcer_boot_image
     }
   }
+  dynamic "network_interface" {
+    for_each = [local.network_interface]
+    content {
+      address            = lookup(network_interface.value, "address", null)
+      network            = lookup(network_interface.value, "network", null)
+      network_ip         = lookup(network_interface.value, "network_ip", null)
+      subnetwork         = lookup(network_interface.value, "subnetwork", null)
+      subnetwork_project = lookup(network_interface.value, "subnetwork_project", null)
 
-  network_interface {
-    subnetwork_project = local.network_project
-    subnetwork         = var.subnetwork
+      dynamic "access_config" {
+        for_each = lookup(network_interface.value, "access_config", [])
+        content {
+          nat_ip                 = lookup(access_config.value, "nat_ip", null)
+          network_tier           = lookup(access_config.value, "network_tier", null)
+          public_ptr_domain_name = lookup(access_config.value, "public_ptr_domain_name", null)
+        }
+      }
 
-    access_config {
+      dynamic "alias_ip_range" {
+        for_each = lookup(network_interface.value, "alias_ip_range", [])
+        content {
+          ip_cidr_range         = alias_ip_range.value.ip_cidr_range
+          subnetwork_range_name = lookup(alias_ip_range.value, "subnetwork_range_name", null)
+        }
+      }
     }
   }
 

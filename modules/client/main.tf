@@ -42,15 +42,15 @@ locals {
 
   network_interface_base = {
     private = {
-        subnetwork_project = local.network_project
-        subnetwork         = var.subnetwork
-      },
+      subnetwork_project = local.network_project
+      subnetwork         = var.subnetwork
+    },
 
     public = {
-        subnetwork_project = local.network_project
-        subnetwork         = var.subnetwork
-        access_config      = [var.client_access_config]
-      },
+      subnetwork_project = local.network_project
+      subnetwork         = var.subnetwork
+      access_config      = [var.client_access_config]
+    },
 
   }
 
