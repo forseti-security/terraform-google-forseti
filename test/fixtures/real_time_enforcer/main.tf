@@ -15,7 +15,7 @@
  */
 
 provider "tls" {
-  version = "~> 1.2"
+  version = "~> 2.0"
 }
 
 resource "tls_private_key" "main" {
@@ -24,7 +24,7 @@ resource "tls_private_key" "main" {
 }
 
 resource "local_file" "gce-keypair-pk" {
-  content  = "${tls_private_key.main.private_key_pem}"
+  content  = tls_private_key.main.private_key_pem
   filename = "${path.module}/sshkey"
 }
 
@@ -40,14 +40,15 @@ module "bastion" {
 module "real_time_enforcer" {
   source = "../../../examples/real_time_enforcer"
 
-  project_id          = "${var.project_id}"
-  org_id              = "${var.org_id}"
-  enforcer_project_id = "${var.enforcer_project_id}"
+  project_id          = var.project_id
+  org_id              = var.org_id
+  enforcer_project_id = var.enforcer_project_id
 
-  instance_metadata {
+  instance_metadata = {
     # This username is a little bit silly because the enforcer VM is COS, but for
     # the sake of consistency with the Forseti client and server we use the same
     # hostname.
     sshKeys = "ubuntu:${tls_private_key.main.public_key_openssh}"
   }
 }
+

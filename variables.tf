@@ -23,7 +23,7 @@ variable "project_id" {
 
 variable "gsuite_admin_email" {
   description = "G-Suite administrator email address to manage your Forseti installation"
-  default = ""
+  default     = ""
 }
 
 variable "forseti_version" {
@@ -76,32 +76,36 @@ variable "server_boot_image" {
 
 variable "server_instance_metadata" {
   description = "Metadata key/value pairs to make available from within the server instance."
-  type        = "map"
+  type        = map(string)
   default     = {}
 }
 
 variable "server_grpc_allow_ranges" {
   description = "List of CIDRs that will be allowed gRPC access to forseti server"
-  type        = "list"
+  type        = list(string)
   default     = ["10.128.0.0/9"]
 }
 
 variable "server_ssh_allow_ranges" {
   description = "List of CIDRs that will be allowed ssh access to forseti server"
-  type        = "list"
+  type        = list(string)
   default     = ["0.0.0.0/0"]
 }
 
 variable "server_tags" {
   description = "GCE Forseti Server VM Tags"
-  type        = "list"
+  type        = list(string)
   default     = []
 }
 
 variable "server_access_config" {
   description = "Server instance 'access_config' block"
-  type        = "map"
-  default     = {}
+  default     = null
+  type = object({
+    nat_ip                 = string
+    network_tier           = string
+    public_ptr_domain_name = string
+  })
 }
 
 variable "server_private" {
@@ -124,7 +128,8 @@ variable "admin_period" {
 
 variable "admin_disable_polling" {
   description = "Whether to disable polling for Admin API"
-  default     = "False"
+  type        = bool
+  default     = false
 }
 
 variable "appengine_max_calls" {
@@ -139,7 +144,8 @@ variable "appengine_period" {
 
 variable "appengine_disable_polling" {
   description = "Whether to disable polling for App Engine API"
-  default     = "False"
+  type        = bool
+  default     = false
 }
 
 variable "bigquery_max_calls" {
@@ -154,7 +160,8 @@ variable "bigquery_period" {
 
 variable "bigquery_disable_polling" {
   description = "Whether to disable polling for Big Query API"
-  default     = "False"
+  type        = bool
+  default     = false
 }
 
 variable "cloudasset_max_calls" {
@@ -169,7 +176,8 @@ variable "cloudasset_period" {
 
 variable "cloudasset_disable_polling" {
   description = "Whether to disable polling for Cloud Asset API"
-  default     = "False"
+  type        = bool
+  default     = false
 }
 
 variable "cloudbilling_max_calls" {
@@ -184,7 +192,8 @@ variable "cloudbilling_period" {
 
 variable "cloudbilling_disable_polling" {
   description = "Whether to disable polling for Cloud Billing API"
-  default     = "False"
+  type        = bool
+  default     = false
 }
 
 variable "compute_max_calls" {
@@ -199,7 +208,8 @@ variable "compute_period" {
 
 variable "compute_disable_polling" {
   description = "Whether to disable polling for Compute API"
-  default     = "False"
+  type        = bool
+  default     = false
 }
 
 variable "container_max_calls" {
@@ -214,7 +224,8 @@ variable "container_period" {
 
 variable "container_disable_polling" {
   description = "Whether to disable polling for Container API"
-  default     = "False"
+  type        = bool
+  default     = false
 }
 
 variable "crm_max_calls" {
@@ -229,7 +240,8 @@ variable "crm_period" {
 
 variable "crm_disable_polling" {
   description = "Whether to disable polling for CRM API"
-  default     = "False"
+  type        = bool
+  default     = false
 }
 
 variable "iam_max_calls" {
@@ -244,7 +256,8 @@ variable "iam_period" {
 
 variable "iam_disable_polling" {
   description = "Whether to disable polling for IAM API"
-  default     = "False"
+  type        = bool
+  default     = false
 }
 
 variable "logging_max_calls" {
@@ -259,7 +272,8 @@ variable "logging_period" {
 
 variable "logging_disable_polling" {
   description = "Whether to disable polling for Logging API"
-  default     = "False"
+  type        = bool
+  default     = false
 }
 
 variable "securitycenter_max_calls" {
@@ -274,7 +288,8 @@ variable "securitycenter_period" {
 
 variable "securitycenter_disable_polling" {
   description = "Whether to disable polling for Security Center API"
-  default     = "False"
+  type        = bool
+  default     = false
 }
 
 variable "servicemanagement_max_calls" {
@@ -289,7 +304,8 @@ variable "servicemanagement_period" {
 
 variable "servicemanagement_disable_polling" {
   description = "Whether to disable polling for Service Management API"
-  default     = "False"
+  type        = bool
+  default     = false
 }
 
 variable "sqladmin_max_calls" {
@@ -304,12 +320,14 @@ variable "sqladmin_period" {
 
 variable "sqladmin_disable_polling" {
   description = "Whether to disable polling for SQL Admin API"
-  default     = "False"
+  type        = bool
+  default     = false
 }
 
 variable "storage_disable_polling" {
-  description = "Whether to disable polling for Storage API"
-  default     = "False"
+  description = "Whetservicemanagement_disable_pollingher to disable polling for Storage API"
+  type        = bool
+  default     = false
 }
 
 variable "cai_api_timeout" {
@@ -594,7 +612,8 @@ variable "groups_settings_period" {
 
 variable "groups_settings_disable_polling" {
   description = "Whether to disable polling for the G Suite Groups API"
-  default     = "False"
+  type        = bool
+  default     = false
 }
 
 variable "groups_settings_enabled" {
@@ -627,26 +646,30 @@ variable "client_region" {
 
 variable "client_instance_metadata" {
   description = "Metadata key/value pairs to make available from within the client instance."
-  type        = "map"
+  type        = map(string)
   default     = {}
 }
 
 variable "client_ssh_allow_ranges" {
   description = "List of CIDRs that will be allowed ssh access to forseti client"
-  type        = "list"
+  type        = list(string)
   default     = ["0.0.0.0/0"]
 }
 
 variable "client_tags" {
   description = "GCE Forseti Client VM Tags"
-  type        = "list"
+  type        = list(string)
   default     = []
 }
 
 variable "client_access_config" {
   description = "Client instance 'access_config' block"
-  type        = "map"
-  default     = {}
+  default     = null
+  type = object({
+    nat_ip                 = string
+    network_tier           = string
+    public_ptr_domain_name = string
+  })
 }
 
 variable "client_private" {
@@ -736,7 +759,7 @@ variable "enable_cai_bucket" {
 #--------#
 variable "org_id" {
   description = "GCP Organization ID that Forseti will have purview over"
-  default = ""
+  default     = ""
 }
 
 variable "domain" {
@@ -750,7 +773,7 @@ variable "folder_id" {
 
 variable "composite_root_resources" {
   description = "A list of root resources that Forseti will monitor. This supersedes the root_resource_id when set."
-  type        = "list"
+  type        = list(string)
   default     = []
 }
 
@@ -758,3 +781,4 @@ variable "sendgrid_api_key" {
   description = "Sendgrid.com API key to enable email notifications"
   default     = ""
 }
+

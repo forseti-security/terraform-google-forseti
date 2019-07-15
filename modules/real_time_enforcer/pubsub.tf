@@ -19,14 +19,15 @@
 #-----------------------------------------#
 
 resource "google_pubsub_subscription" "main" {
-  project = "${var.project_id}"
+  project = var.project_id
   name    = "real-time-enforcer-events-subscription-${var.suffix}"
-  topic   = "${var.topic}"
+  topic   = var.topic
 }
 
 resource "google_pubsub_subscription_iam_member" "subscriber" {
-  project      = "${var.project_id}"
-  subscription = "${google_pubsub_subscription.main.name}"
+  project      = var.project_id
+  subscription = google_pubsub_subscription.main.name
   role         = "roles/pubsub.subscriber"
   member       = "serviceAccount:${google_service_account.main.email}"
 }
+

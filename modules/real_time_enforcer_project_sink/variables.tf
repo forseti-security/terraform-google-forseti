@@ -21,3 +21,4 @@ variable "pubsub_project_id" {
 variable "sink_project_id" {
   description = "The project ID where logs will be exported from."
 }
+

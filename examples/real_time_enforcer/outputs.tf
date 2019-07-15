@@ -16,7 +16,7 @@
 
 output "suffix" {
   description = "The random suffix appended to Forseti resources"
-  value       = "${random_string.suffix.result}"
+  value       = random_string.suffix.result
 }
 
 #--------------------------#
@@ -25,35 +25,41 @@ output "suffix" {
 
 output "forseti-rt-enforcer-vm-name" {
   description = "Forseti Enforcer VM name"
-  value       = "${module.real_time_enforcer.forseti-rt-enforcer-vm-name}"
+  value       = module.real_time_enforcer.forseti-rt-enforcer-vm-name
 }
 
 output "forseti-rt-enforcer-vm-ip" {
   description = "Forseti Enforcer VM private IP address"
-  value       = "${module.real_time_enforcer.forseti-rt-enforcer-vm-ip}"
+  value       = module.real_time_enforcer.forseti-rt-enforcer-vm-ip
+}
+
+output "forseti-rt-enforcer-vm-public-ip" {
+  description = "Forseti Enforcer VM public IP address"
+  value       = module.real_time_enforcer.forseti-rt-enforcer-vm-public-ip
 }
 
 output "forseti-rt-enforcer-service-account" {
   description = "Forseti Enforcer service account"
-  value       = "${module.real_time_enforcer.forseti-rt-enforcer-service-account}"
+  value       = module.real_time_enforcer.forseti-rt-enforcer-service-account
 }
 
 output "forseti-rt-enforcer-storage-bucket" {
   description = "Forseti Enforcer storage bucket"
-  value       = "${module.real_time_enforcer.forseti-rt-enforcer-storage-bucket}"
+  value       = module.real_time_enforcer.forseti-rt-enforcer-storage-bucket
 }
 
 output "forseti-rt-enforcer-topic" {
   description = "The Forseti Enforcer events topic"
-  value       = "${module.real_time_enforcer_project_sink.topic}"
+  value       = module.real_time_enforcer_project_sink.topic
 }
 
 output "forseti-rt-enforcer-viewer-role-id" {
   description = "The forseti real time enforcer viewer Role ID."
-  value       = "${module.real_time_enforcer_roles.forseti-rt-enforcer-viewer-role-id}"
+  value       = module.real_time_enforcer_roles.forseti-rt-enforcer-viewer-role-id
 }
 
 output "forseti-rt-enforcer-writer-role-id" {
   description = "The forseti real time enforcer writer Role ID."
-  value       = "${module.real_time_enforcer_roles.forseti-rt-enforcer-writer-role-id}"
+  value       = module.real_time_enforcer_roles.forseti-rt-enforcer-writer-role-id
 }
+

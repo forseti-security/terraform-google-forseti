@@ -70,20 +70,24 @@ variable "network_project" {
 
 variable "enforcer_ssh_allow_ranges" {
   description = "List of CIDRs that will be allowed ssh access to forseti real time enforcer"
-  type        = "list"
+  type        = list(string)
   default     = ["0.0.0.0/0"]
 }
 
 variable "enforcer_instance_metadata" {
   description = "Metadata key/value pairs to make available from within the real time enforcer instance."
-  type        = "map"
+  type        = map(string)
   default     = {}
 }
 
 variable "enforcer_instance_access_config" {
   description = "Enforcer instance 'access_config' block"
-  type        = "map"
-  default     = {}
+  default     = null
+  type = object({
+    nat_ip                 = string
+    network_tier           = string
+    public_ptr_domain_name = string
+  })
 }
 
 variable "enforcer_instance_private" {
@@ -106,3 +110,4 @@ variable "enforcer_viewer_role" {
 variable "topic" {
   description = "The pubsub topic receiving exported logs."
 }
+

@@ -36,6 +36,7 @@ variable "domain" {
 
 variable "instance_metadata" {
   description = "Metadata key/value pairs to make available from within the client and server instances."
-  type        = "map"
+  type        = map(string)
   default     = {}
 }
+
