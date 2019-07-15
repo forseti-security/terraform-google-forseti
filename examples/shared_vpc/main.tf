@@ -84,7 +84,7 @@ module "forseti" {
   project_id               = var.project_id
   client_region            = google_compute_router_nat.main.region
   gsuite_admin_email       = var.gsuite_admin_email
-  network                  = google_compute_router.main.network
+  network                  = var.network
   subnetwork               = data.google_compute_subnetwork.main.self_link
   network_project          = google_compute_router_nat.main.project
   org_id                   = var.org_id
