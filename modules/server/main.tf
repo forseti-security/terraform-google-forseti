@@ -80,16 +80,16 @@ locals {
     "roles/securitycenter.findingsEditor",
   ]
   network_interface_base = {
-    private = {
+    private = [{
       subnetwork_project = local.network_project
       subnetwork         = var.subnetwork
-    },
+    }],
 
-    public = {
+    public = [{
       subnetwork_project = local.network_project
       subnetwork         = var.subnetwork
       access_config      = [var.server_access_config]
-    },
+    }],
 
   }
   network_interface = local.network_interface_base[var.server_private ? "private" : "public"]
@@ -437,7 +437,7 @@ resource "google_compute_instance" "forseti-server" {
   metadata                  = var.server_instance_metadata
   metadata_startup_script   = data.template_file.forseti_server_startup_script.rendered
   dynamic "network_interface" {
-    for_each = [local.network_interface]
+    for_each = local.network_interface
     content {
       address            = lookup(network_interface.value, "address", null)
       network            = lookup(network_interface.value, "network", null)
