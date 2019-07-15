@@ -100,12 +100,12 @@ variable "server_tags" {
 
 variable "server_access_config" {
   description = "Server instance 'access_config' block"
-  default     = []
-  type = list(object({
+  default     = null
+  type = object({
     nat_ip                 = string
     network_tier           = string
     public_ptr_domain_name = string
-  }))
+  })
 }
 
 variable "server_private" {
@@ -664,12 +664,12 @@ variable "client_tags" {
 
 variable "client_access_config" {
   description = "Client instance 'access_config' block"
-  default     = []
-  type = list(object({
+  default     = null
+  type = object({
     nat_ip                 = string
     network_tier           = string
     public_ptr_domain_name = string
-  }))
+  })
 }
 
 variable "client_private" {
