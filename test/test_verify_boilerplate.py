@@ -79,8 +79,8 @@ class AllTestCase(unittest.TestCase):
             # Invalid test cases for non-*file files (.tf|.py|.sh|.yaml|.xml..)
             invalid_header = []
             for line in header_template:
-                if "2018" in line:
-                    invalid_header.append(line.replace('2018', 'YEAR'))
+                if "2019" in line:
+                    invalid_header.append(line.replace('2019', 'YEAR'))
                 else:
                     invalid_header.append(line)
             invalid_header.append(content)
