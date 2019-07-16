@@ -23,7 +23,7 @@ This example illustrates how to set up a Forseti installation with shared VPC.
 
 | Name | Description |
 |------|-------------|
-| credentials\_path | Pass through the `credentials_path` variable so that InSpec can reuse the credentials |
+| credentials\_path | Pass through the `credentials\_path` variable so that InSpec can reuse the credentials |
 | forseti-client-service-account | Forseti Client service account |
 | forseti-client-storage-bucket | Forseti Client storage bucket |
 | forseti-client-vm-ip | Forseti Client VM private IP address |

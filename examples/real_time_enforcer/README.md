@@ -10,7 +10,6 @@ By default, terraform will use your application default credentials.  If you'd l
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| credentials\_path | Path to service account json | string | n/a | yes |
 | enforcer\_project\_id | A project to be managed by the real time enforcer | string | n/a | yes |
 | instance\_metadata | Metadata key/value pairs to make available from within the client and server instances. | map | `<map>` | no |
 | org\_id | GCP Organization ID that Forseti will have purview over | string | n/a | yes |

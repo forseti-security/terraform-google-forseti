@@ -61,7 +61,7 @@ Then perform the following commands on the config folder:
 | bucket\_cai\_location | GCS CAI storage bucket location | string | `"us-central1"` | no |
 | buckets\_acl\_violations\_should\_notify | Notify for Buckets ACL violations | string | `"true"` | no |
 | cai\_api\_timeout | Timeout in seconds to wait for the exportAssets API to return success. | string | `"3600"` | no |
-| client\_access\_config | Client instance 'access_config' block | map | `<map>` | no |
+| client\_access\_config | Client instance 'access\_config' block | map | `<map>` | no |
 | client\_boot\_image | GCE Forseti Client role instance size | string | `"ubuntu-os-cloud/ubuntu-1804-lts"` | no |
 | client\_instance\_metadata | Metadata key/value pairs to make available from within the client instance. | map | `<map>` | no |
 | client\_private | Private GCE Forseti Client VM (no public IP) | string | `"false"` | no |
@@ -82,7 +82,7 @@ Then perform the following commands on the config folder:
 | cloudsql\_proxy\_arch | CloudSQL Proxy architecture | string | `"linux.amd64"` | no |
 | cloudsql\_region | CloudSQL region | string | `"us-central1"` | no |
 | cloudsql\_type | CloudSQL Instance size | string | `"db-n1-standard-1"` | no |
-| composite\_root\_resources | A list of root resources that Forseti will monitor. This supersedes the root_resource_id when set. | list | `<list>` | no |
+| composite\_root\_resources | A list of root resources that Forseti will monitor. This supersedes the root\_resource\_id when set. | list | `<list>` | no |
 | compute\_disable\_polling | Whether to disable polling for Compute API | string | `"False"` | no |
 | compute\_max\_calls | Maximum calls that can be made to Compute API | string | `"18"` | no |
 | compute\_period | The period of max calls for the Compute API (in seconds) | string | `"1.0"` | no |
@@ -120,8 +120,8 @@ Then perform the following commands on the config folder:
 | groups\_settings\_period | the period of max calls to the G Suite Groups API | string | `"1.1"` | no |
 | groups\_settings\_violations\_should\_notify | Notify for groups settings violations | string | `"true"` | no |
 | groups\_violations\_should\_notify | Notify for Groups violations | string | `"true"` | no |
-| gsuite\_admin\_email | G-Suite administrator email address to manage your Forseti installation | string | `""` | yes |
-| iam\_disable\_polling | Whether to disable polling for IAM API | string | `"false"` | no |
+| gsuite\_admin\_email | G-Suite administrator email address to manage your Forseti installation | string | `""` | no |
+| iam\_disable\_polling | Whether to disable polling for IAM API | string | `"False"` | no |
 | iam\_max\_calls | Maximum calls that can be made to IAM API | string | `"90"` | no |
 | iam\_period | The period of max calls for the IAM API (in seconds) | string | `"1.0"` | no |
 | iam\_policy\_enabled | IAM Policy scanner enabled. | string | `"true"` | no |
@@ -152,7 +152,7 @@ Then perform the following commands on the config folder:
 | logging\_period | The period of max calls for the Logging API (in seconds) | string | `"1.0"` | no |
 | network | The VPC where the Forseti client and server will be created | string | `"default"` | no |
 | network\_project | The project containing the VPC and subnetwork where the Forseti client and server will be created | string | `""` | no |
-| org\_id | GCP Organization ID that Forseti will have purview over | string | `""` | yes |
+| org\_id | GCP Organization ID that Forseti will have purview over | string | `""` | no |
 | project\_id | Google Project ID that you want Forseti deployed into | string | n/a | yes |
 | resource\_enabled | Resource scanner enabled. | string | `"true"` | no |
 | resource\_violations\_should\_notify | Notify for resource violations | string | `"true"` | no |
@@ -160,7 +160,7 @@ Then perform the following commands on the config folder:
 | securitycenter\_max\_calls | Maximum calls that can be made to Security Center API | string | `"1"` | no |
 | securitycenter\_period | The period of max calls for the Security Center API (in seconds) | string | `"1.1"` | no |
 | sendgrid\_api\_key | Sendgrid.com API key to enable email notifications | string | `""` | no |
-| server\_access\_config | Server instance 'access_config' block | map | `<map>` | no |
+| server\_access\_config | Server instance 'access\_config' block | map | `<map>` | no |
 | server\_boot\_image | GCE instance image that is being used, currently Ubuntu only support is available | string | `"ubuntu-os-cloud/ubuntu-1804-lts"` | no |
 | server\_grpc\_allow\_ranges | List of CIDRs that will be allowed gRPC access to forseti server | list | `<list>` | no |
 | server\_instance\_metadata | Metadata key/value pairs to make available from within the server instance. | map | `<map>` | no |
@@ -180,6 +180,7 @@ Then perform the following commands on the config folder:
 | storage\_bucket\_location | GCS storage bucket location | string | `"us-central1"` | no |
 | storage\_disable\_polling | Whether to disable polling for Storage API | string | `"False"` | no |
 | subnetwork | The VPC subnetwork where the Forseti client and server will be created | string | `"default"` | no |
+| violations\_slack\_webhook | Slack webhook for any violation. Will apply to all scanner violation notifiers. | string | `""` | no |
 
 ## Outputs
 

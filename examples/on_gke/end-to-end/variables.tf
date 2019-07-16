@@ -22,7 +22,6 @@ variable "domain" {
   description = "The domain associated with the GCP Organization ID"
 }
 
-
 variable "gke_cluster_name" {
   description = "The name of the GKE Cluster"
   default = "forseti-cluster"
