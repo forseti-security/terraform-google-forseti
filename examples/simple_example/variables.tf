@@ -16,7 +16,7 @@
 
 variable "credentials_path" {
   description = "Path to service account json"
-  default = "../../credentials.json"
+  default     = "../../credentials.json"
 }
 
 variable "gsuite_admin_email" {
