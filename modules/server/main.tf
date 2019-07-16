@@ -93,7 +93,7 @@ locals {
 
   }
   network_interface = local.network_interface_base[var.server_private ? "private" : "public"]
-  missing_emails    = var.sendgrid_api_key != "" && var.forseti_email_sender == "" || var.forseti_email_recipient == "" ? 1 : 0
+  missing_emails    = ((var.sendgrid_api_key != "") && (var.forseti_email_sender == "" || var.forseti_email_recipient == "") ? 1 : 0 )
 }
 
 #------------------#
@@ -102,7 +102,7 @@ locals {
 resource "null_resource" "missing_emails" {
   count = local.missing_emails
   provisioner "local-exec" {
-    command     = "false"
+    command     = "echo 'expected missing_emails to be 0 or false, got ${local.missing_emails}, sendgrid_api_key=${var.sendgrid_api_key} forseti_email_sender=${var.forseti_email_sender} forseti_email_recipient=${var.forseti_email_recipient}' >&2; false"
     interpreter = ["bash", "-c"]
   }
 }
