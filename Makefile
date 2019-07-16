@@ -18,7 +18,7 @@ SHELL := /usr/bin/env bash
 # Docker build config variables
 CREDENTIALS_PATH 			?= /cft/workdir/credentials.json
 DOCKER_ORG 				:= gcr.io/cloud-foundation-cicd
-DOCKER_TAG_BASE_KITCHEN_TERRAFORM 	?= 2.0.0
+DOCKER_TAG_BASE_KITCHEN_TERRAFORM 	?= 2.3.0
 DOCKER_REPO_BASE_KITCHEN_TERRAFORM 	:= ${DOCKER_ORG}/cft/kitchen-terraform:${DOCKER_TAG_BASE_KITCHEN_TERRAFORM}
 
 # All is the first target in the file so it will get picked up when you just run 'make' on its own
@@ -95,7 +95,9 @@ docker_run:
 		-e ENFORCER_PROJECT \
 		-e GSUITE_ADMIN_EMAIL \
 		-e SERVICE_ACCOUNT_JSON \
-		-e CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=${CREDENTIALS_PATH} \
+		-e NETWORK \
+		-e NETWORK_PROJECT \
+		-e SUBNETWORK \
 		-e GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_PATH} \
 		-v $(CURDIR):/cft/workdir \
 		${DOCKER_REPO_BASE_KITCHEN_TERRAFORM} \
