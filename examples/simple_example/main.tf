@@ -35,6 +35,11 @@ provider "random" {
   version = "~> 2.0"
 }
 
+locals {
+# Fix for https://github.com/terraform-providers/terraform-provider-google/issues/3987
+network = "default"
+}
+
 resource "random_pet" "main" {
   length    = "1"
   prefix    = "forseti-simple-example"
@@ -88,7 +93,7 @@ module "forseti-install-simple" {
   server_private           = var.private
   server_region            = google_compute_router_nat.main.region
   client_region            = google_compute_router_nat.main.region
-  network                  = google_compute_router.main.network
+  network                  = local.network
   subnetwork               = data.google_compute_subnetwork.main.name
   sendgrid_api_key         = var.sendgrid_api_key
   forseti_email_sender     = var.forseti_email_sender
