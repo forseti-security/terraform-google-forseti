@@ -570,11 +570,7 @@ variable "server_tags" {
 variable "server_access_config" {
   description = "Server instance 'access_config' block"
   default     = null
-  type = object({
-    nat_ip                 = string
-    network_tier           = string
-    public_ptr_domain_name = string
-  })
+  type        = map(any)
 }
 
 variable "server_private" {
