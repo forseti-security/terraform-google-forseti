@@ -24,11 +24,6 @@ output "forseti-rt-enforcer-vm-ip" {
   value       = google_compute_instance.main.network_interface[0].network_ip
 }
 
-output "forseti-rt-enforcer-vm-public-ip" {
-  description = "Forseti Enforcer VM public IP address"
-  value       = google_compute_instance.main.network_interface[0].access_config[0].nat_ip
-}
-
 output "forseti-rt-enforcer-service-account" {
   description = "Forseti Enforcer service account"
   value       = google_service_account.main.email
