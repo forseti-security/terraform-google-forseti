@@ -93,7 +93,7 @@ locals {
 
   }
   network_interface = local.network_interface_base[var.server_private ? "private" : "public"]
-  missing_emails    = ((var.sendgrid_api_key != "") && (var.forseti_email_sender == "" || var.forseti_email_recipient == "") ? 1 : 0 )
+  missing_emails    = ((var.sendgrid_api_key != "") && (var.forseti_email_sender == "" || var.forseti_email_recipient == "") ? 1 : 0)
 }
 
 #------------------#
