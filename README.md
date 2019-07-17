@@ -2,6 +2,13 @@
 
 The Terraform Forseti module can be used to quickly install and configure [Forseti](https://forsetisecurity.org/) in a fresh cloud project.
 
+## Compatibility
+
+This module is meant for use with Terraform 0.12. If you haven't
+[upgraded][terraform-0.12-upgrade] and need a Terraform 0.11.x-compatible
+version of this module, the last released version intended for Terraform 0.11.x
+is [2.3.0][v2.3.0].
+
 ## Usage
 A simple setup is provided in the examples folder; however, the usage of the module within your own main.tf file is as follows:
 
@@ -328,3 +335,6 @@ The project has the following folders and files:
 - (/variables.tf): all the variables for the module
 - (/test): all integration tests are located here
 - (/README.md): this file
+
+[v2.3.0]: https://registry.terraform.io/modules/terraform-google-modules/forseti/google/2.3.0
+[terraform-0.12-upgrade]: https://www.terraform.io/upgrade-guides/0-12.html
