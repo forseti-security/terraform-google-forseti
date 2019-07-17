@@ -569,7 +569,7 @@ variable "server_tags" {
 
 variable "server_access_config" {
   description = "Server instance 'access_config' block"
-  default     = null
+  default     = {}
   type        = map(any)
 }
 

@@ -98,7 +98,7 @@ variable "client_tags" {
 
 variable "client_access_config" {
   description = "Client instance 'access_config' block"
-  default     = null
+  default     = {}
   type        = map(any)
 }
 

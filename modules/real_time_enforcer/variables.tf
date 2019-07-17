@@ -82,7 +82,7 @@ variable "enforcer_instance_metadata" {
 
 variable "enforcer_instance_access_config" {
   description = "Enforcer instance 'access_config' block"
-  default     = null
+  default     = {}
   type = object({
     nat_ip                 = string
     network_tier           = string
