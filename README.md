@@ -2,17 +2,24 @@
 
 The Terraform Forseti module can be used to quickly install and configure [Forseti](https://forsetisecurity.org/) in a fresh cloud project.
 
+## Compatibility
+
+This module is meant for use with Terraform 0.12. If you haven't
+[upgraded][terraform-0.12-upgrade] and need a Terraform 0.11.x-compatible
+version of this module, the last released version intended for Terraform 0.11.x
+is [2.3.0][v2.3.0].
+
 ## Usage
 A simple setup is provided in the examples folder; however, the usage of the module within your own main.tf file is as follows:
 
 ```hcl
     provider "google" {
-      credentials = "${file("/path/to/credentials.json")}"
+      credentials = file("/path/to/credentials.json")
     }
 
     module "forseti" {
       source  = "terraform-google-modules/forseti/google"
-      version = "~> 2.0.0"
+      version = "~> 3.0"
 
       gsuite_admin_email = "superadmin@yourdomain.com"
       domain             = "yourdomain.com"
@@ -192,8 +199,8 @@ Then perform the following commands on the config folder:
 
 ## Requirements
 ### Installation Dependencies
-- [Terraform](https://www.terraform.io/downloads.html) 0.11.x
-- [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google) plugin v1.12.0
+- [Terraform](https://www.terraform.io/downloads.html) 0.12
+- [Terraform Provider for GCP][terraform-provider-google] plugin v2.11
 - [terraform-provider-template](https://github.com/terraform-providers/terraform-provider-template) plugin >= v2.0
 - [Python 3.7.x](https://www.python.org/getit/)
 - [terraform-docs](https://github.com/segmentio/terraform-docs/releases) (optional) 0.6.0
@@ -264,7 +271,7 @@ Utilizing a shared VPC via a host project is supported with the `-f` flag:
 ```
 
 ### Terraform
-Be sure you have the correct Terraform version (0.11.x), you can choose the binary here:
+Be sure you have the correct Terraform version (0.12), you can choose the binary here:
 - https://releases.hashicorp.com/terraform/
 
 Additionally, you will need to export `TF_WARN_OUTPUT_ERRORS=1` to work around a [known issue](https://github.com/hashicorp/terraform/issues/17862) with Terraform when running terraform destroy.
@@ -328,3 +335,7 @@ The project has the following folders and files:
 - (/variables.tf): all the variables for the module
 - (/test): all integration tests are located here
 - (/README.md): this file
+
+[v2.3.0]: https://registry.terraform.io/modules/terraform-google-modules/forseti/google/2.3.0
+[terraform-0.12-upgrade]: https://www.terraform.io/upgrade-guides/0-12.html
+[terraform-provider-google]: https://github.com/terraform-providers/terraform-provider-google

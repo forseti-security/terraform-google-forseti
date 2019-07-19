@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,20 +16,21 @@
 
 output "forseti-client-vm-name" {
   description = "Forseti Client VM name"
-  value       = "${google_compute_instance.forseti-client.name}"
+  value       = google_compute_instance.forseti-client.name
 }
 
 output "forseti-client-vm-ip" {
   description = "Forseti Client VM private IP address"
-  value       = "${google_compute_instance.forseti-client.network_interface.0.network_ip}"
+  value       = google_compute_instance.forseti-client.network_interface[0].network_ip
 }
 
 output "forseti-client-service-account" {
   description = "Forseti Client service account"
-  value       = "${google_service_account.forseti_client.email}"
+  value       = google_service_account.forseti_client.email
 }
 
 output "forseti-client-storage-bucket" {
   description = "Forseti Client storage bucket"
-  value       = "${google_storage_bucket.client_config.id}"
+  value       = google_storage_bucket.client_config.id
 }
+

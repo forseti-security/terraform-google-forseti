@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,3 +17,4 @@
 variable "enforcer_project_id" {
   description = "The project where test resources will be created. The real time enforcer will automatically remediate resources within this project."
 }
+

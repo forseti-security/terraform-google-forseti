@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,22 +21,22 @@ output "bastion_host" {
 
 output "project_id" {
   description = "A forwarded copy of `project_id` for InSpec"
-  value       = "${var.project_id}"
+  value       = var.project_id
 }
 
 output "org_id" {
   description = "A forwarded copy of `org_id` for InSpec"
-  value       = "${var.org_id}"
+  value       = var.org_id
 }
 
 output "suffix" {
   description = "The random suffix appended to Forseti resources"
-  value       = "${module.real_time_enforcer.suffix}"
+  value       = module.real_time_enforcer.suffix
 }
 
 output "enforcer_project_id" {
   description = "A forwarded copy of `enforcer_project_id` for InSpec"
-  value       = "${var.enforcer_project_id}"
+  value       = var.enforcer_project_id
 }
 
 #--------------------------#
@@ -45,35 +45,36 @@ output "enforcer_project_id" {
 
 output "forseti-rt-enforcer-vm-name" {
   description = "Forseti Enforcer VM name"
-  value       = "${module.real_time_enforcer.forseti-rt-enforcer-vm-name}"
+  value       = module.real_time_enforcer.forseti-rt-enforcer-vm-name
 }
 
 output "forseti-rt-enforcer-vm-ip" {
   description = "Forseti Enforcer VM private IP address"
-  value       = "${module.real_time_enforcer.forseti-rt-enforcer-vm-ip}"
+  value       = module.real_time_enforcer.forseti-rt-enforcer-vm-ip
 }
 
 output "forseti-rt-enforcer-service-account" {
   description = "Forseti Enforcer service account"
-  value       = "${module.real_time_enforcer.forseti-rt-enforcer-service-account}"
+  value       = module.real_time_enforcer.forseti-rt-enforcer-service-account
 }
 
 output "forseti-rt-enforcer-storage-bucket" {
   description = "Forseti Enforcer storage bucket"
-  value       = "${module.real_time_enforcer.forseti-rt-enforcer-storage-bucket}"
+  value       = module.real_time_enforcer.forseti-rt-enforcer-storage-bucket
 }
 
 output "forseti-rt-enforcer-topic" {
   description = "The Forseti Enforcer events topic"
-  value       = "${module.real_time_enforcer.forseti-rt-enforcer-topic}"
+  value       = module.real_time_enforcer.forseti-rt-enforcer-topic
 }
 
 output "forseti-rt-enforcer-viewer-role-id" {
   description = "The forseti real time enforcer viewer Role ID."
-  value       = "${module.real_time_enforcer.forseti-rt-enforcer-viewer-role-id}"
+  value       = module.real_time_enforcer.forseti-rt-enforcer-viewer-role-id
 }
 
 output "forseti-rt-enforcer-writer-role-id" {
   description = "The forseti real time enforcer writer Role ID."
-  value       = "${module.real_time_enforcer.forseti-rt-enforcer-writer-role-id}"
+  value       = module.real_time_enforcer.forseti-rt-enforcer-writer-role-id
 }
+

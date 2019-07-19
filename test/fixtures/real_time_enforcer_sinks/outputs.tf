@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,35 +16,36 @@
 
 output "pubsub_project_id" {
   description = "A forwarded copy of 'pubsub_project_id' for inspec"
-  value       = "${var.pubsub_project_id}"
+  value       = var.pubsub_project_id
 }
 
 output "org_id" {
   description = "A forwarded copy of 'org_id' for inspec"
-  value       = "${var.org_id}"
+  value       = var.org_id
 }
 
 output "sink_project_id" {
   description = "A forwarded copy of 'sink_project_id' for inspec"
-  value       = "${var.sink_project_id}"
+  value       = var.sink_project_id
 }
 
 output "org_sink_name" {
   description = "The organization logging sink name"
-  value       = "${module.real_time_enforcer_organization_sink.sink_name}"
+  value       = module.real_time_enforcer_organization_sink.sink_name
 }
 
 output "org_topic" {
   description = "The organization pubsub logging topic"
-  value       = "${module.real_time_enforcer_organization_sink.topic}"
+  value       = module.real_time_enforcer_organization_sink.topic
 }
 
 output "project_sink_name" {
   description = "The project logging sink name"
-  value       = "${module.real_time_enforcer_project_sink.sink_name}"
+  value       = module.real_time_enforcer_project_sink.sink_name
 }
 
 output "project_topic" {
   description = "The project pubsub logging topic"
-  value       = "${module.real_time_enforcer_project_sink.topic}"
+  value       = module.real_time_enforcer_project_sink.topic
 }
+

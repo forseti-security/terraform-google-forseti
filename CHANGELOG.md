@@ -8,6 +8,12 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ## [Unreleased]
 
+## [v3.0.0] - 2019-07-19
+
+### Changed
+
+- Supported version of Terraform is 0.12. [#201]
+
 ## [v2.3.0] - 2019-07-11
 
 ### Added
@@ -186,7 +192,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 ### ADDED
 - This is the initial release of the Forseti module.
 
-[Unreleased]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v2.2.0...HEAD
+[Unreleased]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v3.0.0...HEAD
 [v0.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/releases/tag/v0.1.0
 [v1.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v0.1.0...v1.0.0
 [v1.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.0.0...v1.1.0
@@ -203,9 +209,12 @@ Extending the adopted spec, each change should have a link to its corresponding 
 [v2.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v2.0.0...v2.1.0
 [v2.2.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v2.1.0...v2.2.0
 [v2.3.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v2.2.0...v2.3.0
+[v3.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v2.3.0...v3.0.0
 
+[#201]: https://github.com/forseti-security/terraform-google-forseti/pull/201
 [#180]: https://github.com/forseti-security/terraform-google-forseti/pull/180
 [#174]: https://github.com/forseti-security/terraform-google-forseti/pull/174
+[#173]: https://github.com/forseti-security/terraform-google-forseti/pull/173
 [#170]: https://github.com/forseti-security/terraform-google-forseti/pull/170
 [#163]: https://github.com/forseti-security/terraform-google-forseti/pull/163
 [#157]: https://github.com/forseti-security/terraform-google-forseti/pull/157
