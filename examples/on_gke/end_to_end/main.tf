@@ -92,14 +92,15 @@ module "vpc" {
 }
 
 module "forseti" {
-  source             = "../../../"
-  gsuite_admin_email = "${var.gsuite_admin_email}"
-  domain             = "${var.domain}"
-  project_id         = "${var.project_id}"
-  org_id             = "${var.org_id}"
-  network            = "${module.vpc.network_name}"
-  client_private     = true
-  server_private     = true
+  source                  = "../../../"
+  gsuite_admin_email      = "${var.gsuite_admin_email}"
+  domain                  = "${var.domain}"
+  project_id              = "${var.project_id}"
+  org_id                  = "${var.org_id}"
+  network                 = "${module.vpc.network_name}"
+  client_private          = true
+  server_private          = true
+  storage_bucket_location = "${var.region}"
 }
 
 module "gke" {

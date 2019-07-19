@@ -45,7 +45,7 @@ variable "helm_repository_url" {
 
 variable "k8s_forseti_namespace" {
   description = "The Kubernetes namespace in which to deploy Forseti."
-  default     = "default"
+  default     = "forseti"
 }
 
 variable "k8s_forseti_orchestrator_image" {
@@ -76,11 +76,6 @@ variable "k8s_tiller_sa_name" {
 variable "network_policy" {
   description = "Apply pod network policies"
   default     = "false"
-}
-
-variable "network_policy" {
-  description = "Apply pod network policies"
-  default = "false"
 }
 
 variable "project_id" {
