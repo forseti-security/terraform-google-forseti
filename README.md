@@ -199,7 +199,7 @@ Then perform the following commands on the config folder:
 
 ## Requirements
 ### Installation Dependencies
-- [Terraform](https://www.terraform.io/downloads.html) 0.11.x
+- [Terraform](https://www.terraform.io/downloads.html) 0.12
 - [Terraform Provider for GCP][terraform-provider-google] plugin v2.11
 - [terraform-provider-template](https://github.com/terraform-providers/terraform-provider-template) plugin >= v2.0
 - [Python 3.7.x](https://www.python.org/getit/)
@@ -271,7 +271,7 @@ Utilizing a shared VPC via a host project is supported with the `-f` flag:
 ```
 
 ### Terraform
-Be sure you have the correct Terraform version (0.11.x), you can choose the binary here:
+Be sure you have the correct Terraform version (0.12), you can choose the binary here:
 - https://releases.hashicorp.com/terraform/
 
 Additionally, you will need to export `TF_WARN_OUTPUT_ERRORS=1` to work around a [known issue](https://github.com/hashicorp/terraform/issues/17862) with Terraform when running terraform destroy.
