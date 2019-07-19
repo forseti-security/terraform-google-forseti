@@ -12,7 +12,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ### Changed
 
-- Supported version of Terraform is 0.12. [#172]
+- Supported version of Terraform is 0.12. [#201]
 
 ## [v2.3.0] - 2019-07-11
 
@@ -211,6 +211,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 [v2.3.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v2.2.0...v2.3.0
 [v3.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v2.3.0...v3.0.0
 
+[#201]: https://github.com/forseti-security/terraform-google-forseti/pull/201
 [#180]: https://github.com/forseti-security/terraform-google-forseti/pull/180
 [#174]: https://github.com/forseti-security/terraform-google-forseti/pull/174
 [#173]: https://github.com/forseti-security/terraform-google-forseti/pull/173
