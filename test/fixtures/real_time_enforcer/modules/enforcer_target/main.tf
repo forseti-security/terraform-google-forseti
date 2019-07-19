@@ -15,7 +15,7 @@
  */
 
 provider "google" {
-  version = "~> 2.0"
+  version = "~> 2.11.0"
 }
 
 resource "random_string" "main" {
