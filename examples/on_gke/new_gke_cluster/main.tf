@@ -153,7 +153,7 @@ module "forseti-on-gke" {
   forseti_cloudsql_connection_name = "${var.forseti_cloudsql_connection_name}"
   forseti_server_service_account   = "${var.forseti_server_service_account}"
   forseti_server_bucket            = "${var.forseti_server_storage_bucket}"
-  gke_service_account              = "${module.gke.service_account}"
+  gke_service_account              = "${var.gke.service_account}"
   k8s_forseti_namespace            = "${var.k8s_forseti_namespace}-${var.suffix}"
   project_id                       = "${var.project_id}"
   network_policy                   = "${module.gke.network_policy_enabled}"

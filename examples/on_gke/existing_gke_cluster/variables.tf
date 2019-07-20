@@ -38,12 +38,12 @@ variable "forseti_server_storage_bucket" {
   description = "Forseti Server storage bucket"
 }
 
-variable "k8s_ca_certificate" {
-  description = "Kubernetes API server CA certificate."
+variable "gke_cluster_location" {
+  description = "The location of the GKE cluster on which to deploy Forseti"
 }
 
-variable "k8s_endpoint" {
-  description = "The Kubernetes API endpoint."
+variable "gke_cluster_name" {
+  description = "The name of the GKE cluster on which to deploy Forseti"
 }
 
 variable "gke_service_account" {
@@ -73,4 +73,8 @@ variable "network_policy" {
 
 variable "project_id" {
   description = "The ID of an existing Google project where Forseti will be installed"
+}
+
+variable "suffix" {
+  description = "The random suffix appended to Forseti resources"
 }
