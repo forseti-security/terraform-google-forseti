@@ -3,7 +3,7 @@ Follow this example you desire to deploy Forseti on GKE but are starting from an
 
 This example deploys the following:
 1. A new VPC
-2. Forseti infrstructure 
+2. Forseti infrstructure
 3. A new GKE cluster - terraform-google-modules/kubernetes-engine/google
 4. Forseti on GKE - forseti-on-gke
 
