@@ -95,7 +95,7 @@ variable "sub_network_name" {
 }
 
 variable "zones" {
-  description = "The zones to host the cluster in. This is optional if the GKE cluster is regional.  It is required required if the cluster is zonal."
+  description = "The zones to host the cluster in. This is optional if the GKE cluster is regional.  It is required if the cluster is zonal."
   default     = []
 }
 
