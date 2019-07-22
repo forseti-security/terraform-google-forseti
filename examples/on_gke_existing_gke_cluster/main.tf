@@ -74,7 +74,7 @@ resource "google_project_service" "gcr" {
 //*****************************************
 
 module "forseti-on-gke" {
-  source                           = "../../../modules/on_gke"
+  source                           = "../../modules/on_gke"
   forseti_client_service_account   = "${var.forseti_client_service_account}"
   forseti_client_vm_ip             = "${var.forseti_client_vm_ip}"
   forseti_cloudsql_connection_name = "${var.forseti_cloudsql_connection_name}"

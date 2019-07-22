@@ -92,7 +92,7 @@ module "vpc" {
 }
 
 module "forseti" {
-  source                  = "../../../"
+  source                  = "../../"
   gsuite_admin_email      = "${var.gsuite_admin_email}"
   domain                  = "${var.domain}"
   project_id              = "${var.project_id}"
@@ -151,7 +151,7 @@ module "forseti-on-gke" {
     kubernetes = "kubernetes.forseti"
     helm       = "helm.forseti"
   }
-  source                           = "../../../modules/on_gke"
+  source                           = "../../modules/on_gke"
   forseti_client_service_account   = "${module.forseti.forseti-client-service-account}"
   forseti_client_vm_ip             = "${module.forseti.forseti-client-vm-ip}"
   forseti_cloudsql_connection_name = "${module.forseti.forseti-cloudsql-connection-name}"
