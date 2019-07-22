@@ -59,9 +59,23 @@ provider "helm" {
   install_tiller                  = true
 }
 
+//*****************************************
+//  Enable the GCR Service
+//*****************************************
+
 resource "google_project_service" "gcr" {
   project            = "${var.project_id}"
   service            = "containerregistry.googleapis.com"
+  disable_on_destroy = "false"
+}
+
+//*****************************************
+//  Enable the GKE Service
+//*****************************************
+
+resource "google_project_service" "gke" {
+  project            = "${var.project_id}"
+  service            = "container.googleapis.com"
   disable_on_destroy = "false"
 }
 
@@ -98,9 +112,13 @@ module "forseti" {
   project_id              = "${var.project_id}"
   org_id                  = "${var.org_id}"
   network                 = "${module.vpc.network_name}"
+  subnetwork              = "${var.sub_network_name}"
   client_private          = true
   server_private          = true
   storage_bucket_location = "${var.region}"
+  server_region           = "${var.region}"
+  client_region           = "${var.region}"
+  cloudsql_region         = "${var.region}"
 }
 
 module "gke" {

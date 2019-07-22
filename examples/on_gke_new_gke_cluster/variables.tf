@@ -99,6 +99,7 @@ variable "project_id" {
 
 variable "region" {
   description = "Region where forseti subnetwork will be deployed"
+  default     = "us-central1"
 }
 
 variable "sub_network_name" {
@@ -111,7 +112,7 @@ variable "suffix" {
 }
 
 variable "zones" {
-  description = "The zones to host the cluster in (optional if regional cluster / required if zonal)"
+  description = "The zones to host the cluster in.  This is optional if the GKE cluster is regional.  It is required required if the cluster is zonal."
   default     = []
 }
 

@@ -65,6 +65,7 @@ variable "k8s_tiller_sa_name" {
   description = "The Kubernetes Service Account used by Tiller"
   default     = "tiller"
 }
+
 variable "network_name" {
   description = "The name of the VPC being created"
   default     = "forseti-gke-network"
@@ -85,15 +86,16 @@ variable "project_id" {
 
 variable "region" {
   description = "Region where forseti subnetwork will be deployed"
+  default     = "us-central1"
 }
 
 variable "sub_network_name" {
-  description = "The names of the subnet being created"
+  description = "The name of the subnet being created"
   default     = "gke-sub-network"
 }
 
 variable "zones" {
-  description = "The zones to host the cluster in (optional if regional cluster / required if zonal)"
+  description = "The zones to host the cluster in. This is optional if the GKE cluster is regional.  It is required required if the cluster is zonal."
   default     = []
 }
 
