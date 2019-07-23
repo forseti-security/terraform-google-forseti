@@ -58,27 +58,6 @@ provider "helm" {
 }
 
 //*****************************************
-//  Enable the GCR Service
-//*****************************************
-
-resource "google_project_service" "gcr" {
-  project            = "${var.project_id}"
-  service            = "containerregistry.googleapis.com"
-  disable_on_destroy = "false"
-}
-
-//*****************************************
-//  Enable the GKE Service
-//*****************************************
-
-resource "google_project_service" "gke" {
-  project            = "${var.project_id}"
-  service            = "container.googleapis.com"
-  disable_on_destroy = "false"
-}
-
-
-//*****************************************
 //  Setup the VPC
 //*****************************************
 
