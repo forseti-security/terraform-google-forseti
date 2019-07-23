@@ -70,6 +70,9 @@ resource "kubernetes_service_account" "tiller" {
     name      = "${var.k8s_tiller_sa_name}"
     namespace = "${var.k8s_forseti_namespace}"
   }
+  depends_on = [
+    "kubernetes_namespace.forseti"
+  ]
 }
 
 //*****************************************
