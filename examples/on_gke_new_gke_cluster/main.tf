@@ -147,5 +147,5 @@ module "forseti-on-gke" {
   k8s_forseti_namespace            = "${var.k8s_forseti_namespace}-${var.suffix}"
   project_id                       = "${var.project_id}"
   network_policy                   = "${module.gke.network_policy_enabled}"
-  load_balancer                    = "${var.load_balancer}
+  load_balancer                    = "${var.load_balancer}"
 }
