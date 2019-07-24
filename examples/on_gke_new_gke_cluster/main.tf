@@ -62,10 +62,13 @@ provider "helm" {
 //*****************************************
 
 module "vpc" {
-  source       = "terraform-google-modules/network/google"
-  project_id   = "${var.project_id}"
-  network_name = "${var.network_name}"
-  routing_mode = "GLOBAL"
+  source                  = "terraform-google-modules/network/google"
+  version                 = "1.1.0"
+  project_id              = "${var.project_id}"
+  network_name            = "${var.network_name}"
+  routing_mode            = "GLOBAL"
+  description             = "${var.network_description}"
+  auto_create_subnetworks = "${var.auto_create_subnetworks}"
 
   subnets = [{
     subnet_name   = "${var.sub_network_name}"
