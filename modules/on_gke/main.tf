@@ -199,6 +199,11 @@ resource "helm_release" "forseti-security" {
     value = "${var.production}"
   }
 
+  set {
+    name  = "loadBalancer"
+    value = "${var.load_balancer}"
+  }
+
   values = [
     "networkPolicyIngressCidr: [${var.forseti_client_vm_ip}/32]"
   ]

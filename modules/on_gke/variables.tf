@@ -73,6 +73,11 @@ variable "k8s_tiller_sa_name" {
   default     = "tiller"
 }
 
+variable "load_balancer" {
+  description = "The type of load balancer to deploy for the forseti-server if desired: none, external, internal"
+  default     = "none"
+}
+
 variable "network_policy" {
   description = "Apply pod network policies"
   default     = "false"

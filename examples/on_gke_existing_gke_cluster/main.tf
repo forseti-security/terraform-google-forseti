@@ -84,4 +84,5 @@ module "forseti-on-gke" {
   k8s_forseti_namespace            = "${var.k8s_forseti_namespace}-${var.suffix}"
   helm_repository_url              = "${var.helm_repository_url}"
   project_id                       = "${var.project_id}"
+  load_balancer                    = "${var.load_balancer}
 }
