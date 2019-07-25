@@ -116,4 +116,13 @@ variable "auto_create_subnetworks" {
   default     = false
 }
 
+variable "client_private" {
+  description = "Private GCE Forseti Client VM (no public IP)"
+  default     = "false"
+}
+
+variable "server_private" {
+  description = "Private GCE Forseti Server VM (no public IP)"
+  default     = "false"
+}
 

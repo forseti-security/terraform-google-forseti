@@ -96,8 +96,8 @@ module "forseti" {
   org_id                  = "${var.org_id}"
   network                 = "${module.vpc.network_name}"
   subnetwork              = "${var.sub_network_name}"
-  client_private          = true
-  server_private          = true
+  client_private          = "${var.client_private}"
+  server_private          = "${var.server_private}"
   storage_bucket_location = "${var.region}"
   server_region           = "${var.region}"
   client_region           = "${var.region}"
