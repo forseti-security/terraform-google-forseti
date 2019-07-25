@@ -92,6 +92,12 @@ variable "production" {
   default     = "true"
 }
 
+variable "recreate_pods" {
+  description = "Instructs the helm_release resource to, on update, perform pod restarts for the resources if applicable."
+  default     = "true"
+
+}
+
 variable "server_log_level" {
   description = "The log level of the Forseti server container."
   default     = "info"

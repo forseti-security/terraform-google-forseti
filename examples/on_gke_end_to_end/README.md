@@ -1,9 +1,16 @@
 # Forseti on GKE - End-to-End
-Follow this example you desire to deploy Forseti on GKE but are starting from an empty GCP project.  In otherwords, Forseti has not been yet been deployed.
+Follow this example to deploy Forseti on GKE but are starting from an empty GCP project.  In otherwords, Forseti has not been yet been deployed.
 
 This example deploys the following:
 1. A new VPC
-2. Forseti infrstructure
+2. Forseti infrastructure
+   * CloudSQL Database
+   * Forseti Server GCS Bucket
+   * Forseti Client GCS Bucket
+   * Forseti Server VM
+   * Forseti Client VM
+   * Forseti Server IAM Service Account
+   * Forseti Client IAM Service Account
 3. A new GKE cluster - terraform-google-modules/kubernetes-engine/google
 4. Forseti on GKE - forseti-on-gke
 
@@ -53,7 +60,7 @@ The [project factory](https://github.com/terraform-google-modules/terraform-goog
 - [kubectl](https://github.com/kubernetes/kubernetes/releases) 1.9.x
 #### Terraform and Plugins
 - [Terraform](https://www.terraform.io/downloads.html) 0.12
-- [Terraform Provider for GCP][terraform-provider-google] v2.9
+- [Terraform Provider for GCP](https://www.terraform.io/docs/providers/google/index.html) v2.9
 
 ### Configure a Service Account
 In order to execute this module you must have a Service Account with the

@@ -1,8 +1,8 @@
 # Forseti on GKE - Deploy on GKE
-Follow this example if Forseti already exists in the environment.  Additionaly, this example supports the scenario that a GKE already exists as well.  The only action taken by Terraform is to invoke Helm to deploy Forseti on GKE.
+Follow this example if Forseti already exists in the environment.  Additionally, this example supports the scenario that a GKE already exists as well.  The only action taken by Terraform is to invoke Helm to deploy Forseti on GKE.
 
 This example deploys the following:
-2. Forseti on GKE - forseti-on-gke
+1. Forseti on GKE - forseti-on-gke
 
 [^]: (autogen_docs_start)
 

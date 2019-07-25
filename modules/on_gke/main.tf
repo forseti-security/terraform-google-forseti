@@ -136,7 +136,7 @@ resource "helm_release" "forseti-security" {
   namespace     = "${var.k8s_forseti_namespace}"
   repository    = "${var.helm_repository_url}"
   chart         = "forseti-security"
-  recreate_pods = true
+  recreate_pods = "${var.recreate_pods}"
   depends_on    = ["kubernetes_role_binding.tiller", "kubernetes_namespace.forseti"]
 
   set {
