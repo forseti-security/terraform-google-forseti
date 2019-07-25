@@ -521,6 +521,7 @@ resource "google_sql_user" "root" {
   name     = "root"
   instance = google_sql_database_instance.master.name
   project  = var.project_id
+  host     = var.cloudsql_user_host
 }
 
 resource "null_resource" "services-dependency" {
