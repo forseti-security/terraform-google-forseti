@@ -611,7 +611,7 @@ variable "cloudsql_type" {
 }
 
 variable "cloudsql_user_host" {
-  description = "The host the user can connect from.  Can be an IP address or IP address range. Changing this forces a new resource to be created."
+  description = "The host the user can connect from. Can be an IP address or IP address range. Changing this forces a new resource to be created."
   default     = "%"
 }
 
