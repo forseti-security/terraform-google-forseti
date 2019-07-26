@@ -62,7 +62,6 @@ locals {
   ]
   server_read_roles = [
     "roles/appengine.appViewer",
-    "roles/bigquery.dataViewer",
     "roles/bigquery.metadataViewer",
     "roles/browser",
     "roles/cloudasset.viewer",
