@@ -56,6 +56,11 @@ variable "forseti_run_frequency" {
   default     = "0 */2 * * *"
 }
 
+variable "forseti_enable_tracing" {
+  description = "Enable Forseti tracing"
+  default = "false"
+}
+
 #----------------#
 # Forseti server #
 #----------------#
@@ -773,4 +778,3 @@ variable "sendgrid_api_key" {
   description = "Sendgrid.com API key to enable email notifications"
   default     = ""
 }
-

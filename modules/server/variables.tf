@@ -54,6 +54,11 @@ variable "forseti_run_frequency" {
   default     = "0 */2 * * *"
 }
 
+variable "forseti_enable_tracing" {
+  description = "Enable Forseti tracing"
+  default     = "false"
+}
+
 #--------------------------#
 # Forseti config inventory #
 #--------------------------#
