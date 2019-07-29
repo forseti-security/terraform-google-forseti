@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 
+variable "auto_create_subnetworks" {
+  type        = bool
+  description = "When set to true, the network is created in 'auto subnet mode' and it will create a subnet for each region automatically across the 10.128.0.0/9 address range. When set to false, the network is created in 'custom subnet mode' so the user can explicitly connect subnetwork resources."
+  default     = false
+}
+
 variable "credentials_path" {
   description = "Path to service account json"
 }
@@ -78,6 +84,26 @@ variable "k8s_forseti_namespace" {
   default     = "forseti"
 }
 
+variable "k8s_forseti_orchestrator_image" {
+  description = "The container image for the Forseti orchestrator"
+  default     = "gcr.io/forseti-containers/forseti"
+}
+
+variable "k8s_forseti_orchestrator_image_tag" {
+  description = "The tag for the container image for the Forseti orchestrator"
+  default     = "v2.18.0"
+}
+
+variable "k8s_forseti_server_image" {
+  description = "The container image for the Forseti server"
+  default     = "gcr.io/forseti-containers/forseti"
+}
+
+variable "k8s_forseti_server_image_tag" {
+  description = "The tag for the container image for the Forseti server"
+  default     = "v2.18.0"
+}
+
 variable "k8s_tiller_sa_name" {
   description = "The Kubernetes Service Account used by Tiller"
   default     = "tiller"
@@ -91,6 +117,12 @@ variable "load_balancer" {
 variable "network_name" {
   description = "The name of the VPC being created"
   default     = "gke-network"
+}
+
+variable "network_description" {
+  type        = string
+  description = "An optional description of the network. The resource must be recreated to modify this field."
+  default     = ""
 }
 
 variable "production" {
@@ -119,16 +151,4 @@ variable "suffix" {
 variable "zones" {
   description = "The zones to host the cluster in.  This is optional if the GKE cluster is regional.  It is required if the cluster is zonal."
   default     = ["us-central1-a"]
-}
-
-variable "network_description" {
-  type        = string
-  description = "An optional description of the network. The resource must be recreated to modify this field."
-  default     = ""
-}
-
-variable "auto_create_subnetworks" {
-  type        = bool
-  description = "When set to true, the network is created in 'auto subnet mode' and it will create a subnet for each region automatically across the 10.128.0.0/9 address range. When set to false, the network is created in 'custom subnet mode' so the user can explicitly connect subnetwork resources."
-  default     = false
 }

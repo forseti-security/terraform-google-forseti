@@ -61,6 +61,26 @@ variable "k8s_forseti_namespace" {
   default     = "forseti"
 }
 
+variable "k8s_forseti_orchestrator_image" {
+  description = "The container image for the Forseti orchestrator"
+  default     = "gcr.io/forseti-containers/forseti"
+}
+
+variable "k8s_forseti_orchestrator_image_tag" {
+  description = "The tag for the container image for the Forseti orchestrator"
+  default     = "v2.18.0"
+}
+
+variable "k8s_forseti_server_image" {
+  description = "The container image for the Forseti server"
+  default     = "gcr.io/forseti-containers/forseti"
+}
+
+variable "k8s_forseti_server_image_tag" {
+  description = "The tag for the container image for the Forseti server"
+  default     = "v2.18.0"
+}
+
 variable "k8s_tiller_sa_name" {
   description = "The Kubernetes Service Account used by Tiller"
   default     = "tiller"
