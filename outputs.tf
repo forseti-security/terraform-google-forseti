@@ -56,7 +56,7 @@ output "forseti-server-storage-bucket" {
 
 output "forseti-cloudsql-connection-name" {
   description = "Forseti CloudSQL Connection String"
-  value       = module.server.forseti-cloudsql-connection-name
+  value       = module.cloudsql.forseti-cloudsql-connection-name
 }
 
 output "suffix" {

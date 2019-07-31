@@ -36,7 +36,6 @@ locals {
   server_conf_path        = "${var.forseti_home}/configs/forseti_conf_server.yaml"
   server_name             = "forseti-server-vm-${local.random_hash}"
   server_sa_name          = "forseti-server-gcp-${local.random_hash}"
-  cloudsql_name           = "forseti-server-db-${local.random_hash}"
   storage_bucket_name     = "forseti-server-${local.random_hash}"
   storage_cai_bucket_name = "forseti-cai-export-${local.random_hash}"
   server_bucket_name      = "forseti-server-${local.random_hash}"
@@ -145,7 +144,7 @@ data "template_file" "forseti_server_env" {
     cloudsql_db_name       = var.cloudsql_db_name
     cloudsql_db_port       = var.cloudsql_db_port
     cloudsql_region        = var.cloudsql_region
-    cloudsql_instance_name = google_sql_database_instance.master.name
+    cloudsql_instance_name = var.cloudsql_instance_name
   }
 }
 
@@ -481,48 +480,6 @@ resource "google_compute_instance" "forseti-server" {
     module.server_rules,
     null_resource.services-dependency,
   ]
-}
-
-#----------------------#
-# Forseti SQL database #
-#----------------------#
-resource "google_sql_database_instance" "master" {
-  name             = local.cloudsql_name
-  project          = var.project_id
-  region           = var.cloudsql_region
-  database_version = "MYSQL_5_7"
-
-  settings {
-    tier              = var.cloudsql_type
-    activation_policy = "ALWAYS"
-    disk_size         = "25"
-    disk_type         = "PD_SSD"
-
-    backup_configuration {
-      enabled            = true
-      binary_log_enabled = true
-    }
-
-    ip_configuration {
-      ipv4_enabled = true
-      require_ssl  = true
-    }
-  }
-
-  depends_on = [null_resource.services-dependency]
-}
-
-resource "google_sql_database" "forseti-db" {
-  name     = var.cloudsql_db_name
-  project  = var.project_id
-  instance = google_sql_database_instance.master.name
-}
-
-resource "google_sql_user" "root" {
-  name     = "root"
-  instance = google_sql_database_instance.master.name
-  project  = var.project_id
-  host     = var.cloudsql_user_host
 }
 
 resource "null_resource" "services-dependency" {
