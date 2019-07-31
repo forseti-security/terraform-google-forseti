@@ -126,7 +126,7 @@ terraform init
 You are now ready to install Forseti with Terraform by running the apply command:
 
 ```bash
-terraform apply -auto-approve
+terraform apply
 ```
 
 This can take a few minutes as all the necessary resources are provisioned.
