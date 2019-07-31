@@ -22,7 +22,7 @@ You will need to activate a few APIs on this project for Forseti to function:
   "cloudresourcemanager.googleapis.com,
   serviceusage.googleapis.com,
   compute.googleapis.com"></walkthrough-enable-apis>
-  
+
 ## Configure Forseti
 To install Forseti, you will need to update a few settings in the <walkthrough-editor-open-file filePath="terraform-google-forseti/examples/install_simple/terraform.tfvars">terraform.tfvars</walkthrough-editor-open-file>.
 
@@ -60,15 +60,15 @@ On line 7, update the <walkthrough-editor-select-line
   filePath="terraform-google-forseti/examples/install_simple/terraform.tfvars"
   startLine=6
   endLine=6
-  startCharacterOffset=12
-  endCharacterOffset=19>subnetwork</walkthrough-editor-select-line>.
+  startCharacterOffset=19
+  endCharacterOffset=26>subnetwork</walkthrough-editor-select-line>.
 
 If you are deploying on a Shared VPC, you need to set the <walkthrough-editor-select-line
   filePath="terraform-google-forseti/examples/install_simple/terraform.tfvars"
   startLine=7
   endLine=7
-  startCharacterOffset=17
-  endCharacterOffset=17>network project</walkthrough-editor-select-line>
+  startCharacterOffset=19
+  endCharacterOffset=19>network project</walkthrough-editor-select-line>
 on line 8. Otherwise, you can leave this empty.
 
 ## Enable Optional Features
@@ -95,20 +95,20 @@ To enable this, add a <walkthrough-editor-select-line
   filePath="terraform-google-forseti/examples/install_simple/terraform.tfvars"
   startLine=10
   endLine=10
-  startCharacterOffset=18
-  endCharacterOffset=18>SendGrid API key</walkthrough-editor-select-line>
+  startCharacterOffset=27
+  endCharacterOffset=27>SendGrid API key</walkthrough-editor-select-line>
 on line 12 and update the <walkthrough-editor-select-line
   filePath="terraform-google-forseti/examples/install_simple/terraform.tfvars"
   startLine=11
   endLine=11
-  startCharacterOffset=22
-  endCharacterOffset=22>sender</walkthrough-editor-select-line>
+  startCharacterOffset=27
+  endCharacterOffset=27>sender</walkthrough-editor-select-line>
 and <walkthrough-editor-select-line
   filePath="terraform-google-forseti/examples/install_simple/terraform.tfvars"
   startLine=12
   endLine=12
-  startCharacterOffset=25
-  endCharacterOffset=25>recipient</walkthrough-editor-select-line>
+  startCharacterOffset=27
+  endCharacterOffset=27>recipient</walkthrough-editor-select-line>
 settings.
 
 ## Install Forseti
