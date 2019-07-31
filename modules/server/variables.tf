@@ -582,39 +582,6 @@ variable "client_service_account_email" {
   description = "Service account of the forseti client"
 }
 
-#------------#
-# Forseti db #
-#------------#
-variable "cloudsql_region" {
-  description = "CloudSQL region"
-  default     = "us-central1"
-}
-
-variable "cloudsql_db_name" {
-  description = "CloudSQL database name"
-  default     = "forseti_security"
-}
-
-variable "cloudsql_db_port" {
-  description = "CloudSQL database port"
-  default     = "3306"
-}
-
-variable "cloudsql_proxy_arch" {
-  description = "CloudSQL Proxy architecture"
-  default     = "linux.amd64"
-}
-
-variable "cloudsql_type" {
-  description = "CloudSQL Instance size"
-  default     = "db-n1-standard-1"
-}
-
-variable "cloudsql_user_host" {
-  description = "The host the user can connect from. Can be an IP address or IP address range. Changing this forces a new resource to be created."
-  default     = "%"
-}
-
 #----------------#
 # Forseti bucket #
 #----------------#
@@ -711,6 +678,34 @@ variable "services" {
   description = "An artificial dependency to bypass #10462"
   type        = list(string)
   default     = []
+}
+
+#------------#
+# Forseti db #
+#------------#
+
+variable "cloudsql_db_name" {
+  description = "CloudSQL database name"
+  default     = "forseti_security"
+}
+
+variable "cloudsql_db_port" {
+  description = "CloudSQL database port"
+  default     = "3306"
+}
+
+variable "cloudsql_instance_name" {
+  description = "The name of the master CloudSQL instance"
+}
+
+variable "cloudsql_proxy_arch" {
+  description = "CloudSQL Proxy architecture"
+  default     = "linux.amd64"
+}
+
+variable "cloudsql_region" {
+  description = "CloudSQL region"
+  default     = "us-central1"
 }
 
 #---------------------------------------#

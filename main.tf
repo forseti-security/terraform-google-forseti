@@ -119,11 +119,10 @@ module "server" {
   server_tags                                         = var.server_tags
   server_access_config                                = var.server_access_config
   server_private                                      = var.server_private
-  cloudsql_region                                     = var.cloudsql_region
+  cloudsql_instance_name                              = module.cloudsql.forseti-cloudsql-instance-name
   cloudsql_db_name                                    = var.cloudsql_db_name
   cloudsql_db_port                                    = var.cloudsql_db_port
   cloudsql_proxy_arch                                 = var.cloudsql_proxy_arch
-  cloudsql_type                                       = var.cloudsql_type
   storage_bucket_location                             = var.storage_bucket_location
   bucket_cai_location                                 = var.bucket_cai_location
   bucket_cai_lifecycle_age                            = var.bucket_cai_lifecycle_age
@@ -243,3 +242,11 @@ module "server" {
   services = google_project_service.main.*.service
 }
 
+module "cloudsql" {
+  source          = "./modules/cloudsql"
+  project_id      = var.project_id
+  cloudsql_type   = var.cloudsql_type
+  cloudsql_region = var.cloudsql_region
+  suffix          = local.random_hash
+  services        = google_project_service.main.*.service
+}
