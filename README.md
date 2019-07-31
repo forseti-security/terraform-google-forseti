@@ -101,6 +101,7 @@ Then perform the following commands on the config folder:
 | enable\_write | Enabling/Disabling write actions | string | `"false"` | no |
 | enabled\_apis\_enabled | Enabled APIs scanner enabled. | string | `"false"` | no |
 | enabled\_apis\_violations\_should\_notify | Notify for enabled APIs violations | string | `"true"` | no |
+| excluded\_resources | Resources to be excluded during the inventory phase. | list | `[]` | no |
 | external\_project\_access\_violations\_should\_notify | Notify for External Project Access violations | string | `"true"` | no |
 | firewall\_rule\_enabled | Firewall rule scanner enabled. | string | `"true"` | no |
 | firewall\_rule\_violations\_should\_notify | Notify for Firewall rule violations | string | `"true"` | no |
