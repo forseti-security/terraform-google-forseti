@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-# terraform {
-#   backend "gcs" {
-#     bucket  = "my-project-tfstate"
-#     prefix  = "terraform/forseti"
-#   }
-# }
+terraform {
+  backend "gcs" {
+    bucket  = "clearify-secops-forseti2-tfstate"
+    prefix  = "terraform/forseti"
+  }
+}

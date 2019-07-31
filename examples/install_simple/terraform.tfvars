@@ -1,6 +1,6 @@
-project_id = "my-project-id"
-org_id     = "11111111"
-domain     = "mydomain.com"
+project_id = "clearify-secops-forseti2"
+org_id     = "816421441114"
+domain     = "clearify.co"
 
 region          = "us-east4"
 network         = "default"
