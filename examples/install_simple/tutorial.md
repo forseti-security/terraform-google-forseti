@@ -184,6 +184,8 @@ git add -A
 git commit -m "Initial commit"
 ```
 
+You may be prompted to configure your identity for Git. If you are, follow the provided commands to do so and run commit again.
+
 ### Push your configuration
 ```bash
 git remote add origin https://source.developers.google.com/p/{{project_id}}/r/terraform-forseti
