@@ -31,13 +31,13 @@ variable "domain" {
 
 variable "instance_metadata" {
   description = "Metadata key/value pairs to make available from within the client and server instances."
-  type        = "map"
+  type        = map(string)
   default     = {}
 }
 
 variable "instance_tags" {
   description = "Tags to assign the client and server instances."
-  type        = "list"
+  type        = list(string)
   default     = []
 }
 

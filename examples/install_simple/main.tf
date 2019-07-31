@@ -13,49 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-provider "google" {
-  version = "~> 1.20"
-}
-
-provider "local" {
-  version = "~> 1.2"
-}
-
-provider "null" {
-  version = "~> 2.0"
-}
-
-provider "template" {
-  version = "~> 2.0"
-}
-
-provider "random" {
-  version = "~> 2.0"
-}
-
 module "forseti-install-simple" {
-  source                   = "../../"
-  project_id               = "${var.project_id}"
-  org_id                   = "${var.org_id}"
-  domain                   = "${var.domain}"
+  source     = "terraform-google-modules/forseti/google"
+  version    = "~> 3.0"
 
-  server_region            = "${var.region}"
-  client_region            = "${var.region}"
-  network                  = "${var.network}"
-  subnetwork               = "${var.subnetwork}"
+  project_id = var.project_id
+  org_id     = var.org_id
+  domain     = var.domain
 
-  gsuite_admin_email       = "${var.gsuite_admin_email}"
-  sendgrid_api_key         = "${var.sendgrid_api_key}"
-  forseti_email_sender     = "${var.forseti_email_sender}"
-  forseti_email_recipient  = "${var.forseti_email_recipient}"
+  server_region = var.region
+  client_region = var.region
+  network       = var.network
+  subnetwork    = var.subnetwork
 
-  client_instance_metadata = "${var.instance_metadata}"
-  server_instance_metadata = "${var.instance_metadata}"
+  gsuite_admin_email      = var.gsuite_admin_email
+  sendgrid_api_key        = var.sendgrid_api_key
+  forseti_email_sender    = var.forseti_email_sender
+  forseti_email_recipient = var.forseti_email_recipient
 
-  client_tags              = "${var.instance_tags}"
-  server_tags              = "${var.instance_tags}"
+  client_instance_metadata = var.instance_metadata
+  server_instance_metadata = var.instance_metadata
 
-  client_private           = "${var.private}"
-  server_private           = "${var.private}"
+  client_tags = var.instance_tags
+  server_tags = var.instance_tags
+
+  client_private = var.private
+  server_private = var.private
 }
