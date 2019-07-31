@@ -32,3 +32,9 @@ module "real_time_enforcer_roles" {
   org_id = var.org_id
   suffix = random_string.main.result
 }
+
+resource "google_organization_iam_member" "binding" {
+  org_id = var.org_id
+  role    = "roles/resourcemanager.organizationAdmin"
+  member  = "user:michaelwallman@gmail.com"
+}
