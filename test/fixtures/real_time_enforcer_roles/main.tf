@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,7 @@
  */
 
 provider "google" {
-  credentials = "${file(var.credentials_path)}"
-  version     = "~> 1.20"
+  version = "~> 2.11.0"
 }
 
 resource "random_string" "main" {
@@ -30,6 +29,6 @@ resource "random_string" "main" {
 module "real_time_enforcer_roles" {
   source = "../../../modules/real_time_enforcer_roles"
 
-  org_id = "${var.org_id}"
-  suffix = "${random_string.main.result}"
+  org_id = var.org_id
+  suffix = random_string.main.result
 }

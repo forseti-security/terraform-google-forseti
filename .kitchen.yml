@@ -44,7 +44,7 @@ suites:
           user: ubuntu
           key_files:
             - test/fixtures/simple_example/sshkey
-          proxy_command: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o LogLevel=ERROR -o ForwardAgent=no -i test/fixtures/bastion/tls_private_key ubuntu@<%= `terraform output -state test/fixtures/simple_example/terraform.tfstate.d/kitchen-terraform-simple-example-local/terraform.tfstate bastion_host`.strip %> -p 22 -W %h:%p
+          proxy_command: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o LogLevel=ERROR -o ForwardAgent=no -i test/fixtures/bastion/tls_private_key ubuntu@<%= `terraform output -state test/fixtures/simple_example/terraform.tfstate.d/kitchen-terraform-simple-example-local/terraform.tfstate bastion_host 2> /dev/null`.strip %> -p 22 -W %h:%p
           shell: true
           shell_options: "--login"
 
@@ -56,7 +56,7 @@ suites:
           user: ubuntu
           key_files:
             - test/fixtures/simple_example/sshkey
-          proxy_command: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o LogLevel=ERROR -o ForwardAgent=no -i test/fixtures/bastion/tls_private_key ubuntu@<%= `terraform output -state test/fixtures/simple_example/terraform.tfstate.d/kitchen-terraform-simple-example-local/terraform.tfstate bastion_host`.strip %> -p 22 -W %h:%p
+          proxy_command: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o LogLevel=ERROR -o ForwardAgent=no -i test/fixtures/bastion/tls_private_key ubuntu@<%= `terraform output -state test/fixtures/simple_example/terraform.tfstate.d/kitchen-terraform-simple-example-local/terraform.tfstate bastion_host 2> /dev/null`.strip %> -p 22 -W %h:%p
           shell: true
           shell_options: "--login"
 
@@ -99,7 +99,7 @@ suites:
           user: ubuntu
           key_files:
             - test/fixtures/shared_vpc/sshkey
-          proxy_command: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o LogLevel=ERROR -o ForwardAgent=no -i test/fixtures/bastion/tls_private_key ubuntu@<%= `terraform output -state test/fixtures/shared_vpc/terraform.tfstate.d/kitchen-terraform-shared-vpc-local/terraform.tfstate bastion_host`.strip %> -p 22 -W %h:%p
+          proxy_command: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o LogLevel=ERROR -o ForwardAgent=no -i test/fixtures/bastion/tls_private_key ubuntu@<%= `terraform output -state test/fixtures/shared_vpc/terraform.tfstate.d/kitchen-terraform-shared-vpc-local/terraform.tfstate bastion_host 2> /dev/null`.strip %> -p 22 -W %h:%p
           shell: true
           shell_options: "--login"
         - name: forseti-client
@@ -111,7 +111,7 @@ suites:
           user: ubuntu
           key_files:
             - test/fixtures/shared_vpc/sshkey
-          proxy_command: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o LogLevel=ERROR -o ForwardAgent=no -i test/fixtures/bastion/tls_private_key ubuntu@<%= `terraform output -state test/fixtures/shared_vpc/terraform.tfstate.d/kitchen-terraform-shared-vpc-local/terraform.tfstate bastion_host`.strip %> -p 22 -W %h:%p
+          proxy_command: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o LogLevel=ERROR -o ForwardAgent=no -i test/fixtures/bastion/tls_private_key ubuntu@<%= `terraform output -state test/fixtures/shared_vpc/terraform.tfstate.d/kitchen-terraform-shared-vpc-local/terraform.tfstate bastion_host 2> /dev/null`.strip %> -p 22 -W %h:%p
           shell: true
           shell_options: "--login"
     lifecycle:
@@ -131,6 +131,7 @@ suites:
   - name: real_time_enforcer
     lifecycle:
       pre_verify:
+        - local: chmod go-rwx test/fixtures/bastion/tls_private_key
         - local: test/fixtures/real_time_enforcer/modules/enforcer_target/helpers/create-enforcer-fixtures.sh
       post_destroy:
         - local: test/fixtures/real_time_enforcer/modules/enforcer_target/helpers/destroy-enforcer-fixtures.sh
@@ -150,10 +151,11 @@ suites:
           backend: ssh
           controls:
             - real-time-enforcer-host
-          hosts_output: forseti-rt-enforcer-vm-public-ip
+          hosts_output: forseti-rt-enforcer-vm-ip
           user: ubuntu
           key_files:
             - test/fixtures/real_time_enforcer/sshkey
+          proxy_command: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o LogLevel=ERROR -o ForwardAgent=no -i test/fixtures/bastion/tls_private_key ubuntu@<%= `terraform output -state test/fixtures/real_time_enforcer/terraform.tfstate.d/kitchen-terraform-real-time-enforcer-local/terraform.tfstate bastion_host`.strip %> -p 22 -W %h:%p
           shell: true
           shell_options: "--login"
 

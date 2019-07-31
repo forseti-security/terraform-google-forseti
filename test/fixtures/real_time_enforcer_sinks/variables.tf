@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,3 +25,4 @@ variable "sink_project_id" {
 variable "org_id" {
   description = "A test organization to export logs from"
 }
+

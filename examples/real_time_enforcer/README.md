@@ -2,6 +2,8 @@
 
 This example illustrates how to set up a Forseti installation with real-time policy enforcer.
 
+By default, terraform will use your application default credentials.  If you'd like to use a different service account key, set the environment variable `GOOGLE_APPLICATION_CREDENTIALS` to the desired key's path.  For more info on using the GCP provider, refer to the terraform documentation.
+
 [^]: (autogen_docs_start)
 
 ## Inputs
@@ -24,7 +26,6 @@ This example illustrates how to set up a Forseti installation with real-time pol
 | forseti-rt-enforcer-viewer-role-id | The forseti real time enforcer viewer Role ID. |
 | forseti-rt-enforcer-vm-ip | Forseti Enforcer VM private IP address |
 | forseti-rt-enforcer-vm-name | Forseti Enforcer VM name |
-| forseti-rt-enforcer-vm-public-ip | Forseti Enforcer VM public IP address |
 | forseti-rt-enforcer-writer-role-id | The forseti real time enforcer writer Role ID. |
 | suffix | The random suffix appended to Forseti resources |
 

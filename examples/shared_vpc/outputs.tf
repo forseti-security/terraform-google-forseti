@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,75 +16,76 @@
 
 output "suffix" {
   description = "The random suffix appended to Forseti resources"
-  value       = "${module.forseti.suffix}"
+  value       = module.forseti.suffix
 }
 
 output "project_id" {
   description = "ID of the service project"
-  value       = "${var.project_id}"
+  value       = var.project_id
 }
 
 output "network_project" {
   description = "ID of the network project holding shared VPC"
-  value       = "${var.network_project}"
+  value       = var.network_project
 }
 
 output "forseti-server-vm-ip" {
   description = "Forseti Server VM private IP address"
-  value       = "${module.forseti.forseti-server-vm-ip}"
+  value       = module.forseti.forseti-server-vm-ip
 }
 
 output "forseti-server-vm-name" {
   description = "Forseti Server VM name"
-  value       = "${module.forseti.forseti-server-vm-name}"
+  value       = module.forseti.forseti-server-vm-name
 }
 
 output "forseti-client-vm-ip" {
   description = "Forseti Client VM private IP address"
-  value       = "${module.forseti.forseti-client-vm-ip}"
+  value       = module.forseti.forseti-client-vm-ip
 }
 
 output "forseti-client-vm-name" {
   description = "Forseti Client VM name"
-  value       = "${module.forseti.forseti-client-vm-name}"
+  value       = module.forseti.forseti-client-vm-name
 }
 
 output "region" {
   description = "Region in which server and client will be deployed"
-  value       = "${var.region}"
+  value       = var.region
 }
 
 output "subnetwork" {
   description = "Subnetwork where server and client will be deployed"
-  value       = "${var.subnetwork}"
+  value       = var.subnetwork
 }
 
 output "network" {
   description = "Network where server and client will be deployed"
-  value       = "${var.network}"
+  value       = var.network
 }
 
 output "credentials_path" {
   description = "Pass through the `credentials_path` variable so that InSpec can reuse the credentials"
-  value       = "${var.credentials_path}"
+  value       = var.credentials_path
 }
 
 output "forseti-client-storage-bucket" {
   description = "Forseti Client storage bucket"
-  value       = "${module.forseti.forseti-client-storage-bucket}"
+  value       = module.forseti.forseti-client-storage-bucket
 }
 
 output "forseti-server-storage-bucket" {
   description = "Forseti Server storage bucket"
-  value       = "${module.forseti.forseti-server-storage-bucket}"
+  value       = module.forseti.forseti-server-storage-bucket
 }
 
 output "forseti-client-service-account" {
   description = "Forseti Client service account"
-  value       = "${module.forseti.forseti-client-service-account}"
+  value       = module.forseti.forseti-client-service-account
 }
 
 output "forseti-server-service-account" {
   description = "Forseti Server service account"
-  value       = "${module.forseti.forseti-server-service-account}"
+  value       = module.forseti.forseti-server-service-account
 }
+

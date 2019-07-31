@@ -49,3 +49,6 @@ credentials.json
 .idea/
 
 **/tls_private_key
+
+docker.env
+.envrc

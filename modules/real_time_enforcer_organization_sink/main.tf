@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,12 +27,12 @@ resource "random_string" "main" {
 
 resource "google_pubsub_topic" "main" {
   name    = "real-time-enforcer-events-topic-${random_string.main.result}"
-  project = "${var.pubsub_project_id}"
+  project = var.pubsub_project_id
 }
 
 resource "google_logging_organization_sink" "main" {
   name             = "real-time-enforcer-log-sink-${random_string.main.result}"
-  org_id           = "${var.org_id}"
+  org_id           = var.org_id
   destination      = "pubsub.googleapis.com/projects/${var.pubsub_project_id}/topics/${google_pubsub_topic.main.name}"
   include_children = "true"
 
@@ -42,11 +42,13 @@ severity != ERROR
 protoPayload.serviceName != "k8s.io"
 NOT protoPayload.methodName: "delete"
 EOD
+
 }
 
 resource "google_pubsub_topic_iam_member" "publisher" {
-  topic   = "${google_pubsub_topic.main.name}"
-  role    = "roles/pubsub.publisher"
-  project = "${var.pubsub_project_id}"
-  member  = "${google_logging_organization_sink.main.writer_identity}"
+  topic = google_pubsub_topic.main.name
+  role = "roles/pubsub.publisher"
+  project = var.pubsub_project_id
+  member = google_logging_organization_sink.main.writer_identity
 }
+
