@@ -229,7 +229,7 @@ module "server" {
   blacklist_violations_should_notify                  = var.blacklist_violations_should_notify
   bigquery_acl_violations_should_notify               = var.bigquery_acl_violations_should_notify
   audit_logging_violations_should_notify              = var.audit_logging_violations_should_notify
-
+  excluded_resources                                  = var.excluded_resources
   violations_slack_webhook = var.violations_slack_webhook
   cscc_violations_enabled  = var.cscc_violations_enabled
   cscc_source_id           = var.cscc_source_id

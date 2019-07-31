@@ -240,6 +240,12 @@ variable "crm_disable_polling" {
   default     = false
 }
 
+variable "excluded_resources" {
+  description = "A list of resources to exclude during the inventory phase."
+  type        = list(string)
+  default     = []
+}
+
 variable "iam_max_calls" {
   description = "Maximum calls that can be made to IAM API"
   default     = "90"

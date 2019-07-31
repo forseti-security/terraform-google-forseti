@@ -33,6 +33,14 @@ inventory:
     #    - "organizations/56789"
     ${COMPOSITE_ROOT_RESOURCES}
 
+    # Resources to be excluded during the inventory process.
+    # Only organizations/<ORG_NUMBER>, folders/<FOLDER_NUMBER>,
+    # projects/<PROJECT_ID> or projects/<PROJECT_NUMBER> are accepted.
+    # The child resources under the excluded resources will also be excluded.
+    #
+    # Example:
+    # excluded_resources: ['folders/1234', 'projects/my-project-123', 'projects/4321']
+    ${EXCLUDED_RESOURCES}
 
     # gsuite access
     domain_super_admin_email: ${DOMAIN_SUPER_ADMIN_EMAIL}
