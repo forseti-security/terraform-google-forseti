@@ -10,13 +10,13 @@ version of this module, the last released version intended for Terraform 0.11.x
 is [2.3.0][v2.3.0].
 
 ## Usage
-A simple setup is provided in the examples folder; however, the usage of the module within your own main.tf file is as follows:
+Example setups are included in the [examples](./examples/), but you can can also get started using a Cloud Shell Tutorial.
+
+[![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fforseti-security%2Fterraform-google-forseti.git&cloudshell_git_branch=master&cloudshell_working_dir=examples/install_simple&cloudshell_image=gcr.io%2Fgraphite-cloud-shell-images%2Fterraform%3Alatest&cloudshell_tutorial=.%2Ftutorial.md)
+
+Simple usage of the module within your own main.tf file is as follows:
 
 ```hcl
-    provider "google" {
-      credentials = file("/path/to/credentials.json")
-    }
-
     module "forseti" {
       source  = "terraform-google-modules/forseti/google"
       version = "~> 3.0"
@@ -27,13 +27,6 @@ A simple setup is provided in the examples folder; however, the usage of the mod
       org_id             = "2313934234"
     }
 ```
-
-Then perform the following commands on the config folder:
-
-- `terraform init` to get the plugins
-- `terraform plan` to see the infrastructure plan
-- `terraform apply` to apply the infrastructure build
-- `terraform destroy` to destroy the built infrastructure
 
 [^]: (autogen_docs_start)
 
