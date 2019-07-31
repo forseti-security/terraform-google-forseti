@@ -589,7 +589,7 @@ variable "inventory_gcs_summary_enabled" {
 
 variable "inventory_email_summary_enabled" {
   description = "Email summary for inventory enabled"
-  default     = "true"
+  default     = "false"
 }
 
 #---------------------------------------#
@@ -778,4 +778,3 @@ variable "sendgrid_api_key" {
   description = "Sendgrid.com API key to enable email notifications"
   default     = ""
 }
-
