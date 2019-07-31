@@ -86,27 +86,9 @@ resource "kubernetes_role" "tiller" {
   }
 
   rule {
-    api_groups = [""]
-    resources  = ["pods", "services", "secrets", "configmaps", "namespaces", "persistentvolumeclaims"]
-    verbs      = ["get", "list", "create", "delete", "update", "patch"]
-  }
-
-  rule {
-    api_groups = ["extensions", "apps"]
-    resources  = ["deployments", "replicasets"]
-    verbs      = ["get", "list", "create", "delete", "update", "patch"]
-  }
-
-  rule {
-    api_groups = ["extensions", "batch/v1beta1", "batch"]
-    resources  = ["jobs", "cronjobs"]
-    verbs      = ["get", "list", "create", "delete", "update", "patch"]
-  }
-
-  rule {
-    api_groups = ["networking.k8s.io"]
-    resources  = ["networkpolicies"]
-    verbs      = ["get", "list", "create", "delete", "update", "patch"]
+    api_groups = ["", "extensions", "apps", "batch/v1beta1", "batch", "networking.k8s.io"]
+    resources  = ["*"]
+    verbs      = ["*"]
   }
 }
 
