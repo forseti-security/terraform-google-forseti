@@ -79,4 +79,5 @@ module "forseti-on-gke" {
   helm_repository_url                = "${var.helm_repository_url}"
   project_id                         = "${var.project_id}"
   load_balancer                      = "${var.load_balancer}"
+  server_log_level                   = "${var.server_log_level}"
 }

@@ -105,3 +105,8 @@ variable "project_id" {
 variable "suffix" {
   description = "The random suffix appended to Forseti resources"
 }
+
+variable "server_log_level" {
+  description = "The log level of the Forseti server container."
+  default     = "info"
+}

@@ -155,4 +155,5 @@ module "forseti-on-gke" {
   project_id                         = "${var.project_id}"
   network_policy                     = "${module.gke.network_policy_enabled}"
   load_balancer                      = "${var.load_balancer}"
+  server_log_level                   = "${var.server_log_level}"
 }

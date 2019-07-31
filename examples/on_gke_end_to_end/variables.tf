@@ -146,3 +146,7 @@ variable "server_private" {
   default     = "false"
 }
 
+variable "server_log_level" {
+  description = "The log level of the Forseti server container."
+  default     = "info"
+}

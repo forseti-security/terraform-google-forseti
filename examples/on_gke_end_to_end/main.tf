@@ -168,4 +168,5 @@ module "forseti-on-gke" {
   network_policy                     = "${module.gke.network_policy_enabled}"
   load_balancer                      = "${var.load_balancer}"
   helm_repository_url                = "${var.helm_repository_url}"
+  server_log_level                   = "${var.server_log_level}"
 }
