@@ -32,6 +32,14 @@ variable "region" {
   default     = "us-central1"
 }
 
+variable "network" {
+  description = "Name of the shared VPC"
+}
+
+variable "subnetwork" {
+  description = "Name of the subnetwork where forseti will be deployed"
+}
+
 variable "org_id" {
   description = "GCP Organization ID that Forseti will have purview over"
 }
