@@ -28,13 +28,19 @@ resource "local_file" "gce-keypair-pk" {
   filename = "${path.module}/sshkey"
 }
 
+data "google_compute_zones" "main" {
+  project = var.project_id
+  region  = var.region
+  status  = "UP"
+}
+
 module "bastion" {
   source = "../bastion"
 
   network    = var.network
   project_id = var.network_project
   subnetwork = var.subnetwork
-  zone       = "us-central1-f"
+  zone       = data.google_compute_zones.main.names[0]
 }
 
 module "forseti-shared-vpc" {
@@ -95,4 +101,3 @@ resource "null_resource" "wait_for_client" {
     }
   }
 }
-
