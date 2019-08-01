@@ -27,6 +27,11 @@ variable "project_id" {
   description = "The ID of an existing Google project where Forseti will be installed"
 }
 
+variable "region" {
+  description = "Region where forseti subnetwork will be deployed"
+  default     = "us-central1"
+}
+
 variable "org_id" {
   description = "GCP Organization ID that Forseti will have purview over"
 }
@@ -66,4 +71,3 @@ variable "forseti_email_recipient" {
   description = "Forseti email recipient."
   default     = ""
 }
-
