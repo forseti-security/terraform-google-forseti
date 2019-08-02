@@ -147,6 +147,7 @@ module "forseti-on-gke" {
   forseti_server_service_account     = "${var.forseti_server_service_account}"
   forseti_server_bucket              = "${var.forseti_server_storage_bucket}"
   gke_service_account                = "${module.gke.service_account}"
+  helm_repository_url                = "${var.helm_repository_url}"
   k8s_forseti_namespace              = "${var.k8s_forseti_namespace}-${var.suffix}"
   k8s_forseti_orchestrator_image     = "${var.k8s_forseti_orchestrator_image}"
   k8s_forseti_orchestrator_image_tag = "${var.k8s_forseti_orchestrator_image_tag}"
