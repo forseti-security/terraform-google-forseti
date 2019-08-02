@@ -1,6 +1,6 @@
-# Upgrading to v3.0
+# Upgrading to v4.0
 
-The v3.0 release of the *forseti* module is a backwards incompatible
+The v4.0 release of the *forseti* module is a backwards incompatible
 release.
 
 ## Migration Instructions
@@ -24,8 +24,8 @@ configuration like the following example:
 ```diff
  module "forseti" {
    source  = "terraform-google-modules/forseti/google"
--  version = "~> 2.0"
-+  version = "~> 3.0"
+-  version = "~> 3.0"
++  version = "~> 4.0"
 
 +  inventory_email_summary_enabled = "true"
 +  sendgrip_api_key = "your-sendgrid-api-key-here"
