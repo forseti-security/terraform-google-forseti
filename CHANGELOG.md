@@ -15,6 +15,8 @@ Extending the adopted spec, each change should have a link to its corresponding 
 ### Changed
 
 - Remove roles/bigquery.dataViewer role from server. [#210]
+- Flip `inventory_email_summary_enabled` default to `false` and require
+  `sendgrid_api_key` to be non-empty when `true`. [#211]
 
 ## [v3.0.0] - 2019-07-19
 
