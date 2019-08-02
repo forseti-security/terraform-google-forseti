@@ -8,12 +8,15 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ## [Unreleased]
 
-- Flip `inventory_email_summary_enabled` default to `false` and require
-  `sendgrid_api_key` to be non-empty when `true`. [#211]
+## Added
+
+- Added tracing support. [#223]
 
 ### Changed
 
-- Remove roles/bigquery.dataViewer role from server [#210]
+- Remove roles/bigquery.dataViewer role from server. [#210]
+- Flip `inventory_email_summary_enabled` default to `false` and require
+  `sendgrid_api_key` to be non-empty when `true`. [#211]
 
 ## [v3.0.0] - 2019-07-19
 
@@ -218,6 +221,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 [v2.3.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v2.2.0...v2.3.0
 [v3.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v2.3.0...v3.0.0
 
+[#223]: https://github.com/forseti-security/terraform-google-forseti/pull/223
 [#210]: https://github.com/forseti-security/terraform-google-forseti/pull/210
 [#201]: https://github.com/forseti-security/terraform-google-forseti/pull/201
 [#180]: https://github.com/forseti-security/terraform-google-forseti/pull/180
