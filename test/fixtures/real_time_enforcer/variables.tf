@@ -26,3 +26,15 @@ variable "enforcer_project_id" {
   description = "A project to be managed by the real time enforcer"
 }
 
+variable "region" {
+  description = "Region where forseti subnetwork will be deployed"
+  default     = "us-central1"
+}
+
+variable "network" {
+  description = "Name of the shared VPC"
+}
+
+variable "subnetwork" {
+  description = "Name of the subnetwork where forseti will be deployed"
+}

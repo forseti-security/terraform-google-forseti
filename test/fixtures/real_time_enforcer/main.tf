@@ -28,13 +28,19 @@ resource "local_file" "gce-keypair-pk" {
   filename = "${path.module}/sshkey"
 }
 
+data "google_compute_zones" "main" {
+  project = var.project_id
+  region  = var.region
+  status  = "UP"
+}
+
 module "bastion" {
   source = "../bastion"
 
-  network    = "default"
+  network    = var.network
   project_id = "${var.project_id}"
-  subnetwork = "default"
-  zone       = "us-central1-f"
+  subnetwork = var.subnetwork
+  zone       = data.google_compute_zones.main.names[0]
 }
 
 module "real_time_enforcer" {
@@ -43,6 +49,9 @@ module "real_time_enforcer" {
   project_id          = var.project_id
   org_id              = var.org_id
   enforcer_project_id = var.enforcer_project_id
+  region              = var.region
+  network             = var.network
+  subnetwork          = var.subnetwork
 
   instance_metadata = {
     # This username is a little bit silly because the enforcer VM is COS, but for

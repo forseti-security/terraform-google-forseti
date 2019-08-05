@@ -60,6 +60,8 @@ module "real_time_enforcer" {
   enforcer_writer_role       = module.real_time_enforcer_roles.forseti-rt-enforcer-writer-role-id
   enforcer_instance_private  = true
   suffix                     = random_string.suffix.result
-  network                    = "default"
-  subnetwork                 = data.google_compute_subnetwork.main.name
+  network                    = var.network
+  subnetwork                 = var.subnetwork
+  client_region              = var.region
+  enforcer_region            = var.region
 }
