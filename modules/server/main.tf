@@ -49,7 +49,7 @@ locals {
   # mitigates issues in the Forseti explainer that requires `root_resource_id` to be of type `str`.
   root_resource_id         = "root_resource_id: ${length(var.composite_root_resources) > 0 ? "\"\"" : var.folder_id != "" ? "folders/${var.folder_id}" : "organizations/${var.org_id}"}"
   composite_root_resources = length(var.composite_root_resources) > 0 ? "composite_root_resources: [${join(", ", formatlist("\"%s\"", var.composite_root_resources))}]" : ""
-  excluded_resources = length(var.excluded_resources) > 0 ? "excluded_resources: [${join(", ", formatlist("\"%s\"", var.excluded_resources))}]" : ""
+  excluded_resources       = length(var.excluded_resources) > 0 ? "excluded_resources: [${join(", ", formatlist("\"%s\"", var.excluded_resources))}]" : ""
   server_project_roles = [
     "roles/storage.objectViewer",
     "roles/storage.objectCreator",
