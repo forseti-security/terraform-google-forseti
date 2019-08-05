@@ -131,7 +131,7 @@ Then perform the following commands on the config folder:
 | iap\_violations\_should\_notify | Notify for IAP violations | string | `"true"` | no |
 | instance\_network\_interface\_enabled | Instance network interface scanner enabled. | string | `"false"` | no |
 | instance\_network\_interface\_violations\_should\_notify | Notify for instance network interface violations | string | `"true"` | no |
-| inventory\_email\_summary\_enabled | Email summary for inventory enabled | string | `"true"` | no |
+| inventory\_email\_summary\_enabled | Email summary for inventory enabled | string | `"false"` | no |
 | inventory\_gcs\_summary\_enabled | GCS summary for inventory enabled | string | `"true"` | no |
 | inventory\_retention\_days | Number of days to retain inventory data. | string | `"-1"` | no |
 | ke\_scanner\_enabled | KE scanner enabled. | string | `"false"` | no |
