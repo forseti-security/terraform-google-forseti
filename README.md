@@ -28,22 +28,21 @@ Simple usage of the module within your own main.tf file is as follows:
     }
 ```
 
-[^]: (autogen_docs_start)
-
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| admin\_disable\_polling | Whether to disable polling for Admin API | string | `"false"` | no |
+| admin\_disable\_polling | Whether to disable polling for Admin API | bool | `"false"` | no |
 | admin\_max\_calls | Maximum calls that can be made to Admin API | string | `"14"` | no |
 | admin\_period | The period of max calls for the Admin API (in seconds) | string | `"1.0"` | no |
-| appengine\_disable\_polling | Whether to disable polling for App Engine API | string | `"false"` | no |
+| appengine\_disable\_polling | Whether to disable polling for App Engine API | bool | `"false"` | no |
 | appengine\_max\_calls | Maximum calls that can be made to App Engine API | string | `"18"` | no |
 | appengine\_period | The period of max calls for the App Engine API (in seconds) | string | `"1.0"` | no |
 | audit\_logging\_enabled | Audit Logging scanner enabled. | string | `"false"` | no |
 | audit\_logging\_violations\_should\_notify | Notify for Audit logging violations | string | `"true"` | no |
 | bigquery\_acl\_violations\_should\_notify | Notify for BigQuery ACL violations | string | `"true"` | no |
-| bigquery\_disable\_polling | Whether to disable polling for Big Query API | string | `"false"` | no |
+| bigquery\_disable\_polling | Whether to disable polling for Big Query API | bool | `"false"` | no |
 | bigquery\_enabled | Big Query scanner enabled. | string | `"true"` | no |
 | bigquery\_max\_calls | Maximum calls that can be made to Big Query API | string | `"160"` | no |
 | bigquery\_period | The period of max calls for the Big Query API (in seconds) | string | `"1.0"` | no |
@@ -54,18 +53,18 @@ Simple usage of the module within your own main.tf file is as follows:
 | bucket\_cai\_location | GCS CAI storage bucket location | string | `"us-central1"` | no |
 | buckets\_acl\_violations\_should\_notify | Notify for Buckets ACL violations | string | `"true"` | no |
 | cai\_api\_timeout | Timeout in seconds to wait for the exportAssets API to return success. | string | `"3600"` | no |
-| client\_access\_config | Client instance 'access_config' block | map | `<map>` | no |
+| client\_access\_config | Client instance 'access_config' block | map(any) | `<map>` | no |
 | client\_boot\_image | GCE Forseti Client role instance size | string | `"ubuntu-os-cloud/ubuntu-1804-lts"` | no |
-| client\_instance\_metadata | Metadata key/value pairs to make available from within the client instance. | map | `<map>` | no |
+| client\_instance\_metadata | Metadata key/value pairs to make available from within the client instance. | map(string) | `<map>` | no |
 | client\_private | Private GCE Forseti Client VM (no public IP) | string | `"false"` | no |
 | client\_region | GCE Forseti Client role region size | string | `"us-central1"` | no |
-| client\_ssh\_allow\_ranges | List of CIDRs that will be allowed ssh access to forseti client | list | `<list>` | no |
-| client\_tags | GCE Forseti Client VM Tags | list | `<list>` | no |
+| client\_ssh\_allow\_ranges | List of CIDRs that will be allowed ssh access to forseti client | list(string) | `<list>` | no |
+| client\_tags | GCE Forseti Client VM Tags | list(string) | `<list>` | no |
 | client\_type | GCE Forseti Client role instance size | string | `"n1-standard-2"` | no |
-| cloudasset\_disable\_polling | Whether to disable polling for Cloud Asset API | string | `"false"` | no |
+| cloudasset\_disable\_polling | Whether to disable polling for Cloud Asset API | bool | `"false"` | no |
 | cloudasset\_max\_calls | Maximum calls that can be made to Cloud Asset API | string | `"1"` | no |
 | cloudasset\_period | The period of max calls for the Cloud Asset API (in seconds) | string | `"1.0"` | no |
-| cloudbilling\_disable\_polling | Whether to disable polling for Cloud Billing API | string | `"false"` | no |
+| cloudbilling\_disable\_polling | Whether to disable polling for Cloud Billing API | bool | `"false"` | no |
 | cloudbilling\_max\_calls | Maximum calls that can be made to Cloud Billing API | string | `"5"` | no |
 | cloudbilling\_period | The period of max calls for the Cloud Billing API (in seconds) | string | `"1.2"` | no |
 | cloudsql\_acl\_enabled | Cloud SQL scanner enabled. | string | `"true"` | no |
@@ -75,16 +74,17 @@ Simple usage of the module within your own main.tf file is as follows:
 | cloudsql\_proxy\_arch | CloudSQL Proxy architecture | string | `"linux.amd64"` | no |
 | cloudsql\_region | CloudSQL region | string | `"us-central1"` | no |
 | cloudsql\_type | CloudSQL Instance size | string | `"db-n1-standard-1"` | no |
-| composite\_root\_resources | A list of root resources that Forseti will monitor. This supersedes the root_resource_id when set. | list | `<list>` | no |
-| compute\_disable\_polling | Whether to disable polling for Compute API | string | `"false"` | no |
+| cloudsql\_user\_host | The host the user can connect from.  Can be an IP address or IP address range. Changing this forces a new resource to be created. | string | `"%"` | no |
+| composite\_root\_resources | A list of root resources that Forseti will monitor. This supersedes the root_resource_id when set. | list(string) | `<list>` | no |
+| compute\_disable\_polling | Whether to disable polling for Compute API | bool | `"false"` | no |
 | compute\_max\_calls | Maximum calls that can be made to Compute API | string | `"18"` | no |
 | compute\_period | The period of max calls for the Compute API (in seconds) | string | `"1.0"` | no |
 | config\_validator\_enabled | Config Validator scanner enabled. | string | `"false"` | no |
 | config\_validator\_violations\_should\_notify | Notify for Config Validator violations. | string | `"true"` | no |
-| container\_disable\_polling | Whether to disable polling for Container API | string | `"false"` | no |
+| container\_disable\_polling | Whether to disable polling for Container API | bool | `"false"` | no |
 | container\_max\_calls | Maximum calls that can be made to Container API | string | `"9"` | no |
 | container\_period | The period of max calls for the Container API (in seconds) | string | `"1.0"` | no |
-| crm\_disable\_polling | Whether to disable polling for CRM API | string | `"false"` | no |
+| crm\_disable\_polling | Whether to disable polling for CRM API | bool | `"false"` | no |
 | crm\_max\_calls | Maximum calls that can be made to CRN API | string | `"4"` | no |
 | crm\_period | The period of max calls for the CRM  API (in seconds) | string | `"1.2"` | no |
 | cscc\_source\_id | Source ID for CSCC Beta API | string | `""` | no |
@@ -107,14 +107,14 @@ Simple usage of the module within your own main.tf file is as follows:
 | forwarding\_rule\_enabled | Forwarding rule scanner enabled. | string | `"false"` | no |
 | forwarding\_rule\_violations\_should\_notify | Notify for forwarding rule violations | string | `"true"` | no |
 | group\_enabled | Group scanner enabled. | string | `"true"` | no |
-| groups\_settings\_disable\_polling | Whether to disable polling for the G Suite Groups API | string | `"false"` | no |
+| groups\_settings\_disable\_polling | Whether to disable polling for the G Suite Groups API | bool | `"false"` | no |
 | groups\_settings\_enabled | Groups settings scanner enabled. | string | `"true"` | no |
 | groups\_settings\_max\_calls | Maximum calls that can be made to the G Suite Groups API | string | `"5"` | no |
 | groups\_settings\_period | the period of max calls to the G Suite Groups API | string | `"1.1"` | no |
 | groups\_settings\_violations\_should\_notify | Notify for groups settings violations | string | `"true"` | no |
 | groups\_violations\_should\_notify | Notify for Groups violations | string | `"true"` | no |
-| gsuite\_admin\_email | G-Suite administrator email address to manage your Forseti installation | string | `""` | yes |
-| iam\_disable\_polling | Whether to disable polling for IAM API | string | `"false"` | no |
+| gsuite\_admin\_email | G-Suite administrator email address to manage your Forseti installation | string | `""` | no |
+| iam\_disable\_polling | Whether to disable polling for IAM API | bool | `"false"` | no |
 | iam\_max\_calls | Maximum calls that can be made to IAM API | string | `"90"` | no |
 | iam\_period | The period of max calls for the IAM API (in seconds) | string | `"1.0"` | no |
 | iam\_policy\_enabled | IAM Policy scanner enabled. | string | `"true"` | no |
@@ -124,7 +124,7 @@ Simple usage of the module within your own main.tf file is as follows:
 | iap\_violations\_should\_notify | Notify for IAP violations | string | `"true"` | no |
 | instance\_network\_interface\_enabled | Instance network interface scanner enabled. | string | `"false"` | no |
 | instance\_network\_interface\_violations\_should\_notify | Notify for instance network interface violations | string | `"true"` | no |
-| inventory\_email\_summary\_enabled | Email summary for inventory enabled | string | `"true"` | no |
+| inventory\_email\_summary\_enabled | Email summary for inventory enabled | string | `"false"` | no |
 | inventory\_gcs\_summary\_enabled | GCS summary for inventory enabled | string | `"true"` | no |
 | inventory\_retention\_days | Number of days to retain inventory data. | string | `"-1"` | no |
 | ke\_scanner\_enabled | KE scanner enabled. | string | `"false"` | no |
@@ -140,39 +140,40 @@ Simple usage of the module within your own main.tf file is as follows:
 | location\_violations\_should\_notify | Notify for location violations | string | `"true"` | no |
 | log\_sink\_enabled | Log sink scanner enabled. | string | `"true"` | no |
 | log\_sink\_violations\_should\_notify | Notify for log sink violations | string | `"true"` | no |
-| logging\_disable\_polling | Whether to disable polling for Logging API | string | `"false"` | no |
+| logging\_disable\_polling | Whether to disable polling for Logging API | bool | `"false"` | no |
 | logging\_max\_calls | Maximum calls that can be made to Logging API | string | `"9"` | no |
 | logging\_period | The period of max calls for the Logging API (in seconds) | string | `"1.0"` | no |
 | network | The VPC where the Forseti client and server will be created | string | `"default"` | no |
 | network\_project | The project containing the VPC and subnetwork where the Forseti client and server will be created | string | `""` | no |
-| org\_id | GCP Organization ID that Forseti will have purview over | string | `""` | yes |
+| org\_id | GCP Organization ID that Forseti will have purview over | string | `""` | no |
 | project\_id | Google Project ID that you want Forseti deployed into | string | n/a | yes |
 | resource\_enabled | Resource scanner enabled. | string | `"true"` | no |
 | resource\_violations\_should\_notify | Notify for resource violations | string | `"true"` | no |
-| securitycenter\_disable\_polling | Whether to disable polling for Security Center API | string | `"false"` | no |
+| securitycenter\_disable\_polling | Whether to disable polling for Security Center API | bool | `"false"` | no |
 | securitycenter\_max\_calls | Maximum calls that can be made to Security Center API | string | `"1"` | no |
 | securitycenter\_period | The period of max calls for the Security Center API (in seconds) | string | `"1.1"` | no |
 | sendgrid\_api\_key | Sendgrid.com API key to enable email notifications | string | `""` | no |
-| server\_access\_config | Server instance 'access_config' block | map | `<map>` | no |
+| server\_access\_config | Server instance 'access_config' block | map(any) | `<map>` | no |
 | server\_boot\_image | GCE instance image that is being used, currently Ubuntu only support is available | string | `"ubuntu-os-cloud/ubuntu-1804-lts"` | no |
-| server\_grpc\_allow\_ranges | List of CIDRs that will be allowed gRPC access to forseti server | list | `<list>` | no |
-| server\_instance\_metadata | Metadata key/value pairs to make available from within the server instance. | map | `<map>` | no |
+| server\_grpc\_allow\_ranges | List of CIDRs that will be allowed gRPC access to forseti server | list(string) | `<list>` | no |
+| server\_instance\_metadata | Metadata key/value pairs to make available from within the server instance. | map(string) | `<map>` | no |
 | server\_private | Private GCE Forseti Server VM (no public IP) | string | `"false"` | no |
 | server\_region | GCP region where Forseti will be deployed | string | `"us-central1"` | no |
-| server\_ssh\_allow\_ranges | List of CIDRs that will be allowed ssh access to forseti server | list | `<list>` | no |
-| server\_tags | GCE Forseti Server VM Tags | list | `<list>` | no |
+| server\_ssh\_allow\_ranges | List of CIDRs that will be allowed ssh access to forseti server | list(string) | `<list>` | no |
+| server\_tags | GCE Forseti Server VM Tags | list(string) | `<list>` | no |
 | server\_type | GCE Forseti Server role instance size | string | `"n1-standard-2"` | no |
 | service\_account\_key\_enabled | Service account key scanner enabled. | string | `"true"` | no |
 | service\_account\_key\_violations\_should\_notify | Notify for service account key violations | string | `"true"` | no |
-| servicemanagement\_disable\_polling | Whether to disable polling for Service Management API | string | `"false"` | no |
+| servicemanagement\_disable\_polling | Whether to disable polling for Service Management API | bool | `"false"` | no |
 | servicemanagement\_max\_calls | Maximum calls that can be made to Service Management API | string | `"2"` | no |
 | servicemanagement\_period | The period of max calls for the Service Management API (in seconds) | string | `"1.1"` | no |
-| sqladmin\_disable\_polling | Whether to disable polling for SQL Admin API | string | `"false"` | no |
+| sqladmin\_disable\_polling | Whether to disable polling for SQL Admin API | bool | `"false"` | no |
 | sqladmin\_max\_calls | Maximum calls that can be made to SQL Admin API | string | `"1"` | no |
 | sqladmin\_period | The period of max calls for the SQL Admin API (in seconds) | string | `"1.1"` | no |
 | storage\_bucket\_location | GCS storage bucket location | string | `"us-central1"` | no |
-| storage\_disable\_polling | Whether to disable polling for Storage API | string | `alse"` | no |
+| storage\_disable\_polling | Whetservicemanagement_disable_pollingher to disable polling for Storage API | bool | `"false"` | no |
 | subnetwork | The VPC subnetwork where the Forseti client and server will be created | string | `"default"` | no |
+| violations\_slack\_webhook | Slack webhook for any violation. Will apply to all scanner violation notifiers. | string | `""` | no |
 
 ## Outputs
 
@@ -182,13 +183,14 @@ Simple usage of the module within your own main.tf file is as follows:
 | forseti-client-storage-bucket | Forseti Client storage bucket |
 | forseti-client-vm-ip | Forseti Client VM private IP address |
 | forseti-client-vm-name | Forseti Client VM name |
+| forseti-cloudsql-connection-name | Forseti CloudSQL Connection String |
 | forseti-server-service-account | Forseti Server service account |
 | forseti-server-storage-bucket | Forseti Server storage bucket |
 | forseti-server-vm-ip | Forseti Server VM private IP address |
 | forseti-server-vm-name | Forseti Server VM name |
 | suffix | The random suffix appended to Forseti resources |
 
-[^]: (autogen_docs_end)
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## Requirements
 ### Installation Dependencies
