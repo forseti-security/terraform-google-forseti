@@ -4,15 +4,13 @@ This example illustrates how to set up a Forseti installation with real-time pol
 
 By default, terraform will use your application default credentials.  If you'd like to use a different service account key, set the environment variable `GOOGLE_APPLICATION_CREDENTIALS` to the desired key's path.  For more info on using the GCP provider, refer to the terraform documentation.
 
-[^]: (autogen_docs_start)
-
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| credentials\_path | Path to service account json | string | n/a | yes |
 | enforcer\_project\_id | A project to be managed by the real time enforcer | string | n/a | yes |
-| instance\_metadata | Metadata key/value pairs to make available from within the client and server instances. | map | `<map>` | no |
+| instance\_metadata | Metadata key/value pairs to make available from within the client and server instances. | map(string) | `<map>` | no |
 | org\_id | GCP Organization ID that Forseti will have purview over | string | n/a | yes |
 | project\_id | The ID of an existing Google project where Forseti will be installed | string | n/a | yes |
 
@@ -29,4 +27,4 @@ By default, terraform will use your application default credentials.  If you'd l
 | forseti-rt-enforcer-writer-role-id | The forseti real time enforcer writer Role ID. |
 | suffix | The random suffix appended to Forseti resources |
 
-[^]: (autogen_docs_end)
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
