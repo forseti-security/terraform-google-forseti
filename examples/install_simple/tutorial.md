@@ -71,6 +71,8 @@ If you are deploying on a Shared VPC, you need to set the <walkthrough-editor-se
   endCharacterOffset=19>network project</walkthrough-editor-select-line>
 on line 8. Otherwise, you can leave this empty.
 
+**Note that Forseti will run on VMs with external IPs by default.**
+
 ## Enable Optional Features
 There are additional settings which you can configure in the settings file to enable advanced Forseti functionality.
 

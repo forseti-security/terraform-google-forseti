@@ -44,7 +44,7 @@ variable "instance_tags" {
 
 variable "private" {
   description = "Private client and server instances (no public IPs)"
-  default     = true
+  default     = false
 }
 
 variable "sendgrid_api_key" {
