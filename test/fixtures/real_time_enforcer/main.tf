@@ -60,3 +60,4 @@ module "real_time_enforcer" {
     sshKeys = "ubuntu:${tls_private_key.main.public_key_openssh}"
   }
 }
+
