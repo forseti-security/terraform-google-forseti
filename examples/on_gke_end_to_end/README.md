@@ -46,7 +46,7 @@ In order to operate with the Service Account you must activate the following API
 - Kubernetes Engine API - container.googleapis.com
 - Container Registry API - containerregistry.googleapis.com
 
-[^]: (autogen_docs_start)
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## Inputs
 
