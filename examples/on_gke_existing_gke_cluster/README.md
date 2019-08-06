@@ -51,4 +51,4 @@ In addition to the [roles](https://github.com/forseti-security/terraform-google-
 | network\_policy | Whether or not to apply Pod NetworkPolicies | string | `"false"` | no |
 | project\_id | The ID of an existing Google project where Forseti will be installed | string | n/a | yes |
 
-[^]: (autogen_docs_end)
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
