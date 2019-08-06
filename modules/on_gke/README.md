@@ -24,7 +24,7 @@
 | project\_id | The ID of the GCP project where Forseti is currently deployed. | string | n/a | yes |
 | server\_log\_level | The log level of the Forseti server container. | string | `"info"` | no |
 
-[^]: (autogen_docs_end)
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## Requirements
 
