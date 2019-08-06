@@ -68,4 +68,4 @@ In order to operate with the Service Account you must activate the following API
 | sub\_network\_name | The names of the subnet being created | string | `"gke-sub-network"` | no |
 | zones | The zones to host the cluster in (optional if regional cluster / required if zonal) | list | `<list>` | no |
 
-[^]: (autogen_docs_end)
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
