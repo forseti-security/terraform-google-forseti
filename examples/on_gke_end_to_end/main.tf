@@ -96,8 +96,6 @@ module "forseti" {
   org_id                  = "${var.org_id}"
   network                 = "${module.vpc.network_name}"
   subnetwork              = "${var.sub_network_name}"
-  client_private          = "${var.client_private}"
-  server_private          = "${var.server_private}"
   storage_bucket_location = "${var.region}"
   server_region           = "${var.region}"
   client_region           = "${var.region}"
@@ -106,6 +104,7 @@ module "forseti" {
 
 module "gke" {
   source                   = "terraform-google-modules/kubernetes-engine/google"
+  version                  = "4.0.0"
   project_id               = "${var.project_id}"
   name                     = "${var.gke_cluster_name}"
   regional                 = false

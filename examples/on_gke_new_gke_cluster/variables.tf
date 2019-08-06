@@ -15,9 +15,9 @@
  */
 
 variable "auto_create_subnetworks" {
-  type        = bool
   description = "When set to true, the network is created in 'auto subnet mode' and it will create a subnet for each region automatically across the 10.128.0.0/9 address range. When set to false, the network is created in 'custom subnet mode' so the user can explicitly connect subnetwork resources."
   default     = false
+  type        = bool
 }
 
 variable "credentials_path" {
@@ -127,7 +127,8 @@ variable "network_description" {
 
 variable "production" {
   description = "Whether or not to deploy Forseti on GKE in a production configuration"
-  default     = "true"
+  default     = true
+  type        = bool
 }
 
 variable "project_id" {

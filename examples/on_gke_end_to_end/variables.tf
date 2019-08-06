@@ -98,7 +98,8 @@ variable "network_name" {
 
 variable "production" {
   description = "Whether or not to deploy Forseti on GKE in a production configuration"
-  default     = "true"
+  default     = true
+  type        = bool
 }
 
 variable "org_id" {
@@ -131,19 +132,9 @@ variable "network_description" {
 }
 
 variable "auto_create_subnetworks" {
-  type        = bool
   description = "When set to true, the network is created in 'auto subnet mode' and it will create a subnet for each region automatically across the 10.128.0.0/9 address range. When set to false, the network is created in 'custom subnet mode' so the user can explicitly connect subnetwork resources."
   default     = false
-}
-
-variable "client_private" {
-  description = "Private GCE Forseti Client VM (no public IP)"
-  default     = "false"
-}
-
-variable "server_private" {
-  description = "Private GCE Forseti Server VM (no public IP)"
-  default     = "false"
+  type        = bool
 }
 
 variable "server_log_level" {

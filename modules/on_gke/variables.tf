@@ -80,7 +80,8 @@ variable "load_balancer" {
 
 variable "network_policy" {
   description = "Apply pod network policies"
-  default     = "false"
+  default     = false
+  type        = bool
 }
 
 variable "project_id" {
@@ -89,12 +90,14 @@ variable "project_id" {
 
 variable "production" {
   description = "Whether or not to deploy Forseti on GKE in a production configuration"
-  default     = "true"
+  default     = true
+  type        = bool
 }
 
 variable "recreate_pods" {
   description = "Instructs the helm_release resource to, on update, perform pod restarts for the resources if applicable."
-  default     = "true"
+  default     = true
+  type        = bool
 
 }
 

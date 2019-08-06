@@ -96,6 +96,7 @@ module "vpc" {
 
 module "gke" {
   source            = "terraform-google-modules/kubernetes-engine/google"
+  version           = "4.0.0"
   project_id        = "${var.project_id}"
   name              = "${var.gke_cluster_name}"
   regional          = false

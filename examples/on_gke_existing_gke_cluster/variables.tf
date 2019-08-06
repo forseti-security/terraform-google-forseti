@@ -95,7 +95,8 @@ variable "load_balancer" {
 
 variable "network_policy" {
   description = "Whether or not to apply Pod NetworkPolicies"
-  default     = "false"
+  default     = false
+  type        = bool
 }
 
 variable "project_id" {
