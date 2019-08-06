@@ -49,6 +49,7 @@ locals {
   # mitigates issues in the Forseti explainer that requires `root_resource_id` to be of type `str`.
   root_resource_id         = "root_resource_id: ${length(var.composite_root_resources) > 0 ? "\"\"" : var.folder_id != "" ? "folders/${var.folder_id}" : "organizations/${var.org_id}"}"
   composite_root_resources = length(var.composite_root_resources) > 0 ? "composite_root_resources: [${join(", ", formatlist("\"%s\"", var.composite_root_resources))}]" : ""
+  excluded_resources       = length(var.excluded_resources) > 0 ? "excluded_resources: [${join(", ", formatlist("\"%s\"", var.excluded_resources))}]" : ""
   server_project_roles = [
     "roles/storage.objectViewer",
     "roles/storage.objectCreator",
@@ -252,6 +253,7 @@ data "template_file" "forseti_server_config" {
     BIGQUERY_ACL_VIOLATIONS_SHOULD_NOTIFY               = var.bigquery_acl_violations_should_notify
     AUDIT_LOGGING_VIOLATIONS_SHOULD_NOTIFY              = var.audit_logging_violations_should_notify
     VIOLATIONS_SLACK_WEBHOOK                            = var.violations_slack_webhook
+    EXCLUDED_RESOURCES                                  = local.excluded_resources
     # CSCC notifications
     CSCC_VIOLATIONS_ENABLED = var.cscc_violations_enabled
     CSCC_SOURCE_ID          = var.cscc_source_id
