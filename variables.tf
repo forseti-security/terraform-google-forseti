@@ -56,12 +56,6 @@ variable "forseti_run_frequency" {
   default     = "0 */2 * * *"
 }
 
-variable "forseti_enable_tracing" {
-  description = "Enable Forseti tracing"
-  type        = bool
-  default     = false
-}
-
 #----------------#
 # Forseti server #
 #----------------#

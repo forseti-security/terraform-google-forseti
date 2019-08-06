@@ -13,23 +13,3 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-provider "google" {
-  version = "~> 2.11.0"
-}
-
-resource "random_string" "main" {
-  upper   = "true"
-  lower   = "true"
-  number  = "false"
-  special = "false"
-  length  = 4
-}
-
-module "real_time_enforcer_roles" {
-  source = "../../../modules/real_time_enforcer_roles"
-
-  org_id = var.org_id
-  suffix = random_string.main.result
-}
-

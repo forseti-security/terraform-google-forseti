@@ -121,7 +121,6 @@ data "template_file" "forseti_server_startup_script" {
     forseti_version              = var.forseti_version
     forseti_server_conf_path     = local.server_conf_path
     forseti_home                 = var.forseti_home
-    forseti_enable_tracing       = var.forseti_enable_tracing
     cloudsql_proxy_arch          = var.cloudsql_proxy_arch
     storage_bucket_name          = local.server_bucket_name
     forseti_conf_server_checksum = base64sha256(data.template_file.forseti_server_config.rendered)
@@ -147,7 +146,6 @@ data "template_file" "forseti_server_env" {
     cloudsql_db_port       = var.cloudsql_db_port
     cloudsql_region        = var.cloudsql_region
     cloudsql_instance_name = google_sql_database_instance.master.name
-    forseti_enable_tracing = var.forseti_enable_tracing ? "True" : "False"
   }
 }
 
@@ -532,3 +530,4 @@ resource "null_resource" "services-dependency" {
     services = jsonencode(var.services)
   }
 }
+
