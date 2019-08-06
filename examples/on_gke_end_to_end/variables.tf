@@ -18,6 +18,11 @@ variable "credentials_path" {
   description = "Path to service account json"
 }
 
+variable "config_validator_enabled" {
+  description = "Config Validator scanner enabled."
+  default     = "false"
+}
+
 variable "domain" {
   description = "The domain associated with the GCP Organization ID"
 }
@@ -54,6 +59,16 @@ variable "gsuite_admin_email" {
 variable "helm_repository_url" {
   description = "The Helm repository containing the 'forseti-security' Helm charts"
   default     = "https://forseti-security-charts.storage.googleapis.com/release/"
+}
+
+variable "k8s_config_validator_image" {
+  description = "The container image used by the config-validator"
+  default     = "gcr.io/forseti-containers/config-validator"
+}
+
+variable "k8s_config_validator_image_tag" {
+  description = "The tag for the config-validator image."
+  default     = "latest"
 }
 
 variable "k8s_forseti_namespace" {
@@ -104,6 +119,11 @@ variable "production" {
 
 variable "org_id" {
   description = "GCP Organization ID that Forseti will have purview over"
+}
+
+variable "policy_library_repository_url" {
+  description = "The git repository containing the policy-library."
+  default     = "https://github.com/forseti-security/policy-library"
 }
 
 variable "project_id" {

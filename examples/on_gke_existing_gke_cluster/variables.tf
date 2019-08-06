@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+variable "config_validator_enabled" {
+  description = "Config Validator scanner enabled."
+  default     = "false"
+}
+
 variable "credentials_path" {
   description = "Path to service account json"
 }
@@ -47,7 +52,6 @@ variable "gke_cluster_name" {
 }
 
 
-
 variable "gke_service_account" {
   description = "The service account to run nodes as if not overridden in node_pools."
   default     = "create"
@@ -61,6 +65,16 @@ variable "helm_repository_url" {
 variable "k8s_forseti_namespace" {
   description = "The Kubernetes namespace in which to deploy Forseti."
   default     = "forseti"
+}
+
+variable "k8s_config_validator_image" {
+  description = "The container image used by the config-validator"
+  default     = "gcr.io/forseti-containers/config-validator"
+}
+
+variable "k8s_config_validator_image_tag" {
+  description = "The tag for the config-validator image."
+  default     = "latest"
 }
 
 variable "k8s_forseti_orchestrator_image" {
@@ -97,6 +111,11 @@ variable "network_policy" {
   description = "Whether or not to apply Pod NetworkPolicies"
   default     = false
   type        = bool
+}
+
+variable "policy_library_repository_url" {
+  description = "The git repository containing the policy-library."
+  default     = "https://github.com/forseti-security/policy-library"
 }
 
 variable "project_id" {

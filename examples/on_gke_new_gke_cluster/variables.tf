@@ -20,6 +20,11 @@ variable "auto_create_subnetworks" {
   type        = bool
 }
 
+variable "config_validator_enabled" {
+  description = "Config Validator scanner enabled."
+  default     = "false"
+}
+
 variable "credentials_path" {
   description = "Path to service account json"
 }
@@ -79,6 +84,15 @@ variable "helm_repository_url" {
   default     = "https://forseti-security-charts.storage.googleapis.com/release/"
 }
 
+variable "k8s_config_validator_image" {
+  description = "The container image used by the config-validator"
+  default     = "gcr.io/forseti-containers/config-validator"
+}
+
+variable "k8s_config_validator_image_tag" {
+  description = "The tag for the config-validator image."
+  default     = "latest"
+}
 variable "k8s_forseti_namespace" {
   description = "The Kubernetes namespace in which to deploy Forseti."
   default     = "forseti"
@@ -123,6 +137,11 @@ variable "network_description" {
   type        = string
   description = "An optional description of the network. The resource must be recreated to modify this field."
   default     = ""
+}
+
+variable "policy_library_repository_url" {
+  description = "The git repository containing the policy-library."
+  default     = "https://github.com/forseti-security/policy-library"
 }
 
 variable "production" {

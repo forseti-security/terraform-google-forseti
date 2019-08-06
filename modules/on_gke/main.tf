@@ -127,6 +127,31 @@ resource "helm_release" "forseti-security" {
   }
 
   set {
+    name  = "configValidator"
+    value = "${var.config_validator_enabled}"
+  }
+
+  set {
+    name  = "configValidatorImage"
+    value = "${var.k8s_config_validator_image}"
+  }
+
+  set {
+    name  = "configValidatorImageTag"
+    value = "${var.k8s_config_validator_image_tag}"
+  }
+
+  set {
+    name  = "loadBalancer"
+    value = "${var.load_balancer}"
+  }
+
+  set {
+    name  = "networkPolicyEnable"
+    value = "${var.network_policy}"
+  }
+
+  set {
     name  = "orchestratorImage"
     value = "${var.k8s_forseti_orchestrator_image}"
   }
@@ -139,6 +164,17 @@ resource "helm_release" "forseti-security" {
   set_sensitive {
     name  = "orchestratorKeyContents"
     value = "${google_service_account_key.client_key.private_key}"
+  }
+
+  set {
+    name  = "production"
+    value = "${var.production}"
+  }
+
+  set {
+    name  = "policyLibraryLocation"
+    value = "${var.policy_library_repository_url}"
+
   }
 
   set {
@@ -169,21 +205,6 @@ resource "helm_release" "forseti-security" {
   set {
     name  = "serverLogLevel"
     value = "${var.server_log_level}"
-  }
-
-  set {
-    name  = "networkPolicyEnable"
-    value = "${var.network_policy}"
-  }
-
-  set {
-    name  = "production"
-    value = "${var.production}"
-  }
-
-  set {
-    name  = "loadBalancer"
-    value = "${var.load_balancer}"
   }
 
   values = [
