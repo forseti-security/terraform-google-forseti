@@ -62,11 +62,6 @@ chmod -R ug+rwx ${forseti_home}/configs ${forseti_home}/rules ${forseti_home}/in
 echo "Installing Forseti"
 python3 setup.py install
 
-%{ if forseti_enable_tracing }
-echo "Installing Forseti tracing libs"
-python3 -m pip install --no-cache .[tracing]
-%{ endif }
-
 # Export variables required by initialize_forseti_services.sh.
 ${forseti_env}
 
