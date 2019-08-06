@@ -26,7 +26,7 @@ The [project factory](https://github.com/terraform-google-modules/terraform-goog
 In addition to the [roles](https://github.com/forseti-security/terraform-google-forseti#iam-roles) required for the core module function, the Service Account must have these roles for this example.
 - roles/container.developer
 
-[^]: (autogen_docs_start)
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## Inputs
 
