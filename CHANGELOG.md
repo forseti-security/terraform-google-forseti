@@ -8,9 +8,13 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ## [Unreleased]
 
+## [v3.1.0] - 2019-08-07
+
 ## Added
 
-- Added tracing support. [#223]
+- Support for Forseti v2.19.0. [#225]
+- Add on_gke submodule [#182]
+- Add `excluded_resources` variable to forseti_conf_server.yaml. [#213]
 
 ### Changed
 
