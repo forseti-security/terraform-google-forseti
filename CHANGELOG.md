@@ -224,7 +224,11 @@ Extending the adopted spec, each change should have a link to its corresponding 
 [v2.2.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v2.1.0...v2.2.0
 [v2.3.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v2.2.0...v2.3.0
 [v3.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v2.3.0...v3.0.0
+[v3.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v3.0.0...v3.1.0
 
+[#225]: https://github.com/forseti-security/terraform-google-forseti/pull/225
+[#213]: https://github.com/forseti-security/terraform-google-forseti/pull/213
+[#182]: https://github.com/forseti-security/terraform-google-forseti/pull/182
 [#211]: https://github.com/forseti-security/terraform-google-forseti/pull/211
 [#223]: https://github.com/forseti-security/terraform-google-forseti/pull/223
 [#210]: https://github.com/forseti-security/terraform-google-forseti/pull/210
