@@ -690,28 +690,13 @@ variable "services" {
 # Forseti db #
 #------------#
 
-variable "cloudsql_db_name" {
-  description = "CloudSQL database name"
-  default     = "forseti_security"
-}
-
-variable "cloudsql_db_port" {
-  description = "CloudSQL database port"
-  default     = "3306"
-}
-
-variable "cloudsql_instance_name" {
-  description = "The name of the master CloudSQL instance"
+variable "cloudsql_module" {
+  description = "The CloudSQL module"
 }
 
 variable "cloudsql_proxy_arch" {
   description = "CloudSQL Proxy architecture"
   default     = "linux.amd64"
-}
-
-variable "cloudsql_region" {
-  description = "CloudSQL region"
-  default     = "us-central1"
 }
 
 #---------------------------------------#

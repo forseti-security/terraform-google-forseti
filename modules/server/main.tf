@@ -141,10 +141,10 @@ data "template_file" "forseti_server_env" {
 
   vars = {
     project_id             = var.project_id
-    cloudsql_db_name       = var.cloudsql_db_name
-    cloudsql_db_port       = var.cloudsql_db_port
-    cloudsql_region        = var.cloudsql_region
-    cloudsql_instance_name = var.cloudsql_instance_name
+    cloudsql_db_name       = var.cloudsql_module.forseti-cloudsql-db-name
+    cloudsql_db_port       = var.cloudsql_module.forseti-clodusql-db-port
+    cloudsql_region        = var.cloudsql_module.forseti-cloudsql-region
+    cloudsql_instance_name = var.cloudsql_module.forseti-cloudsql-instance-name
   }
 }
 

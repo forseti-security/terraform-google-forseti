@@ -128,9 +128,7 @@ module "server" {
   server_tags                                         = var.server_tags
   server_access_config                                = var.server_access_config
   server_private                                      = var.server_private
-  cloudsql_instance_name                              = module.cloudsql.forseti-cloudsql-instance-name
-  cloudsql_db_name                                    = var.cloudsql_db_name
-  cloudsql_db_port                                    = var.cloudsql_db_port
+  cloudsql_module                                     = module.cloudsql
   cloudsql_proxy_arch                                 = var.cloudsql_proxy_arch
   storage_bucket_location                             = var.storage_bucket_location
   bucket_cai_location                                 = var.bucket_cai_location

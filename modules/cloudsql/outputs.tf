@@ -23,3 +23,18 @@ output "forseti-cloudsql-instance-name" {
   description = "The name of the master CloudSQL instance"
   value       = google_sql_database_instance.master.name
 }
+
+output "forseti-cloudsql-region" {
+  description = "CloudSQL region"
+  value       = var.cloudsql_region
+}
+
+output "forseti-cloudsql-db-name" {
+  description = "CloudSQL region"
+  value       = var.cloudsql_db_name
+}
+
+output "forseti-clodusql-db-port" {
+  description = "CloudSQL database port"
+  value       = "3306"
+}
