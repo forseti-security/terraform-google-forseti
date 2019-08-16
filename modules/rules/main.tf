@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,22 +44,28 @@ locals {
 }
 
 data "template_file" "main" {
-  count    = "${length(local.files)}"
-  template = "${file("${path.module}/templates/${element(local.files, count.index)}")}"
+  count = length(local.files)
+  template = file(
+    "${path.module}/templates/${element(local.files, count.index)}",
+  )
 
-  vars {
-    org_id = "${var.org_id}"
-    domain = "${var.domain}"
+  vars = {
+    org_id = var.org_id
+    domain = var.domain
   }
 }
 
 resource "google_storage_bucket_object" "main" {
-  count   = "${length(local.files)}"
-  name    = "${element(local.files, count.index)}"
-  content = "${element(data.template_file.main.*.rendered, count.index)}"
-  bucket  = "${var.bucket}"
+  count   = length(local.files)
+  name    = element(local.files, count.index)
+  content = element(data.template_file.main.*.rendered, count.index)
+  bucket  = var.bucket
 
   lifecycle {
-    ignore_changes = ["content", "detect_md5hash"]
+    ignore_changes = [
+      content,
+      detect_md5hash,
+    ]
   }
 }
+

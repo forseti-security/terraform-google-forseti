@@ -8,6 +8,48 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed race condition in server VM roles. [#231]
+
+## [v4.0.0] - 2019-08-07
+
+## Added
+
+- Support for Forseti v2.19.0. [#225]
+- Add on_gke submodule [#182]
+- Add `excluded_resources` variable to forseti_conf_server.yaml. [#213]
+
+### Changed
+
+- Remove roles/bigquery.dataViewer role from server. [#210]
+- Flip `inventory_email_summary_enabled` default to `false` and require
+  `sendgrid_api_key` to be non-empty when `true`. [#211]
+
+## [v3.0.0] - 2019-07-19
+
+### Changed
+
+- Supported version of Terraform is 0.12. [#201]
+
+## [v2.3.0] - 2019-07-11
+
+### Added
+
+- Support for Forseti v2.18.0. [#200]
+- Support for Forseti Real-Time Enforcer VM private IP address. [#180]
+
+### Changed
+
+- Updated ke_rules.yaml file to scan for new vulnerabilities. [#200]
+
+## [v2.2.0] - 2019-06-20
+
+### Added
+
+- Support for Forseti v2.17.0 [#184]
+- Add Kubernetes resources to CAI asset inventory
+
 ### Changed
 
 - Do not add email configuration if `sendgrid_api_key` is unset [#174]
@@ -168,7 +210,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 ### ADDED
 - This is the initial release of the Forseti module.
 
-[Unreleased]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v3.0.0...HEAD
 [v0.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/releases/tag/v0.1.0
 [v1.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v0.1.0...v1.0.0
 [v1.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.0.0...v1.1.0
@@ -183,8 +225,22 @@ Extending the adopted spec, each change should have a link to its corresponding 
 [v1.6.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.5.1...v1.6.0
 [v2.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.6.0...v2.0.0
 [v2.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v2.0.0...v2.1.0
+[v2.2.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v2.1.0...v2.2.0
+[v2.3.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v2.2.0...v2.3.0
+[v3.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v2.3.0...v3.0.0
+[v4.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v3.0.0...v4.0.0
 
+[#231]: https://github.com/forseti-security/terraform-google-forseti/pull/231
+[#225]: https://github.com/forseti-security/terraform-google-forseti/pull/225
+[#213]: https://github.com/forseti-security/terraform-google-forseti/pull/213
+[#182]: https://github.com/forseti-security/terraform-google-forseti/pull/182
+[#211]: https://github.com/forseti-security/terraform-google-forseti/pull/211
+[#223]: https://github.com/forseti-security/terraform-google-forseti/pull/223
+[#210]: https://github.com/forseti-security/terraform-google-forseti/pull/210
+[#201]: https://github.com/forseti-security/terraform-google-forseti/pull/201
+[#180]: https://github.com/forseti-security/terraform-google-forseti/pull/180
 [#174]: https://github.com/forseti-security/terraform-google-forseti/pull/174
+[#173]: https://github.com/forseti-security/terraform-google-forseti/pull/173
 [#170]: https://github.com/forseti-security/terraform-google-forseti/pull/170
 [#163]: https://github.com/forseti-security/terraform-google-forseti/pull/163
 [#157]: https://github.com/forseti-security/terraform-google-forseti/pull/157

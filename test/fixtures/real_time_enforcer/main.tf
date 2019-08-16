@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,28 +14,50 @@
  * limitations under the License.
  */
 
+provider "tls" {
+  version = "~> 2.0"
+}
+
 resource "tls_private_key" "main" {
   algorithm = "RSA"
   rsa_bits  = 4096
 }
 
 resource "local_file" "gce-keypair-pk" {
-  content  = "${tls_private_key.main.private_key_pem}"
+  content  = tls_private_key.main.private_key_pem
   filename = "${path.module}/sshkey"
+}
+
+data "google_compute_zones" "main" {
+  project = var.project_id
+  region  = var.region
+  status  = "UP"
+}
+
+module "bastion" {
+  source = "../bastion"
+
+  network    = var.network
+  project_id = "${var.project_id}"
+  subnetwork = var.subnetwork
+  zone       = data.google_compute_zones.main.names[0]
 }
 
 module "real_time_enforcer" {
   source = "../../../examples/real_time_enforcer"
 
-  credentials_path    = "${var.credentials_path}"
-  project_id          = "${var.project_id}"
-  org_id              = "${var.org_id}"
-  enforcer_project_id = "${var.enforcer_project_id}"
+  project_id          = var.project_id
+  org_id              = var.org_id
+  enforcer_project_id = var.enforcer_project_id
+  region              = var.region
+  network             = var.network
+  subnetwork          = var.subnetwork
 
-  instance_metadata {
+  instance_metadata = {
     # This username is a little bit silly because the enforcer VM is COS, but for
     # the sake of consistency with the Forseti client and server we use the same
     # hostname.
     sshKeys = "ubuntu:${tls_private_key.main.public_key_openssh}"
   }
 }
+

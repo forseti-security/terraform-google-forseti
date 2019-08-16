@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,13 +41,13 @@ variable "domain" {
 
 variable "instance_metadata" {
   description = "Metadata key/value pairs to make available from within the client and server instances."
-  type        = "map"
+  type        = map(string)
   default     = {}
 }
 
 variable "instance_tags" {
   description = "Tags to assign the client and server instances."
-  type        = "list"
+  type        = list(string)
   default     = []
 }
 
@@ -55,3 +55,4 @@ variable "public_ptr_domain_name" {
   description = "Forseti server DNS name"
   default     = ""
 }
+

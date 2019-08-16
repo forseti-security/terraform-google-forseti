@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,13 +24,14 @@ resource "random_string" "pubsub-topic-suffix" {
 module "real_time_enforcer_organization_sink" {
   source = "../../../modules/real_time_enforcer_organization_sink"
 
-  pubsub_project_id = "${var.pubsub_project_id}"
-  org_id            = "${var.org_id}"
+  pubsub_project_id = var.pubsub_project_id
+  org_id            = var.org_id
 }
 
 module "real_time_enforcer_project_sink" {
   source = "../../../modules/real_time_enforcer_project_sink"
 
-  pubsub_project_id = "${var.pubsub_project_id}"
-  sink_project_id   = "${var.sink_project_id}"
+  pubsub_project_id = var.pubsub_project_id
+  sink_project_id   = var.sink_project_id
 }
+

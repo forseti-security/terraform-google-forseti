@@ -14,7 +14,7 @@
 
 require "yaml"
 
-forseti_version = "2.16.0"
+forseti_version = "2.19.0"
 
 control "server" do
   title "Forseti server instance resources"
@@ -325,8 +325,6 @@ control "server" do
             including(
               "resource" => "iam_policy_violations",
               "should_notify" => true,
-              # This extra bit of verification tests the `iam_policy_violations_slack_webhook` variable
-              "notifiers" => including("name" => "slack_webhook", "configuration" => { "data_format" => "json", "webhook_url" => nil }),
             )
           )
         end
@@ -376,8 +374,6 @@ control "server" do
             including(
               "resource" => "kms_violations",
               "should_notify" => true,
-              # This extra bit of verification tests the `kms_violations_slack_webhook` variable
-              "notifiers" => including("name" => "slack_webhook", "configuration" => { "data_format" => "json", "webhook_url" => nil }),
             )
           )
         end

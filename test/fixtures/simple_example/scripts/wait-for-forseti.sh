@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2018 Google LLC
+# Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,9 +16,9 @@
 
 # Block until the Forseti startup script has finished running.
 
-echo "Waiting for up to 300 seconds for Forseti to be ready."
+echo "Waiting for up to 360 seconds for Forseti to be ready."
 
-for _ in {1..300}; do
+for _ in {1..360}; do
   if [[ -f /etc/profile.d/forseti_environment.sh ]]; then
     echo "Forseti is ready."
     exit 0
@@ -27,5 +27,5 @@ for _ in {1..300}; do
   fi
 done
 
-echo "Forseti was not ready after 300 seconds!"
+echo "Forseti was not ready after 360 seconds!"
 exit 1

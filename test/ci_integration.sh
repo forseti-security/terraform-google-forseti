@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Copyright 2018 Google LLC
+# Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,12 +17,23 @@
 # Always clean up.
 DELETE_AT_EXIT="$(mktemp -d)"
 finish() {
+  local rv=$?
+  echo 'BEGIN: finish() trap handler' >&2
+  if [[ "${rv}" -ne 0 ]]; then
+    echo 'BEGIN: .kitchen/logs/kitchen.log'
+    cat .kitchen/logs/kitchen.log
+    echo 'END: .kitchen/logs/kitchen.log'
+    echo 'BEGIN: kitchen diagnose --all'
+    kitchen diagnose --all
+    echo 'END: kitchen diagnose --all'
+  fi
   echo 'BEGIN: finish() trap handler' >&2
   set +e
   kitchen destroy "$SUITE"
   set -e
   [[ -d "${DELETE_AT_EXIT}" ]] && rm -rf "${DELETE_AT_EXIT}"
   echo 'END: finish() trap handler' >&2
+  exit "${rv}"
 }
 
 # Map the input parameters provided by Concourse CI, or whatever mechanism is
@@ -44,6 +55,7 @@ setup_environment() {
   export TF_VAR_domain="${DOMAIN}"
   export TF_VAR_gsuite_admin_email="${GSUITE_ADMIN_EMAIL}"
   export TF_VAR_credentials_path="${CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE}"
+  export TF_VAR_region="${REGION}"
 
   # shared_vpc test suite
   export TF_VAR_network_project="${NETWORK_PROJECT}"

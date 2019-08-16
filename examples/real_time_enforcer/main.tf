@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,7 @@
  */
 
 provider "google" {
-  credentials = "${file(var.credentials_path)}"
-  version     = "~> 1.20"
+  version = "~> 2.11.0"
 }
 
 provider "null" {
@@ -41,28 +40,28 @@ resource "random_string" "suffix" {
 
 module "real_time_enforcer_roles" {
   source = "../../modules/real_time_enforcer_roles"
-
-  org_id = "${var.org_id}"
-  suffix = "${random_string.suffix.result}"
+  org_id = var.org_id
+  suffix = random_string.suffix.result
 }
 
 module "real_time_enforcer_project_sink" {
-  source = "../../modules/real_time_enforcer_project_sink"
-
-  pubsub_project_id = "${var.project_id}"
-  sink_project_id   = "${var.enforcer_project_id}"
+  source            = "../../modules/real_time_enforcer_project_sink"
+  pubsub_project_id = var.project_id
+  sink_project_id   = var.enforcer_project_id
 }
 
 module "real_time_enforcer" {
-  source = "../../modules/real_time_enforcer"
-
-  project_id                 = "${var.project_id}"
-  org_id                     = "${var.org_id}"
-  enforcer_instance_metadata = "${var.instance_metadata}"
-  topic                      = "${module.real_time_enforcer_project_sink.topic}"
-
-  enforcer_viewer_role = "${module.real_time_enforcer_roles.forseti-rt-enforcer-viewer-role-id}"
-  enforcer_writer_role = "${module.real_time_enforcer_roles.forseti-rt-enforcer-writer-role-id}"
-
-  suffix = "${random_string.suffix.result}"
+  source                     = "../../modules/real_time_enforcer"
+  project_id                 = var.project_id
+  org_id                     = var.org_id
+  enforcer_instance_metadata = var.instance_metadata
+  topic                      = module.real_time_enforcer_project_sink.topic
+  enforcer_viewer_role       = module.real_time_enforcer_roles.forseti-rt-enforcer-viewer-role-id
+  enforcer_writer_role       = module.real_time_enforcer_roles.forseti-rt-enforcer-writer-role-id
+  enforcer_instance_private  = true
+  suffix                     = random_string.suffix.result
+  network                    = var.network
+  subnetwork                 = var.subnetwork
+  client_region              = var.region
+  enforcer_region            = var.region
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -70,14 +70,25 @@ variable "network_project" {
 
 variable "enforcer_ssh_allow_ranges" {
   description = "List of CIDRs that will be allowed ssh access to forseti real time enforcer"
-  type        = "list"
+  type        = list(string)
   default     = ["0.0.0.0/0"]
 }
 
 variable "enforcer_instance_metadata" {
   description = "Metadata key/value pairs to make available from within the real time enforcer instance."
-  type        = "map"
+  type        = map(string)
   default     = {}
+}
+
+variable "enforcer_instance_access_config" {
+  description = "Enforcer instance 'access_config' block"
+  default     = {}
+  type        = map(any)
+}
+
+variable "enforcer_instance_private" {
+  description = "Enable enforcer instance private IP"
+  default     = "false"
 }
 
 variable "suffix" {
@@ -95,3 +106,4 @@ variable "enforcer_viewer_role" {
 variable "topic" {
   description = "The pubsub topic receiving exported logs."
 }
+

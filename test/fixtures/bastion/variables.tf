@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,20 +16,21 @@
 
 variable "network" {
   description = "The name of the network in which the bastion host will be deployed."
-  type        = "string"
+  type        = string
 }
 
 variable "project_id" {
   description = "The ID of the project in which resources will be created."
-  type        = "string"
+  type        = string
 }
 
 variable "subnetwork" {
   description = "The name of the subnetwork in which the bastion host will be deployed."
-  type        = "string"
+  type        = string
 }
 
 variable "zone" {
   description = "The name of the zone in which the bastion host will be deployed."
-  type        = "string"
+  type        = string
 }
+

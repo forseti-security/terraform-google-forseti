@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,25 +16,21 @@
 
 output "forseti-rt-enforcer-vm-name" {
   description = "Forseti Enforcer VM name"
-  value       = "${google_compute_instance.main.name}"
+  value       = google_compute_instance.main.name
 }
 
 output "forseti-rt-enforcer-vm-ip" {
   description = "Forseti Enforcer VM private IP address"
-  value       = "${google_compute_instance.main.network_interface.0.network_ip}"
-}
-
-output "forseti-rt-enforcer-vm-public-ip" {
-  description = "Forseti Enforcer VM public IP address"
-  value       = "${google_compute_instance.main.network_interface.0.access_config.0.nat_ip}"
+  value       = google_compute_instance.main.network_interface[0].network_ip
 }
 
 output "forseti-rt-enforcer-service-account" {
   description = "Forseti Enforcer service account"
-  value       = "${google_service_account.main.email}"
+  value       = google_service_account.main.email
 }
 
 output "forseti-rt-enforcer-storage-bucket" {
   description = "Forseti Enforcer storage bucket"
-  value       = "${google_storage_bucket.main.name}"
+  value       = google_storage_bucket.main.name
 }
+

@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ variable "project_id" {
 
 variable "forseti_version" {
   description = "The version of Forseti to install"
-  default     = "v2.16.0"
+  default     = "v2.19.0"
 }
 
 variable "forseti_repo_url" {
@@ -79,26 +79,27 @@ variable "server_address" {
 
 variable "client_ssh_allow_ranges" {
   description = "List of CIDRs that will be allowed ssh access to forseti server"
-  type        = "list"
+  type        = list(string)
   default     = ["0.0.0.0/0"]
 }
 
 variable "client_instance_metadata" {
   description = "Metadata key/value pairs to make available from within the client instance"
-  type        = "map"
+  type        = map(string)
   default     = {}
 }
 
 variable "client_tags" {
   description = "VM instance tags"
-  type        = "list"
+  type        = list(string)
   default     = []
 }
 
+
 variable "client_access_config" {
   description = "Client instance 'access_config' block"
-  type        = "map"
   default     = {}
+  type        = map(any)
 }
 
 variable "client_private" {
@@ -112,6 +113,7 @@ variable "suffix" {
 
 variable "services" {
   description = "An artificial dependency to bypass #10462"
-  type        = "list"
+  type        = list(string)
   default     = []
 }
+

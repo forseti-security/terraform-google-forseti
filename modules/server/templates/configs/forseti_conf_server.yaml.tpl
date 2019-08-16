@@ -33,6 +33,14 @@ inventory:
     #    - "organizations/56789"
     ${COMPOSITE_ROOT_RESOURCES}
 
+    # Resources to be excluded during the inventory process.
+    # Only organizations/<ORG_NUMBER>, folders/<FOLDER_NUMBER>,
+    # projects/<PROJECT_ID> or projects/<PROJECT_NUMBER> are accepted.
+    # The child resources under the excluded resources will also be excluded.
+    #
+    # Example:
+    # excluded_resources: ['folders/1234', 'projects/my-project-123', 'projects/4321']
+    ${EXCLUDED_RESOURCES}
 
     # gsuite access
     domain_super_admin_email: ${DOMAIN_SUPER_ADMIN_EMAIL}
@@ -178,8 +186,15 @@ inventory:
         #    - dns.googleapis.com/Policy
         #    - iam.googleapis.com/Role
         #    - iam.googleapis.com/ServiceAccount
+        #    - k8s.io/Namespace
+        #    - k8s.io/Node
+        #    - k8s.io/Pod
         #    - pubsub.googleapis.com/Subscription
         #    - pubsub.googleapis.com/Topic
+        #    - rbac.authorization.k8s.io/ClusterRole
+        #    - rbac.authorization.k8s.io/ClusterRoleBinding
+        #    - rbac.authorization.k8s.io/Role
+        #    - rbac.authorization.k8s.io/RoleBinding
         #    - spanner.googleapis.com/Database
         #    - spanner.googleapis.com/Instance
         #    - sqladmin.googleapis.com/Instance
@@ -289,10 +304,12 @@ notifier:
             # Create an incoming webhook in your organization's Slack setting, located at:
             # https://[your_org].slack.com/apps/manage/custom-integrations
             # Add the provided URL in the configuration below in `webhook_url`.
+            %{ if IAM_POLICY_VIOLATIONS_SLACK_WEBHOOK != "" || VIOLATIONS_SLACK_WEBHOOK != "" }
             - name: slack_webhook
               configuration:
                 data_format: json  # slack only supports json
-                webhook_url: ${IAM_POLICY_VIOLATIONS_SLACK_WEBHOOK}
+                webhook_url: %{ if IAM_POLICY_VIOLATIONS_SLACK_WEBHOOK != "" }${IAM_POLICY_VIOLATIONS_SLACK_WEBHOOK}%{ else }${VIOLATIONS_SLACK_WEBHOOK}%{ endif }
+            %{ endif }
 
         - resource: audit_logging_violations
           should_notify: ${AUDIT_LOGGING_VIOLATIONS_SHOULD_NOTIFY}
@@ -307,6 +324,12 @@ notifier:
                 data_format: csv
                 # gcs_path should begin with "gs://"
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+            %{ if VIOLATIONS_SLACK_WEBHOOK != "" }
+            - name: slack_webhook
+              configuration:
+                data_format: json  # slack only supports json
+                webhook_url: ${VIOLATIONS_SLACK_WEBHOOK}
+            %{ endif }
 
         - resource: blacklist_violations
           should_notify: ${BLACKLIST_VIOLATIONS_SHOULD_NOTIFY}
@@ -321,6 +344,12 @@ notifier:
                 data_format: csv
                 # gcs_path should begin with "gs://"
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+            %{ if VIOLATIONS_SLACK_WEBHOOK != "" }
+            - name: slack_webhook
+              configuration:
+                data_format: json  # slack only supports json
+                webhook_url: ${VIOLATIONS_SLACK_WEBHOOK}
+            %{ endif }
 
         - resource: bigquery_acl_violations
           should_notify: ${BIGQUERY_ACL_VIOLATIONS_SHOULD_NOTIFY}
@@ -335,6 +364,12 @@ notifier:
                 data_format: csv
                 # gcs_path should begin with "gs://"
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+            %{ if VIOLATIONS_SLACK_WEBHOOK != "" }
+            - name: slack_webhook
+              configuration:
+                data_format: json  # slack only supports json
+                webhook_url: ${VIOLATIONS_SLACK_WEBHOOK}
+            %{ endif }
 
         - resource: buckets_acl_violations
           should_notify: ${BUCKETS_ACL_VIOLATIONS_SHOULD_NOTIFY}
@@ -349,6 +384,12 @@ notifier:
                 data_format: csv
                 # gcs_path should begin with "gs://"
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+            %{ if VIOLATIONS_SLACK_WEBHOOK != "" }
+            - name: slack_webhook
+              configuration:
+                data_format: json  # slack only supports json
+                webhook_url: ${VIOLATIONS_SLACK_WEBHOOK}
+            %{ endif }
 
         - resource: config_validator_violations
           should_notify: ${CONFIG_VALIDATOR_VIOLATIONS_SHOULD_NOTIFY}
@@ -363,6 +404,12 @@ notifier:
                 data_format: csv
                 # gcs_path should begin with "gs://"
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+            %{ if VIOLATIONS_SLACK_WEBHOOK != "" }
+            - name: slack_webhook
+              configuration:
+                data_format: json  # slack only supports json
+                webhook_url: ${VIOLATIONS_SLACK_WEBHOOK}
+            %{ endif }
 
         - resource: cloudsql_acl_violations
           should_notify: ${CLOUDSQL_ACL_VIOLATIONS_SHOULD_NOTIFY}
@@ -377,6 +424,12 @@ notifier:
                 data_format: csv
                 # gcs_path should begin with "gs://"
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+            %{ if VIOLATIONS_SLACK_WEBHOOK != "" }
+            - name: slack_webhook
+              configuration:
+                data_format: json  # slack only supports json
+                webhook_url: ${VIOLATIONS_SLACK_WEBHOOK}
+            %{ endif }
 
         - resource: enabled_apis_violations
           should_notify: ${ENABLED_APIS_VIOLATIONS_SHOULD_NOTIFY}
@@ -391,6 +444,12 @@ notifier:
                 data_format: csv
                 # gcs_path should begin with "gs://"
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+            %{ if VIOLATIONS_SLACK_WEBHOOK != "" }
+            - name: slack_webhook
+              configuration:
+                data_format: json  # slack only supports json
+                webhook_url: ${VIOLATIONS_SLACK_WEBHOOK}
+            %{ endif }
 
         - resource: firewall_rule_violations
           should_notify: ${FIREWALL_RULE_VIOLATIONS_SHOULD_NOTIFY}
@@ -405,6 +464,12 @@ notifier:
                 data_format: csv
                 # gcs_path should begin with "gs://"
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+            %{ if VIOLATIONS_SLACK_WEBHOOK != "" }
+            - name: slack_webhook
+              configuration:
+                data_format: json  # slack only supports json
+                webhook_url: ${VIOLATIONS_SLACK_WEBHOOK}
+            %{ endif }
 
         - resource: forwarding_rule_violations
           should_notify: ${FORWARDING_RULE_VIOLATIONS_SHOULD_NOTIFY}
@@ -419,6 +484,12 @@ notifier:
                 data_format: csv
                 # gcs_path should begin with "gs://"
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+            %{ if VIOLATIONS_SLACK_WEBHOOK != "" }
+            - name: slack_webhook
+              configuration:
+                data_format: json  # slack only supports json
+                webhook_url: ${VIOLATIONS_SLACK_WEBHOOK}
+            %{ endif }
 
         - resource: groups_settings_violations
           should_notify: ${GROUPS_SETTINGS_VIOLATIONS_SHOULD_NOTIFY}
@@ -432,7 +503,13 @@ notifier:
               configuration:
                 data_format: csv
                 # gcs_path should begin with "gs://"
-                gcs_path: gs://{FORSETI_BUCKET}/scanner_violations
+                gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+            %{ if VIOLATIONS_SLACK_WEBHOOK != "" }
+            - name: slack_webhook
+              configuration:
+                data_format: json  # slack only supports json
+                webhook_url: ${VIOLATIONS_SLACK_WEBHOOK}
+            %{ endif }
 
         - resource: ke_version_violations
           should_notify: ${KE_VERSION_VIOLATIONS_SHOULD_NOTIFY}
@@ -447,6 +524,12 @@ notifier:
                 data_format: csv
                 # gcs_path should begin with "gs://"
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+            %{ if VIOLATIONS_SLACK_WEBHOOK != "" }
+            - name: slack_webhook
+              configuration:
+                data_format: json  # slack only supports json
+                webhook_url: ${VIOLATIONS_SLACK_WEBHOOK}
+            %{ endif }
 
         - resource: ke_violations
           should_notify: ${KE_VIOLATIONS_SHOULD_NOTIFY}
@@ -461,6 +544,12 @@ notifier:
                 data_format: csv
                 # gcs_path should begin with "gs://"
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+            %{ if VIOLATIONS_SLACK_WEBHOOK != "" }
+            - name: slack_webhook
+              configuration:
+                data_format: json  # slack only supports json
+                webhook_url: ${VIOLATIONS_SLACK_WEBHOOK}
+            %{ endif }
 
         - resource: kms_violations
           should_notify: ${KMS_VIOLATIONS_SHOULD_NOTIFY}
@@ -479,10 +568,12 @@ notifier:
             # Create an incoming webhook in your organization's Slack setting, located at:
             # https://[your_org].slack.com/apps/manage/custom-integrations
             # Add the provided URL in the configuration below in `webhook_url`.
+            %{ if KMS_VIOLATIONS_SLACK_WEBHOOK != "" || VIOLATIONS_SLACK_WEBHOOK != "" }
             - name: slack_webhook
               configuration:
                 data_format: json  # slack only supports json
-                webhook_url: ${KMS_VIOLATIONS_SLACK_WEBHOOK}
+                webhook_url: %{ if KMS_VIOLATIONS_SLACK_WEBHOOK != "" }${KMS_VIOLATIONS_SLACK_WEBHOOK}%{ else }${VIOLATIONS_SLACK_WEBHOOK}%{ endif }
+            %{ endif }
 
         - resource: groups_violations
           should_notify: ${GROUPS_VIOLATIONS_SHOULD_NOTIFY}
@@ -497,6 +588,12 @@ notifier:
                 data_format: csv
                 # gcs_path should begin with "gs://"
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+            %{ if VIOLATIONS_SLACK_WEBHOOK != "" }
+            - name: slack_webhook
+              configuration:
+                data_format: json  # slack only supports json
+                webhook_url: ${VIOLATIONS_SLACK_WEBHOOK}
+            %{ endif }
 
         - resource: instance_network_interface_violations
           should_notify: ${INSTANCE_NETWORK_INTERFACE_VIOLATIONS_SHOULD_NOTIFY}
@@ -511,6 +608,12 @@ notifier:
                 data_format: csv
                 # gcs_path should begin with "gs://"
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+            %{ if VIOLATIONS_SLACK_WEBHOOK != "" }
+            - name: slack_webhook
+              configuration:
+                data_format: json  # slack only supports json
+                webhook_url: ${VIOLATIONS_SLACK_WEBHOOK}
+            %{ endif }
 
         - resource: iap_violations
           should_notify: ${IAP_VIOLATIONS_SHOULD_NOTIFY}
@@ -525,6 +628,12 @@ notifier:
                 data_format: csv
                 # gcs_path should begin with "gs://"
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+            %{ if VIOLATIONS_SLACK_WEBHOOK != "" }
+            - name: slack_webhook
+              configuration:
+                data_format: json  # slack only supports json
+                webhook_url: ${VIOLATIONS_SLACK_WEBHOOK}
+            %{ endif }
 
         - resource: lien_violations
           should_notify: ${LIEN_VIOLATIONS_SHOULD_NOTIFY}
@@ -539,6 +648,12 @@ notifier:
                 data_format: csv
                 # gcs_path should begin with "gs://"
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+            %{ if VIOLATIONS_SLACK_WEBHOOK != "" }
+            - name: slack_webhook
+              configuration:
+                data_format: json  # slack only supports json
+                webhook_url: ${VIOLATIONS_SLACK_WEBHOOK}
+            %{ endif }
 
         - resource: location_violations
           should_notify: ${LOCATION_VIOLATIONS_SHOULD_NOTIFY}
@@ -553,6 +668,12 @@ notifier:
                 data_format: csv
                 # gcs_path should begin with "gs://"
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+            %{ if VIOLATIONS_SLACK_WEBHOOK != "" }
+            - name: slack_webhook
+              configuration:
+                data_format: json  # slack only supports json
+                webhook_url: ${VIOLATIONS_SLACK_WEBHOOK}
+            %{ endif }
 
         - resource: log_sink_violations
           should_notify: ${LOG_SINK_VIOLATIONS_SHOULD_NOTIFY}
@@ -567,6 +688,12 @@ notifier:
                 data_format: csv
                 # gcs_path should begin with "gs://"
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+            %{ if VIOLATIONS_SLACK_WEBHOOK != "" }
+            - name: slack_webhook
+              configuration:
+                data_format: json  # slack only supports json
+                webhook_url: ${VIOLATIONS_SLACK_WEBHOOK}
+            %{ endif }
 
         - resource: resource_violations
           should_notify: ${RESOURCE_VIOLATIONS_SHOULD_NOTIFY}
@@ -581,6 +708,12 @@ notifier:
                 data_format: csv
                 # gcs_path should begin with "gs://"
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+            %{ if VIOLATIONS_SLACK_WEBHOOK != "" }
+            - name: slack_webhook
+              configuration:
+                data_format: json  # slack only supports json
+                webhook_url: ${VIOLATIONS_SLACK_WEBHOOK}
+            %{ endif }
 
         - resource: service_account_key_violations
           should_notify: ${SERVICE_ACCOUNT_KEY_VIOLATIONS_SHOULD_NOTIFY}
@@ -595,6 +728,12 @@ notifier:
                 data_format: csv
                 # gcs_path should begin with "gs://"
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+            %{ if VIOLATIONS_SLACK_WEBHOOK != "" }
+            - name: slack_webhook
+              configuration:
+                data_format: json  # slack only supports json
+                webhook_url: ${VIOLATIONS_SLACK_WEBHOOK}
+            %{ endif }
 
         - resource: external_project_access_violations
           should_notify: ${EXTERNAL_PROJECT_ACCESS_VIOLATIONS_SHOULD_NOTIFY}
@@ -609,6 +748,12 @@ notifier:
                 data_format: csv
                 # gcs_path should begin with "gs://"
                 gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+            %{ if VIOLATIONS_SLACK_WEBHOOK != "" }
+            - name: slack_webhook
+              configuration:
+                data_format: json  # slack only supports json
+                webhook_url: ${VIOLATIONS_SLACK_WEBHOOK}
+            %{ endif }
 
     violation:
       cscc:
