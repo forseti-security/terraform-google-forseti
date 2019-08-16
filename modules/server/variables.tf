@@ -561,6 +561,16 @@ variable "server_boot_image" {
   default     = "ubuntu-os-cloud/ubuntu-1804-lts"
 }
 
+variable "server_boot_disk_size" {
+  description = "Size of the GCE instance boot disk in GBs."
+  default     = "100"
+}
+
+variable "server_boot_disk_type" {
+  description = "GCE instance boot disk type, can be pd-standard or pd-ssd."
+  default     = "pd-ssd"
+}
+
 variable "server_instance_metadata" {
   description = "Metadata key/value pairs to make available from within the server instance."
   type        = map(string)

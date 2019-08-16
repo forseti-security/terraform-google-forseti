@@ -468,6 +468,8 @@ resource "google_compute_instance" "forseti-server" {
   boot_disk {
     initialize_params {
       image = var.server_boot_image
+      size  = var.server_boot_disk_size
+      type  = var.server_boot_disk_type
     }
   }
 
