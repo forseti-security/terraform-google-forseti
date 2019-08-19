@@ -479,6 +479,13 @@ resource "google_compute_instance" "forseti-server" {
     google_service_account.forseti_server,
     module.server_rules,
     null_resource.services-dependency,
+    google_project_iam_member.server_roles,
+    google_organization_iam_member.org_read,
+    google_folder_iam_member.folder_read,
+    google_organization_iam_member.org_write,
+    google_folder_iam_member.folder_write,
+    google_organization_iam_member.org_cscc,
+
   ]
 }
 

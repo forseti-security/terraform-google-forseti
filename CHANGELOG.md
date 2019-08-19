@@ -8,6 +8,10 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed race condition in server VM roles. [#231]
+
 ## [v4.0.0] - 2019-08-07
 
 ## Added
@@ -226,6 +230,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 [v3.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v2.3.0...v3.0.0
 [v4.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v3.0.0...v4.0.0
 
+[#231]: https://github.com/forseti-security/terraform-google-forseti/pull/231
 [#225]: https://github.com/forseti-security/terraform-google-forseti/pull/225
 [#213]: https://github.com/forseti-security/terraform-google-forseti/pull/213
 [#182]: https://github.com/forseti-security/terraform-google-forseti/pull/182
