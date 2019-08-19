@@ -693,6 +693,11 @@ variable "cloudsql_db_port" {
   default     = "3306"
 }
 
+variable "cloudsql_private" {
+  description = "Whether to enable private network and not to create public IP for CloudSQL Instance"
+  default     = "false"
+}
+
 variable "cloudsql_proxy_arch" {
   description = "CloudSQL Proxy architecture"
   default     = "linux.amd64"

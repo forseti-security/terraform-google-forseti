@@ -17,6 +17,16 @@
 #--------#
 # Config #
 #--------#
+variable "network" {
+  description = "The VPC where the Forseti client and server will be created"
+  default     = "default"
+}
+
+variable "network_project" {
+  description = "The project containing the VPC and subnetwork where the Forseti client and server will be created"
+  default     = ""
+}
+
 variable "project_id" {
   description = "Google Project ID that you want Forseti deployed into"
 }
@@ -42,6 +52,11 @@ variable "cloudsql_region" {
 variable "cloudsql_db_name" {
   description = "CloudSQL database name"
   default     = "forseti_security"
+}
+
+variable "cloudsql_private" {
+  description = "Whether to enable private network and not to create public IP for CloudSQL Instance"
+  default     = "false"
 }
 
 variable "cloudsql_type" {
