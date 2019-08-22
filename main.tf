@@ -133,6 +133,7 @@ module "server" {
   cloudsql_region                                     = var.cloudsql_region
   cloudsql_db_name                                    = var.cloudsql_db_name
   cloudsql_db_port                                    = var.cloudsql_db_port
+  cloudsql_private                                    = var.cloudsql_private
   cloudsql_proxy_arch                                 = var.cloudsql_proxy_arch
   cloudsql_type                                       = var.cloudsql_type
   storage_bucket_location                             = var.storage_bucket_location

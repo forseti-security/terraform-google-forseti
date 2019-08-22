@@ -492,6 +492,10 @@ resource "google_compute_instance" "forseti-server" {
   ]
 }
 
+data "google_compute_network" "default" {
+    name = var.network
+}
+
 #----------------------#
 # Forseti SQL database #
 #----------------------#
@@ -513,12 +517,13 @@ resource "google_sql_database_instance" "master" {
     }
 
     ip_configuration {
-      ipv4_enabled = true
-      require_ssl  = true
+      ipv4_enabled        = var.cloudsql_private == true ? false : true
+      private_network     = var.cloudsql_private == true ? data.google_compute_network.default.self_link : null
+      require_ssl         = true
     }
   }
 
-  depends_on = [null_resource.services-dependency]
+  depends_on = ["null_resource.services-dependency", "data.google_compute_network.default"]
 }
 
 resource "google_sql_database" "forseti-db" {
