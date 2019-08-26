@@ -172,7 +172,7 @@ resource "helm_release" "forseti-security" {
   }
 
   set {
-    name  = "policyLibraryLocation"
+    name  = "policyLibraryRepositoryURL"
     value = "${var.policy_library_repository_url}"
 
   }
