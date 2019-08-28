@@ -19,10 +19,6 @@ provider "google" {
   version     = "~> 2.11.0"
 }
 
-provider "google-beta" {
-  project = var.project_id
-}
-
 provider "local" {
   version = "~> 1.3"
 }
