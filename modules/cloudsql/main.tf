@@ -71,7 +71,6 @@ resource "google_sql_database_instance" "master" {
     tier              = var.cloudsql_type
     activation_policy = "ALWAYS"
     disk_size         = var.cloudsql_disk_size
-    disk_type         = var.cloudsql_disk_type
 
     backup_configuration {
       enabled            = true

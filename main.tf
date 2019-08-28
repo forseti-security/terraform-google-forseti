@@ -252,7 +252,6 @@ module "server" {
 module "cloudsql" {
   source             = "./modules/cloudsql"
   cloudsql_disk_size = var.cloudsql_disk_size
-  cloudsql_disk_type = var.cloudsql_disk_type
   cloudsql_private   = var.cloudsql_private
   cloudsql_region    = var.cloudsql_region
   cloudsql_type      = var.cloudsql_type
