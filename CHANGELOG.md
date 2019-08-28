@@ -18,6 +18,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 - Fixed race condition in server VM roles. [#231]
 
 ## [v4.0.0] - 2019-08-07
+Version 4.0.0 is a backwards-incompatible release. Please see the [upgrade instructions](./docs/upgrading_to_v4.0.md) for details.
 
 ## Added
 
