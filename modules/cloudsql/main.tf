@@ -27,11 +27,6 @@ locals {
 # Forseti Private SQL Database Setup #
 #------------------------------------#
 
-provider "google-beta" {
-  alias   = "cloudsql"
-  project = var.project_id
-}
-
 data "google_compute_network" "cloudsql_private_network" {
   name    = "${var.network}"
   project = "${local.network_project}"
@@ -46,7 +41,6 @@ resource "google_project_service" "service_networking" {
 
 resource "google_compute_global_address" "private_ip_address" {
   count         = var.cloudsql_private ? 1 : 0
-  provider      = "google-beta.cloudsql"
   project       = var.project_id
   name          = "private-ip-address"
   purpose       = "VPC_PEERING"
@@ -58,7 +52,6 @@ resource "google_compute_global_address" "private_ip_address" {
 
 resource "google_service_networking_connection" "private_vpc_connection" {
   count                   = var.cloudsql_private ? 1 : 0
-  provider                = "google-beta.cloudsql"
   network                 = "${data.google_compute_network.cloudsql_private_network.self_link}"
   service                 = "servicenetworking.googleapis.com"
   reserved_peering_ranges = ["${google_compute_global_address.private_ip_address[count.index].name}"]
@@ -69,7 +62,6 @@ resource "google_service_networking_connection" "private_vpc_connection" {
 #----------------------#
 
 resource "google_sql_database_instance" "master" {
-  provider         = "google-beta.cloudsql"
   name             = local.cloudsql_name
   project          = var.project_id
   region           = var.cloudsql_region
@@ -78,8 +70,8 @@ resource "google_sql_database_instance" "master" {
   settings {
     tier              = var.cloudsql_type
     activation_policy = "ALWAYS"
-    disk_size         = "25"
-    disk_type         = "PD_SSD"
+    disk_size         = var.cloudsql_disk_size
+    disk_type         = var.cloudsql_disk_type
 
     backup_configuration {
       enabled            = true

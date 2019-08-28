@@ -250,12 +250,14 @@ module "server" {
 }
 
 module "cloudsql" {
-  source           = "./modules/cloudsql"
-  cloudsql_private = var.cloudsql_private
-  cloudsql_region  = var.cloudsql_region
-  cloudsql_type    = var.cloudsql_type
-  network_project  = var.network_project
-  project_id       = var.project_id
-  services         = google_project_service.main.*.service
-  suffix           = local.random_hash
+  source             = "./modules/cloudsql"
+  cloudsql_disk_size = var.cloudsql_disk_size
+  cloudsql_disk_type = var.cloudsql_disk_type
+  cloudsql_private   = var.cloudsql_private
+  cloudsql_region    = var.cloudsql_region
+  cloudsql_type      = var.cloudsql_type
+  network_project    = var.network_project
+  project_id         = var.project_id
+  services           = google_project_service.main.*.service
+  suffix             = local.random_hash
 }

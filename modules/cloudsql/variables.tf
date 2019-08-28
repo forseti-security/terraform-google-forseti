@@ -54,6 +54,17 @@ variable "cloudsql_db_name" {
   default     = "forseti_security"
 }
 
+variable "cloudsql_disk_size" {
+  description = "The size of data disk, in GB. Size of a running instance cannot be reduced but can be increased."
+  default     = "25"
+}
+
+variable "cloudsql_disk_type" {
+  description = "The type of data disk: PD_SSD or PD_HDD."
+  default     = PD_SDD
+  type        = schema.TypeEnum
+}
+
 variable "cloudsql_private" {
   description = "Whether to enable private network and not to create public IP for CloudSQL Instance"
   default     = "false"

@@ -19,6 +19,10 @@ provider "google" {
   version     = "~> 2.11.0"
 }
 
+provider "google-beta" {
+  project = var.project_id
+}
+
 provider "local" {
   version = "~> 1.3"
 }
@@ -47,6 +51,7 @@ module "forseti-install-simple" {
   server_tags              = var.instance_tags
   client_private           = var.private
   server_private           = var.private
+  cloudsql_private         = var.private
   server_region            = var.region
   client_region            = var.region
   network                  = var.network

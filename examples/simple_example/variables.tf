@@ -61,7 +61,7 @@ variable "instance_tags" {
 }
 
 variable "private" {
-  description = "Private client and server instances (no public IPs)"
+  description = "Private client, server, and CloudSQL instances (no public IPs)"
   default     = true
 }
 
