@@ -327,7 +327,7 @@ variable "sqladmin_disable_polling" {
 }
 
 variable "storage_disable_polling" {
-  description = "Whetservicemanagement_disable_pollingher to disable polling for Storage API"
+  description = "Whether to disable polling for Storage API"
   type        = bool
   default     = false
 }
