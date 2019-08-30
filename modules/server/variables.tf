@@ -385,6 +385,31 @@ variable "log_sink_enabled" {
   default     = "true"
 }
 
+variable "policy_library_home" {
+  description = "The local policy library directory."
+  default = "$USER_HOME/policy-library"
+}
+
+variable "policy_library_repository_url" {
+  description = "The git repository containing the policy-library."
+  default = ""
+}
+
+variable "policy_library_sync_enabled" {
+  description = "Sync config validator policy library from private repository."
+  default     = "false"
+}
+
+variable "policy_library_sync_git_sync_tag" {
+  description = "Tag for the git-sync image."
+  default = "v3.1.2"
+}
+
+variable "policy_library_sync_ssh_known_hosts" {
+  description = "List of authorized public keys for SSH host of the policy library repository."
+  default = ""
+}
+
 variable "resource_enabled" {
   description = "Resource scanner enabled."
   default     = "true"
@@ -758,4 +783,3 @@ variable "groups_settings_violations_should_notify" {
   description = "Notify for groups settings violations"
   default     = "true"
 }
-
