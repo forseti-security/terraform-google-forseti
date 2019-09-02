@@ -13,3 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+output "project_id" {
+  value = module.forseti-host-project.project_id
+}
+
+output "gsuite_admin_email" {
+  value = google_service_account.int_test.email
+}
+
+output "network_project" {
+  value = module.forseti-service-project.project_id
+}
+
+output "enforcer_project_id" {
+  value = module.forseti-enforcer-project.project_id
+}
+
+output "sa_key" {
+  value     = google_service_account_key.int_test.private_key
+  sensitive = true
+}
