@@ -18,7 +18,7 @@ This configuration is used to simply install Forseti. It includes a full Cloud S
 | network | The VPC where the Forseti client and server will be created | string | n/a | yes |
 | network\_project | The project containing the VPC and subnetwork where the Forseti client and server will be created | string | n/a | yes |
 | org\_id | GCP Organization ID that Forseti will have purview over | string | n/a | yes |
-| private | Private client and server instances (no public IPs) | string | `"true"` | no |
+| private | Private client and server instances (no public IPs) | string | `"false"` | no |
 | project\_id | The ID of an existing Google project where Forseti will be installed | string | n/a | yes |
 | region | GCP region where Forseti will be deployed | string | n/a | yes |
 | sendgrid\_api\_key | Sendgrid API key. | string | `""` | no |

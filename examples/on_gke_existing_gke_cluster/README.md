@@ -27,28 +27,34 @@ In addition to the [roles](https://github.com/forseti-security/terraform-google-
 - roles/container.developer
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
-
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
+| config\_validator\_enabled | Config Validator scanner enabled. | string | `"false"` | no |
 | credentials\_path | Path to service account json | string | n/a | yes |
 | forseti\_client\_service\_account | Forseti Client service account | string | n/a | yes |
 | forseti\_client\_vm\_ip | Forseti Client VM private IP address | string | n/a | yes |
 | forseti\_cloudsql\_connection\_name | The connection string to the CloudSQL instance | string | n/a | yes |
 | forseti\_server\_service\_account | Forseti Server service account | string | n/a | yes |
 | forseti\_server\_storage\_bucket | Forseti Server storage bucket | string | n/a | yes |
+| gke\_cluster\_location | The location of the GKE cluster on which to deploy Forseti | string | n/a | yes |
+| gke\_cluster\_name | The name of the GKE cluster on which to deploy Forseti | string | n/a | yes |
 | gke\_service\_account | The service account to run nodes as if not overridden in node\_pools. | string | `"create"` | no |
 | helm\_repository\_url | The Helm repository containing the 'forseti-security' Helm charts | string | `"https://forseti-security-charts.storage.googleapis.com/release/"` | no |
-| k8s\_ca\_certificate | Kubernetes API server CA certificate. | string | n/a | yes |
-| k8s\_endpoint | The Kubernetes API endpoint. | string | n/a | yes |
-| k8s\_forseti\_namespace | The Kubernetes namespace in which to deploy Forseti. | string | `"default"` | no |
+| k8s\_config\_validator\_image | The container image used by the config-validator | string | `"gcr.io/forseti-containers/config-validator"` | no |
+| k8s\_config\_validator\_image\_tag | The tag for the config-validator image. | string | `"latest"` | no |
+| k8s\_forseti\_namespace | The Kubernetes namespace in which to deploy Forseti. | string | `"forseti"` | no |
 | k8s\_forseti\_orchestrator\_image | The container image for the Forseti orchestrator | string | `"gcr.io/forseti-containers/forseti"` | no |
-| k8s\_forseti\_orchestrator\_image\_tag | The tag for the container image for the Forseti orchestrator | string | `"latest"` | no |
+| k8s\_forseti\_orchestrator\_image\_tag | The tag for the container image for the Forseti orchestrator | string | `"v2.19.1"` | no |
 | k8s\_forseti\_server\_image | The container image for the Forseti server | string | `"gcr.io/forseti-containers/forseti"` | no |
-| k8s\_forseti\_server\_image\_tag | The tag for the container image for the Forseti server | string | `"latest"` | no |
+| k8s\_forseti\_server\_image\_tag | The tag for the container image for the Forseti server | string | `"v2.19.1"` | no |
 | k8s\_tiller\_sa\_name | The Kubernetes Service Account used by Tiller | string | `"tiller"` | no |
-| network\_policy | Whether or not to apply Pod NetworkPolicies | string | `"false"` | no |
+| load\_balancer | The type of load balancer to deploy for the forseti-server if desired: none, external, internal | string | `"internal"` | no |
+| network\_policy | Whether or not to apply Pod NetworkPolicies | bool | `"false"` | no |
+| policy\_library\_repository\_url | The git repository containing the policy-library. | string | `"https://github.com/forseti-security/policy-library"` | no |
 | project\_id | The ID of an existing Google project where Forseti will be installed | string | n/a | yes |
+| server\_log\_level | The log level of the Forseti server container. | string | `"info"` | no |
+| suffix | The random suffix appended to Forseti resources | string | n/a | yes |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
