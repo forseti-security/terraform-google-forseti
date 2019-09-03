@@ -40,7 +40,7 @@ resource "null_resource" "email_without_sendgrid_api_key" {
 # Locals #
 #--------#
 locals {
-  random_hash     = random_id.random_hash_suffix.hex
+  random_hash     = var.resource_name_suffix == null ? random_id.random_hash_suffix.hex : var.resource_name_suffix
   network_project = var.network_project != "" ? var.network_project : var.project_id
 
   services_list = [
