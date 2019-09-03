@@ -405,10 +405,11 @@ resource "google_storage_bucket_object" "forseti_server_config" {
 }
 
 module "server_rules" {
-  source = "../rules"
-  bucket = google_storage_bucket.server_config.name
-  org_id = var.org_id
-  domain = var.domain
+  source               = "../rules"
+  bucket               = google_storage_bucket.server_config.name
+  org_id               = var.org_id
+  domain               = var.domain
+  manage_rules_enabled = var.manage_rules_enabled
 }
 
 resource "google_storage_bucket" "cai_export" {
