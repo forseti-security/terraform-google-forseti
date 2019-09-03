@@ -433,7 +433,7 @@ resource "google_storage_bucket" "cai_export" {
 }
 
 resource "tls_private_key" "policy_library_sync_ssh" {
-  count     = "${var.policy_library_sync_enabled ? 1 : 0}"
+  count     = var.policy_library_sync_enabled ? 1 : 0
   algorithm = "RSA"
 }
 
