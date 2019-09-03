@@ -125,6 +125,8 @@ module "server" {
   server_type                                         = var.server_type
   server_region                                       = var.server_region
   server_boot_image                                   = var.server_boot_image
+  server_boot_disk_size                               = var.server_boot_disk_size
+  server_boot_disk_type                               = var.server_boot_disk_type
   server_tags                                         = var.server_tags
   server_access_config                                = var.server_access_config
   server_private                                      = var.server_private

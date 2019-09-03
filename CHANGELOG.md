@@ -6,13 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Extending the adopted spec, each change should have a link to its corresponding pull request appended.
 
-## [Unreleased]
+## [v4.0.1] - 2019-08-23
+
+### Added
+
+- Support for Forseti v2.19.1 [#233]
+- Added boot disk type and boot disk size variables, with increased default disk size. [#232]
 
 ### Fixed
 
 - Fixed race condition in server VM roles. [#231]
 
 ## [v4.0.0] - 2019-08-07
+Version 4.0.0 is a backwards-incompatible release. Please see the [upgrade instructions](./docs/upgrading_to_v4.0.md) for details.
 
 ## Added
 
@@ -229,7 +235,10 @@ Extending the adopted spec, each change should have a link to its corresponding 
 [v2.3.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v2.2.0...v2.3.0
 [v3.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v2.3.0...v3.0.0
 [v4.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v3.0.0...v4.0.0
+[v4.0.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.0.0...v4.0.1
 
+[#233]: https://github.com/forseti-security/terraform-google-forseti/pull/233
+[#232]: https://github.com/forseti-security/terraform-google-forseti/pull/232
 [#231]: https://github.com/forseti-security/terraform-google-forseti/pull/231
 [#225]: https://github.com/forseti-security/terraform-google-forseti/pull/225
 [#213]: https://github.com/forseti-security/terraform-google-forseti/pull/213
