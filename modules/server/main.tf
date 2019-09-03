@@ -92,9 +92,9 @@ locals {
     }],
 
   }
-  network_interface                         = local.network_interface_base[var.server_private ? "private" : "public"]
-  missing_emails                            = ((var.sendgrid_api_key != "") && (var.forseti_email_sender == "" || var.forseti_email_recipient == "") ? 1 : 0)
-  policy_library_sync_folder                = "policy_library_sync"
+  missing_emails             = ((var.sendgrid_api_key != "") && (var.forseti_email_sender == "" || var.forseti_email_recipient == "") ? 1 : 0)
+  network_interface          = local.network_interface_base[var.server_private ? "private" : "public"]
+  policy_library_sync_folder = "policy_library_sync"
 }
 
 #------------------#
@@ -115,18 +115,18 @@ data "template_file" "forseti_server_startup_script" {
   template = local.server_startup_script
 
   vars = {
-    cloudsql_proxy_arch                       = var.cloudsql_proxy_arch
-    forseti_conf_server_checksum              = base64sha256(data.template_file.forseti_server_config.rendered)
-    forseti_env                               = data.template_file.forseti_server_env.rendered
-    forseti_environment                       = data.template_file.forseti_server_environment.rendered
-    forseti_home                              = var.forseti_home
-    forseti_repo_url                          = var.forseti_repo_url
-    forseti_run_frequency                     = var.forseti_run_frequency
-    forseti_server_conf_path                  = local.server_conf_path
-    forseti_version                           = var.forseti_version
-    policy_library_home                       = var.policy_library_home
-    policy_library_sync_enabled               = var.policy_library_sync_enabled
-    storage_bucket_name                       = local.server_bucket_name
+    cloudsql_proxy_arch          = var.cloudsql_proxy_arch
+    forseti_conf_server_checksum = base64sha256(data.template_file.forseti_server_config.rendered)
+    forseti_env                  = data.template_file.forseti_server_env.rendered
+    forseti_environment          = data.template_file.forseti_server_environment.rendered
+    forseti_home                 = var.forseti_home
+    forseti_repo_url             = var.forseti_repo_url
+    forseti_run_frequency        = var.forseti_run_frequency
+    forseti_server_conf_path     = local.server_conf_path
+    forseti_version              = var.forseti_version
+    policy_library_home          = var.policy_library_home
+    policy_library_sync_enabled  = var.policy_library_sync_enabled
+    storage_bucket_name          = local.server_bucket_name
   }
 }
 
@@ -134,13 +134,13 @@ data "template_file" "forseti_server_environment" {
   template = local.server_environment
 
   vars = {
-    forseti_home                      = var.forseti_home
-    forseti_server_conf_path          = local.server_conf_path
-    policy_library_home               = var.policy_library_home
-    policy_library_sync_enabled       = var.policy_library_sync_enabled
-    policy_library_repository_url     = var.policy_library_repository_url
-    policy_library_sync_git_sync_tag  = var.policy_library_sync_git_sync_tag
-    storage_bucket_name               = local.server_bucket_name
+    forseti_home                     = var.forseti_home
+    forseti_server_conf_path         = local.server_conf_path
+    policy_library_home              = var.policy_library_home
+    policy_library_sync_enabled      = var.policy_library_sync_enabled
+    policy_library_repository_url    = var.policy_library_repository_url
+    policy_library_sync_git_sync_tag = var.policy_library_sync_git_sync_tag
+    storage_bucket_name              = local.server_bucket_name
   }
 }
 
@@ -433,8 +433,8 @@ resource "google_storage_bucket" "cai_export" {
 }
 
 resource "tls_private_key" "policy_library_sync_ssh" {
-  count       = "${var.policy_library_sync_enabled ? 1 : 0}"
-  algorithm   = "RSA"
+  count     = "${var.policy_library_sync_enabled ? 1 : 0}"
+  algorithm = "RSA"
 }
 
 resource "google_storage_bucket_object" "policy_library_sync_ssh_key" {
