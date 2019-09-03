@@ -97,7 +97,7 @@ if [ "${policy_library_sync_enabled}" == "true" ]; then
   # Setup local FS
   # Note: gsutil is using the -n flag so that once the SSH key is copied locally, it is not overwritten for any subsequent runs of terraform
   sudo mkdir -p /etc/git-secret
-  sudo gsutil cp -n gs://${storage_bucket_name}/policy_library_sync/* /etc/git-secret/
+  sudo gsutil cp -n gs://${storage_bucket_name}/${policy_library_sync_gcs_directory_name}/* /etc/git-secret/
 else
   # DEPRECATED! Remove once users have migrated over to Git-Sync
   # Download the Newest Config Validator constraints from GCS

@@ -465,6 +465,11 @@ variable "policy_library_sync_enabled" {
   default     = "false"
 }
 
+variable "policy_library_sync_gcs_directory_name" {
+  description = "The directory name of the GCS folder used for the policy library sync config."
+  default     = "policy_library_sync"
+}
+
 variable "policy_library_sync_git_sync_tag" {
   description = "Tag for the git-sync image."
   default     = "v3.1.2"
