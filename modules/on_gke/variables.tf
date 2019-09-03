@@ -101,7 +101,6 @@ variable "network_policy" {
 
 variable "policy_library_repository_url" {
   description = "The git repository containing the policy-library."
-  default     = "https://github.com/forseti-security/policy-library"
 }
 
 variable "production" {
