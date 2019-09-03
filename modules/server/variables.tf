@@ -26,7 +26,7 @@ variable "gsuite_admin_email" {
 
 variable "forseti_version" {
   description = "The version of Forseti to install"
-  default     = "v2.19.0"
+  default     = "v2.19.1"
 }
 
 variable "forseti_repo_url" {
@@ -559,6 +559,16 @@ variable "server_region" {
 variable "server_boot_image" {
   description = "GCE instance image that is being used, currently Debian only support is available"
   default     = "ubuntu-os-cloud/ubuntu-1804-lts"
+}
+
+variable "server_boot_disk_size" {
+  description = "Size of the GCE instance boot disk in GBs."
+  default     = "100"
+}
+
+variable "server_boot_disk_type" {
+  description = "GCE instance boot disk type, can be pd-standard or pd-ssd."
+  default     = "pd-ssd"
 }
 
 variable "server_instance_metadata" {

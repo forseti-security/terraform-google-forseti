@@ -15,7 +15,7 @@
 require "yaml"
 
 forseti_server_vm_ip = attribute("forseti-server-vm-ip")
-forseti_version = "2.19.0"
+forseti_version = "2.19.1"
 
 control "client" do
   title "Forseti client instance resources"

@@ -104,7 +104,7 @@ Simple usage of the module within your own main.tf file is as follows:
 | forseti\_home | Forseti installation directory | string | `"$USER_HOME/forseti-security"` | no |
 | forseti\_repo\_url | Git repo for the Forseti installation | string | `"https://github.com/GoogleCloudPlatform/forseti-security"` | no |
 | forseti\_run\_frequency | Schedule of running the Forseti scans | string | `"0 */2 * * *"` | no |
-| forseti\_version | The version of Forseti to install | string | `"v2.19.0"` | no |
+| forseti\_version | The version of Forseti to install | string | `"v2.19.1"` | no |
 | forwarding\_rule\_enabled | Forwarding rule scanner enabled. | string | `"false"` | no |
 | forwarding\_rule\_violations\_should\_notify | Notify for forwarding rule violations | string | `"true"` | no |
 | group\_enabled | Group scanner enabled. | string | `"true"` | no |
@@ -156,6 +156,8 @@ Simple usage of the module within your own main.tf file is as follows:
 | sendgrid\_api\_key | Sendgrid.com API key to enable email notifications | string | `""` | no |
 | server\_access\_config | Server instance 'access_config' block | map(any) | `<map>` | no |
 | server\_boot\_image | GCE instance image that is being used, currently Ubuntu only support is available | string | `"ubuntu-os-cloud/ubuntu-1804-lts"` | no |
+| server\_boot\_disk\_size | Size of the GCE instance boot disk in GBs | string | `"100"` | no |
+| server\_boot\_disk\_type | GCE instance boot disk type, can be pd-standard or pd-ssd | string | `"pd-ssd"` | no |
 | server\_grpc\_allow\_ranges | List of CIDRs that will be allowed gRPC access to forseti server | list(string) | `<list>` | no |
 | server\_instance\_metadata | Metadata key/value pairs to make available from within the server instance. | map(string) | `<map>` | no |
 | server\_private | Private GCE Forseti Server VM (no public IP) | string | `"false"` | no |
