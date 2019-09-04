@@ -147,6 +147,12 @@ Simple usage of the module within your own main.tf file is as follows:
 | network | The VPC where the Forseti client and server will be created | string | `"default"` | no |
 | network\_project | The project containing the VPC and subnetwork where the Forseti client and server will be created | string | `""` | no |
 | org\_id | GCP Organization ID that Forseti will have purview over | string | `""` | no |
+| policy\_library\_home | The local policy library directory | string | `"$USER_HOME/policy-library"` | no |
+| policy\_library\_repository\_url | The git repository containing the policy-library. | string | `""` | no |
+| policy\_library\_sync\_enabled | Sync config validator policy library from private repository | string | `"false"` | no |
+| policy\_library\_sync\_gcs\_directory\_name | The directory name of the GCS folder used for the policy library sync config | string | `"policy_library_sync"` | no |
+| policy\_library\_sync\_git\_sync\_tag | Tag for the git-sync image | string | `"v3.1.2"` | no |
+| policy\_library\_sync\_ssh\_known\_hosts | List of authorized public keys for SSH host of the policy library repository| string | `""` | no |
 | project\_id | Google Project ID that you want Forseti deployed into | string | n/a | yes |
 | resource\_enabled | Resource scanner enabled. | string | `"true"` | no |
 | resource\_violations\_should\_notify | Notify for resource violations | string | `"true"` | no |
@@ -187,6 +193,7 @@ Simple usage of the module within your own main.tf file is as follows:
 | forseti-client-vm-ip | Forseti Client VM private IP address |
 | forseti-client-vm-name | Forseti Client VM name |
 | forseti-cloudsql-connection-name | Forseti CloudSQL Connection String |
+| forseti-server-git-public-key-openssh | The public OpenSSH key generated to allow the Forseti Server to clone the policy library repository |
 | forseti-server-service-account | Forseti Server service account |
 | forseti-server-storage-bucket | Forseti Server storage bucket |
 | forseti-server-vm-ip | Forseti Server VM private IP address |

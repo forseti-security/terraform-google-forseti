@@ -92,8 +92,8 @@ locals {
     }],
 
   }
-  network_interface = local.network_interface_base[var.server_private ? "private" : "public"]
   missing_emails    = ((var.sendgrid_api_key != "") && (var.forseti_email_sender == "" || var.forseti_email_recipient == "") ? 1 : 0)
+  network_interface = local.network_interface_base[var.server_private ? "private" : "public"]
 }
 
 #------------------#
@@ -114,16 +114,19 @@ data "template_file" "forseti_server_startup_script" {
   template = local.server_startup_script
 
   vars = {
-    forseti_environment          = data.template_file.forseti_server_environment.rendered
-    forseti_env                  = data.template_file.forseti_server_env.rendered
-    forseti_run_frequency        = var.forseti_run_frequency
-    forseti_repo_url             = var.forseti_repo_url
-    forseti_version              = var.forseti_version
-    forseti_server_conf_path     = local.server_conf_path
-    forseti_home                 = var.forseti_home
-    cloudsql_proxy_arch          = var.cloudsql_proxy_arch
-    storage_bucket_name          = local.server_bucket_name
-    forseti_conf_server_checksum = base64sha256(data.template_file.forseti_server_config.rendered)
+    cloudsql_proxy_arch                    = var.cloudsql_proxy_arch
+    forseti_conf_server_checksum           = base64sha256(data.template_file.forseti_server_config.rendered)
+    forseti_env                            = data.template_file.forseti_server_env.rendered
+    forseti_environment                    = data.template_file.forseti_server_environment.rendered
+    forseti_home                           = var.forseti_home
+    forseti_repo_url                       = var.forseti_repo_url
+    forseti_run_frequency                  = var.forseti_run_frequency
+    forseti_server_conf_path               = local.server_conf_path
+    forseti_version                        = var.forseti_version
+    policy_library_home                    = var.policy_library_home
+    policy_library_sync_enabled            = var.policy_library_sync_enabled
+    policy_library_sync_gcs_directory_name = var.policy_library_sync_gcs_directory_name
+    storage_bucket_name                    = local.server_bucket_name
   }
 }
 
@@ -131,9 +134,13 @@ data "template_file" "forseti_server_environment" {
   template = local.server_environment
 
   vars = {
-    forseti_home             = var.forseti_home
-    forseti_server_conf_path = local.server_conf_path
-    storage_bucket_name      = local.server_bucket_name
+    forseti_home                     = var.forseti_home
+    forseti_server_conf_path         = local.server_conf_path
+    policy_library_home              = var.policy_library_home
+    policy_library_sync_enabled      = var.policy_library_sync_enabled
+    policy_library_repository_url    = var.policy_library_repository_url
+    policy_library_sync_git_sync_tag = var.policy_library_sync_git_sync_tag
+    storage_bucket_name              = local.server_bucket_name
   }
 }
 
@@ -425,6 +432,32 @@ resource "google_storage_bucket" "cai_export" {
   depends_on = [null_resource.services-dependency]
 }
 
+resource "tls_private_key" "policy_library_sync_ssh" {
+  count     = var.policy_library_sync_enabled ? 1 : 0
+  algorithm = "RSA"
+}
+
+resource "google_storage_bucket_object" "policy_library_sync_ssh_key" {
+  count   = var.policy_library_sync_enabled && var.policy_library_repository_url != "" ? 1 : 0
+  name    = "${var.policy_library_sync_gcs_directory_name}/ssh"
+  content = tls_private_key.policy_library_sync_ssh[0].private_key_pem
+  bucket  = local.server_bucket_name
+
+  depends_on = [
+    google_storage_bucket.server_config,
+    tls_private_key.policy_library_sync_ssh,
+  ]
+}
+
+resource "google_storage_bucket_object" "policy_library_sync_ssh_known_hosts" {
+  count   = var.policy_library_sync_enabled && var.policy_library_sync_ssh_known_hosts != "" ? 1 : 0
+  name    = "${var.policy_library_sync_gcs_directory_name}/known_hosts"
+  content = var.policy_library_sync_ssh_known_hosts
+  bucket  = local.server_bucket_name
+
+  depends_on = [google_storage_bucket.server_config]
+}
+
 #-------------------------#
 # Forseti server instance #
 #-------------------------#
@@ -437,6 +470,7 @@ resource "google_compute_instance" "forseti-server" {
   allow_stopping_for_update = true
   metadata                  = var.server_instance_metadata
   metadata_startup_script   = data.template_file.forseti_server_startup_script.rendered
+
   dynamic "network_interface" {
     for_each = local.network_interface
     content {
@@ -479,16 +513,16 @@ resource "google_compute_instance" "forseti-server" {
   }
 
   depends_on = [
-    google_service_account.forseti_server,
-    module.server_rules,
-    null_resource.services-dependency,
-    google_project_iam_member.server_roles,
-    google_organization_iam_member.org_read,
     google_folder_iam_member.folder_read,
-    google_organization_iam_member.org_write,
     google_folder_iam_member.folder_write,
     google_organization_iam_member.org_cscc,
-
+    google_organization_iam_member.org_read,
+    google_organization_iam_member.org_write,
+    google_project_iam_member.server_roles,
+    google_service_account.forseti_server,
+    google_storage_bucket.server_config,
+    module.server_rules,
+    null_resource.services-dependency,
   ]
 }
 
@@ -539,4 +573,3 @@ resource "null_resource" "services-dependency" {
     services = jsonencode(var.services)
   }
 }
-

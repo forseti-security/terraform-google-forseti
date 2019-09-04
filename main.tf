@@ -244,6 +244,12 @@ module "server" {
   violations_slack_webhook                            = var.violations_slack_webhook
   cscc_violations_enabled                             = var.cscc_violations_enabled
   cscc_source_id                                      = var.cscc_source_id
+  policy_library_home                                 = var.policy_library_home
+  policy_library_repository_url                       = var.policy_library_repository_url
+  policy_library_sync_enabled                         = var.policy_library_sync_enabled
+  policy_library_sync_gcs_directory_name              = var.policy_library_sync_gcs_directory_name
+  policy_library_sync_git_sync_tag                    = var.policy_library_sync_git_sync_tag
+  policy_library_sync_ssh_known_hosts                 = var.policy_library_sync_ssh_known_hosts
 
   groups_settings_max_calls                = var.groups_settings_max_calls
   groups_settings_period                   = var.groups_settings_period
