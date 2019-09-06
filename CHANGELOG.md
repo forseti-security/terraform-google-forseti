@@ -10,7 +10,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ### Added
 
-- Support for Forseti v2.20.0 
+- Support for Forseti v2.20.0 [#246]
 - Added support for Policy Library sync. [#239]
 
 ## [v4.0.1] - 2019-08-23
