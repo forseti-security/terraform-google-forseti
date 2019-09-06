@@ -76,18 +76,47 @@ echo "${forseti_environment}" > /etc/profile.d/forseti_environment.sh | sudo sh
 gsutil cp gs://${storage_bucket_name}/configs/forseti_conf_server.yaml ${forseti_server_conf_path}
 gsutil cp -r gs://${storage_bucket_name}/rules ${forseti_home}/
 
-# Download the Newest Config Validator constraints from GCS
-rm -rf ${forseti_home}/policy-library
+# Get Config Validator constraints
+sudo mkdir -m 777 -p ${policy_library_home}
+if [ "${policy_library_sync_enabled}" == "true" ]; then
+  # Policy Library Sync
+  echo "Forseti Startup - Policy Library sync is enabled."
 
-# Attempt to download the config-validator policy and gracefully handle the absence
-# of policy files.  The config-validator is not required for the rest of Forseti
-# and should not halt installation.
-gsutil cp -r gs://${storage_bucket_name}/policy-library ${forseti_home}/ || echo "No policy available, continuing with Forseti installation"
+  # Install Docker
+  if [ -z "$(which docker)" ]; then
+    echo "Forseti Startup - Installing Docker."
+    sudo apt-get update
+    sudo apt -y install apt-transport-https ca-certificates curl software-properties-common
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+    sudo apt update
+    apt-cache policy docker-ce
+    sudo apt install -y docker-ce
+  fi
+
+  # Setup local FS
+  # Note: gsutil is using the -n flag so that once the SSH key is copied locally, it is not overwritten for any subsequent runs of terraform
+  sudo mkdir -p /etc/git-secret
+  sudo gsutil cp -n gs://${storage_bucket_name}/${policy_library_sync_gcs_directory_name}/* /etc/git-secret/
+else
+  # DEPRECATED! Remove once users have migrated over to Git-Sync
+  # Download the Newest Config Validator constraints from GCS
+  echo "Forseti Startup - Copying Policy Library from GCS."
+
+  # Attempt to download the config-validator policy and gracefully handle the absence
+  # of policy files.  The config-validator is not required for the rest of Forseti
+  # and should not halt installation.
+  gsutil cp -r gs://${storage_bucket_name}/policy-library ${policy_library_home}/ || echo "No policy available, continuing with Forseti installation"
+fi
 
 # Start Forseti service depends on vars defined above.
 bash ./install/gcp/scripts/initialize_forseti_services.sh
 echo "Starting services."
 systemctl start cloudsqlproxy
+if [ "${policy_library_sync_enabled}" == "true" ]; then
+  systemctl start policy-library-sync
+  sleep 5
+fi
 systemctl start config-validator
 sleep 5
 
