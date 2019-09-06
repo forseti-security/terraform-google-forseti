@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Extending the adopted spec, each change should have a link to its corresponding pull request appended.
 
+## [v4.1.0] - 2019-09-06
+
+### Added
+
+- Support for Forseti v2.20.0 
+- Added support for Policy Library sync. [#239]
+
 ## [v4.0.1] - 2019-08-23
 
 ### Added
