@@ -20,11 +20,11 @@
 //*****************************************
 
 resource "google_service_account_key" "server_key" {
-  service_account_id = "${var.forseti_server_service_account}"
+  service_account_id = var.forseti_server_service_account
 }
 
 resource "google_service_account_key" "client_key" {
-  service_account_id = "${var.forseti_client_service_account}"
+  service_account_id = var.forseti_client_service_account
 }
 
 //*****************************************
@@ -32,7 +32,7 @@ resource "google_service_account_key" "client_key" {
 //*****************************************
 
 resource "google_project_iam_member" "cluster_service_account-storage_reader" {
-  project = "${var.project_id}"
+  project = var.project_id
   role    = "roles/storage.objectViewer"
   member  = "serviceAccount:${var.gke_service_account}"
 }
@@ -42,12 +42,12 @@ resource "google_project_iam_member" "cluster_service_account-storage_reader" {
 //*****************************************
 
 data "google_storage_object_signed_url" "file_url" {
-  bucket = "${var.forseti_server_bucket}"
+  bucket = var.forseti_server_bucket
   path   = "configs/forseti_conf_server.yaml"
 }
 
 data "http" "server_config_contents" {
-  url        = "${data.google_storage_object_signed_url.file_url.signed_url}"
+  url        = data.google_storage_object_signed_url.file_url.signed_url
   depends_on = ["data.google_storage_object_signed_url.file_url"]
 }
 
@@ -57,7 +57,7 @@ data "http" "server_config_contents" {
 
 resource "kubernetes_namespace" "forseti" {
   metadata {
-    name = "${var.k8s_forseti_namespace}"
+    name = var.k8s_forseti_namespace
   }
 }
 
@@ -67,8 +67,8 @@ resource "kubernetes_namespace" "forseti" {
 
 resource "kubernetes_service_account" "tiller" {
   metadata {
-    name      = "${var.k8s_tiller_sa_name}"
-    namespace = "${var.k8s_forseti_namespace}"
+    name      = var.k8s_tiller_sa_name
+    namespace = var.k8s_forseti_namespace
   }
   depends_on = [
     "kubernetes_namespace.forseti"
@@ -82,11 +82,11 @@ resource "kubernetes_service_account" "tiller" {
 resource "kubernetes_role" "tiller" {
   metadata {
     name      = "tiller-manager"
-    namespace = "${var.k8s_forseti_namespace}"
+    namespace = var.k8s_forseti_namespace
   }
 
   rule {
-    api_groups = ["", "extensions", "apps", "batch/v1beta1", "batch", "networking.k8s.io"]
+    api_groups = ["", "extensions", "apps", "batch/v1beta1", "batch", "networking.k8s.io", "rbac.authorization.k8s.io"]
     resources  = ["*"]
     verbs      = ["*"]
   }
@@ -95,17 +95,17 @@ resource "kubernetes_role" "tiller" {
 resource "kubernetes_role_binding" "tiller" {
   metadata {
     name      = "tiller-binding"
-    namespace = "${var.k8s_forseti_namespace}"
+    namespace = var.k8s_forseti_namespace
   }
   role_ref {
     api_group = "rbac.authorization.k8s.io"
     kind      = "Role"
-    name      = "${kubernetes_role.tiller.metadata.0.name}"
+    name      = kubernetes_role.tiller.metadata.0.name
   }
   subject {
     kind      = "ServiceAccount"
-    name      = "${kubernetes_service_account.tiller.metadata.0.name}"
-    namespace = "${var.k8s_forseti_namespace}"
+    name      = kubernetes_service_account.tiller.metadata.0.name
+    namespace = var.k8s_forseti_namespace
   }
 }
 
@@ -115,81 +115,110 @@ resource "kubernetes_role_binding" "tiller" {
 
 resource "helm_release" "forseti-security" {
   name          = "forseti"
-  namespace     = "${var.k8s_forseti_namespace}"
-  repository    = "${var.helm_repository_url}"
+  namespace     = var.k8s_forseti_namespace
+  repository    = var.helm_repository_url
   chart         = "forseti-security"
-  recreate_pods = "${var.recreate_pods}"
+  recreate_pods = var.recreate_pods
   depends_on    = ["kubernetes_role_binding.tiller", "kubernetes_namespace.forseti"]
 
   set {
     name  = "cloudsqlConnection"
-    value = "${var.forseti_cloudsql_connection_name}"
+    value = var.forseti_cloudsql_connection_name
   }
 
   set {
     name  = "configValidator"
-    value = "${var.config_validator_enabled}"
+    value = var.config_validator_enabled
   }
 
   set {
     name  = "configValidatorImage"
-    value = "${var.k8s_config_validator_image}"
+    value = var.k8s_config_validator_image
   }
 
   set {
     name  = "configValidatorImageTag"
-    value = "${var.k8s_config_validator_image_tag}"
+    value = var.k8s_config_validator_image_tag
+  }
+
+  set {
+    name  = "gitSyncImage"
+    value = var.git_sync_image
+  }
+
+  set {
+    name  = "gitSyncImageTag"
+    value = var.git_sync_image_tag
+  }
+
+  set_sensitive {
+    name  = "gitSyncPrivateSSHKey"
+    value = "${base64encode(var.git_sync_private_ssh_key)}"
+  }
+
+  set {
+    name  = "gitSyncSSH"
+    value = var.git_sync_ssh
+  }
+
+  set {
+    name  = "gitSyncWait"
+    value = var.git_sync_wait
   }
 
   set {
     name  = "loadBalancer"
-    value = "${var.load_balancer}"
+    value = var.load_balancer
   }
 
   set {
     name  = "networkPolicyEnable"
-    value = "${var.network_policy}"
+    value = var.network_policy
   }
 
   set {
     name  = "orchestratorImage"
-    value = "${var.k8s_forseti_orchestrator_image}"
+    value = var.k8s_forseti_orchestrator_image
   }
 
   set {
     name  = "orchestratorImageTag"
-    value = "${var.k8s_forseti_orchestrator_image_tag}"
+    value = var.k8s_forseti_orchestrator_image_tag
   }
 
   set_sensitive {
     name  = "orchestratorKeyContents"
-    value = "${google_service_account_key.client_key.private_key}"
+    value = google_service_account_key.client_key.private_key
   }
 
   set {
     name  = "production"
-    value = "${var.production}"
+    value = var.production
   }
 
   set {
     name  = "policyLibraryRepositoryURL"
-    value = "${var.policy_library_repository_url}"
+    value = var.policy_library_repository_url
+  }
 
+  set {
+    name  = "policyLibraryRepositoryBranch"
+    value = var.policy_library_repository_branch
   }
 
   set {
     name  = "serverImage"
-    value = "${var.k8s_forseti_server_image}"
+    value = var.k8s_forseti_server_image
   }
 
   set {
     name  = "serverImageTag"
-    value = "${var.k8s_forseti_server_image_tag}"
+    value = var.k8s_forseti_server_image_tag
   }
 
   set {
     name  = "serverBucket"
-    value = "${var.forseti_server_bucket}"
+    value = var.forseti_server_bucket
   }
 
   set_string {
@@ -204,7 +233,7 @@ resource "helm_release" "forseti-security" {
 
   set {
     name  = "serverLogLevel"
-    value = "${var.server_log_level}"
+    value = var.server_log_level
   }
 
   values = [

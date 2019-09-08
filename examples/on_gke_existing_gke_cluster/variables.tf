@@ -43,6 +43,32 @@ variable "forseti_server_storage_bucket" {
   description = "Forseti Server storage bucket"
 }
 
+variable "git_sync_image" {
+  description = "The container image used by the config-validator git-sync side-car"
+  default     = "gcr.io/google-containers/git-sync"
+}
+
+variable "git_sync_image_tag" {
+  description = "The container image tag used by the config-validator git-sync side-car"
+  default     = "v3.1.2"
+}
+
+variable "git_sync_private_ssh_key" {
+  description = "The private OpenSSH key generated to allow the git-sync to clone the policy library repository."
+  default     = ""
+}
+
+variable "git_sync_ssh" {
+  description = "Use SSH for git-sync operations"
+  default     = false
+  type        = bool
+}
+
+variable "git_sync_wait" {
+  description = "The time number of seconds between git-syncs"
+  default     = 30
+}
+
 variable "gke_cluster_location" {
   description = "The location of the GKE cluster on which to deploy Forseti"
 }
@@ -116,6 +142,11 @@ variable "network_policy" {
 variable "policy_library_repository_url" {
   description = "The git repository containing the policy-library."
   default     = "https://github.com/forseti-security/policy-library"
+}
+
+variable "policy_library_repository_branch" {
+  description = "The specific git branch containing the policies."
+  default     = "master"
 }
 
 variable "project_id" {

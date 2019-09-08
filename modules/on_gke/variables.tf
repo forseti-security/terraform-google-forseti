@@ -39,6 +39,32 @@ variable "forseti_server_service_account" {
   description = "Forseti Server service account"
 }
 
+variable "git_sync_image" {
+  description = "The container image used by the config-validator git-sync side-car"
+  default     = "gcr.io/google-containers/git-sync"
+}
+
+variable "git_sync_image_tag" {
+  description = "The container image tag used by the config-validator git-sync side-car"
+  default     = "v3.1.2"
+}
+
+variable "git_sync_private_ssh_key" {
+  description = "The private OpenSSH key generated to allow the git-sync to clone the policy library repository."
+  default     = ""
+}
+
+variable "git_sync_ssh" {
+  description = "Use SSH for git-sync operations"
+  default     = true
+  type        = bool
+}
+
+variable "git_sync_wait" {
+  description = "The time number of seconds between git-syncs"
+  default     = 30
+}
+
 variable "gke_service_account" {
   description = "The name of the IAM service account attached to the GKE cluster node-pool"
 }
@@ -101,6 +127,11 @@ variable "network_policy" {
 
 variable "policy_library_repository_url" {
   description = "The git repository containing the policy-library."
+}
+
+variable "policy_library_repository_branch" {
+  description = "The specific git branch containing the policies."
+  default     = "master"
 }
 
 variable "production" {
