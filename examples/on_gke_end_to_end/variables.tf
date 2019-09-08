@@ -37,6 +37,11 @@ variable "git_sync_image_tag" {
   default     = "v3.1.2"
 }
 
+variable "git_sync_private_ssh_key_file" {
+  description = "The file containing the private SSH key allowing the git-sync to clone the policy library repository."
+  default     = ""
+}
+
 variable "git_sync_ssh" {
   description = "Use SSH for git-sync operations"
   default     = false

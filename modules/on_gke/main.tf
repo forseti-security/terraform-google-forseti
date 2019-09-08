@@ -59,6 +59,7 @@ resource "kubernetes_namespace" "forseti" {
   metadata {
     name = var.k8s_forseti_namespace
   }
+  // depends_on = ["null_resource.gke_cluster_ready"]
 }
 
 //*****************************************
@@ -109,6 +110,10 @@ resource "kubernetes_role_binding" "tiller" {
   }
 }
 
+data "local_file" "git_sync_private_ssh_key_file" {
+    filename = var.git_sync_private_ssh_key_file
+}
+
 //*****************************************
 //  Deploy Forseti on GKE via Helm
 //*****************************************
@@ -153,7 +158,7 @@ resource "helm_release" "forseti-security" {
 
   set_sensitive {
     name  = "gitSyncPrivateSSHKey"
-    value = "${base64encode(var.git_sync_private_ssh_key)}"
+    value = data.local_file.git_sync_private_ssh_key_file.content_base64
   }
 
   set {

@@ -96,7 +96,7 @@ module "vpc" {
 
 module "gke" {
   source            = "terraform-google-modules/kubernetes-engine/google"
-  version           = "4.0.0"
+  version           = "4.1.0"
   project_id        = "${var.project_id}"
   name              = "${var.gke_cluster_name}"
   regional          = false
@@ -150,7 +150,7 @@ module "forseti-on-gke" {
   forseti_server_bucket              = "${var.forseti_server_storage_bucket}"
   git_sync_image                     = "${var.git_sync_image}"
   git_sync_image_tag                 = "${var.git_sync_image_tag}"
-  git_sync_private_ssh_key           = "${var.git_sync_private_ssh_key}"
+  git_sync_private_ssh_key_file      = "${var.git_sync_private_ssh_key_file}"
   git_sync_ssh                       = "${var.git_sync_ssh}"
   git_sync_wait                      = "${var.git_sync_ssh}"
   gke_service_account                = "${module.gke.service_account}"

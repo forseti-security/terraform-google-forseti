@@ -39,11 +39,6 @@ output "forseti-client-vm-name" {
   value       = module.client.forseti-client-vm-name
 }
 
-output "forseti-server-git-private-key-pem" {
-  description = "The private OpenSSH (in PEM format) key generated to allow the Forseti Server to clone the policy library repository."
-  value       = module.server.forseti-server-git-private-key-pem
-}
-
 output "forseti-server-git-public-key-openssh" {
   description = "The public OpenSSH key generated to allow the Forseti Server to clone the policy library repository."
   value       = module.server.forseti-server-git-public-key-openssh
