@@ -149,12 +149,12 @@ Simple usage of the module within your own main.tf file is as follows:
 | network | The VPC where the Forseti client and server will be created | string | `"default"` | no |
 | network\_project | The project containing the VPC and subnetwork where the Forseti client and server will be created | string | `""` | no |
 | org\_id | GCP Organization ID that Forseti will have purview over | string | `""` | no |
-| policy\_library\_home | The local policy library directory | string | `"$USER_HOME/policy-library"` | no |
+| policy\_library\_home | The local policy library directory. | string | `"$USER_HOME/policy-library"` | no |
 | policy\_library\_repository\_url | The git repository containing the policy-library. | string | `""` | no |
-| policy\_library\_sync\_enabled | Sync config validator policy library from private repository | string | `"false"` | no |
-| policy\_library\_sync\_gcs\_directory\_name | The directory name of the GCS folder used for the policy library sync config | string | `"policy_library_sync"` | no |
-| policy\_library\_sync\_git\_sync\_tag | Tag for the git-sync image | string | `"v3.1.2"` | no |
-| policy\_library\_sync\_ssh\_known\_hosts | List of authorized public keys for SSH host of the policy library repository| string | `""` | no |
+| policy\_library\_sync\_enabled | Sync config validator policy library from private repository. | string | `"false"` | no |
+| policy\_library\_sync\_gcs\_directory\_name | The directory name of the GCS folder used for the policy library sync config. | string | `"policy_library_sync"` | no |
+| policy\_library\_sync\_git\_sync\_tag | Tag for the git-sync image. | string | `"v3.1.2"` | no |
+| policy\_library\_sync\_ssh\_known\_hosts | List of authorized public keys for SSH host of the policy library repository. | string | `""` | no |
 | project\_id | Google Project ID that you want Forseti deployed into | string | n/a | yes |
 | resource\_enabled | Resource scanner enabled. | string | `"true"` | no |
 | resource\_violations\_should\_notify | Notify for resource violations | string | `"true"` | no |
@@ -163,9 +163,9 @@ Simple usage of the module within your own main.tf file is as follows:
 | securitycenter\_period | The period of max calls for the Security Center API (in seconds) | string | `"1.1"` | no |
 | sendgrid\_api\_key | Sendgrid.com API key to enable email notifications | string | `""` | no |
 | server\_access\_config | Server instance 'access\_config' block | map(any) | `<map>` | no |
+| server\_boot\_disk\_size | Size of the GCE instance boot disk in GBs. | string | `"100"` | no |
+| server\_boot\_disk\_type | GCE instance boot disk type, can be pd-standard or pd-ssd. | string | `"pd-ssd"` | no |
 | server\_boot\_image | GCE instance image that is being used, currently Ubuntu only support is available | string | `"ubuntu-os-cloud/ubuntu-1804-lts"` | no |
-| server\_boot\_disk\_size | Size of the GCE instance boot disk in GBs | string | `"100"` | no |
-| server\_boot\_disk\_type | GCE instance boot disk type, can be pd-standard or pd-ssd | string | `"pd-ssd"` | no |
 | server\_grpc\_allow\_ranges | List of CIDRs that will be allowed gRPC access to forseti server | list(string) | `<list>` | no |
 | server\_instance\_metadata | Metadata key/value pairs to make available from within the server instance. | map(string) | `<map>` | no |
 | server\_private | Private GCE Forseti Server VM (no public IP) | string | `"false"` | no |
@@ -195,7 +195,7 @@ Simple usage of the module within your own main.tf file is as follows:
 | forseti-client-vm-ip | Forseti Client VM private IP address |
 | forseti-client-vm-name | Forseti Client VM name |
 | forseti-cloudsql-connection-name | Forseti CloudSQL Connection String |
-| forseti-server-git-public-key-openssh | The public OpenSSH key generated to allow the Forseti Server to clone the policy library repository |
+| forseti-server-git-public-key-openssh | The public OpenSSH key generated to allow the Forseti Server to clone the policy library repository. |
 | forseti-server-service-account | Forseti Server service account |
 | forseti-server-storage-bucket | Forseti Server storage bucket |
 | forseti-server-vm-ip | Forseti Server VM private IP address |
