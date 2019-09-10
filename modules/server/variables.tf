@@ -31,7 +31,7 @@ variable "forseti_version" {
 
 variable "forseti_repo_url" {
   description = "Git repo for the Forseti installation"
-  default     = "https://github.com/GoogleCloudPlatform/forseti-security"
+  default     = "https://github.com/forseti-security/forseti-security"
 }
 
 variable "forseti_email_recipient" {
