@@ -183,7 +183,7 @@ variable "cloudsql_proxy_arch" {
 }
 
 #--------------------#
-# Forseti server IAM #
+# Forseti client IAM #
 #--------------------#
 
 variable "server_iam_module" {

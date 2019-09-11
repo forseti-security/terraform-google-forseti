@@ -7,7 +7,6 @@ This example illustrates how to set up a minimal Forseti installation.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| credentials\_path | Path to service account json | string | `"../../credentials.json"` | no |
 | domain | The domain associated with the GCP Organization ID | string | n/a | yes |
 | forseti\_email\_recipient | Forseti email recipient. | string | `""` | no |
 | forseti\_email\_sender | Forseti email sender. | string | `""` | no |
@@ -16,7 +15,7 @@ This example illustrates how to set up a minimal Forseti installation.
 | instance\_tags | Tags to assign the client and server instances. | list(string) | `<list>` | no |
 | network | Name of the shared VPC | string | n/a | yes |
 | org\_id | GCP Organization ID that Forseti will have purview over | string | n/a | yes |
-| private | Private client and server instances (no public IPs) | string | `"true"` | no |
+| private | Private client, server, and CloudSQL instances (no public IPs) | bool | `"true"` | no |
 | project\_id | The ID of an existing Google project where Forseti will be installed | string | n/a | yes |
 | region | Region where forseti subnetwork will be deployed | string | `"us-central1"` | no |
 | sendgrid\_api\_key | Sendgrid API key. | string | `""` | no |

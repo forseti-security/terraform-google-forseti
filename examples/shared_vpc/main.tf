@@ -22,6 +22,7 @@ provider "google" {
 provider "google-beta" {
   credentials = file(var.credentials_path)
   version     = "~> 2.11.0"
+  project     = var.project_id
 }
 
 provider "local" {

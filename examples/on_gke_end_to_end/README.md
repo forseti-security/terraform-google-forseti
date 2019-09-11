@@ -105,3 +105,6 @@ In order to operate with the Service Account you must activate the following API
 | suffix | The random suffix appended to Forseti resources |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+=======
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+>>>>>>> 2f2c483... Attempt to separate out a common component (#228)
