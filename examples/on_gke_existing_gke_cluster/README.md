@@ -31,7 +31,7 @@ In addition to the [roles](https://github.com/forseti-security/terraform-google-
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| config\_validator\_enabled | Config Validator scanner enabled. | string | `"false"` | no |
+| config\_validator\_enabled | Config Validator scanner enabled. | bool | `"false"` | no |
 | credentials\_path | Path to service account json | string | n/a | yes |
 | forseti\_client\_service\_account | Forseti Client service account | string | n/a | yes |
 | forseti\_client\_vm\_ip | Forseti Client VM private IP address | string | n/a | yes |

@@ -16,6 +16,7 @@
 
 variable "config_validator_enabled" {
   description = "Config Validator scanner enabled."
+  type        = bool
   default     = false
 }
 
@@ -56,8 +57,8 @@ variable "git_sync_private_ssh_key_file" {
 
 variable "git_sync_ssh" {
   description = "Use SSH for git-sync operations"
-  default     = true
   type        = bool
+  default     = true
 }
 
 variable "git_sync_wait" {
@@ -121,8 +122,8 @@ variable "load_balancer" {
 
 variable "network_policy" {
   description = "Apply pod network policies"
-  default     = false
   type        = bool
+  default     = false
 }
 
 variable "policy_library_repository_url" {
@@ -136,8 +137,8 @@ variable "policy_library_repository_branch" {
 
 variable "production" {
   description = "Whether or not to deploy Forseti on GKE in a production configuration"
-  default     = true
   type        = bool
+  default     = true
 }
 
 variable "project_id" {
@@ -146,8 +147,8 @@ variable "project_id" {
 
 variable "recreate_pods" {
   description = "Instructs the helm_release resource to, on update, perform pod restarts for the resources if applicable."
-  default     = true
   type        = bool
+  default     = true
 }
 
 variable "server_log_level" {

@@ -16,7 +16,8 @@
 
 variable "config_validator_enabled" {
   description = "Config Validator scanner enabled."
-  default     = "false"
+  type        = bool
+  default     = false
 }
 
 variable "credentials_path" {

@@ -140,8 +140,8 @@ variable "network_name" {
 
 variable "production" {
   description = "Whether or not to deploy Forseti on GKE in a production configuration"
-  default     = true
   type        = bool
+  default     = true
 }
 
 variable "org_id" {

@@ -6,7 +6,7 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| config\_validator\_enabled | Config Validator scanner enabled. | string | `"false"` | no |
+| config\_validator\_enabled | Config Validator scanner enabled. | bool | `"false"` | no |
 | forseti\_client\_service\_account | Forseti Client service account | string | n/a | yes |
 | forseti\_client\_vm\_ip | Forseti Client VM private IP address | string | n/a | yes |
 | forseti\_cloudsql\_connection\_name | Forseti CloudSQL Connection String | string | n/a | yes |
