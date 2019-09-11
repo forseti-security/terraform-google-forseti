@@ -116,7 +116,8 @@ variable "server_access_config" {
 
 variable "server_private" {
   description = "Private GCE Forseti Server VM (no public IP)"
-  default     = "false"
+  default     = false
+  type        = bool
 }
 
 #---------------------------------#
@@ -462,7 +463,8 @@ variable "policy_library_repository_url" {
 
 variable "policy_library_sync_enabled" {
   description = "Sync config validator policy library from private repository."
-  default     = "false"
+  default     = false
+  type        = bool
 }
 
 variable "policy_library_sync_gcs_directory_name" {
@@ -712,7 +714,8 @@ variable "client_access_config" {
 
 variable "client_private" {
   description = "Private GCE Forseti Client VM (no public IP)"
-  default     = "false"
+  default     = false
+  type        = bool
 }
 
 #------------#
@@ -740,7 +743,8 @@ variable "cloudsql_disk_size" {
 
 variable "cloudsql_private" {
   description = "Whether to enable private network and not to create public IP for CloudSQL Instance"
-  default     = "false"
+  default     = false
+  type        = bool
 }
 
 variable "cloudsql_proxy_arch" {

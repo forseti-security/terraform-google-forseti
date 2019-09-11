@@ -56,7 +56,7 @@ Simple usage of the module within your own main.tf file is as follows:
 | client\_access\_config | Client instance 'access\_config' block | map(any) | `<map>` | no |
 | client\_boot\_image | GCE Forseti Client role instance size | string | `"ubuntu-os-cloud/ubuntu-1804-lts"` | no |
 | client\_instance\_metadata | Metadata key/value pairs to make available from within the client instance. | map(string) | `<map>` | no |
-| client\_private | Private GCE Forseti Client VM (no public IP) | string | `"false"` | no |
+| client\_private | Private GCE Forseti Client VM (no public IP) | bool | `"false"` | no |
 | client\_region | GCE Forseti Client role region size | string | `"us-central1"` | no |
 | client\_ssh\_allow\_ranges | List of CIDRs that will be allowed ssh access to forseti client | list(string) | `<list>` | no |
 | client\_tags | GCE Forseti Client VM Tags | list(string) | `<list>` | no |
@@ -72,7 +72,7 @@ Simple usage of the module within your own main.tf file is as follows:
 | cloudsql\_db\_name | CloudSQL database name | string | `"forseti_security"` | no |
 | cloudsql\_db\_port | CloudSQL database port | string | `"3306"` | no |
 | cloudsql\_disk\_size | The size of data disk, in GB. Size of a running instance cannot be reduced but can be increased. | string | `"25"` | no |
-| cloudsql\_private | Whether to enable private network and not to create public IP for CloudSQL Instance | string | `"false"` | no |
+| cloudsql\_private | Whether to enable private network and not to create public IP for CloudSQL Instance | bool | `"false"` | no |
 | cloudsql\_proxy\_arch | CloudSQL Proxy architecture | string | `"linux.amd64"` | no |
 | cloudsql\_region | CloudSQL region | string | `"us-central1"` | no |
 | cloudsql\_type | CloudSQL Instance size | string | `"db-n1-standard-1"` | no |
@@ -151,7 +151,7 @@ Simple usage of the module within your own main.tf file is as follows:
 | org\_id | GCP Organization ID that Forseti will have purview over | string | `""` | no |
 | policy\_library\_home | The local policy library directory. | string | `"$USER_HOME/policy-library"` | no |
 | policy\_library\_repository\_url | The git repository containing the policy-library. | string | `""` | no |
-| policy\_library\_sync\_enabled | Sync config validator policy library from private repository. | string | `"false"` | no |
+| policy\_library\_sync\_enabled | Sync config validator policy library from private repository. | bool | `"false"` | no |
 | policy\_library\_sync\_gcs\_directory\_name | The directory name of the GCS folder used for the policy library sync config. | string | `"policy_library_sync"` | no |
 | policy\_library\_sync\_git\_sync\_tag | Tag for the git-sync image. | string | `"v3.1.2"` | no |
 | policy\_library\_sync\_ssh\_known\_hosts | List of authorized public keys for SSH host of the policy library repository. | string | `""` | no |
@@ -168,7 +168,7 @@ Simple usage of the module within your own main.tf file is as follows:
 | server\_boot\_image | GCE instance image that is being used, currently Ubuntu only support is available | string | `"ubuntu-os-cloud/ubuntu-1804-lts"` | no |
 | server\_grpc\_allow\_ranges | List of CIDRs that will be allowed gRPC access to forseti server | list(string) | `<list>` | no |
 | server\_instance\_metadata | Metadata key/value pairs to make available from within the server instance. | map(string) | `<map>` | no |
-| server\_private | Private GCE Forseti Server VM (no public IP) | string | `"false"` | no |
+| server\_private | Private GCE Forseti Server VM (no public IP) | bool | `"false"` | no |
 | server\_region | GCP region where Forseti will be deployed | string | `"us-central1"` | no |
 | server\_ssh\_allow\_ranges | List of CIDRs that will be allowed ssh access to forseti server | list(string) | `<list>` | no |
 | server\_tags | GCE Forseti Server VM Tags | list(string) | `<list>` | no |

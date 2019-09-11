@@ -63,6 +63,7 @@ variable "instance_tags" {
 variable "private" {
   description = "Private client, server, and CloudSQL instances (no public IPs)"
   default     = true
+  type        = bool
 }
 
 variable "sendgrid_api_key" {
