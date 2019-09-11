@@ -110,7 +110,7 @@ variable "k8s_forseti_orchestrator_image" {
 
 variable "k8s_forseti_orchestrator_image_tag" {
   description = "The tag for the container image for the Forseti orchestrator"
-  default     = "v2.19.1"
+  default     = "v2.20.0"
 }
 
 variable "k8s_forseti_server_image" {
@@ -120,7 +120,7 @@ variable "k8s_forseti_server_image" {
 
 variable "k8s_forseti_server_image_tag" {
   description = "The tag for the container image for the Forseti server"
-  default     = "v2.19.1"
+  default     = "v2.20.0"
 }
 
 variable "k8s_tiller_sa_name" {

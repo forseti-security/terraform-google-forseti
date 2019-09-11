@@ -59,7 +59,6 @@ resource "kubernetes_namespace" "forseti" {
   metadata {
     name = var.k8s_forseti_namespace
   }
-  // depends_on = ["null_resource.gke_cluster_ready"]
 }
 
 //*****************************************
@@ -111,7 +110,7 @@ resource "kubernetes_role_binding" "tiller" {
 }
 
 data "local_file" "git_sync_private_ssh_key_file" {
-    filename = var.git_sync_private_ssh_key_file
+  filename = var.git_sync_private_ssh_key_file
 }
 
 //*****************************************

@@ -38,6 +38,11 @@ In addition to the [roles](https://github.com/forseti-security/terraform-google-
 | forseti\_cloudsql\_connection\_name | The connection string to the CloudSQL instance | string | n/a | yes |
 | forseti\_server\_service\_account | Forseti Server service account | string | n/a | yes |
 | forseti\_server\_storage\_bucket | Forseti Server storage bucket | string | n/a | yes |
+| git\_sync\_image | The container image used by the config-validator git-sync side-car | string | `"gcr.io/google-containers/git-sync"` | no |
+| git\_sync\_image\_tag | The container image tag used by the config-validator git-sync side-car | string | `"v3.1.2"` | no |
+| git\_sync\_private\_ssh\_key\_file | The file containing the private SSH key allowing the git-sync to clone the policy library repository. | string | `""` | no |
+| git\_sync\_ssh | Use SSH for git-sync operations | bool | `"false"` | no |
+| git\_sync\_wait | The time number of seconds between git-syncs | string | `"30"` | no |
 | gke\_cluster\_location | The location of the GKE cluster on which to deploy Forseti | string | n/a | yes |
 | gke\_cluster\_name | The name of the GKE cluster on which to deploy Forseti | string | n/a | yes |
 | gke\_service\_account | The service account to run nodes as if not overridden in node\_pools. | string | `"create"` | no |
@@ -46,12 +51,13 @@ In addition to the [roles](https://github.com/forseti-security/terraform-google-
 | k8s\_config\_validator\_image\_tag | The tag for the config-validator image. | string | `"latest"` | no |
 | k8s\_forseti\_namespace | The Kubernetes namespace in which to deploy Forseti. | string | `"forseti"` | no |
 | k8s\_forseti\_orchestrator\_image | The container image for the Forseti orchestrator | string | `"gcr.io/forseti-containers/forseti"` | no |
-| k8s\_forseti\_orchestrator\_image\_tag | The tag for the container image for the Forseti orchestrator | string | `"v2.19.1"` | no |
+| k8s\_forseti\_orchestrator\_image\_tag | The tag for the container image for the Forseti orchestrator | string | `"v2.20.0"` | no |
 | k8s\_forseti\_server\_image | The container image for the Forseti server | string | `"gcr.io/forseti-containers/forseti"` | no |
-| k8s\_forseti\_server\_image\_tag | The tag for the container image for the Forseti server | string | `"v2.19.1"` | no |
+| k8s\_forseti\_server\_image\_tag | The tag for the container image for the Forseti server | string | `"v2.20.0"` | no |
 | k8s\_tiller\_sa\_name | The Kubernetes Service Account used by Tiller | string | `"tiller"` | no |
 | load\_balancer | The type of load balancer to deploy for the forseti-server if desired: none, external, internal | string | `"internal"` | no |
 | network\_policy | Whether or not to apply Pod NetworkPolicies | bool | `"false"` | no |
+| policy\_library\_repository\_branch | The specific git branch containing the policies. | string | `"master"` | no |
 | policy\_library\_repository\_url | The git repository containing the policy-library. | string | `"https://github.com/forseti-security/policy-library"` | no |
 | project\_id | The ID of an existing Google project where Forseti will be installed | string | n/a | yes |
 | server\_log\_level | The log level of the Forseti server container. | string | `"info"` | no |
