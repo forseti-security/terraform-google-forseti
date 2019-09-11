@@ -43,7 +43,7 @@ In order to operate with the Service Account you must activate the following API
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | auto\_create\_subnetworks | When set to true, the network is created in 'auto subnet mode' and it will create a subnet for each region automatically across the 10.128.0.0/9 address range. When set to false, the network is created in 'custom subnet mode' so the user can explicitly connect subnetwork resources. | bool | `"false"` | no |
-| config\_validator\_enabled | Config Validator scanner enabled. | string | `"false"` | no |
+| config\_validator\_enabled | Config Validator scanner enabled. | bool | `"false"` | no |
 | credentials\_path | Path to service account json | string | n/a | yes |
 | forseti\_client\_service\_account | Forseti Client service account | string | `""` | no |
 | forseti\_client\_vm\_ip | Forseti Client VM private IP address | string | `""` | no |
