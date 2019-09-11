@@ -462,7 +462,8 @@ variable "policy_library_repository_url" {
 
 variable "policy_library_sync_enabled" {
   description = "Sync config validator policy library from private repository."
-  default     = "false"
+  type        = bool
+  default     = false
 }
 
 variable "policy_library_sync_gcs_directory_name" {

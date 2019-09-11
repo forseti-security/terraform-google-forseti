@@ -60,8 +60,8 @@ variable "git_sync_private_ssh_key_file" {
 
 variable "git_sync_ssh" {
   description = "Use SSH for git-sync operations"
-  default     = false
   type        = bool
+  default     = false
 }
 
 variable "git_sync_wait" {
@@ -135,8 +135,8 @@ variable "load_balancer" {
 
 variable "network_policy" {
   description = "Whether or not to apply Pod NetworkPolicies"
-  default     = false
   type        = bool
+  default     = false
 }
 
 variable "policy_library_repository_url" {

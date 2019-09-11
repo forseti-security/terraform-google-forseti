@@ -20,6 +20,7 @@ variable "credentials_path" {
 
 variable "config_validator_enabled" {
   description = "Config Validator scanner enabled."
+  type        = bool
   default     = false
 }
 
@@ -44,8 +45,8 @@ variable "git_sync_private_ssh_key_file" {
 
 variable "git_sync_ssh" {
   description = "Use SSH for git-sync operations"
-  default     = false
   type        = bool
+  default     = false
 }
 
 variable "git_sync_wait" {
@@ -184,8 +185,8 @@ variable "network_description" {
 
 variable "auto_create_subnetworks" {
   description = "When set to true, the network is created in 'auto subnet mode' and it will create a subnet for each region automatically across the 10.128.0.0/9 address range. When set to false, the network is created in 'custom subnet mode' so the user can explicitly connect subnetwork resources."
-  default     = false
   type        = bool
+  default     = false
 }
 
 variable "server_log_level" {
