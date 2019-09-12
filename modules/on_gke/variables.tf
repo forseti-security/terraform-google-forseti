@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 
+variable "config_validator_enabled" {
+  description = "Config Validator scanner enabled."
+  type        = bool
+  default     = false
+}
+
 variable "forseti_client_vm_ip" {
   description = "Forseti Client VM private IP address"
 }
@@ -34,6 +40,32 @@ variable "forseti_server_service_account" {
   description = "Forseti Server service account"
 }
 
+variable "git_sync_image" {
+  description = "The container image used by the config-validator git-sync side-car"
+  default     = "gcr.io/google-containers/git-sync"
+}
+
+variable "git_sync_image_tag" {
+  description = "The container image tag used by the config-validator git-sync side-car"
+  default     = "v3.1.2"
+}
+
+variable "git_sync_private_ssh_key_file" {
+  description = "The file containing the private SSH key allowing the git-sync to clone the policy library repository."
+  default     = ""
+}
+
+variable "git_sync_ssh" {
+  description = "Use SSH for git-sync operations"
+  type        = bool
+  default     = true
+}
+
+variable "git_sync_wait" {
+  description = "The time number of seconds between git-syncs"
+  default     = 30
+}
+
 variable "gke_service_account" {
   description = "The name of the IAM service account attached to the GKE cluster node-pool"
 }
@@ -41,6 +73,16 @@ variable "gke_service_account" {
 variable "helm_repository_url" {
   description = "The Helm repository containing the 'forseti-security' Helm charts"
   default     = "https://forseti-security-charts.storage.googleapis.com/release/"
+}
+
+variable "k8s_config_validator_image" {
+  description = "The container image used by the config-validator"
+  default     = "gcr.io/forseti-containers/config-validator"
+}
+
+variable "k8s_config_validator_image_tag" {
+  description = "The tag for the config-validator image."
+  default     = "latest"
 }
 
 variable "k8s_forseti_namespace" {
@@ -80,25 +122,33 @@ variable "load_balancer" {
 
 variable "network_policy" {
   description = "Apply pod network policies"
-  default     = false
   type        = bool
+  default     = false
+}
+
+variable "policy_library_repository_url" {
+  description = "The git repository containing the policy-library."
+}
+
+variable "policy_library_repository_branch" {
+  description = "The specific git branch containing the policies."
+  default     = "master"
+}
+
+variable "production" {
+  description = "Whether or not to deploy Forseti on GKE in a production configuration"
+  type        = bool
+  default     = true
 }
 
 variable "project_id" {
   description = "The ID of the GCP project where Forseti is currently deployed."
 }
 
-variable "production" {
-  description = "Whether or not to deploy Forseti on GKE in a production configuration"
-  default     = true
-  type        = bool
-}
-
 variable "recreate_pods" {
   description = "Instructs the helm_release resource to, on update, perform pod restarts for the resources if applicable."
-  default     = true
   type        = bool
-
+  default     = true
 }
 
 variable "server_log_level" {

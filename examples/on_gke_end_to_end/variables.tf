@@ -18,8 +18,40 @@ variable "credentials_path" {
   description = "Path to service account json"
 }
 
+variable "config_validator_enabled" {
+  description = "Config Validator scanner enabled."
+  type        = bool
+  default     = false
+}
+
 variable "domain" {
   description = "The domain associated with the GCP Organization ID"
+}
+
+variable "git_sync_image" {
+  description = "The container image used by the config-validator git-sync side-car"
+  default     = "gcr.io/google-containers/git-sync"
+}
+
+variable "git_sync_image_tag" {
+  description = "The container image tag used by the config-validator git-sync side-car"
+  default     = "v3.1.2"
+}
+
+variable "git_sync_private_ssh_key_file" {
+  description = "The file containing the private SSH key allowing the git-sync to clone the policy library repository."
+  default     = ""
+}
+
+variable "git_sync_ssh" {
+  description = "Use SSH for git-sync operations"
+  type        = bool
+  default     = false
+}
+
+variable "git_sync_wait" {
+  description = "The time number of seconds between git-syncs"
+  default     = 30
 }
 
 variable "gke_cluster_name" {
@@ -54,6 +86,16 @@ variable "gsuite_admin_email" {
 variable "helm_repository_url" {
   description = "The Helm repository containing the 'forseti-security' Helm charts"
   default     = "https://forseti-security-charts.storage.googleapis.com/release/"
+}
+
+variable "k8s_config_validator_image" {
+  description = "The container image used by the config-validator"
+  default     = "gcr.io/forseti-containers/config-validator"
+}
+
+variable "k8s_config_validator_image_tag" {
+  description = "The tag for the config-validator image."
+  default     = "latest"
 }
 
 variable "k8s_forseti_namespace" {
@@ -98,12 +140,22 @@ variable "network_name" {
 
 variable "production" {
   description = "Whether or not to deploy Forseti on GKE in a production configuration"
-  default     = true
   type        = bool
+  default     = true
 }
 
 variable "org_id" {
   description = "GCP Organization ID that Forseti will have purview over"
+}
+
+variable "policy_library_repository_url" {
+  description = "The git repository containing the policy-library."
+  default     = "https://github.com/forseti-security/policy-library"
+}
+
+variable "policy_library_repository_branch" {
+  description = "The specific git branch containing the policies."
+  default     = "master"
 }
 
 variable "project_id" {
@@ -133,8 +185,8 @@ variable "network_description" {
 
 variable "auto_create_subnetworks" {
   description = "When set to true, the network is created in 'auto subnet mode' and it will create a subnet for each region automatically across the 10.128.0.0/9 address range. When set to false, the network is created in 'custom subnet mode' so the user can explicitly connect subnetwork resources."
-  default     = false
   type        = bool
+  default     = false
 }
 
 variable "server_log_level" {
