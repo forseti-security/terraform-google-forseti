@@ -38,17 +38,23 @@ In addition to the [roles](https://github.com/forseti-security/terraform-google-
 | forseti\_cloudsql\_connection\_name | The connection string to the CloudSQL instance | string | n/a | yes |
 | forseti\_server\_service\_account | Forseti Server service account | string | n/a | yes |
 | forseti\_server\_storage\_bucket | Forseti Server storage bucket | string | n/a | yes |
+<<<<<<< HEAD
 | git\_sync\_image | The container image used by the config-validator git-sync side-car | string | `"gcr.io/google-containers/git-sync"` | no |
 | git\_sync\_image\_tag | The container image tag used by the config-validator git-sync side-car | string | `"v3.1.2"` | no |
 | git\_sync\_private\_ssh\_key\_file | The file containing the private SSH key allowing the git-sync to clone the policy library repository. | string | `""` | no |
 | git\_sync\_ssh | Use SSH for git-sync operations | bool | `"false"` | no |
 | git\_sync\_wait | The time number of seconds between git-syncs | string | `"30"` | no |
+=======
+>>>>>>> master
 | gke\_cluster\_location | The location of the GKE cluster on which to deploy Forseti | string | n/a | yes |
 | gke\_cluster\_name | The name of the GKE cluster on which to deploy Forseti | string | n/a | yes |
 | gke\_service\_account | The service account to run nodes as if not overridden in node\_pools. | string | `"create"` | no |
 | helm\_repository\_url | The Helm repository containing the 'forseti-security' Helm charts | string | `"https://forseti-security-charts.storage.googleapis.com/release/"` | no |
+<<<<<<< HEAD
 | k8s\_config\_validator\_image | The container image used by the config-validator | string | `"gcr.io/forseti-containers/config-validator"` | no |
 | k8s\_config\_validator\_image\_tag | The tag for the config-validator image. | string | `"latest"` | no |
+=======
+>>>>>>> master
 | k8s\_forseti\_namespace | The Kubernetes namespace in which to deploy Forseti. | string | `"forseti"` | no |
 | k8s\_forseti\_orchestrator\_image | The container image for the Forseti orchestrator | string | `"gcr.io/forseti-containers/forseti"` | no |
 | k8s\_forseti\_orchestrator\_image\_tag | The tag for the container image for the Forseti orchestrator | string | `"v2.20.0"` | no |

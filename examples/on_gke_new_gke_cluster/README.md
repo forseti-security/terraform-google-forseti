@@ -43,7 +43,10 @@ In order to operate with the Service Account you must activate the following API
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | auto\_create\_subnetworks | When set to true, the network is created in 'auto subnet mode' and it will create a subnet for each region automatically across the 10.128.0.0/9 address range. When set to false, the network is created in 'custom subnet mode' so the user can explicitly connect subnetwork resources. | bool | `"false"` | no |
+<<<<<<< HEAD
 | config\_validator\_enabled | Config Validator scanner enabled. | bool | `"false"` | no |
+=======
+>>>>>>> master
 | credentials\_path | Path to service account json | string | n/a | yes |
 | forseti\_client\_service\_account | Forseti Client service account | string | `""` | no |
 | forseti\_client\_vm\_ip | Forseti Client VM private IP address | string | `""` | no |
@@ -72,8 +75,11 @@ In order to operate with the Service Account you must activate the following API
 | load\_balancer | The type of load balancer to deploy for the forseti-server if desired: none, external, internal | string | `"internal"` | no |
 | network\_description | An optional description of the network. The resource must be recreated to modify this field. | string | `""` | no |
 | network\_name | The name of the VPC being created | string | `"gke-network"` | no |
+<<<<<<< HEAD
 | policy\_library\_repository\_branch | The specific git branch containing the policies. | string | `"master"` | no |
 | policy\_library\_repository\_url | The git repository containing the policy-library. | string | `"https://github.com/forseti-security/policy-library"` | no |
+=======
+>>>>>>> master
 | production | Whether or not to deploy Forseti on GKE in a production configuration | bool | `"true"` | no |
 | project\_id | The ID of an existing Google project where Forseti will be installed | string | n/a | yes |
 | region | Region where forseti subnetwork will be deployed | string | `"us-central1"` | no |

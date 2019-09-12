@@ -67,8 +67,11 @@ In order to operate with the Service Account you must activate the following API
 | gke\_service\_ip\_range | The IP range of the Kubernetes services. | string | `"10.3.0.0/20"` | no |
 | gsuite\_admin\_email | G-Suite administrator email address to manage your Forseti installation | string | n/a | yes |
 | helm\_repository\_url | The Helm repository containing the 'forseti-security' Helm charts | string | `"https://forseti-security-charts.storage.googleapis.com/release/"` | no |
+<<<<<<< HEAD
 | k8s\_config\_validator\_image | The container image used by the config-validator | string | `"gcr.io/forseti-containers/config-validator"` | no |
 | k8s\_config\_validator\_image\_tag | The tag for the config-validator image. | string | `"latest"` | no |
+=======
+>>>>>>> master
 | k8s\_forseti\_namespace | The Kubernetes namespace in which to deploy Forseti. | string | `"forseti"` | no |
 | k8s\_forseti\_orchestrator\_image | The container image for the Forseti orchestrator | string | `"gcr.io/forseti-containers/forseti"` | no |
 | k8s\_forseti\_orchestrator\_image\_tag | The tag for the container image for the Forseti orchestrator | string | `"v2.20.0"` | no |
@@ -79,8 +82,11 @@ In order to operate with the Service Account you must activate the following API
 | network\_description | An optional description of the network. The resource must be recreated to modify this field. | string | `""` | no |
 | network\_name | The name of the VPC being created | string | `"forseti-gke-network"` | no |
 | org\_id | GCP Organization ID that Forseti will have purview over | string | n/a | yes |
+<<<<<<< HEAD
 | policy\_library\_repository\_branch | The specific git branch containing the policies. | string | `"master"` | no |
 | policy\_library\_repository\_url | The git repository containing the policy-library. | string | `"https://github.com/forseti-security/policy-library"` | no |
+=======
+>>>>>>> master
 | production | Whether or not to deploy Forseti on GKE in a production configuration | bool | `"true"` | no |
 | project\_id | The ID of an existing Google project where Forseti will be installed | string | n/a | yes |
 | region | Region where forseti subnetwork will be deployed | string | `"us-central1"` | no |
@@ -102,4 +108,8 @@ In order to operate with the Service Account you must activate the following API
 | forseti-server-vm-name | Forseti Server VM name |
 | suffix | The random suffix appended to Forseti resources |
 
+<<<<<<< HEAD
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+=======
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+>>>>>>> master

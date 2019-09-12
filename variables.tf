@@ -116,7 +116,8 @@ variable "server_access_config" {
 
 variable "server_private" {
   description = "Private GCE Forseti Server VM (no public IP)"
-  default     = "false"
+  default     = false
+  type        = bool
 }
 
 #---------------------------------#
@@ -337,7 +338,7 @@ variable "sqladmin_disable_polling" {
 }
 
 variable "storage_disable_polling" {
-  description = "Whetservicemanagement_disable_pollingher to disable polling for Storage API"
+  description = "Whether to disable polling for Storage API"
   type        = bool
   default     = false
 }
@@ -713,7 +714,8 @@ variable "client_access_config" {
 
 variable "client_private" {
   description = "Private GCE Forseti Client VM (no public IP)"
-  default     = "false"
+  default     = false
+  type        = bool
 }
 
 #------------#
@@ -732,6 +734,17 @@ variable "cloudsql_db_name" {
 variable "cloudsql_db_port" {
   description = "CloudSQL database port"
   default     = "3306"
+}
+
+variable "cloudsql_disk_size" {
+  description = "The size of data disk, in GB. Size of a running instance cannot be reduced but can be increased."
+  default     = "25"
+}
+
+variable "cloudsql_private" {
+  description = "Whether to enable private network and not to create public IP for CloudSQL Instance"
+  default     = false
+  type        = bool
 }
 
 variable "cloudsql_proxy_arch" {
