@@ -60,17 +60,17 @@ variable "forseti_run_frequency" {
 # Forseti server #
 #----------------#
 variable "server_type" {
-  description = "GCE Forseti Server role instance size"
+  description = "GCE Forseti Server machine type"
   default     = "n1-standard-2"
 }
 
 variable "server_region" {
-  description = "GCP region where Forseti will be deployed"
+  description = "GCE Forseti Server region"
   default     = "us-central1"
 }
 
 variable "server_boot_image" {
-  description = "GCE instance image that is being used, currently Ubuntu only support is available"
+  description = "GCE Forseti Server boot image - Currently only Ubuntu is supported"
   default     = "ubuntu-os-cloud/ubuntu-1804-lts"
 }
 
@@ -674,17 +674,17 @@ variable "groups_settings_violations_should_notify" {
 # Forseti client #
 #----------------#
 variable "client_type" {
-  description = "GCE Forseti Client role instance size"
+  description = "GCE Forseti Client machine type"
   default     = "n1-standard-2"
 }
 
 variable "client_boot_image" {
-  description = "GCE Forseti Client role instance size"
+  description = "GCE Forseti Client boot image"
   default     = "ubuntu-os-cloud/ubuntu-1804-lts"
 }
 
 variable "client_region" {
-  description = "GCE Forseti Client role region size"
+  description = "GCE Forseti Client region"
   default     = "us-central1"
 }
 

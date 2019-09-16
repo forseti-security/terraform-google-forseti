@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Extending the adopted spec, each change should have a link to its corresponding pull request appended.
 
+## [Unreleased]
+
+### Added
+
+- CloudSQL instance created in the same zone as GCE instances [#253]
+
 ## [v4.1.0] - 2019-09-06
 
 ### Added
@@ -245,6 +251,7 @@ Version 4.0.0 is a backwards-incompatible release. Please see the [upgrade instr
 [v4.0.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.0.0...v4.0.1
 [v4.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.0.1...v4.1.0
 
+[#253]: https://github.com/forseti-security/terraform-google-forseti/pull/253
 [#246]: https://github.com/forseti-security/terraform-google-forseti/pull/246
 [#239]: https://github.com/forseti-security/terraform-google-forseti/pull/239
 [#233]: https://github.com/forseti-security/terraform-google-forseti/pull/233
