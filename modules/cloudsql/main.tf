@@ -21,22 +21,22 @@ locals {
   random_hash     = var.suffix
   cloudsql_name   = "forseti-server-db-${local.random_hash}"
   network_project = var.network_project != "" ? var.network_project : var.project_id
+  cloudsql_zone   = "${var.cloudsql_region}-c"
 }
 
 #------------------------------------#
 # Forseti Private SQL Database Setup #
 #------------------------------------#
-
 data "google_compute_network" "cloudsql_private_network" {
-  name    = "${var.network}"
-  project = "${local.network_project}"
+  name    = var.network
+  project = local.network_project
 }
 
 resource "google_project_service" "service_networking" {
   count              = var.cloudsql_private ? 1 : 0
   project            = var.project_id
   service            = "servicenetworking.googleapis.com"
-  disable_on_destroy = "false"
+  disable_on_destroy = false
 }
 
 resource "google_compute_global_address" "private_ip_address" {
@@ -60,7 +60,6 @@ resource "google_service_networking_connection" "private_vpc_connection" {
 #----------------------#
 # Forseti SQL database #
 #----------------------#
-
 resource "google_sql_database_instance" "master" {
   name             = local.cloudsql_name
   project          = var.project_id
@@ -78,9 +77,13 @@ resource "google_sql_database_instance" "master" {
     }
 
     ip_configuration {
-      ipv4_enabled    = var.cloudsql_private ? "false" : "true"
+      ipv4_enabled    = var.cloudsql_private ? false : true
       require_ssl     = true
       private_network = var.cloudsql_private ? data.google_compute_network.cloudsql_private_network.self_link : ""
+    }
+
+    location_preference {
+      zone = local.cloudsql_zone
     }
   }
   depends_on = [null_resource.services-dependency, "google_service_networking_connection.private_vpc_connection"]

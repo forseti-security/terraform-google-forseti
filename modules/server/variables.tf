@@ -577,17 +577,17 @@ variable "inventory_email_summary_enabled" {
 # Forseti server #
 #----------------#
 variable "server_type" {
-  description = "GCE Forseti Server role instance size"
+  description = "GCE Forseti Server machine type"
   default     = "n1-standard-2"
 }
 
 variable "server_region" {
-  description = "GCP region where Forseti will be deployed"
+  description = "GCE Forseti Server region"
   default     = "us-central1"
 }
 
 variable "server_boot_image" {
-  description = "GCE instance image that is being used, currently Debian only support is available"
+  description = "GCE Forseti Server boot image - Currently only Ubuntu is supported"
   default     = "ubuntu-os-cloud/ubuntu-1804-lts"
 }
 
