@@ -679,11 +679,6 @@ variable "server_ssh_allow_ranges" {
 #-------#
 # Flags #
 #-------#
-variable "enable_write" {
-  description = "Enabling/Disabling write actions"
-  default     = "false"
-}
-
 variable "enable_cai_bucket" {
   description = "Create a GCS bucket for CAI exports"
   default     = "true"
@@ -737,6 +732,14 @@ variable "cloudsql_module" {
 variable "cloudsql_proxy_arch" {
   description = "CloudSQL Proxy architecture"
   default     = "linux.amd64"
+}
+
+#--------------------#
+# Forseti server IAM #
+#--------------------#
+
+variable "server_iam_module" {
+  description = "The Forseti Server IAM module"
 }
 
 #---------------------------------------#

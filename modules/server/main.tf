@@ -35,7 +35,6 @@ locals {
   )
   server_conf_path        = "${var.forseti_home}/configs/forseti_conf_server.yaml"
   server_name             = "forseti-server-vm-${local.random_hash}"
-  server_sa_name          = "forseti-server-gcp-${local.random_hash}"
   storage_bucket_name     = "forseti-server-${local.random_hash}"
   storage_cai_bucket_name = "forseti-cai-export-${local.random_hash}"
   server_bucket_name      = "forseti-server-${local.random_hash}"
@@ -49,35 +48,7 @@ locals {
   root_resource_id         = "root_resource_id: ${length(var.composite_root_resources) > 0 ? "\"\"" : var.folder_id != "" ? "folders/${var.folder_id}" : "organizations/${var.org_id}"}"
   composite_root_resources = length(var.composite_root_resources) > 0 ? "composite_root_resources: [${join(", ", formatlist("\"%s\"", var.composite_root_resources))}]" : ""
   excluded_resources       = length(var.excluded_resources) > 0 ? "excluded_resources: [${join(", ", formatlist("\"%s\"", var.excluded_resources))}]" : ""
-  server_project_roles = [
-    "roles/storage.objectViewer",
-    "roles/storage.objectCreator",
-    "roles/cloudsql.client",
-    "roles/cloudtrace.agent",
-    "roles/logging.logWriter",
-    "roles/iam.serviceAccountTokenCreator",
-  ]
-  server_write_roles = [
-    "roles/compute.securityAdmin",
-  ]
-  server_read_roles = [
-    "roles/appengine.appViewer",
-    "roles/bigquery.metadataViewer",
-    "roles/browser",
-    "roles/cloudasset.viewer",
-    "roles/cloudsql.viewer",
-    "roles/compute.networkViewer",
-    "roles/iam.securityReviewer",
-    "roles/orgpolicy.policyViewer",
-    "roles/servicemanagement.quotaViewer",
-    "roles/serviceusage.serviceUsageConsumer",
-  ]
-  server_bucket_roles = [
-    "roles/storage.objectAdmin",
-  ]
-  server_cscc_roles = [
-    "roles/securitycenter.findingsEditor",
-  ]
+
   network_interface_base = {
     private = [{
       subnetwork_project = local.network_project
@@ -276,57 +247,6 @@ data "template_file" "forseti_server_config" {
   }
 }
 
-#-------------------------#
-# Forseti Service Account #
-#-------------------------#
-resource "google_service_account" "forseti_server" {
-  account_id   = local.server_sa_name
-  project      = var.project_id
-  display_name = "Forseti Server Service Account"
-}
-
-resource "google_project_iam_member" "server_roles" {
-  count   = length(local.server_project_roles)
-  role    = local.server_project_roles[count.index]
-  project = var.project_id
-  member  = "serviceAccount:${google_service_account.forseti_server.email}"
-}
-
-resource "google_organization_iam_member" "org_read" {
-  count  = var.org_id != "" ? length(local.server_read_roles) : 0
-  role   = local.server_read_roles[count.index]
-  org_id = var.org_id
-  member = "serviceAccount:${google_service_account.forseti_server.email}"
-}
-
-resource "google_folder_iam_member" "folder_read" {
-  count  = var.folder_id != "" ? length(local.server_read_roles) : 0
-  role   = local.server_read_roles[count.index]
-  folder = var.folder_id
-  member = "serviceAccount:${google_service_account.forseti_server.email}"
-}
-
-resource "google_organization_iam_member" "org_write" {
-  count  = var.org_id != "" && var.enable_write ? length(local.server_write_roles) : 0
-  role   = local.server_write_roles[count.index]
-  org_id = var.org_id
-  member = "serviceAccount:${google_service_account.forseti_server.email}"
-}
-
-resource "google_folder_iam_member" "folder_write" {
-  count  = var.folder_id != "" && var.enable_write ? length(local.server_write_roles) : 0
-  role   = local.server_write_roles[count.index]
-  folder = var.folder_id
-  member = "serviceAccount:${google_service_account.forseti_server.email}"
-}
-
-resource "google_organization_iam_member" "org_cscc" {
-  count  = var.org_id != "" && var.cscc_violations_enabled ? length(local.server_cscc_roles) : 0
-  role   = local.server_cscc_roles[count.index]
-  org_id = var.org_id
-  member = "serviceAccount:${google_service_account.forseti_server.email}"
-}
-
 #------------------------#
 # Forseti Firewall Rules #
 #------------------------#
@@ -334,7 +254,7 @@ resource "google_compute_firewall" "forseti-server-deny-all" {
   name                    = "forseti-server-deny-all-${local.random_hash}"
   project                 = local.network_project
   network                 = var.network
-  target_service_accounts = [google_service_account.forseti_server.email]
+  target_service_accounts = [var.server_iam_module.forseti-server-service-account]
   source_ranges           = ["0.0.0.0/0"]
   priority                = "200"
 
@@ -357,7 +277,7 @@ resource "google_compute_firewall" "forseti-server-ssh-external" {
   name                    = "forseti-server-ssh-external-${local.random_hash}"
   project                 = local.network_project
   network                 = var.network
-  target_service_accounts = [google_service_account.forseti_server.email]
+  target_service_accounts = [var.server_iam_module.forseti-server-service-account]
   source_ranges           = var.server_ssh_allow_ranges
   priority                = "100"
 
@@ -373,7 +293,7 @@ resource "google_compute_firewall" "forseti-server-allow-grpc" {
   name                    = "forseti-server-allow-grpc-${local.random_hash}"
   project                 = local.network_project
   network                 = var.network
-  target_service_accounts = [google_service_account.forseti_server.email]
+  target_service_accounts = [var.server_iam_module.forseti-server-service-account]
   source_ranges           = var.server_grpc_allow_ranges
   source_service_accounts = [var.client_service_account_email]
   priority                = "100"
@@ -507,19 +427,12 @@ resource "google_compute_instance" "forseti-server" {
   }
 
   service_account {
-    email  = google_service_account.forseti_server.email
+    email  = var.server_iam_module.forseti-server-service-account
     scopes = ["cloud-platform"]
   }
 
   depends_on = [
-    google_folder_iam_member.folder_read,
-    google_folder_iam_member.folder_write,
-    google_organization_iam_member.org_cscc,
-    google_organization_iam_member.org_read,
-    google_organization_iam_member.org_write,
-    google_project_iam_member.server_roles,
-    google_service_account.forseti_server,
-    google_storage_bucket.server_config,
+    var.server_iam_module,
     module.server_rules,
     null_resource.services-dependency,
   ]

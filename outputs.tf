@@ -51,7 +51,7 @@ output "forseti-server-storage-bucket" {
 
 output "forseti-server-service-account" {
   description = "Forseti Server service account"
-  value       = module.server.forseti-server-service-account
+  value       = module.server_iam.forseti-server-service-account
 }
 
 output "forseti-server-vm-ip" {

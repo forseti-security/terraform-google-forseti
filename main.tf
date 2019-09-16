@@ -140,7 +140,6 @@ module "server" {
   network_project                                     = var.network_project
   server_grpc_allow_ranges                            = var.server_grpc_allow_ranges
   server_ssh_allow_ranges                             = var.server_ssh_allow_ranges
-  enable_write                                        = var.enable_write
   domain                                              = var.domain
   org_id                                              = var.org_id
   folder_id                                           = var.folder_id
@@ -254,6 +253,8 @@ module "server" {
   groups_settings_enabled                  = var.groups_settings_enabled
   groups_settings_violations_should_notify = var.groups_settings_violations_should_notify
 
+  server_iam_module = module.server_iam
+
   services = google_project_service.main.*.service
 }
 
@@ -267,4 +268,13 @@ module "cloudsql" {
   project_id         = var.project_id
   services           = google_project_service.main.*.service
   suffix             = local.random_hash
+}
+
+module "server_iam" {
+  source                  = "./modules/server_iam"
+  cscc_violations_enabled = var.cscc_violations_enabled
+  enable_write            = var.enable_write
+  project_id              = var.project_id
+  org_id                  = var.org_id
+  suffix                  = local.random_hash
 }
