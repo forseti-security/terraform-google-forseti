@@ -31,6 +31,8 @@ Simple usage of the module within your own main.tf file is as follows:
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 
+Either the **folder\_id** or **org\_id** input is required to successfully deploy the Forseti module.
+
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | admin\_disable\_polling | Whether to disable polling for Admin API | bool | `"false"` | no |
@@ -100,7 +102,7 @@ Simple usage of the module within your own main.tf file is as follows:
 | external\_project\_access\_violations\_should\_notify | Notify for External Project Access violations | string | `"true"` | no |
 | firewall\_rule\_enabled | Firewall rule scanner enabled. | string | `"true"` | no |
 | firewall\_rule\_violations\_should\_notify | Notify for Firewall rule violations | string | `"true"` | no |
-| folder\_id | GCP Folder that the Forseti project will be deployed into | string | `""` | no** |
+| folder\_id | GCP Folder that the Forseti project will be deployed into | string | `""` | no |
 | forseti\_email\_recipient | Email address that receives Forseti notifications | string | `""` | no |
 | forseti\_email\_sender | Email address that sends the Forseti notifications | string | `""` | no |
 | forseti\_home | Forseti installation directory | string | `"$USER_HOME/forseti-security"` | no |
@@ -148,7 +150,7 @@ Simple usage of the module within your own main.tf file is as follows:
 | logging\_period | The period of max calls for the Logging API (in seconds) | string | `"1.0"` | no |
 | network | The VPC where the Forseti client and server will be created | string | `"default"` | no |
 | network\_project | The project containing the VPC and subnetwork where the Forseti client and server will be created | string | `""` | no |
-| org\_id | GCP Organization ID that Forseti will have purview over | string | `""` | no** |
+| org\_id | GCP Organization ID that Forseti will have purview over | string | `""` | no |
 | policy\_library\_home | The local policy library directory. | string | `"$USER_HOME/policy-library"` | no |
 | policy\_library\_repository\_url | The git repository containing the policy-library. | string | `""` | no |
 | policy\_library\_sync\_enabled | Sync config validator policy library from private repository. | bool | `"false"` | no |
@@ -185,8 +187,6 @@ Simple usage of the module within your own main.tf file is as follows:
 | storage\_disable\_polling | Whether to disable polling for Storage API | bool | `"false"` | no |
 | subnetwork | The VPC subnetwork where the Forseti client and server will be created | string | `"default"` | no |
 | violations\_slack\_webhook | Slack webhook for any violation. Will apply to all scanner violation notifiers. | string | `""` | no |
-
-** Either the **folder\_id** or **org\_id** input is required to be set for a simple deployment.
 
 ## Outputs
 
