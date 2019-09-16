@@ -184,7 +184,7 @@ Simple usage of the module within your own main.tf file is as follows:
 | subnetwork | The VPC subnetwork where the Forseti client and server will be created | string | `"default"` | no |
 | violations\_slack\_webhook | Slack webhook for any violation. Will apply to all scanner violation notifiers. | string | `""` | no |
 
-__**__ Either the folder\_id or org\_id input is required to be set for a simple deployment.
+** Either the **folder\_id** or **org\_id** input is required to be set for a simple deployment.
 
 ## Outputs
 
