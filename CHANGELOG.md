@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Extending the adopted spec, each change should have a link to its corresponding pull request appended.
 
+## [v4.2.0] - 2019-09-19
+
+### Added
+
+- CloudSQL instance created in the same zone as GCE instances [#253]
+
 ## [v4.1.0] - 2019-09-06
 
 ### Added
