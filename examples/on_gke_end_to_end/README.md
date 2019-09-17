@@ -37,6 +37,8 @@ In addition to the [roles](https://github.com/forseti-security/terraform-google-
 - roles/container.clusterAdmin
 - roles/container.developer
 - roles/iam.serviceAccountAdmin
+- roles/iam.serviceAccountKeyAdmin
+- roles/compute.networkAdmin
 - roles/resourcemanager.projectIamAdmin (only required if `service_account` is set to `create`)
 
 ### Enable APIs
