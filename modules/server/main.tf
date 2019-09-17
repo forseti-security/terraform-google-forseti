@@ -313,13 +313,6 @@ resource "google_storage_bucket_object" "forseti_server_config" {
   content = data.template_file.forseti_server_config.rendered
 }
 
-module "server_rules" {
-  source = "../rules"
-  bucket = var.server_gcs_module.forseti-server-storage-bucket
-  org_id = var.org_id
-  domain = var.domain
-}
-
 resource "tls_private_key" "policy_library_sync_ssh" {
   count     = var.policy_library_sync_enabled ? 1 : 0
   algorithm = "RSA"
@@ -399,7 +392,7 @@ resource "google_compute_instance" "forseti-server" {
 
   depends_on = [
     var.server_iam_module,
-    module.server_rules,
+    var.server_rules_module,
     null_resource.services-dependency,
   ]
 }

@@ -132,6 +132,7 @@ module "server" {
   server_iam_module                                   = module.server_iam
   cloudsql_module                                     = module.cloudsql
   server_gcs_module                                   = module.server_gcs
+  server_rules_module                                 = module.server_rules
   cloudsql_proxy_arch                                 = var.cloudsql_proxy_arch
   network                                             = var.network
   subnetwork                                          = var.subnetwork
@@ -284,4 +285,11 @@ module "server_gcs" {
   storage_bucket_location  = var.storage_bucket_location
   services                 = google_project_service.main.*.service
   suffix                   = local.random_hash
+}
+
+module "server_rules" {
+  source            = "./modules/rules"
+  server_gcs_module = module.server_gcs
+  org_id            = var.org_id
+  domain            = var.domain
 }

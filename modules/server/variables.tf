@@ -724,6 +724,15 @@ variable "server_gcs_module" {
   description = "The Forseti Server GCS module"
 }
 
+#----------------------#
+# Forseti server Rules #
+#----------------------#
+
+variable "server_rules_module" {
+  description = "The Forseti Server rules module"
+}
+
+
 #---------------------------------------#
 # Groups Settings scanner configuration #
 #---------------------------------------#

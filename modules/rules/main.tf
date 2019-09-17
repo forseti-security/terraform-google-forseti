@@ -59,7 +59,7 @@ resource "google_storage_bucket_object" "main" {
   count   = length(local.files)
   name    = element(local.files, count.index)
   content = element(data.template_file.main.*.rendered, count.index)
-  bucket  = var.bucket
+  bucket  = var.server_gcs_module.forseti-server-storage-bucket
 
   lifecycle {
     ignore_changes = [
