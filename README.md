@@ -31,6 +31,8 @@ Simple usage of the module within your own main.tf file is as follows:
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 
+Either the **folder\_id** or **org\_id** input is required to successfully deploy the Forseti module.
+
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | admin\_disable\_polling | Whether to disable polling for Admin API | bool | `"false"` | no |
