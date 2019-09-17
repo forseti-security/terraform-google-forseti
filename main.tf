@@ -253,9 +253,9 @@ module "server" {
   groups_settings_enabled                  = var.groups_settings_enabled
   groups_settings_violations_should_notify = var.groups_settings_violations_should_notify
 
-  server_iam_module = module.server_iam
+  server_iam_module                        = module.server_iam
 
-  services = google_project_service.main.*.service
+  services                                 = google_project_service.main.*.service
 }
 
 module "cloudsql" {
