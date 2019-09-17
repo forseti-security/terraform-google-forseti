@@ -46,7 +46,7 @@ output "forseti-server-git-public-key-openssh" {
 
 output "forseti-server-storage-bucket" {
   description = "Forseti Server storage bucket"
-  value       = module.server.forseti-server-storage-bucket
+  value       = module.server_gcs.forseti-server-storage-bucket
 }
 
 output "forseti-server-service-account" {

@@ -33,11 +33,8 @@ locals {
   server_conf = file(
     "${path.module}/templates/configs/forseti_conf_server.yaml.tpl",
   )
-  server_conf_path        = "${var.forseti_home}/configs/forseti_conf_server.yaml"
-  server_name             = "forseti-server-vm-${local.random_hash}"
-  storage_bucket_name     = "forseti-server-${local.random_hash}"
-  storage_cai_bucket_name = "forseti-cai-export-${local.random_hash}"
-  server_bucket_name      = "forseti-server-${local.random_hash}"
+  server_conf_path = "${var.forseti_home}/configs/forseti_conf_server.yaml"
+  server_name      = "forseti-server-vm-${local.random_hash}"
 
   # Determine the root resource. If a composite root resource list is available
   # then it will take precedence, otherwise we'll fall back to a singular root
@@ -96,7 +93,7 @@ data "template_file" "forseti_server_startup_script" {
     policy_library_home                    = var.policy_library_home
     policy_library_sync_enabled            = var.policy_library_sync_enabled
     policy_library_sync_gcs_directory_name = var.policy_library_sync_gcs_directory_name
-    storage_bucket_name                    = local.server_bucket_name
+    storage_bucket_name                    = var.server_gcs_module.forseti-server-storage-bucket
   }
 }
 
@@ -110,7 +107,7 @@ data "template_file" "forseti_server_environment" {
     policy_library_sync_enabled      = var.policy_library_sync_enabled
     policy_library_repository_url    = var.policy_library_repository_url
     policy_library_sync_git_sync_tag = var.policy_library_sync_git_sync_tag
-    storage_bucket_name              = local.server_bucket_name
+    storage_bucket_name              = var.server_gcs_module.forseti-server-storage-bucket
   }
 }
 
@@ -137,9 +134,9 @@ data "template_file" "forseti_server_config" {
     ROOT_RESOURCE_ID                                    = local.root_resource_id
     COMPOSITE_ROOT_RESOURCES                            = local.composite_root_resources
     DOMAIN_SUPER_ADMIN_EMAIL                            = var.gsuite_admin_email
-    CAI_ENABLED                                         = var.enable_cai_bucket
-    FORSETI_CAI_BUCKET                                  = google_storage_bucket.cai_export[0].name
-    FORSETI_BUCKET                                      = local.server_bucket_name
+    CAI_ENABLED                                         = var.server_gcs_module.forseti-cai-bucket-enabled
+    FORSETI_CAI_BUCKET                                  = var.server_gcs_module.forseti-cai-storage-bucket
+    FORSETI_BUCKET                                      = var.server_gcs_module.forseti-server-storage-bucket
     STORAGE_DISABLE_POLLING                             = var.storage_disable_polling
     SQLADMIN_PERIOD                                     = var.sqladmin_period
     SQLADMIN_MAX_CALLS                                  = var.sqladmin_max_calls
@@ -309,46 +306,18 @@ resource "google_compute_firewall" "forseti-server-allow-grpc" {
 #------------------------#
 # Forseti Storage bucket #
 #------------------------#
-resource "google_storage_bucket" "server_config" {
-  name          = local.server_bucket_name
-  location      = var.storage_bucket_location
-  project       = var.project_id
-  force_destroy = "true"
-
-  depends_on = [null_resource.services-dependency]
-}
 
 resource "google_storage_bucket_object" "forseti_server_config" {
   name    = "configs/forseti_conf_server.yaml"
-  bucket  = google_storage_bucket.server_config.name
+  bucket  = var.server_gcs_module.forseti-server-storage-bucket
   content = data.template_file.forseti_server_config.rendered
 }
 
 module "server_rules" {
   source = "../rules"
-  bucket = google_storage_bucket.server_config.name
+  bucket = var.server_gcs_module.forseti-server-storage-bucket
   org_id = var.org_id
   domain = var.domain
-}
-
-resource "google_storage_bucket" "cai_export" {
-  count         = var.enable_cai_bucket ? 1 : 0
-  name          = local.storage_cai_bucket_name
-  location      = var.bucket_cai_location
-  project       = var.project_id
-  force_destroy = "true"
-
-  lifecycle_rule {
-    action {
-      type = "Delete"
-    }
-
-    condition {
-      age = var.bucket_cai_lifecycle_age
-    }
-  }
-
-  depends_on = [null_resource.services-dependency]
 }
 
 resource "tls_private_key" "policy_library_sync_ssh" {
@@ -360,10 +329,9 @@ resource "google_storage_bucket_object" "policy_library_sync_ssh_key" {
   count   = var.policy_library_sync_enabled && var.policy_library_repository_url != "" ? 1 : 0
   name    = "${var.policy_library_sync_gcs_directory_name}/ssh"
   content = tls_private_key.policy_library_sync_ssh[0].private_key_pem
-  bucket  = local.server_bucket_name
+  bucket  = var.server_gcs_module.forseti-server-storage-bucket
 
   depends_on = [
-    google_storage_bucket.server_config,
     tls_private_key.policy_library_sync_ssh,
   ]
 }
@@ -372,9 +340,7 @@ resource "google_storage_bucket_object" "policy_library_sync_ssh_known_hosts" {
   count   = var.policy_library_sync_enabled && var.policy_library_sync_ssh_known_hosts != "" ? 1 : 0
   name    = "${var.policy_library_sync_gcs_directory_name}/known_hosts"
   content = var.policy_library_sync_ssh_known_hosts
-  bucket  = local.server_bucket_name
-
-  depends_on = [google_storage_bucket.server_config]
+  bucket  = var.server_gcs_module.forseti-server-storage-bucket
 }
 
 #-------------------------#

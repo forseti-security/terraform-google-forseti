@@ -628,24 +628,6 @@ variable "client_service_account_email" {
   description = "Service account of the forseti client"
 }
 
-#----------------#
-# Forseti bucket #
-#----------------#
-variable "storage_bucket_location" {
-  description = "GCS storage bucket location"
-  default     = "us-central1"
-}
-
-variable "bucket_cai_location" {
-  description = "GCS CAI storage bucket location"
-  default     = "us-central1"
-}
-
-variable "bucket_cai_lifecycle_age" {
-  description = "GCS CAI lifecycle age value"
-  default     = "14"
-}
-
 ##---------#
 ## Network #
 ##---------#
@@ -674,14 +656,6 @@ variable "server_ssh_allow_ranges" {
   description = "List of CIDRs that will be allowed ssh access to forseti server"
   type        = list(string)
   default     = ["0.0.0.0/0"]
-}
-
-#-------#
-# Flags #
-#-------#
-variable "enable_cai_bucket" {
-  description = "Create a GCS bucket for CAI exports"
-  default     = "true"
 }
 
 #--------#
@@ -740,6 +714,14 @@ variable "cloudsql_proxy_arch" {
 
 variable "server_iam_module" {
   description = "The Forseti Server IAM module"
+}
+
+#--------------------#
+# Forseti server GCS #
+#--------------------#
+
+variable "server_gcs_module" {
+  description = "The Forseti Server GCS module"
 }
 
 #---------------------------------------#

@@ -112,7 +112,6 @@ module "client" {
 module "server" {
   source = "./modules/server"
 
-  enable_cai_bucket                                   = var.enable_cai_bucket
   project_id                                          = var.project_id
   gsuite_admin_email                                  = var.gsuite_admin_email
   forseti_version                                     = var.forseti_version
@@ -132,10 +131,8 @@ module "server" {
   server_private                                      = var.server_private
   server_iam_module                                   = module.server_iam
   cloudsql_module                                     = module.cloudsql
+  server_gcs_module                                   = module.server_gcs
   cloudsql_proxy_arch                                 = var.cloudsql_proxy_arch
-  storage_bucket_location                             = var.storage_bucket_location
-  bucket_cai_location                                 = var.bucket_cai_location
-  bucket_cai_lifecycle_age                            = var.bucket_cai_lifecycle_age
   network                                             = var.network
   subnetwork                                          = var.subnetwork
   network_project                                     = var.network_project
@@ -276,4 +273,15 @@ module "server_iam" {
   project_id              = var.project_id
   org_id                  = var.org_id
   suffix                  = local.random_hash
+}
+
+module "server_gcs" {
+  source                   = "./modules/server_gcs"
+  project_id               = var.project_id
+  bucket_cai_location      = var.bucket_cai_location
+  bucket_cai_lifecycle_age = var.bucket_cai_lifecycle_age
+  enable_cai_bucket        = var.enable_cai_bucket
+  storage_bucket_location  = var.storage_bucket_location
+  services                 = google_project_service.main.*.service
+  suffix                   = local.random_hash
 }

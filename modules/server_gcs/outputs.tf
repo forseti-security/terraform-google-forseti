@@ -14,17 +14,18 @@
  * limitations under the License.
  */
 
-output "forseti-server-git-public-key-openssh" {
-  description = "The public OpenSSH key generated to allow the Forseti Server to clone the policy library repository."
-  value       = tls_private_key.policy_library_sync_ssh[0].public_key_openssh
+output "forseti-server-storage-bucket" {
+  description = "Forseti Server storage bucket"
+  value       = google_storage_bucket.server_config.id
 }
 
-output "forseti-server-vm-ip" {
-  description = "Forseti Server VM private IP address"
-  value       = google_compute_instance.forseti-server.network_interface[0].network_ip
+output "forseti-cai-storage-bucket" {
+  description = "Forseti CAI storage bucket"
+  value       = google_storage_bucket.cai_export[0].id
 }
 
-output "forseti-server-vm-name" {
-  description = "Forseti Server VM name"
-  value       = google_compute_instance.forseti-server.name
+output "forseti-cai-bucket-enabled" {
+  description = "Whether or not the GCS bucket for CAI exports is enabled"
+  value       = var.enable_cai_bucket
+
 }
