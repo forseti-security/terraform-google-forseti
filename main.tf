@@ -130,6 +130,7 @@ module "server" {
   server_tags                                         = var.server_tags
   server_access_config                                = var.server_access_config
   server_private                                      = var.server_private
+  server_iam_module                                   = module.server_iam
   cloudsql_module                                     = module.cloudsql
   cloudsql_proxy_arch                                 = var.cloudsql_proxy_arch
   storage_bucket_location                             = var.storage_bucket_location
@@ -253,9 +254,7 @@ module "server" {
   groups_settings_enabled                  = var.groups_settings_enabled
   groups_settings_violations_should_notify = var.groups_settings_violations_should_notify
 
-  server_iam_module                        = module.server_iam
-
-  services                                 = google_project_service.main.*.service
+  services = google_project_service.main.*.service
 }
 
 module "cloudsql" {
