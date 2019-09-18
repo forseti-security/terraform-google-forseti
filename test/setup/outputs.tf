@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-output "project_id" {
+output "network_project" {
   value = module.forseti-host-project.project_id
 }
 
@@ -22,7 +22,7 @@ output "gsuite_admin_email" {
   value = google_service_account.int_test.email
 }
 
-output "network_project" {
+output "project_id" {
   value = module.forseti-service-project.project_id
 }
 
@@ -30,7 +30,27 @@ output "enforcer_project_id" {
   value = module.forseti-enforcer-project.project_id
 }
 
+output "network" {
+  value = module.forseti-host-network.network_name
+}
+
+output "subnetwork" {
+  value = module.forseti-host-network.subnets_names[0]
+}
+
 output "sa_key" {
   value     = google_service_account_key.int_test.private_key
   sensitive = true
+}
+
+output "org_id" {
+  value = var.org_id
+}
+
+output "folder_id" {
+  value = var.folder_id
+}
+
+output "billing_account" {
+  value = var.billing_account
 }

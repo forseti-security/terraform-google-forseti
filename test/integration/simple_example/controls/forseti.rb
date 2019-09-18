@@ -42,7 +42,7 @@ control 'forseti' do
     name: forseti_server_vm_name
   ) do
     it { should exist }
-    its('machine_size') { should eq 'n1-standard-2' }
+    its('machine_size') { should eq 'n1-standard-8' }
   end
 
   describe google_sql_database_instances(project: project_id) do

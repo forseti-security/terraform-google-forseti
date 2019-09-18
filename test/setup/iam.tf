@@ -15,7 +15,6 @@
  */
 
 locals {
-  suffix = random_string.main.result
   int_required_roles = [
     "roles/owner"
   ]
@@ -25,10 +24,13 @@ locals {
     "roles/compute.xpnAdmin",
     "roles/iam.organizationRoleAdmin", // Permissions to manage/test real-time-enforcer roles
     "roles/logging.configWriter",      // Permissions to create stackdriver log exports
+    "roles/bigquery.dataViewer",
   ]
 
   forseti_host_project_required_roles = [
+    "roles/owner",
     "roles/compute.admin",
+    "roles/compute.securityAdmin",
     "roles/billing.projectManager",
     "roles/compute.networkAdmin",
     "roles/compute.networkViewer",
@@ -36,40 +38,43 @@ locals {
     "roles/iam.serviceAccountCreator",
     "roles/iam.serviceAccountAdmin",
     "roles/iam.serviceAccountUser",
+    "roles/serviceusage.serviceUsageAdmin",
+    "roles/storage.admin",
+    "roles/cloudsql.admin",
+    "roles/pubsub.admin",
+    "roles/bigquery.dataViewer",
   ]
 
   forseti_project_required_roles = [
-    "roles/compute.instanceAdmin",
+    "roles/owner",
+    "roles/compute.admin",
     "roles/compute.networkAdmin",
     "roles/compute.networkViewer",
     "roles/compute.securityAdmin",
     "roles/iam.serviceAccountAdmin",
     "roles/iam.serviceAccountUser",
+    "roles/iam.serviceAccountCreator",
     "roles/serviceusage.serviceUsageAdmin",
     "roles/storage.admin",
     "roles/cloudsql.admin",
     "roles/pubsub.admin",
     "roles/billing.projectManager",
+    "roles/bigquery.dataViewer",
   ]
 
   forseti_enforcer_project_required_roles = [
+    "roles/owner",
     "roles/storage.admin", // Permissions to create GCS buckets that the enforcer will manage
     "roles/billing.projectManager",
     "roles/pubsub.admin",
+    "roles/compute.admin",
+    "roles/bigquery.dataViewer",
   ]
-}
-
-resource "random_string" "main" {
-  upper   = "true"
-  lower   = "true"
-  number  = "false"
-  special = "false"
-  length  = 4
 }
 
 resource "google_service_account" "int_test" {
   project      = module.forseti-host-project.project_id
-  account_id   = "ci-forseti"
+  account_id   = "ci-forseti-${random_string.project_suffix.result}"
   display_name = "ci-forseti"
 }
 
@@ -107,7 +112,7 @@ resource "google_project_iam_member" "forseti" {
 resource "google_project_iam_member" "forseti-enforcer" {
   count = length(local.forseti_enforcer_project_required_roles)
 
-  project = module.forseti-enforcer-project.project_id
+  project = module.forseti-host-project.project_id
   role    = local.forseti_enforcer_project_required_roles[count.index]
   member  = "serviceAccount:${google_service_account.int_test.email}"
 }

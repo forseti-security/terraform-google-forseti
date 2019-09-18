@@ -34,3 +34,8 @@ variable "zone" {
   type        = string
 }
 
+variable "key_suffix" {
+  description = "Suffix to append to the key file name"
+  type        = string
+  default     = ""
+}

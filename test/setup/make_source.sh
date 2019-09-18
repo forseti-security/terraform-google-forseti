@@ -19,25 +19,29 @@ echo "#!/usr/bin/env bash" > ../source.sh
 project_id=$(terraform output project_id)
 echo "export TF_VAR_project_id='$project_id'" >> ../source.sh
 echo "export TF_VAR_pubsub_project_id='$project_id'" >> ../source.sh
-
 network_project=$(terraform output network_project)
 echo "export TF_VAR_network_project='$network_project'" >> ../source.sh
 
 enforcer_project_id=$(terraform output enforcer_project_id)
-echo "export TF_VAR_enforcer_project_id='$enforcer_project_id'" >> ../source.sh
+echo "export TF_VAR_enforcer_project_id='$network_project'" >> ../source.sh
+
 echo "export TF_VAR_sink_project_id='$enforcer_project_id'" >> ../source.sh
-network="forseti-network"
+
+network=$(terraform output network)
 echo "export TF_VAR_network='$network'" >> ../source.sh
-subnetwork="forseti-subnetwork"
+subnetwork=$(terraform output subnetwork)
 echo "export TF_VAR_subnetwork='$subnetwork'" >> ../source.sh
-domain="phoogle.net"
+domain="dev.infra.cft.tips"
 echo "export TF_VAR_domain='$domain'" >> ../source.sh
 region="us-central1"
 echo "export TF_VAR_region='$region'" >> ../source.sh
-
 gsuite_admin_email=$(terraform output gsuite_admin_email)
 echo "export TF_VAR_gsuite_admin_email='$gsuite_admin_email'" >> ../source.sh
 
-sa_json=$(terraform output sa_key)
-# shellcheck disable=SC2086
-echo "export SERVICE_ACCOUNT_JSON='$(echo $sa_json | base64 --decode)'" >> ../source.sh
+
+org_id=$(terraform output org_id)
+echo "export TF_VAR_org_id='$org_id'" >> ../source.sh
+folder_id=$(terraform output folder_id)
+echo "export TF_VAR_folder_id='$folder_id'" >> ../source.sh
+billing_account=$(terraform output billing_account)
+echo "export TF_VAR_billing_account='$billing_account'" >> ../source.sh

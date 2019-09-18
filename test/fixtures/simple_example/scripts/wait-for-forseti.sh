@@ -16,16 +16,16 @@
 
 # Block until the Forseti startup script has finished running.
 
-echo "Waiting for up to 360 seconds for Forseti to be ready."
+echo "Waiting for up to 720 seconds for Forseti to be ready."
 
-for _ in {1..360}; do
+for _ in {1..72}; do
   if [[ -f /etc/profile.d/forseti_environment.sh ]]; then
     echo "Forseti is ready."
     exit 0
   else
-    sleep 1
+    sleep 10
   fi
 done
 
-echo "Forseti was not ready after 360 seconds!"
+echo "Forseti was not ready after 720 seconds!"
 exit 1

@@ -45,7 +45,6 @@ module "bastion" {
 
 module "forseti-shared-vpc" {
   source             = "../../../examples/shared_vpc"
-  credentials_path   = var.credentials_path
   project_id         = var.project_id
   region             = var.region
   gsuite_admin_email = var.gsuite_admin_email
