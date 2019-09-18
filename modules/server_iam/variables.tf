@@ -38,7 +38,8 @@ variable "folder_id" {
 #-------#
 variable "enable_write" {
   description = "Enabling/Disabling write actions"
-  default     = "false"
+  type        = bool
+  default     = false
 }
 
 variable "suffix" {
@@ -50,5 +51,6 @@ variable "suffix" {
 #-------------------------#
 variable "cscc_violations_enabled" {
   description = "Notify for CSCC violations"
-  default     = "false"
+  type        = bool
+  default     = false
 }
