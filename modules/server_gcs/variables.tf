@@ -57,5 +57,6 @@ variable "bucket_cai_lifecycle_age" {
 #-------#
 variable "enable_cai_bucket" {
   description = "Create a GCS bucket for CAI exports"
-  default     = "true"
+  type        = bool
+  default     = true
 }

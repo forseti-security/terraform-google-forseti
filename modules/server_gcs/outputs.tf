@@ -27,5 +27,4 @@ output "forseti-cai-storage-bucket" {
 output "forseti-cai-bucket-enabled" {
   description = "Whether or not the GCS bucket for CAI exports is enabled"
   value       = var.enable_cai_bucket
-
 }

@@ -32,7 +32,7 @@ resource "google_storage_bucket" "server_config" {
   name          = local.server_bucket_name
   location      = var.storage_bucket_location
   project       = var.project_id
-  force_destroy = "true"
+  force_destroy = true
 
   depends_on = [null_resource.services-dependency]
 }
@@ -42,7 +42,7 @@ resource "google_storage_bucket" "cai_export" {
   name          = local.storage_cai_bucket_name
   location      = var.bucket_cai_location
   project       = var.project_id
-  force_destroy = "true"
+  force_destroy = true
 
   lifecycle_rule {
     action {
