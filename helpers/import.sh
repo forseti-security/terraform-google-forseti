@@ -17,7 +17,7 @@ show_help() {
   cat <<EOF
 Usage:
 
-    ${0##*/} -m MODULE_LOCAL_NAME -o ORG_ID -p PROJECT_ID -r RESOURCE_NAME_SUFFIX
+    ${0##*/} -m MODULE_LOCAL_NAME -o ORG_ID -p PROJECT_ID -r RESOURCE_NAME_SUFFIX [-n NETWORK_PROJECT_ID]
     ${0##*/} -h
 
 Import to Terraform a Forseti deployment created with the deprecated Python
@@ -33,9 +33,13 @@ Required parameters:
     -r RESOURCE_NAME_SUFFIX The suffix appended to the names of the Forseti
                             resources; likely a 7 digit number.
 
+Optional parameters:
+
+    -n NETWORK_PROJECT_ID   The ID of the project where the network is deployed.
+
 Example of usage:
 
-    ${0##*/} -m forseti -o 12345678901 -p forseti-235k -r 1234567
+    ${0##*/} -m forseti -o 12345678901 -p forseti-235k -r a1b2c3d -n forseti-network-235k
 
 Example of required Terraform configuration:
 
@@ -43,10 +47,14 @@ Example of required Terraform configuration:
       source = "terraform-google-modules/forseti/google"
       version = "~> 4.2"
 
-      domain               = "DOMAIN"
-      project_id           = "PROJECT_ID"
-      resource_name_suffix = "RESOURCE_NAME_SUFFIX"
-      org_id               = "ORG_ID"
+      domain               = "example.com"
+      project_id           = "forseti-235k"
+      resource_name_suffix = "a1b2c3d"
+      org_id               = "12345678901"
+
+      network         = "forseti"
+      network_project = "forseti-network-235k"
+      subnetwork      = "forseti"
 
       client_instance_metadata = {
         enable-oslogin = "TRUE"
@@ -64,6 +72,7 @@ then
   exit 0
 fi
 MODULE_LOCAL_NAME=""
+NETWORK_PROJECT_ID=""
 ORG_ID=""
 PROJECT_ID=""
 RESOURCE_NAME_SUFFIX=""
@@ -76,6 +85,8 @@ while getopts ":hm:o:p:r:" opt; do
     m )
       MODULE_LOCAL_NAME="$OPTARG"
       ;;
+    n )
+      NETWORK_PROJECT_ID="$OPTARG"
     o )
       ORG_ID="$OPTARG"
       ;;
@@ -107,6 +118,11 @@ if [[ -z "$PROJECT_ID" ]]; then
   exit 1
 fi
 
+if [[ -z "$NETWORK_PROJECT_ID" ]]; then
+  echo "Missing optional parameter: NETWORK_PROJECT_ID; assuming equal to PROJECT_ID"
+  NETWORK_PROJECT_ID="$PROJECT_ID"
+fi
+
 if [[ -z "$ORG_ID" ]]; then
   echo "Missing required parameter: ORG_ID; run ${0##*/} -h for more information" 1>&2
   exit 1
@@ -136,8 +152,8 @@ terraform import "module.$MODULE_LOCAL_NAME.google_project_service.main[13]" "$P
 terraform import "module.$MODULE_LOCAL_NAME.google_project_service.main[14]" "$PROJECT_ID/storage-api.googleapis.com"
 terraform import "module.$MODULE_LOCAL_NAME.google_project_service.main[15]" "$PROJECT_ID/groupssettings.googleapis.com"
 terraform import "module.$MODULE_LOCAL_NAME.module.client.google_compute_instance.forseti-client" "$PROJECT_ID/us-central1-c/forseti-client-vm-$RESOURCE_NAME_SUFFIX"
-terraform import "module.$MODULE_LOCAL_NAME.module.client.google_compute_firewall.forseti-client-deny-all" "$PROJECT_ID/forseti-client-deny-all-$RESOURCE_NAME_SUFFIX"
-terraform import "module.$MODULE_LOCAL_NAME.module.client.google_compute_firewall.forseti-client-ssh-external" "$PROJECT_ID/forseti-client-allow-ssh-external-$RESOURCE_NAME_SUFFIX"
+terraform import "module.$MODULE_LOCAL_NAME.module.client.google_compute_firewall.forseti-client-deny-all" "$NETWORK_PROJECT_ID/forseti-client-deny-all-$RESOURCE_NAME_SUFFIX"
+terraform import "module.$MODULE_LOCAL_NAME.module.client.google_compute_firewall.forseti-client-ssh-external" "$NETWORK_PROJECT_ID/forseti-client-allow-ssh-external-$RESOURCE_NAME_SUFFIX"
 terraform import "module.$MODULE_LOCAL_NAME.module.client.google_project_iam_member.client_roles[0]" "$PROJECT_ID roles/storage.objectViewer serviceAccount:forseti-client-gcp-$RESOURCE_NAME_SUFFIX@$PROJECT_ID.iam.gserviceaccount.com"
 terraform import "module.$MODULE_LOCAL_NAME.module.client.google_service_account.forseti_client" "$PROJECT_ID/forseti-client-gcp-$RESOURCE_NAME_SUFFIX@$PROJECT_ID.iam.gserviceaccount.com"
 terraform import "module.$MODULE_LOCAL_NAME.module.client.google_storage_bucket.client_config" "$PROJECT_ID/forseti-client-$RESOURCE_NAME_SUFFIX"
@@ -157,9 +173,9 @@ terraform import "module.$MODULE_LOCAL_NAME.module.server.google_organization_ia
 terraform import "module.$MODULE_LOCAL_NAME.module.server.google_organization_iam_member.org_read[8]" "$ORG_ID roles/servicemanagement.quotaViewer serviceAccount:forseti-server-gcp-$RESOURCE_NAME_SUFFIX@$PROJECT_ID.iam.gserviceaccount.com"
 terraform import "module.$MODULE_LOCAL_NAME.module.server.google_organization_iam_member.org_read[9]" "$ORG_ID roles/serviceusage.serviceUsageConsumer serviceAccount:forseti-server-gcp-$RESOURCE_NAME_SUFFIX@$PROJECT_ID.iam.gserviceaccount.com"
 terraform import "module.$MODULE_LOCAL_NAME.module.server.google_organization_iam_member.org_write[0]" "$ORG_ID roles/compute.securityAdmin serviceAccount:forseti-server-gcp-$RESOURCE_NAME_SUFFIX@$PROJECT_ID.iam.gserviceaccount.com"
-terraform import "module.$MODULE_LOCAL_NAME.module.server.google_compute_firewall.forseti-server-deny-all" "$PROJECT_ID/forseti-server-deny-all-$RESOURCE_NAME_SUFFIX"
-terraform import "module.$MODULE_LOCAL_NAME.module.server.google_compute_firewall.forseti-server-ssh-external" "$PROJECT_ID/forseti-server-allow-ssh-external-$RESOURCE_NAME_SUFFIX"
-terraform import "module.$MODULE_LOCAL_NAME.module.server.google_compute_firewall.forseti-server-allow-grpc" "$PROJECT_ID/forseti-server-allow-grpc-$RESOURCE_NAME_SUFFIX"
+terraform import "module.$MODULE_LOCAL_NAME.module.server.google_compute_firewall.forseti-server-deny-all" "$NETWORK_PROJECT_ID/forseti-server-deny-all-$RESOURCE_NAME_SUFFIX"
+terraform import "module.$MODULE_LOCAL_NAME.module.server.google_compute_firewall.forseti-server-ssh-external" "$NETWORK_PROJECT_ID/forseti-server-allow-ssh-external-$RESOURCE_NAME_SUFFIX"
+terraform import "module.$MODULE_LOCAL_NAME.module.server.google_compute_firewall.forseti-server-allow-grpc" "$NETWORK_PROJECT_ID/forseti-server-allow-grpc-$RESOURCE_NAME_SUFFIX"
 terraform import "module.$MODULE_LOCAL_NAME.module.server.google_storage_bucket.server_config" "$PROJECT_ID/forseti-server-$RESOURCE_NAME_SUFFIX"
 terraform import "module.$MODULE_LOCAL_NAME.module.server.google_storage_bucket.cai_export" "$PROJECT_ID/forseti-cai-export-$RESOURCE_NAME_SUFFIX"
 terraform import "module.$MODULE_LOCAL_NAME.module.server.google_compute_instance.forseti-server" "$PROJECT_ID/us-central1-c/forseti-server-vm-$RESOURCE_NAME_SUFFIX"
