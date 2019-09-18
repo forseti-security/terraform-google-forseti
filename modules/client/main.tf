@@ -152,7 +152,7 @@ resource "google_compute_instance" "forseti-client" {
 #------------------------#
 resource "google_compute_firewall" "forseti-client-deny-all" {
   name                    = "forseti-client-deny-all-${var.suffix}"
-  project                 = var.network_project
+  project                 = local.network_project
   network                 = var.network
   target_service_accounts = [google_service_account.forseti_client.email]
   source_ranges           = ["0.0.0.0/0"]
@@ -175,7 +175,7 @@ resource "google_compute_firewall" "forseti-client-deny-all" {
 
 resource "google_compute_firewall" "forseti-client-ssh-external" {
   name                    = "forseti-client-ssh-external-${var.suffix}"
-  project                 = var.network_project
+  project                 = local.network_project
   network                 = var.network
   target_service_accounts = [google_service_account.forseti_client.email]
   source_ranges           = var.client_ssh_allow_ranges
@@ -231,4 +231,3 @@ resource "null_resource" "services-dependency" {
     services = jsonencode(var.services)
   }
 }
-
