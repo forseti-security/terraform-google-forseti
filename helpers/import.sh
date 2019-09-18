@@ -41,7 +41,7 @@ Example of required Terraform configuration:
 
     module "forseti" {
       source = "terraform-google-modules/forseti/google"
-      version = "~> 4.1"
+      version = "~> 4.2"
 
       domain               = "DOMAIN"
       project_id           = "PROJECT_ID"
