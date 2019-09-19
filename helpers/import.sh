@@ -87,6 +87,7 @@ while getopts ":hm:o:p:r:" opt; do
       ;;
     n )
       NETWORK_PROJECT_ID="$OPTARG"
+      ;;
     o )
       ORG_ID="$OPTARG"
       ;;
