@@ -14,12 +14,28 @@
  * limitations under the License.
  */
 
-output "forseti-client-vm-name" {
-  description = "Forseti Client VM name"
-  value       = google_compute_instance.forseti-client.name
+#--------#
+# Locals #
+#--------#
+locals {
+  client_bucket_name = "forseti-client-${var.suffix}"
 }
 
-output "forseti-client-vm-ip" {
-  description = "Forseti Client VM private IP address"
-  value       = google_compute_instance.forseti-client.network_interface[0].network_ip
+
+#------------------------#
+# Forseti storage bucket #
+#------------------------#
+resource "google_storage_bucket" "client_config" {
+  name          = local.client_bucket_name
+  location      = var.storage_bucket_location
+  project       = var.project_id
+  force_destroy = "true"
+
+  depends_on = [null_resource.services-dependency]
+}
+
+resource "null_resource" "services-dependency" {
+  triggers = {
+    services = jsonencode(var.services)
+  }
 }

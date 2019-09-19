@@ -14,12 +14,17 @@
  * limitations under the License.
  */
 
-output "forseti-client-vm-name" {
-  description = "Forseti Client VM name"
-  value       = google_compute_instance.forseti-client.name
+output "forseti-server-storage-bucket" {
+  description = "Forseti Server storage bucket"
+  value       = google_storage_bucket.server_config.id
 }
 
-output "forseti-client-vm-ip" {
-  description = "Forseti Client VM private IP address"
-  value       = google_compute_instance.forseti-client.network_interface[0].network_ip
+output "forseti-cai-storage-bucket" {
+  description = "Forseti CAI storage bucket"
+  value       = google_storage_bucket.cai_export[0].id
+}
+
+output "forseti-cai-bucket-enabled" {
+  description = "Whether or not the GCS bucket for CAI exports is enabled"
+  value       = var.enable_cai_bucket
 }

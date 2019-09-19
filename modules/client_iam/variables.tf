@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
-output "forseti-client-vm-name" {
-  description = "Forseti Client VM name"
-  value       = google_compute_instance.forseti-client.name
+variable "project_id" {
+  description = "Google Project ID that you want Forseti deployed into"
 }
 
-output "forseti-client-vm-ip" {
-  description = "Forseti Client VM private IP address"
-  value       = google_compute_instance.forseti-client.network_interface[0].network_ip
+variable "suffix" {
+  description = "The random suffix to append to all Forseti resources"
 }
