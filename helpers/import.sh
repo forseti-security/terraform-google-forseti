@@ -76,7 +76,7 @@ NETWORK_PROJECT_ID=""
 ORG_ID=""
 PROJECT_ID=""
 RESOURCE_NAME_SUFFIX=""
-while getopts ":hm:o:p:r:" opt; do
+while getopts ":hm:n:o:p:r:" opt; do
   case ${opt} in
     h )
       show_help
