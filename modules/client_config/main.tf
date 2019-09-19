@@ -14,12 +14,29 @@
  * limitations under the License.
  */
 
-output "forseti-client-vm-name" {
-  description = "Forseti Client VM name"
-  value       = google_compute_instance.forseti-client.name
+#--------#
+# Locals #
+#--------#
+locals {
+  client_conf = file(
+    "${path.module}/templates/configs/forseti_conf_client.yaml.tpl",
+  )
 }
 
-output "forseti-client-vm-ip" {
-  description = "Forseti Client VM private IP address"
-  value       = google_compute_instance.forseti-client.network_interface[0].network_ip
+#-------------------#
+# Forseti templates #
+#-------------------#
+data "template_file" "forseti_client_config" {
+  template = local.client_conf
+
+  vars = {
+    forseti_server_ip = var.server_address
+  }
 }
+
+resource "google_storage_bucket_object" "forseti_client_config" {
+  name    = "configs/forseti_conf_client.yaml"
+  bucket  = var.client_gcs_module.forseti-client-storage-bucket
+  content = data.template_file.forseti_client_config.rendered
+}
+

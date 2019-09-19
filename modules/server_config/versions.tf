@@ -14,12 +14,7 @@
  * limitations under the License.
  */
 
-output "forseti-client-vm-name" {
-  description = "Forseti Client VM name"
-  value       = google_compute_instance.forseti-client.name
-}
 
-output "forseti-client-vm-ip" {
-  description = "Forseti Client VM private IP address"
-  value       = google_compute_instance.forseti-client.network_interface[0].network_ip
+terraform {
+  required_version = ">= 0.12"
 }

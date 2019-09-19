@@ -19,16 +19,6 @@ output "forseti-server-git-public-key-openssh" {
   value       = tls_private_key.policy_library_sync_ssh[0].public_key_openssh
 }
 
-output "forseti-server-service-account" {
-  description = "Forseti Server service account"
-  value       = google_service_account.forseti_server.email
-}
-
-output "forseti-server-storage-bucket" {
-  description = "Forseti Server storage bucket"
-  value       = google_storage_bucket.server_config.id
-}
-
 output "forseti-server-vm-ip" {
   description = "Forseti Server VM private IP address"
   value       = google_compute_instance.forseti-server.network_interface[0].network_ip
