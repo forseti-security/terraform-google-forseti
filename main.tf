@@ -40,7 +40,7 @@ resource "null_resource" "email_without_sendgrid_api_key" {
 # Locals #
 #--------#
 locals {
-  random_hash     = random_id.random_hash_suffix.hex
+  random_hash     = var.resource_name_suffix == null ? random_id.random_hash_suffix.hex : var.resource_name_suffix
   network_project = var.network_project != "" ? var.network_project : var.project_id
 
   services_list = [
@@ -204,6 +204,7 @@ module "server" {
   group_enabled                                       = var.group_enabled
   forwarding_rule_enabled                             = var.forwarding_rule_enabled
   firewall_rule_enabled                               = var.firewall_rule_enabled
+  manage_rules_enabled                                = var.manage_rules_enabled
   enabled_apis_enabled                                = var.enabled_apis_enabled
   cloudsql_acl_enabled                                = var.cloudsql_acl_enabled
   config_validator_enabled                            = var.config_validator_enabled

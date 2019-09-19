@@ -385,6 +385,12 @@ variable "log_sink_enabled" {
   default     = "true"
 }
 
+variable "manage_rules_enabled" {
+  description = "A toggle to enable or disable the management of rules"
+  type        = bool
+  default     = true
+}
+
 variable "policy_library_home" {
   description = "The local policy library directory."
   default     = "$USER_HOME/policy-library"

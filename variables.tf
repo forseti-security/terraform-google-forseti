@@ -56,6 +56,12 @@ variable "forseti_run_frequency" {
   default     = "0 */2 * * *"
 }
 
+variable "resource_name_suffix" {
+  default     = null
+  description = "A suffix which will be appended to resource names."
+  type        = string
+}
+
 #----------------#
 # Forseti server #
 #----------------#
@@ -449,6 +455,12 @@ variable "location_enabled" {
 variable "log_sink_enabled" {
   description = "Log sink scanner enabled."
   default     = "true"
+}
+
+variable "manage_rules_enabled" {
+  description = "A toggle to enable or disable the management of rules"
+  type        = bool
+  default     = true
 }
 
 variable "policy_library_home" {
