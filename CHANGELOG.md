@@ -6,12 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Extending the adopted spec, each change should have a link to its corresponding pull request appended.
 
-## [Unreleased]
+## [v4.2.0] - 2019-09-23
 
 ### Added
 
+- Support for Forseti v2.21.0 [#255]
+- Verbose logging for the Forseti Server startup script [#254]
 - CloudSQL instance created in the same zone as GCE instances [#253]
-
 - Support for importing existing deployments created by the deprecated Python Installer. [#197]
   - A variable to override the random resource name suffix
   - A variable to toggle management of rules
@@ -255,7 +256,10 @@ Version 4.0.0 is a backwards-incompatible release. Please see the [upgrade instr
 [v4.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v3.0.0...v4.0.0
 [v4.0.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.0.0...v4.0.1
 [v4.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.0.1...v4.1.0
+[v4.2.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.1.0...v4.2.0
 
+[#255]: https://github.com/forseti-security/terraform-google-forseti/pull/266
+[#254]: https://github.com/forseti-security/terraform-google-forseti/pull/257
 [#253]: https://github.com/forseti-security/terraform-google-forseti/pull/253
 [#246]: https://github.com/forseti-security/terraform-google-forseti/pull/246
 [#239]: https://github.com/forseti-security/terraform-google-forseti/pull/239
