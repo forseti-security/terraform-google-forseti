@@ -19,7 +19,6 @@
 #--------#
 locals {
   random_hash             = var.suffix
-  storage_bucket_name     = "forseti-server-${local.random_hash}"
   storage_cai_bucket_name = "forseti-cai-export-${local.random_hash}"
   server_bucket_name      = "forseti-server-${local.random_hash}"
 }

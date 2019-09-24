@@ -21,7 +21,6 @@ locals {
   client_bucket_name = "forseti-client-${var.suffix}"
 }
 
-
 #------------------------#
 # Forseti storage bucket #
 #------------------------#

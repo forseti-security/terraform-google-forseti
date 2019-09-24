@@ -41,9 +41,6 @@ locals {
     "roles/servicemanagement.quotaViewer",
     "roles/serviceusage.serviceUsageConsumer",
   ]
-  server_bucket_roles = [
-    "roles/storage.objectAdmin",
-  ]
   server_cscc_roles = [
     "roles/securitycenter.findingsEditor",
   ]

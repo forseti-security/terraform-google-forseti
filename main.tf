@@ -142,13 +142,13 @@ module "server" {
   policy_library_sync_git_sync_tag       = var.policy_library_sync_git_sync_tag
   policy_library_sync_ssh_known_hosts    = var.policy_library_sync_ssh_known_hosts
 
-  server_iam_module    = module.server_iam
-  cloudsql_module      = module.cloudsql
-  server_gcs_module    = module.server_gcs
-  server_rules_module  = module.server_rules
-  server_config_module = module.server_config
   client_iam_module    = module.client_iam
-
+  cloudsql_module      = module.cloudsql
+  server_config_module = module.server_config
+  server_gcs_module    = module.server_gcs
+  server_iam_module    = module.server_iam
+  server_rules_module  = module.server_rules
+  
   services = google_project_service.main.*.service
 }
 
@@ -168,8 +168,9 @@ module "server_iam" {
   source                  = "./modules/server_iam"
   cscc_violations_enabled = var.cscc_violations_enabled
   enable_write            = var.enable_write
-  project_id              = var.project_id
+  folder_id               = var.folder_id
   org_id                  = var.org_id
+  project_id              = var.project_id
   suffix                  = local.random_hash
 }
 
@@ -313,8 +314,8 @@ module "client_iam" {
 module "client_gcs" {
   source                  = "./modules/client_gcs"
   project_id              = var.project_id
-  suffix                  = local.random_hash
   storage_bucket_location = var.storage_bucket_location
+  suffix                  = local.random_hash
 
   services = google_project_service.main.*.service
 }
