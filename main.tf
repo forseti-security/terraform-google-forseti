@@ -148,7 +148,7 @@ module "server" {
   server_gcs_module    = module.server_gcs
   server_iam_module    = module.server_iam
   server_rules_module  = module.server_rules
-  
+
   services = google_project_service.main.*.service
 }
 
