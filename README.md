@@ -28,6 +28,10 @@ Simple usage of the module within your own main.tf file is as follows:
     }
 ```
 
+We have been seeing a growth in size on customer's GCP environments and therefore we have updated the 
+default VM and Cloud SQL size to `n1-standard-8` and `db-n1-standard-4`. Feel free to update the TF 
+configuration if you want to size up/down the instances.
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 
@@ -77,7 +81,7 @@ Either the **folder\_id** or **org\_id** input is required to successfully deplo
 | cloudsql\_private | Whether to enable private network and not to create public IP for CloudSQL Instance | bool | `"false"` | no |
 | cloudsql\_proxy\_arch | CloudSQL Proxy architecture | string | `"linux.amd64"` | no |
 | cloudsql\_region | CloudSQL region | string | `"us-central1"` | no |
-| cloudsql\_type | CloudSQL Instance size | string | `"db-n1-standard-1"` | no |
+| cloudsql\_type | CloudSQL Instance size | string | `"db-n1-standard-4"` | no |
 | cloudsql\_user\_host | The host the user can connect from.  Can be an IP address or IP address range. Changing this forces a new resource to be created. | string | `"%"` | no |
 | composite\_root\_resources | A list of root resources that Forseti will monitor. This supersedes the root\_resource\_id when set. | list(string) | `<list>` | no |
 | compute\_disable\_polling | Whether to disable polling for Compute API | bool | `"false"` | no |
@@ -174,7 +178,7 @@ Either the **folder\_id** or **org\_id** input is required to successfully deplo
 | server\_region | GCP region where Forseti will be deployed | string | `"us-central1"` | no |
 | server\_ssh\_allow\_ranges | List of CIDRs that will be allowed ssh access to forseti server | list(string) | `<list>` | no |
 | server\_tags | GCE Forseti Server VM Tags | list(string) | `<list>` | no |
-| server\_type | GCE Forseti Server role instance size | string | `"n1-standard-2"` | no |
+| server\_type | GCE Forseti Server role instance size | string | `"n1-standard-8"` | no |
 | service\_account\_key\_enabled | Service account key scanner enabled. | string | `"true"` | no |
 | service\_account\_key\_violations\_should\_notify | Notify for service account key violations | string | `"true"` | no |
 | servicemanagement\_disable\_polling | Whether to disable polling for Service Management API | bool | `"false"` | no |
