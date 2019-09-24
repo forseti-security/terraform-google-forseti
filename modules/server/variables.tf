@@ -46,7 +46,7 @@ variable "forseti_run_frequency" {
 #----------------#
 variable "server_type" {
   description = "GCE Forseti Server machine type"
-  default     = "n1-standard-2"
+  default     = "n1-standard-8"
 }
 
 variable "server_region" {

@@ -28,6 +28,19 @@ Simple usage of the module within your own main.tf file is as follows:
     }
 ```
 
+The default VM size and Cloud SQL size have been increased to `n1-standard-8` and `db-n1-standard-4`
+to account for larger GCP environments.
+
+To size the instances up or down, update the following variables in your `main.tf` file:
+
+`server_type = {VM SIZE}`
+
+`cloudsql_type = {CLOUD SQL SIZE}`
+
+Please refer to the [VM sizing guide](https://cloud.google.com/compute/docs/machine-types) and
+the [Cloud SQL sizing guide](https://cloud.google.com/sql/pricing) to find what works best for
+your environment.
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 
@@ -75,7 +88,7 @@ Simple usage of the module within your own main.tf file is as follows:
 | cloudsql\_private | Whether to enable private network and not to create public IP for CloudSQL Instance | bool | `"false"` | no |
 | cloudsql\_proxy\_arch | CloudSQL Proxy architecture | string | `"linux.amd64"` | no |
 | cloudsql\_region | CloudSQL region | string | `"us-central1"` | no |
-| cloudsql\_type | CloudSQL Instance size | string | `"db-n1-standard-1"` | no |
+| cloudsql\_type | CloudSQL Instance size | string | `"db-n1-standard-4"` | no |
 | cloudsql\_user\_host | The host the user can connect from.  Can be an IP address or IP address range. Changing this forces a new resource to be created. | string | `"%"` | no |
 | composite\_root\_resources | A list of root resources that Forseti will monitor. This supersedes the root_resource_id when set. | list(string) | `<list>` | no |
 | compute\_disable\_polling | Whether to disable polling for Compute API | bool | `"false"` | no |
@@ -174,7 +187,7 @@ Simple usage of the module within your own main.tf file is as follows:
 | server\_region | GCE Forseti Server region | string | `"us-central1"` | no |
 | server\_ssh\_allow\_ranges | List of CIDRs that will be allowed ssh access to forseti server | list(string) | `<list>` | no |
 | server\_tags | GCE Forseti Server VM Tags | list(string) | `<list>` | no |
-| server\_type | GCE Forseti Server machine type | string | `"n1-standard-2"` | no |
+| server\_type | GCE Forseti Server role instance size | string | `"n1-standard-8"` | no |
 | service\_account\_key\_enabled | Service account key scanner enabled. | string | `"true"` | no |
 | service\_account\_key\_violations\_should\_notify | Notify for service account key violations | string | `"true"` | no |
 | servicemanagement\_disable\_polling | Whether to disable polling for Service Management API | bool | `"false"` | no |
