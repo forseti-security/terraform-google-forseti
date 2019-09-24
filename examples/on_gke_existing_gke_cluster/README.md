@@ -51,9 +51,9 @@ In addition to the [roles](https://github.com/forseti-security/terraform-google-
 | k8s\_config\_validator\_image\_tag | The tag for the config-validator image. | string | `"latest"` | no |
 | k8s\_forseti\_namespace | The Kubernetes namespace in which to deploy Forseti. | string | `"forseti"` | no |
 | k8s\_forseti\_orchestrator\_image | The container image for the Forseti orchestrator | string | `"gcr.io/forseti-containers/forseti"` | no |
-| k8s\_forseti\_orchestrator\_image\_tag | The tag for the container image for the Forseti orchestrator | string | `"v2.20.0"` | no |
+| k8s\_forseti\_orchestrator\_image\_tag | The tag for the container image for the Forseti orchestrator | string | `"v2.21.0"` | no |
 | k8s\_forseti\_server\_image | The container image for the Forseti server | string | `"gcr.io/forseti-containers/forseti"` | no |
-| k8s\_forseti\_server\_image\_tag | The tag for the container image for the Forseti server | string | `"v2.20.0"` | no |
+| k8s\_forseti\_server\_image\_tag | The tag for the container image for the Forseti server | string | `"v2.21.0"` | no |
 | k8s\_tiller\_sa\_name | The Kubernetes Service Account used by Tiller | string | `"tiller"` | no |
 | load\_balancer | The type of load balancer to deploy for the forseti-server if desired: none, external, internal | string | `"internal"` | no |
 | network\_policy | Whether or not to apply Pod NetworkPolicies | bool | `"false"` | no |
