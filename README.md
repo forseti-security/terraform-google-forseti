@@ -187,7 +187,7 @@ your environment.
 | server\_region | GCE Forseti Server region | string | `"us-central1"` | no |
 | server\_ssh\_allow\_ranges | List of CIDRs that will be allowed ssh access to forseti server | list(string) | `<list>` | no |
 | server\_tags | GCE Forseti Server VM Tags | list(string) | `<list>` | no |
-| server\_type | GCE Forseti Server role instance size | string | `"n1-standard-8"` | no |
+| server\_type | GCE Forseti Server machine type | string | `"n1-standard-8"` | no |
 | service\_account\_key\_enabled | Service account key scanner enabled. | string | `"true"` | no |
 | service\_account\_key\_violations\_should\_notify | Notify for service account key violations | string | `"true"` | no |
 | servicemanagement\_disable\_polling | Whether to disable polling for Service Management API | bool | `"false"` | no |
