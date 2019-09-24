@@ -67,7 +67,7 @@ variable "resource_name_suffix" {
 #----------------#
 variable "server_type" {
   description = "GCE Forseti Server machine type"
-  default     = "n1-standard-2"
+  default     = "n1-standard-8"
 }
 
 variable "server_region" {
@@ -767,7 +767,7 @@ variable "cloudsql_proxy_arch" {
 
 variable "cloudsql_type" {
   description = "CloudSQL Instance size"
-  default     = "db-n1-standard-1"
+  default     = "db-n1-standard-4"
 }
 
 variable "cloudsql_user_host" {

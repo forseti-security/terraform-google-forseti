@@ -66,7 +66,7 @@ variable "cloudsql_private" {
 
 variable "cloudsql_type" {
   description = "CloudSQL Instance size"
-  default     = "db-n1-standard-1"
+  default     = "db-n1-standard-4"
 }
 
 variable "cloudsql_user_host" {
