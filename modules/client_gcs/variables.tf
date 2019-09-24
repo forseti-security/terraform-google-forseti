@@ -14,12 +14,27 @@
  * limitations under the License.
  */
 
-output "forseti-client-vm-name" {
-  description = "Forseti Client VM name"
-  value       = google_compute_instance.forseti-client.name
+#----------------#
+# Forseti config #
+#----------------#
+variable "project_id" {
+  description = "Google Project ID that you want Forseti deployed into"
 }
 
-output "forseti-client-vm-ip" {
-  description = "Forseti Client VM private IP address"
-  value       = google_compute_instance.forseti-client.network_interface[0].network_ip
+variable "suffix" {
+  description = "The random suffix to append to all Forseti resources"
+}
+
+#----------------#
+# Forseti client #
+#----------------#
+variable "storage_bucket_location" {
+  description = "GCS storage bucket location"
+  default     = "us-central1"
+}
+
+variable "services" {
+  description = "An artificial dependency to bypass #10462"
+  type        = list(string)
+  default     = []
 }
