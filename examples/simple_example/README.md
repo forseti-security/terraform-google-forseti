@@ -7,7 +7,6 @@ This example illustrates how to set up a minimal Forseti installation.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| credentials\_path | Path to service account json | string | `"../../credentials.json"` | no |
 | domain | The domain associated with the GCP Organization ID | string | n/a | yes |
 | forseti\_email\_recipient | Forseti email recipient. | string | `""` | no |
 | forseti\_email\_sender | Forseti email sender. | string | `""` | no |
