@@ -46,7 +46,6 @@ module "bastion" {
 module "forseti-install-simple" {
   source = "../../../examples/simple_example"
 
-  credentials_path   = var.credentials_path
   gsuite_admin_email = var.gsuite_admin_email
   project_id         = var.project_id
   org_id             = var.org_id

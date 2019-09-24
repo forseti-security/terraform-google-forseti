@@ -14,26 +14,39 @@
  * limitations under the License.
  */
 
-#----------------#
-# Forseti config #
-#----------------#
-variable "project_id" {
-  description = "Google Project ID that you want Forseti deployed into"
+#--------#
+# Config #
+#--------#
+variable "composite_root_resources" {
+  description = "A list of root resources that Forseti will monitor. This supersedes the root_resource_id when set."
+  type        = list(string)
+  default     = []
 }
 
-variable "gsuite_admin_email" {
-  description = "G-Suite administrator email address to manage your Forseti installation"
+variable "sendgrid_api_key" {
+  description = "Sendgrid.com API key to enable email notifications"
   default     = ""
 }
 
-variable "forseti_version" {
-  description = "The version of Forseti to install"
-  default     = "v2.21.0"
+#----------------#
+# Forseti config #
+#----------------#
+variable "domain" {
+  description = "The domain associated with the GCP Organization ID"
 }
 
-variable "forseti_repo_url" {
-  description = "Git repo for the Forseti installation"
-  default     = "https://github.com/forseti-security/forseti-security"
+variable "org_id" {
+  description = "GCP Organization ID that Forseti will have purview over"
+}
+
+variable "folder_id" {
+  description = "GCP Folder that the Forseti project will be deployed into"
+  default     = ""
+}
+
+
+variable "gsuite_admin_email" {
+  description = "G-Suite administrator email address to manage your Forseti installation"
 }
 
 variable "forseti_email_recipient" {
@@ -46,89 +59,9 @@ variable "forseti_email_sender" {
   default     = ""
 }
 
-variable "forseti_home" {
-  description = "Forseti installation directory"
-  default     = "$USER_HOME/forseti-security"
-}
-
-variable "forseti_run_frequency" {
-  description = "Schedule of running the Forseti scans"
-  default     = "0 */2 * * *"
-}
-
-variable "resource_name_suffix" {
-  default     = null
-  description = "A suffix which will be appended to resource names."
-  type        = string
-}
-
-#----------------#
-# Forseti server #
-#----------------#
-variable "server_type" {
-  description = "GCE Forseti Server machine type"
-  default     = "n1-standard-8"
-}
-
-variable "server_region" {
-  description = "GCE Forseti Server region"
-  default     = "us-central1"
-}
-
-variable "server_boot_image" {
-  description = "GCE Forseti Server boot image - Currently only Ubuntu is supported"
-  default     = "ubuntu-os-cloud/ubuntu-1804-lts"
-}
-
-variable "server_boot_disk_size" {
-  description = "Size of the GCE instance boot disk in GBs."
-  default     = "100"
-}
-
-variable "server_boot_disk_type" {
-  description = "GCE instance boot disk type, can be pd-standard or pd-ssd."
-  default     = "pd-ssd"
-}
-
-variable "server_instance_metadata" {
-  description = "Metadata key/value pairs to make available from within the server instance."
-  type        = map(string)
-  default     = {}
-}
-
-variable "server_grpc_allow_ranges" {
-  description = "List of CIDRs that will be allowed gRPC access to forseti server"
-  type        = list(string)
-  default     = ["10.128.0.0/9"]
-}
-
-variable "server_ssh_allow_ranges" {
-  description = "List of CIDRs that will be allowed ssh access to forseti server"
-  type        = list(string)
-  default     = ["0.0.0.0/0"]
-}
-
-variable "server_tags" {
-  description = "GCE Forseti Server VM Tags"
-  type        = list(string)
-  default     = []
-}
-
-variable "server_access_config" {
-  description = "Server instance 'access_config' block"
-  default     = {}
-  type        = map(any)
-}
-
-variable "server_private" {
-  description = "Private GCE Forseti Server VM (no public IP)"
-  default     = false
-  type        = bool
-}
-
-#---------------------------------#
-# Forseti server config inventory #
-#---------------------------------#
+#--------------------------#
+# Forseti config inventory #
+#--------------------------#
 variable "admin_max_calls" {
   description = "Maximum calls that can be made to Admin API"
   default     = "14"
@@ -359,9 +292,9 @@ variable "inventory_retention_days" {
   default     = "-1"
 }
 
-#-------------------------------#
-# Forseti server config scanner #
-#-------------------------------#
+#------------------------#
+# Forseti config scanner #
+#------------------------#
 variable "audit_logging_enabled" {
   description = "Audit Logging scanner enabled."
   default     = "false"
@@ -457,43 +390,6 @@ variable "log_sink_enabled" {
   default     = "true"
 }
 
-variable "manage_rules_enabled" {
-  description = "A toggle to enable or disable the management of rules"
-  type        = bool
-  default     = true
-}
-
-variable "policy_library_home" {
-  description = "The local policy library directory."
-  default     = "$USER_HOME/policy-library"
-}
-
-variable "policy_library_repository_url" {
-  description = "The git repository containing the policy-library."
-  default     = ""
-}
-
-variable "policy_library_sync_enabled" {
-  description = "Sync config validator policy library from private repository."
-  type        = bool
-  default     = false
-}
-
-variable "policy_library_sync_gcs_directory_name" {
-  description = "The directory name of the GCS folder used for the policy library sync config."
-  default     = "policy_library_sync"
-}
-
-variable "policy_library_sync_git_sync_tag" {
-  description = "Tag for the git-sync image."
-  default     = "v3.1.2"
-}
-
-variable "policy_library_sync_ssh_known_hosts" {
-  description = "List of authorized public keys for SSH host of the policy library repository."
-  default     = ""
-}
-
 variable "resource_enabled" {
   description = "Resource scanner enabled."
   default     = "true"
@@ -504,9 +400,9 @@ variable "service_account_key_enabled" {
   default     = "true"
 }
 
-#--------------------------------#
-# Forseti server config notifier #
-#--------------------------------#
+#-------------------------#
+# Forseti config notifier #
+#-------------------------#
 variable "violations_slack_webhook" {
   description = "Slack webhook for any violation. Will apply to all scanner violation notifiers."
   default     = ""
@@ -634,8 +530,7 @@ variable "external_project_access_violations_should_notify" {
 
 variable "cscc_violations_enabled" {
   description = "Notify for CSCC violations"
-  type        = bool
-  default     = false
+  default     = "false"
 }
 
 variable "cscc_source_id" {
@@ -650,7 +545,7 @@ variable "inventory_gcs_summary_enabled" {
 
 variable "inventory_email_summary_enabled" {
   description = "Email summary for inventory enabled"
-  default     = "false"
+  default     = "true"
 }
 
 #---------------------------------------#
@@ -683,173 +578,10 @@ variable "groups_settings_violations_should_notify" {
   default     = "true"
 }
 
-#----------------#
-# Forseti client #
-#----------------#
-variable "client_type" {
-  description = "GCE Forseti Client machine type"
-  default     = "n1-standard-2"
-}
+#--------------------#
+# Forseti server GCS #
+#--------------------#
 
-variable "client_boot_image" {
-  description = "GCE Forseti Client boot image"
-  default     = "ubuntu-os-cloud/ubuntu-1804-lts"
-}
-
-variable "client_region" {
-  description = "GCE Forseti Client region"
-  default     = "us-central1"
-}
-
-variable "client_instance_metadata" {
-  description = "Metadata key/value pairs to make available from within the client instance."
-  type        = map(string)
-  default     = {}
-}
-
-variable "client_ssh_allow_ranges" {
-  description = "List of CIDRs that will be allowed ssh access to forseti client"
-  type        = list(string)
-  default     = ["0.0.0.0/0"]
-}
-
-variable "client_tags" {
-  description = "GCE Forseti Client VM Tags"
-  type        = list(string)
-  default     = []
-}
-
-variable "client_access_config" {
-  description = "Client instance 'access_config' block"
-  default     = {}
-  type        = map(any)
-}
-
-variable "client_private" {
-  description = "Private GCE Forseti Client VM (no public IP)"
-  default     = false
-  type        = bool
-}
-
-#------------#
-# Forseti db #
-#------------#
-variable "cloudsql_region" {
-  description = "CloudSQL region"
-  default     = "us-central1"
-}
-
-variable "cloudsql_db_name" {
-  description = "CloudSQL database name"
-  default     = "forseti_security"
-}
-
-variable "cloudsql_db_port" {
-  description = "CloudSQL database port"
-  default     = "3306"
-}
-
-variable "cloudsql_disk_size" {
-  description = "The size of data disk, in GB. Size of a running instance cannot be reduced but can be increased."
-  default     = "25"
-}
-
-variable "cloudsql_private" {
-  description = "Whether to enable private network and not to create public IP for CloudSQL Instance"
-  default     = false
-  type        = bool
-}
-
-variable "cloudsql_proxy_arch" {
-  description = "CloudSQL Proxy architecture"
-  default     = "linux.amd64"
-}
-
-variable "cloudsql_type" {
-  description = "CloudSQL Instance size"
-  default     = "db-n1-standard-4"
-}
-
-variable "cloudsql_user_host" {
-  description = "The host the user can connect from.  Can be an IP address or IP address range. Changing this forces a new resource to be created."
-  default     = "%"
-}
-
-#----------------#
-# Forseti bucket #
-#----------------#
-variable "storage_bucket_location" {
-  description = "GCS storage bucket location"
-  default     = "us-central1"
-}
-
-variable "bucket_cai_location" {
-  description = "GCS CAI storage bucket location"
-  default     = "us-central1"
-}
-
-variable "bucket_cai_lifecycle_age" {
-  description = "GCS CAI lifecycle age value"
-  default     = "14"
-}
-
-#---------#
-# Network #
-#---------#
-variable "network" {
-  description = "The VPC where the Forseti client and server will be created"
-  default     = "default"
-}
-
-variable "subnetwork" {
-  description = "The VPC subnetwork where the Forseti client and server will be created"
-  default     = "default"
-}
-
-variable "network_project" {
-  description = "The project containing the VPC and subnetwork where the Forseti client and server will be created"
-  default     = ""
-}
-
-#-------#
-# Flags #
-#-------#
-variable "enable_write" {
-  description = "Enabling/Disabling write actions"
-  type        = bool
-  default     = false
-}
-
-variable "enable_cai_bucket" {
-  description = "Create a GCS bucket for CAI exports"
-  type        = bool
-  default     = true
-}
-
-#--------#
-# Config #
-#--------#
-variable "org_id" {
-  description = "GCP Organization ID that Forseti will have purview over"
-  default     = ""
-}
-
-variable "domain" {
-  description = "The domain associated with the GCP Organization ID"
-}
-
-variable "folder_id" {
-  description = "GCP Folder that the Forseti project will be deployed into"
-  default     = ""
-}
-
-variable "composite_root_resources" {
-  description = "A list of root resources that Forseti will monitor. This supersedes the root_resource_id when set."
-  type        = list(string)
-  default     = []
-}
-
-variable "sendgrid_api_key" {
-  description = "Sendgrid.com API key to enable email notifications"
-  default     = ""
+variable "server_gcs_module" {
+  description = "The Forseti Server GCS module"
 }
