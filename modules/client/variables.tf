@@ -66,6 +66,7 @@ variable "subnetwork" {
 
 variable "network_project" {
   description = "The project containing the VPC and subnetwork where the Forseti client and server will be created"
+  default     = ""
 }
 
 variable "client_ssh_allow_ranges" {
