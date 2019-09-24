@@ -27,6 +27,15 @@ locals {
 
 }
 
+#-------------------------#
+# Forseti service Account #
+#-------------------------#
+resource "google_service_account" "forseti_client" {
+  account_id   = local.client_sa_name
+  project      = var.project_id
+  display_name = "Forseti Client Service Account"
+}
+
 #----------------------#
 # Forseti client roles #
 #----------------------#
@@ -35,13 +44,4 @@ resource "google_project_iam_member" "client_roles" {
   role    = local.client_project_roles[count.index]
   project = var.project_id
   member  = "serviceAccount:${google_service_account.forseti_client.email}"
-}
-
-#-------------------------#
-# Forseti service Account #
-#-------------------------#
-resource "google_service_account" "forseti_client" {
-  account_id   = local.client_sa_name
-  project      = var.project_id
-  display_name = "Forseti Client Service Account"
 }

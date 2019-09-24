@@ -634,7 +634,8 @@ variable "external_project_access_violations_should_notify" {
 
 variable "cscc_violations_enabled" {
   description = "Notify for CSCC violations"
-  default     = "false"
+  type        = bool
+  default     = false
 }
 
 variable "cscc_source_id" {
@@ -815,12 +816,14 @@ variable "network_project" {
 #-------#
 variable "enable_write" {
   description = "Enabling/Disabling write actions"
-  default     = "false"
+  type        = bool
+  default     = false
 }
 
 variable "enable_cai_bucket" {
   description = "Create a GCS bucket for CAI exports"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 #--------#
