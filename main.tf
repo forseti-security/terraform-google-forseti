@@ -212,7 +212,7 @@ module "server_config" {
   servicemanagement_period                            = var.servicemanagement_period
   servicemanagement_max_calls                         = var.servicemanagement_max_calls
   servicemanagement_disable_polling                   = var.servicemanagement_disable_polling
-  servicusage_period                                  = var.serviceusage_period
+  serviceusage_period                                 = var.serviceusage_period
   serviceusage_max_calls                              = var.serviceusage_max_calls
   serviceusage_disable_polling                        = var.serviceusage_disable_polling
   securitycenter_period                               = var.securitycenter_period
