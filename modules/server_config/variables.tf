@@ -260,6 +260,22 @@ variable "servicemanagement_disable_polling" {
   default     = false
 }
 
+variable "serviceusage_max_calls" {
+  description = "Maximum calls that can be made to Service Usage API"
+  default     = "4"
+}
+
+variable "serviceusage_period" {
+  description = "The period of max calls for the Service Usage API (in seconds)"
+  default     = "1.1"
+}
+
+variable "serviceusage_disable_polling" {
+  description = "Whether to disable polling for Service Usage API"
+  type        = bool
+  default     = false
+}
+
 variable "sqladmin_max_calls" {
   description = "Maximum calls that can be made to SQL Admin API"
   default     = "1"

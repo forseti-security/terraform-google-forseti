@@ -106,6 +106,10 @@ inventory:
           max_calls: ${SERVICEMANAGEMENT_MAX_CALLS}
           period: ${SERVICEMANAGEMENT_PERIOD}
           disable_polling: ${SERVICEMANAGEMENT_DISABLE_POLLING}
+        serviceusage:
+          max_calls: ${SERVICEUSAGE_MAX_CALLS}
+          period: ${SERVICEUSAGE_PERIOD}
+          disable_polling: ${SERVICEUSAGE_DISABLE_POLLING}
         sqladmin:
           max_calls: ${SQLADMIN_MAX_CALLS}
           period: ${SQLADMIN_PERIOD}
