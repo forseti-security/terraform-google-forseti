@@ -28,16 +28,17 @@ Simple usage of the module within your own main.tf file is as follows:
     }
 ```
 
-The default VM size and Cloud SQL size have been increased to `n1-standard-8` and `db-n1-standard-4` 
+The default VM size and Cloud SQL size have been increased to `n1-standard-8` and `db-n1-standard-4`
 to account for larger GCP environments.
 
 To size the instances up or down, update the following variables in your `main.tf` file:
 
-`server_type = {VM SIZE}`  
-`cloudsql_type = {CLOUD SQL SIZE}`  
+`server_type = {VM SIZE}`
 
-Please refer to the [VM sizing guide](https://cloud.google.com/compute/docs/machine-types) and 
-the [Cloud SQL sizing guide](https://cloud.google.com/sql/pricing) to find what works best for 
+`cloudsql_type = {CLOUD SQL SIZE}`
+
+Please refer to the [VM sizing guide](https://cloud.google.com/compute/docs/machine-types) and
+the [Cloud SQL sizing guide](https://cloud.google.com/sql/pricing) to find what works best for
 your environment.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
