@@ -68,14 +68,14 @@ Either the **folder\_id** or **org\_id** input is required to successfully deplo
 | bucket\_cai\_location | GCS CAI storage bucket location | string | `"us-central1"` | no |
 | buckets\_acl\_violations\_should\_notify | Notify for Buckets ACL violations | string | `"true"` | no |
 | cai\_api\_timeout | Timeout in seconds to wait for the exportAssets API to return success. | string | `"3600"` | no |
-| client\_access\_config | Client instance 'access\_config' block | map(any) | `<map>` | no |
-| client\_boot\_image | GCE Forseti Client role instance size | string | `"ubuntu-os-cloud/ubuntu-1804-lts"` | no |
+| client\_access\_config | Client instance 'access_config' block | map(any) | `<map>` | no |
+| client\_boot\_image | GCE Forseti Client boot image | string | `"ubuntu-os-cloud/ubuntu-1804-lts"` | no |
 | client\_instance\_metadata | Metadata key/value pairs to make available from within the client instance. | map(string) | `<map>` | no |
 | client\_private | Private GCE Forseti Client VM (no public IP) | bool | `"false"` | no |
-| client\_region | GCE Forseti Client role region size | string | `"us-central1"` | no |
+| client\_region | GCE Forseti Client region | string | `"us-central1"` | no |
 | client\_ssh\_allow\_ranges | List of CIDRs that will be allowed ssh access to forseti client | list(string) | `<list>` | no |
 | client\_tags | GCE Forseti Client VM Tags | list(string) | `<list>` | no |
-| client\_type | GCE Forseti Client role instance size | string | `"n1-standard-2"` | no |
+| client\_type | GCE Forseti Client machine type | string | `"n1-standard-2"` | no |
 | cloudasset\_disable\_polling | Whether to disable polling for Cloud Asset API | bool | `"false"` | no |
 | cloudasset\_max\_calls | Maximum calls that can be made to Cloud Asset API | string | `"1"` | no |
 | cloudasset\_period | The period of max calls for the Cloud Asset API (in seconds) | string | `"1.0"` | no |
@@ -92,7 +92,7 @@ Either the **folder\_id** or **org\_id** input is required to successfully deplo
 | cloudsql\_region | CloudSQL region | string | `"us-central1"` | no |
 | cloudsql\_type | CloudSQL Instance size | string | `"db-n1-standard-4"` | no |
 | cloudsql\_user\_host | The host the user can connect from.  Can be an IP address or IP address range. Changing this forces a new resource to be created. | string | `"%"` | no |
-| composite\_root\_resources | A list of root resources that Forseti will monitor. This supersedes the root\_resource\_id when set. | list(string) | `<list>` | no |
+| composite\_root\_resources | A list of root resources that Forseti will monitor. This supersedes the root_resource_id when set. | list(string) | `<list>` | no |
 | compute\_disable\_polling | Whether to disable polling for Compute API | bool | `"false"` | no |
 | compute\_max\_calls | Maximum calls that can be made to Compute API | string | `"18"` | no |
 | compute\_period | The period of max calls for the Compute API (in seconds) | string | `"1.0"` | no |
@@ -105,10 +105,10 @@ Either the **folder\_id** or **org\_id** input is required to successfully deplo
 | crm\_max\_calls | Maximum calls that can be made to CRN API | string | `"4"` | no |
 | crm\_period | The period of max calls for the CRM  API (in seconds) | string | `"1.2"` | no |
 | cscc\_source\_id | Source ID for CSCC Beta API | string | `""` | no |
-| cscc\_violations\_enabled | Notify for CSCC violations | string | `"false"` | no |
+| cscc\_violations\_enabled | Notify for CSCC violations | bool | `"false"` | no |
 | domain | The domain associated with the GCP Organization ID | string | n/a | yes |
-| enable\_cai\_bucket | Create a GCS bucket for CAI exports | string | `"true"` | no |
-| enable\_write | Enabling/Disabling write actions | string | `"false"` | no |
+| enable\_cai\_bucket | Create a GCS bucket for CAI exports | bool | `"true"` | no |
+| enable\_write | Enabling/Disabling write actions | bool | `"false"` | no |
 | enabled\_apis\_enabled | Enabled APIs scanner enabled. | string | `"false"` | no |
 | enabled\_apis\_violations\_should\_notify | Notify for enabled APIs violations | string | `"true"` | no |
 | excluded\_resources | A list of resources to exclude during the inventory phase. | list(string) | `<list>` | no |
@@ -161,6 +161,7 @@ Either the **folder\_id** or **org\_id** input is required to successfully deplo
 | logging\_disable\_polling | Whether to disable polling for Logging API | bool | `"false"` | no |
 | logging\_max\_calls | Maximum calls that can be made to Logging API | string | `"9"` | no |
 | logging\_period | The period of max calls for the Logging API (in seconds) | string | `"1.0"` | no |
+| manage\_rules\_enabled | A toggle to enable or disable the management of rules | bool | `"true"` | no |
 | network | The VPC where the Forseti client and server will be created | string | `"default"` | no |
 | network\_project | The project containing the VPC and subnetwork where the Forseti client and server will be created | string | `""` | no |
 | org\_id | GCP Organization ID that Forseti will have purview over | string | `""` | no |
@@ -172,22 +173,23 @@ Either the **folder\_id** or **org\_id** input is required to successfully deplo
 | policy\_library\_sync\_ssh\_known\_hosts | List of authorized public keys for SSH host of the policy library repository. | string | `""` | no |
 | project\_id | Google Project ID that you want Forseti deployed into | string | n/a | yes |
 | resource\_enabled | Resource scanner enabled. | string | `"true"` | no |
+| resource\_name\_suffix | A suffix which will be appended to resource names. | string | `"null"` | no |
 | resource\_violations\_should\_notify | Notify for resource violations | string | `"true"` | no |
 | securitycenter\_disable\_polling | Whether to disable polling for Security Center API | bool | `"false"` | no |
 | securitycenter\_max\_calls | Maximum calls that can be made to Security Center API | string | `"1"` | no |
 | securitycenter\_period | The period of max calls for the Security Center API (in seconds) | string | `"1.1"` | no |
 | sendgrid\_api\_key | Sendgrid.com API key to enable email notifications | string | `""` | no |
-| server\_access\_config | Server instance 'access\_config' block | map(any) | `<map>` | no |
+| server\_access\_config | Server instance 'access_config' block | map(any) | `<map>` | no |
 | server\_boot\_disk\_size | Size of the GCE instance boot disk in GBs. | string | `"100"` | no |
 | server\_boot\_disk\_type | GCE instance boot disk type, can be pd-standard or pd-ssd. | string | `"pd-ssd"` | no |
-| server\_boot\_image | GCE instance image that is being used, currently Ubuntu only support is available | string | `"ubuntu-os-cloud/ubuntu-1804-lts"` | no |
+| server\_boot\_image | GCE Forseti Server boot image - Currently only Ubuntu is supported | string | `"ubuntu-os-cloud/ubuntu-1804-lts"` | no |
 | server\_grpc\_allow\_ranges | List of CIDRs that will be allowed gRPC access to forseti server | list(string) | `<list>` | no |
 | server\_instance\_metadata | Metadata key/value pairs to make available from within the server instance. | map(string) | `<map>` | no |
 | server\_private | Private GCE Forseti Server VM (no public IP) | bool | `"false"` | no |
-| server\_region | GCP region where Forseti will be deployed | string | `"us-central1"` | no |
+| server\_region | GCE Forseti Server region | string | `"us-central1"` | no |
 | server\_ssh\_allow\_ranges | List of CIDRs that will be allowed ssh access to forseti server | list(string) | `<list>` | no |
 | server\_tags | GCE Forseti Server VM Tags | list(string) | `<list>` | no |
-| server\_type | GCE Forseti Server role instance size | string | `"n1-standard-8"` | no |
+| server\_type | GCE Forseti Server machine type | string | `"n1-standard-8"` | no |
 | service\_account\_key\_enabled | Service account key scanner enabled. | string | `"true"` | no |
 | service\_account\_key\_violations\_should\_notify | Notify for service account key violations | string | `"true"` | no |
 | servicemanagement\_disable\_polling | Whether to disable polling for Service Management API | bool | `"false"` | no |
