@@ -14,12 +14,18 @@
  * limitations under the License.
  */
 
-output "forseti-client-vm-name" {
-  description = "Forseti Client VM name"
-  value       = google_compute_instance.forseti-client.name
+variable "forseti_home" {
+  description = "Forseti installation directory"
+  default     = "$USER_HOME/forseti-security"
 }
 
-output "forseti-client-vm-ip" {
-  description = "Forseti Client VM private IP address"
-  value       = google_compute_instance.forseti-client.network_interface[0].network_ip
+variable "server_address" {
+  description = "The Forseti server address"
+}
+
+#--------------------#
+# Forseti client GCS #
+#--------------------#
+variable "client_gcs_module" {
+  description = "The Forseti Client GCS module"
 }
