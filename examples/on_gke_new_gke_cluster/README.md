@@ -40,6 +40,7 @@ In order to operate with the Service Account you must activate the following API
 - Container Registry API - containerregistry.googleapis.com
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -71,17 +72,13 @@ In order to operate with the Service Account you must activate the following API
 | k8s\_forseti\_server\_image | The container image for the Forseti server | string | `"gcr.io/forseti-containers/forseti"` | no |
 | k8s\_forseti\_server\_image\_tag | The tag for the container image for the Forseti server | string | `"v2.21.0"` | no |
 | k8s\_tiller\_sa\_name | The Kubernetes Service Account used by Tiller | string | `"tiller"` | no |
-| load\_balancer | The type of load balancer to deploy for the forseti-server if desired: none, external, internal | string | `"internal"` | no |
-| network\_description | An optional description of the network. The resource must be recreated to modify this field. | string | `""` | no |
 | network\_name | The name of the VPC being created | string | `"gke-network"` | no |
 | policy\_library\_repository\_branch | The specific git branch containing the policies. | string | `"master"` | no |
 | policy\_library\_repository\_url | The git repository containing the policy-library. | string | `"https://github.com/forseti-security/policy-library"` | no |
 | production | Whether or not to deploy Forseti on GKE in a production configuration | bool | `"true"` | no |
 | project\_id | The ID of an existing Google project where Forseti will be installed | string | n/a | yes |
-| region | Region where forseti subnetwork will be deployed | string | `"us-central1"` | no |
-| server\_log\_level | The log level of the Forseti server container. | string | `"info"` | no |
+| region | Region where forseti subnetwork will be deployed | string | n/a | yes |
 | sub\_network\_name | The names of the subnet being created | string | `"gke-sub-network"` | no |
-| suffix | The random suffix appended to Forseti resources | string | n/a | yes |
-| zones | The zones to host the cluster in.  This is optional if the GKE cluster is regional.  It is required if the cluster is zonal. | list | `<list>` | no |
+| zones | The zones to host the cluster in (optional if regional cluster / required if zonal) | list | `<list>` | no |
 
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

@@ -11,11 +11,8 @@ By default, terraform will use your application default credentials.  If you'd l
 |------|-------------|:----:|:-----:|:-----:|
 | enforcer\_project\_id | A project to be managed by the real time enforcer | string | n/a | yes |
 | instance\_metadata | Metadata key/value pairs to make available from within the client and server instances. | map(string) | `<map>` | no |
-| network | Name of the shared VPC | string | n/a | yes |
 | org\_id | GCP Organization ID that Forseti will have purview over | string | n/a | yes |
 | project\_id | The ID of an existing Google project where Forseti will be installed | string | n/a | yes |
-| region | Region where forseti subnetwork will be deployed | string | `"us-central1"` | no |
-| subnetwork | Name of the subnetwork where forseti will be deployed | string | n/a | yes |
 
 ## Outputs
 

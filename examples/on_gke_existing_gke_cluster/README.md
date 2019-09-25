@@ -27,6 +27,7 @@ In addition to the [roles](https://github.com/forseti-security/terraform-google-
 - roles/container.developer
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -60,7 +61,5 @@ In addition to the [roles](https://github.com/forseti-security/terraform-google-
 | policy\_library\_repository\_branch | The specific git branch containing the policies. | string | `"master"` | no |
 | policy\_library\_repository\_url | The git repository containing the policy-library. | string | `"https://github.com/forseti-security/policy-library"` | no |
 | project\_id | The ID of an existing Google project where Forseti will be installed | string | n/a | yes |
-| server\_log\_level | The log level of the Forseti server container. | string | `"info"` | no |
-| suffix | The random suffix appended to Forseti resources | string | n/a | yes |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
