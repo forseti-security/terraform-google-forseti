@@ -15,7 +15,8 @@
  */
 
 provider "google" {
-  version = "~> 2.11.0"
+  credentials = file(var.credentials_path)
+  version     = "~> 2.11.0"
 }
 
 provider "local" {

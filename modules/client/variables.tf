@@ -54,6 +54,11 @@ variable "client_region" {
   default     = "us-central1"
 }
 
+variable "storage_bucket_location" {
+  description = "GCS storage bucket location"
+  default     = "us-central1"
+}
+
 variable "network" {
   description = "The VPC where the Forseti client and server will be created"
   default     = "default"
@@ -66,7 +71,10 @@ variable "subnetwork" {
 
 variable "network_project" {
   description = "The project containing the VPC and subnetwork where the Forseti client and server will be created"
-  default     = ""
+}
+
+variable "server_address" {
+  description = "The Forseti server address"
 }
 
 variable "client_ssh_allow_ranges" {
@@ -87,6 +95,7 @@ variable "client_tags" {
   default     = []
 }
 
+
 variable "client_access_config" {
   description = "Client instance 'access_config' block"
   default     = {}
@@ -106,25 +115,4 @@ variable "services" {
   description = "An artificial dependency to bypass #10462"
   type        = list(string)
   default     = []
-}
-
-#--------------------#
-# Forseti client IAM #
-#--------------------#
-variable "client_iam_module" {
-  description = "The Forseti Client IAM module"
-}
-
-#--------------------#
-# Forseti client GCS #
-#--------------------#
-variable "client_gcs_module" {
-  description = "The Forseti Client GCS module"
-}
-
-#-----------------------#
-# Forseti client config #
-#-----------------------#
-variable "client_config_module" {
-  description = "The Forseti Client config module"
 }
