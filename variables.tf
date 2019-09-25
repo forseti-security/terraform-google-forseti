@@ -474,12 +474,8 @@ variable "policy_library_repository_url" {
 
 variable "policy_library_sync_enabled" {
   description = "Sync config validator policy library from private repository."
-<<<<<<< HEAD
   type        = bool
   default     = false
-=======
-  default     = "false"
->>>>>>> parent of 2f2c483... Attempt to separate out a common component (#228)
 }
 
 variable "policy_library_sync_gcs_directory_name" {
