@@ -33,7 +33,7 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | policy\_library\_repository\_url | The git repository containing the policy-library. | string | n/a | yes |
 | production | Whether or not to deploy Forseti on GKE in a production configuration | bool | `"true"` | no |
 | project\_id | The ID of the GCP project where Forseti is currently deployed. | string | n/a | yes |
-| recreate\_pods | Instructs the helm_release resource to, on update, perform pod restarts for the resources if applicable. | bool | `"true"` | no |
+| recreate\_pods | Instructs the helm\_release resource to, on update, perform pod restarts for the resources if applicable. | bool | `"true"` | no |
 | server\_log\_level | The log level of the Forseti server container. | string | `"info"` | no |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

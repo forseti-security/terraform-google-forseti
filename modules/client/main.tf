@@ -24,11 +24,19 @@ locals {
   client_env_script = file(
     "${path.module}/templates/scripts/forseti-client/forseti_environment.sh.tpl",
   )
+  client_conf = file(
+    "${path.module}/templates/configs/forseti_conf_client.yaml.tpl",
+  )
+  client_conf_path   = "${var.forseti_home}/configs/forseti_conf_client.yaml"
+  client_sa_name     = "forseti-client-gcp-${var.suffix}"
+  client_name        = "forseti-client-vm-${var.suffix}"
+  client_bucket_name = "forseti-client-${var.suffix}"
+  client_zone        = "${var.client_region}-c"
 
-  client_conf_path = "${var.forseti_home}/configs/forseti_conf_client.yaml"
-
-  client_name = "forseti-client-vm-${var.suffix}"
-  client_zone = "${var.client_region}-c"
+  client_project_roles = [
+    "roles/storage.objectViewer",
+    "roles/cloudtrace.agent",
+  ]
 
   network_project = var.network_project != "" ? var.network_project : var.project_id
 
@@ -61,7 +69,7 @@ data "template_file" "forseti_client_startup_script" {
     forseti_version          = var.forseti_version
     forseti_home             = var.forseti_home
     forseti_client_conf_path = local.client_conf_path
-    storage_bucket_name      = var.client_gcs_module.forseti-client-storage-bucket
+    storage_bucket_name      = local.client_bucket_name
   }
 }
 
@@ -71,6 +79,14 @@ data "template_file" "forseti_client_environment" {
   vars = {
     forseti_home             = var.forseti_home
     forseti_client_conf_path = local.client_conf_path
+  }
+}
+
+data "template_file" "forseti_client_config" {
+  template = local.client_conf
+
+  vars = {
+    forseti_server_ip = var.server_address
   }
 }
 
@@ -121,13 +137,13 @@ resource "google_compute_instance" "forseti-client" {
   }
 
   service_account {
-    email  = var.client_iam_module.forseti-client-service-account
+    email  = google_service_account.forseti_client.email
     scopes = ["cloud-platform"]
   }
 
   depends_on = [
     null_resource.services-dependency,
-    var.client_config_module,
+    google_storage_bucket_object.forseti_client_config,
   ]
 }
 
@@ -138,7 +154,7 @@ resource "google_compute_firewall" "forseti-client-deny-all" {
   name                    = "forseti-client-deny-all-${var.suffix}"
   project                 = local.network_project
   network                 = var.network
-  target_service_accounts = [var.client_iam_module.forseti-client-service-account]
+  target_service_accounts = [google_service_account.forseti_client.email]
   source_ranges           = ["0.0.0.0/0"]
   priority                = "200"
 
@@ -161,7 +177,7 @@ resource "google_compute_firewall" "forseti-client-ssh-external" {
   name                    = "forseti-client-ssh-external-${var.suffix}"
   project                 = local.network_project
   network                 = var.network
-  target_service_accounts = [var.client_iam_module.forseti-client-service-account]
+  target_service_accounts = [google_service_account.forseti_client.email]
   source_ranges           = var.client_ssh_allow_ranges
   priority                = "100"
 
@@ -171,6 +187,43 @@ resource "google_compute_firewall" "forseti-client-ssh-external" {
   }
 
   depends_on = [null_resource.services-dependency]
+}
+
+#----------------------#
+# Forseti client roles #
+#----------------------#
+resource "google_project_iam_member" "client_roles" {
+  count   = length(local.client_project_roles)
+  role    = local.client_project_roles[count.index]
+  project = var.project_id
+  member  = "serviceAccount:${google_service_account.forseti_client.email}"
+}
+
+#-------------------------#
+# Forseti service Account #
+#-------------------------#
+resource "google_service_account" "forseti_client" {
+  account_id   = local.client_sa_name
+  project      = var.project_id
+  display_name = "Forseti Client Service Account"
+}
+
+#------------------------#
+# Forseti storage bucket #
+#------------------------#
+resource "google_storage_bucket" "client_config" {
+  name          = local.client_bucket_name
+  location      = var.storage_bucket_location
+  project       = var.project_id
+  force_destroy = "true"
+
+  depends_on = [null_resource.services-dependency]
+}
+
+resource "google_storage_bucket_object" "forseti_client_config" {
+  name    = "configs/forseti_conf_client.yaml"
+  bucket  = google_storage_bucket.client_config.name
+  content = data.template_file.forseti_client_config.rendered
 }
 
 resource "null_resource" "services-dependency" {

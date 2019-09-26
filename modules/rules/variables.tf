@@ -14,12 +14,9 @@
  * limitations under the License.
  */
 
-#--------------------#
-# Forseti server GCS #
-#--------------------#
-
-variable "server_gcs_module" {
-  description = "The Forseti Server GCS module"
+variable "bucket" {
+  description = "The GCS bucket where rules will be uploaded"
+  type        = string
 }
 
 variable "manage_rules_enabled" {
