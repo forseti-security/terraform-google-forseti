@@ -177,6 +177,9 @@ data "template_file" "forseti_server_config" {
     SERVICEMANAGEMENT_PERIOD                            = var.servicemanagement_period
     SERVICEMANAGEMENT_MAX_CALLS                         = var.servicemanagement_max_calls
     SERVICEMANAGEMENT_DISABLE_POLLING                   = var.servicemanagement_disable_polling
+    SERVICEUSAGE_PERIOD                                 = var.serviceusage_period
+    SERVICEUSAGE_MAX_CALLS                              = var.serviceusage_max_calls
+    SERVICEUSAGE_DISABLE_POLLING                        = var.serviceusage_disable_polling
     SECURITYCENTER_PERIOD                               = var.securitycenter_period
     SECURITYCENTER_MAX_CALLS                            = var.securitycenter_max_calls
     SECURITYCENTER_DISABLE_POLLING                      = var.securitycenter_disable_polling

@@ -45,7 +45,7 @@ In addition to the [roles](https://github.com/forseti-security/terraform-google-
 | git\_sync\_wait | The time number of seconds between git-syncs | string | `"30"` | no |
 | gke\_cluster\_location | The location of the GKE cluster on which to deploy Forseti | string | n/a | yes |
 | gke\_cluster\_name | The name of the GKE cluster on which to deploy Forseti | string | n/a | yes |
-| gke\_service\_account | The service account to run nodes as if not overridden in node\_pools. | string | `"create"` | no |
+| gke\_service\_account | The service account to run nodes as if not overridden in node_pools. | string | `"create"` | no |
 | helm\_repository\_url | The Helm repository containing the 'forseti-security' Helm charts | string | `"https://forseti-security-charts.storage.googleapis.com/release/"` | no |
 | k8s\_config\_validator\_image | The container image used by the config-validator | string | `"gcr.io/forseti-containers/config-validator"` | no |
 | k8s\_config\_validator\_image\_tag | The tag for the config-validator image. | string | `"latest"` | no |
