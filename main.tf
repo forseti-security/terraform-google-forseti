@@ -28,7 +28,7 @@ resource "null_resource" "org_id_and_folder_id_are_both_empty" {
 }
 
 resource "null_resource" "email_without_sendgrid_api_key" {
-  count = var.inventory_email_summary_enabled == "true" && var.sendgrid_api_key == "" ? 1 : 0
+  count = var.inventory_email_summary_enabled == true && var.sendgrid_api_key == "" ? 1 : 0
 
   provisioner "local-exec" {
     command     = "echo 'inventory_email_summary_enabled=${var.inventory_email_summary_enabled} sendgrid_api_key=${var.sendgrid_api_key}' >&2; false"
@@ -74,14 +74,14 @@ resource "google_project_service" "main" {
   count              = length(local.services_list)
   project            = var.project_id
   service            = local.services_list[count.index]
-  disable_on_destroy = "false"
+  disable_on_destroy = false
 }
 
 resource "google_project_service" "cscc_violations" {
   count              = var.cscc_violations_enabled ? length(local.cscc_violations_enabled_services_list) : 0
   project            = var.project_id
   service            = local.cscc_violations_enabled_services_list[count.index]
-  disable_on_destroy = "false"
+  disable_on_destroy = false
 }
 
 module "client" {

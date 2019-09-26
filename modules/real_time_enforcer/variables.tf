@@ -88,7 +88,8 @@ variable "enforcer_instance_access_config" {
 
 variable "enforcer_instance_private" {
   description = "Enable enforcer instance private IP"
-  default     = "false"
+  type        = bool
+  default     = false
 }
 
 variable "suffix" {

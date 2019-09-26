@@ -104,7 +104,8 @@ variable "client_access_config" {
 
 variable "client_private" {
   description = "Enable private Forseti client VM (no public IP)"
-  default     = "false"
+  type        = bool
+  default     = false
 }
 
 variable "suffix" {

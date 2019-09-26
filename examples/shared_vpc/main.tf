@@ -53,6 +53,6 @@ module "forseti" {
   domain                   = var.domain
   client_instance_metadata = var.instance_metadata
   server_instance_metadata = var.instance_metadata
-  client_private           = "true"
-  server_private           = "true"
+  client_private           = true
+  server_private           = true
 }

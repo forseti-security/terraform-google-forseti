@@ -91,7 +91,7 @@ gsutil cp -r gs://${storage_bucket_name}/rules ${forseti_home}/
 
 # Get Config Validator constraints
 sudo mkdir -m 777 -p ${policy_library_home}
-if [ "${policy_library_sync_enabled}" == "true" ]; then
+if [ "${policy_library_sync_enabled}" == true ]; then
   # Policy Library Sync
   echo "Forseti Startup - Policy Library sync is enabled."
 
@@ -126,7 +126,7 @@ fi
 echo "Forseti Startup - Starting services."
 bash ./install/gcp/scripts/initialize_forseti_services.sh
 systemctl start cloudsqlproxy
-if [ "${policy_library_sync_enabled}" == "true" ]; then
+if [ "${policy_library_sync_enabled}" == true ]; then
   systemctl start policy-library-sync
   sleep 5
 fi
