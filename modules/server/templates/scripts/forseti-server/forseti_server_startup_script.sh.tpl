@@ -136,10 +136,10 @@ sleep 5
 echo "Forseti Startup - Attempting to update database schema, if necessary."
 python3 $USER_HOME/forseti-security/install/gcp/upgrade_tools/db_migrator.py
 
-# Start main Forseti service
-echo "Forseti Startup - Starting Forseti service."
-systemctl start forseti
-echo "Forseti Startup - Success! The Forseti API server has been started."
+# Enable and start main Forseti service immediately
+echo "Forseti Startup - Enabling and starting Forseti service."
+systemctl enable --now forseti
+echo "Forseti Startup - Success! The Forseti API server has been enabled and started."
 
 # Create a Forseti env script
 FORSETI_ENV="$(cat << EOF
