@@ -23,12 +23,12 @@ variable "project_id" {
 
 variable "forseti_version" {
   description = "The version of Forseti to install"
-  default     = "v2.18.0"
+  default     = "v2.21.0"
 }
 
 variable "forseti_repo_url" {
   description = "Git repo for the Forseti installation"
-  default     = "https://github.com/GoogleCloudPlatform/forseti-security"
+  default     = "https://github.com/forseti-security/forseti-security"
 }
 
 variable "forseti_home" {
@@ -40,22 +40,17 @@ variable "forseti_home" {
 # Forseti client #
 #----------------#
 variable "client_type" {
-  description = "GCE Forseti Client role instance size"
+  description = "GCE Forseti Client machine type"
   default     = "n1-standard-2"
 }
 
 variable "client_boot_image" {
-  description = "GCE Forseti Client role instance size"
+  description = "GCE Forseti Client boot image"
   default     = "ubuntu-os-cloud/ubuntu-1804-lts"
 }
 
 variable "client_region" {
-  description = "GCE Forseti Client role region size"
-  default     = "us-central1"
-}
-
-variable "storage_bucket_location" {
-  description = "GCS storage bucket location"
+  description = "GCE Forseti Client region"
   default     = "us-central1"
 }
 
@@ -71,10 +66,7 @@ variable "subnetwork" {
 
 variable "network_project" {
   description = "The project containing the VPC and subnetwork where the Forseti client and server will be created"
-}
-
-variable "server_address" {
-  description = "The Forseti server address"
+  default     = ""
 }
 
 variable "client_ssh_allow_ranges" {
@@ -94,7 +86,6 @@ variable "client_tags" {
   type        = list(string)
   default     = []
 }
-
 
 variable "client_access_config" {
   description = "Client instance 'access_config' block"
@@ -117,3 +108,23 @@ variable "services" {
   default     = []
 }
 
+#--------------------#
+# Forseti client IAM #
+#--------------------#
+variable "client_iam_module" {
+  description = "The Forseti Client IAM module"
+}
+
+#--------------------#
+# Forseti client GCS #
+#--------------------#
+variable "client_gcs_module" {
+  description = "The Forseti Client GCS module"
+}
+
+#-----------------------#
+# Forseti client config #
+#-----------------------#
+variable "client_config_module" {
+  description = "The Forseti Client config module"
+}

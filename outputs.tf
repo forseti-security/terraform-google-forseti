@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-output "forseti-server-vm-name" {
-  description = "Forseti Server VM name"
-  value       = module.server.forseti-server-vm-name
+output "forseti-client-service-account" {
+  description = "Forseti Client service account"
+  value       = module.client_iam.forseti-client-service-account
 }
 
-output "forseti-server-vm-ip" {
-  description = "Forseti Server VM private IP address"
-  value       = module.server.forseti-server-vm-ip
+output "forseti-client-storage-bucket" {
+  description = "Forseti Client storage bucket"
+  value       = module.client_gcs.forseti-client-storage-bucket
 }
 
-output "forseti-client-vm-name" {
-  description = "Forseti Client VM name"
-  value       = module.client.forseti-client-vm-name
+output "forseti-cloudsql-connection-name" {
+  description = "Forseti CloudSQL Connection String"
+  value       = module.cloudsql.forseti-cloudsql-connection-name
 }
 
 output "forseti-client-vm-ip" {
@@ -34,29 +34,34 @@ output "forseti-client-vm-ip" {
   value       = module.client.forseti-client-vm-ip
 }
 
-output "forseti-server-service-account" {
-  description = "Forseti Server service account"
-  value       = module.server.forseti-server-service-account
+output "forseti-client-vm-name" {
+  description = "Forseti Client VM name"
+  value       = module.client.forseti-client-vm-name
 }
 
-output "forseti-client-service-account" {
-  description = "Forseti Client service account"
-  value       = module.client.forseti-client-service-account
-}
-
-output "forseti-client-storage-bucket" {
-  description = "Forseti Client storage bucket"
-  value       = module.client.forseti-client-storage-bucket
+output "forseti-server-git-public-key-openssh" {
+  description = "The public OpenSSH key generated to allow the Forseti Server to clone the policy library repository."
+  value       = module.server.forseti-server-git-public-key-openssh
 }
 
 output "forseti-server-storage-bucket" {
   description = "Forseti Server storage bucket"
-  value       = module.server.forseti-server-storage-bucket
+  value       = module.server_gcs.forseti-server-storage-bucket
 }
 
-output "forseti-cloudsql-connection-name" {
-  description = "Forseti CloudSQL Connection String"
-  value       = module.server.forseti-cloudsql-connection-name
+output "forseti-server-service-account" {
+  description = "Forseti Server service account"
+  value       = module.server_iam.forseti-server-service-account
+}
+
+output "forseti-server-vm-ip" {
+  description = "Forseti Server VM private IP address"
+  value       = module.server.forseti-server-vm-ip
+}
+
+output "forseti-server-vm-name" {
+  description = "Forseti Server VM name"
+  value       = module.server.forseti-server-vm-name
 }
 
 output "suffix" {

@@ -4,8 +4,7 @@ This configuration is used to simply install Forseti. It includes a full Cloud S
 
 [![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fforseti-security%2Fterraform-google-forseti.git&cloudshell_git_branch=master&cloudshell_working_dir=examples/install_simple&cloudshell_image=gcr.io%2Fgraphite-cloud-shell-images%2Fterraform%3Alatest&cloudshell_tutorial=.%2Ftutorial.md)
 
-[^]: (autogen_docs_start)
-
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -14,12 +13,12 @@ This configuration is used to simply install Forseti. It includes a full Cloud S
 | forseti\_email\_recipient | Forseti email recipient. | string | `""` | no |
 | forseti\_email\_sender | Forseti email sender. | string | `""` | no |
 | gsuite\_admin\_email | The email of a GSuite super admin, used for pulling user directory information *and* sending notifications. | string | n/a | yes |
-| instance\_metadata | Metadata key/value pairs to make available from within the client and server instances. | map | `<map>` | no |
-| instance\_tags | Tags to assign the client and server instances. | list | `<list>` | no |
+| instance\_metadata | Metadata key/value pairs to make available from within the client and server instances. | map(string) | `<map>` | no |
+| instance\_tags | Tags to assign the client and server instances. | list(string) | `<list>` | no |
 | network | The VPC where the Forseti client and server will be created | string | n/a | yes |
 | network\_project | The project containing the VPC and subnetwork where the Forseti client and server will be created | string | n/a | yes |
 | org\_id | GCP Organization ID that Forseti will have purview over | string | n/a | yes |
-| private | Private client and server instances (no public IPs) | string | `"true"` | no |
+| private | Private client and server instances (no public IPs) | bool | `"false"` | no |
 | project\_id | The ID of an existing Google project where Forseti will be installed | string | n/a | yes |
 | region | GCP region where Forseti will be deployed | string | n/a | yes |
 | sendgrid\_api\_key | Sendgrid API key. | string | `""` | no |
@@ -39,4 +38,4 @@ This configuration is used to simply install Forseti. It includes a full Cloud S
 | forseti-server-vm-name | Forseti Server VM name |
 | suffix | The random suffix appended to Forseti resources |
 
-[^]: (autogen_docs_end)
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

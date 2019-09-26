@@ -28,12 +28,12 @@ variable "gsuite_admin_email" {
 
 variable "forseti_version" {
   description = "The version of Forseti to install"
-  default     = "v2.18.0"
+  default     = "v2.21.0"
 }
 
 variable "forseti_repo_url" {
   description = "Git repo for the Forseti installation"
-  default     = "https://github.com/GoogleCloudPlatform/forseti-security"
+  default     = "https://github.com/forseti-security/forseti-security"
 }
 
 variable "forseti_email_recipient" {
@@ -56,22 +56,38 @@ variable "forseti_run_frequency" {
   default     = "0 */2 * * *"
 }
 
+variable "resource_name_suffix" {
+  default     = null
+  description = "A suffix which will be appended to resource names."
+  type        = string
+}
+
 #----------------#
 # Forseti server #
 #----------------#
 variable "server_type" {
-  description = "GCE Forseti Server role instance size"
-  default     = "n1-standard-2"
+  description = "GCE Forseti Server machine type"
+  default     = "n1-standard-8"
 }
 
 variable "server_region" {
-  description = "GCP region where Forseti will be deployed"
+  description = "GCE Forseti Server region"
   default     = "us-central1"
 }
 
 variable "server_boot_image" {
-  description = "GCE instance image that is being used, currently Ubuntu only support is available"
+  description = "GCE Forseti Server boot image - Currently only Ubuntu is supported"
   default     = "ubuntu-os-cloud/ubuntu-1804-lts"
+}
+
+variable "server_boot_disk_size" {
+  description = "Size of the GCE instance boot disk in GBs."
+  default     = "100"
+}
+
+variable "server_boot_disk_type" {
+  description = "GCE instance boot disk type, can be pd-standard or pd-ssd."
+  default     = "pd-ssd"
 }
 
 variable "server_instance_metadata" {
@@ -106,7 +122,8 @@ variable "server_access_config" {
 
 variable "server_private" {
   description = "Private GCE Forseti Server VM (no public IP)"
-  default     = "false"
+  default     = false
+  type        = bool
 }
 
 #---------------------------------#
@@ -240,6 +257,12 @@ variable "crm_disable_polling" {
   default     = false
 }
 
+variable "excluded_resources" {
+  description = "A list of resources to exclude during the inventory phase."
+  type        = list(string)
+  default     = []
+}
+
 variable "iam_max_calls" {
   description = "Maximum calls that can be made to IAM API"
   default     = "90"
@@ -321,7 +344,7 @@ variable "sqladmin_disable_polling" {
 }
 
 variable "storage_disable_polling" {
-  description = "Whetservicemanagement_disable_pollingher to disable polling for Storage API"
+  description = "Whether to disable polling for Storage API"
   type        = bool
   default     = false
 }
@@ -432,6 +455,43 @@ variable "location_enabled" {
 variable "log_sink_enabled" {
   description = "Log sink scanner enabled."
   default     = "true"
+}
+
+variable "manage_rules_enabled" {
+  description = "A toggle to enable or disable the management of rules"
+  type        = bool
+  default     = true
+}
+
+variable "policy_library_home" {
+  description = "The local policy library directory."
+  default     = "$USER_HOME/policy-library"
+}
+
+variable "policy_library_repository_url" {
+  description = "The git repository containing the policy-library."
+  default     = ""
+}
+
+variable "policy_library_sync_enabled" {
+  description = "Sync config validator policy library from private repository."
+  type        = bool
+  default     = false
+}
+
+variable "policy_library_sync_gcs_directory_name" {
+  description = "The directory name of the GCS folder used for the policy library sync config."
+  default     = "policy_library_sync"
+}
+
+variable "policy_library_sync_git_sync_tag" {
+  description = "Tag for the git-sync image."
+  default     = "v3.1.2"
+}
+
+variable "policy_library_sync_ssh_known_hosts" {
+  description = "List of authorized public keys for SSH host of the policy library repository."
+  default     = ""
 }
 
 variable "resource_enabled" {
@@ -574,7 +634,8 @@ variable "external_project_access_violations_should_notify" {
 
 variable "cscc_violations_enabled" {
   description = "Notify for CSCC violations"
-  default     = "false"
+  type        = bool
+  default     = false
 }
 
 variable "cscc_source_id" {
@@ -589,7 +650,7 @@ variable "inventory_gcs_summary_enabled" {
 
 variable "inventory_email_summary_enabled" {
   description = "Email summary for inventory enabled"
-  default     = "true"
+  default     = "false"
 }
 
 #---------------------------------------#
@@ -626,17 +687,17 @@ variable "groups_settings_violations_should_notify" {
 # Forseti client #
 #----------------#
 variable "client_type" {
-  description = "GCE Forseti Client role instance size"
+  description = "GCE Forseti Client machine type"
   default     = "n1-standard-2"
 }
 
 variable "client_boot_image" {
-  description = "GCE Forseti Client role instance size"
+  description = "GCE Forseti Client boot image"
   default     = "ubuntu-os-cloud/ubuntu-1804-lts"
 }
 
 variable "client_region" {
-  description = "GCE Forseti Client role region size"
+  description = "GCE Forseti Client region"
   default     = "us-central1"
 }
 
@@ -666,7 +727,8 @@ variable "client_access_config" {
 
 variable "client_private" {
   description = "Private GCE Forseti Client VM (no public IP)"
-  default     = "false"
+  default     = false
+  type        = bool
 }
 
 #------------#
@@ -687,6 +749,17 @@ variable "cloudsql_db_port" {
   default     = "3306"
 }
 
+variable "cloudsql_disk_size" {
+  description = "The size of data disk, in GB. Size of a running instance cannot be reduced but can be increased."
+  default     = "25"
+}
+
+variable "cloudsql_private" {
+  description = "Whether to enable private network and not to create public IP for CloudSQL Instance"
+  default     = false
+  type        = bool
+}
+
 variable "cloudsql_proxy_arch" {
   description = "CloudSQL Proxy architecture"
   default     = "linux.amd64"
@@ -694,7 +767,7 @@ variable "cloudsql_proxy_arch" {
 
 variable "cloudsql_type" {
   description = "CloudSQL Instance size"
-  default     = "db-n1-standard-1"
+  default     = "db-n1-standard-4"
 }
 
 variable "cloudsql_user_host" {
@@ -743,12 +816,14 @@ variable "network_project" {
 #-------#
 variable "enable_write" {
   description = "Enabling/Disabling write actions"
-  default     = "false"
+  type        = bool
+  default     = false
 }
 
 variable "enable_cai_bucket" {
   description = "Create a GCS bucket for CAI exports"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 #--------#
@@ -778,4 +853,3 @@ variable "sendgrid_api_key" {
   description = "Sendgrid.com API key to enable email notifications"
   default     = ""
 }
-

@@ -41,10 +41,12 @@ locals {
     "rules/role_rules.yaml",
     "rules/service_account_key_rules.yaml",
   ]
+
+  rules_count = var.manage_rules_enabled ? length(local.files) : 0
 }
 
 data "template_file" "main" {
-  count = length(local.files)
+  count = local.rules_count
   template = file(
     "${path.module}/templates/${element(local.files, count.index)}",
   )
@@ -56,10 +58,10 @@ data "template_file" "main" {
 }
 
 resource "google_storage_bucket_object" "main" {
-  count   = length(local.files)
+  count   = local.rules_count
   name    = element(local.files, count.index)
   content = element(data.template_file.main.*.rendered, count.index)
-  bucket  = var.bucket
+  bucket  = var.server_gcs_module.forseti-server-storage-bucket
 
   lifecycle {
     ignore_changes = [
@@ -68,4 +70,3 @@ resource "google_storage_bucket_object" "main" {
     ]
   }
 }
-

@@ -40,3 +40,15 @@ variable "instance_metadata" {
   default     = {}
 }
 
+variable "region" {
+  description = "Region where forseti subnetwork will be deployed"
+  default     = "us-central1"
+}
+
+variable "network" {
+  description = "Name of the shared VPC"
+}
+
+variable "subnetwork" {
+  description = "Name of the subnetwork where forseti will be deployed"
+}

@@ -28,23 +28,31 @@ resource "local_file" "gce-keypair-pk" {
   filename = "${path.module}/sshkey"
 }
 
+data "google_compute_zones" "main" {
+  project = var.project_id
+  region  = var.region
+  status  = "UP"
+}
+
 module "bastion" {
   source = "../bastion"
 
-  network    = "default"
+  network    = var.network
   project_id = var.project_id
-  subnetwork = "default"
-  zone       = "us-central1-f"
+  subnetwork = var.subnetwork
+  zone       = data.google_compute_zones.main.names[0]
 }
 
 module "forseti-install-simple" {
   source = "../../../examples/simple_example"
 
-  credentials_path   = var.credentials_path
   gsuite_admin_email = var.gsuite_admin_email
   project_id         = var.project_id
   org_id             = var.org_id
   domain             = var.domain
+  region             = var.region
+  network            = var.network
+  subnetwork         = var.subnetwork
 
   instance_metadata = {
     sshKeys = "ubuntu:${tls_private_key.main.public_key_openssh}"
@@ -92,4 +100,3 @@ resource "null_resource" "wait_for_client" {
     }
   }
 }
-

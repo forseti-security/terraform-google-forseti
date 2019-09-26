@@ -27,11 +27,20 @@ resource "null_resource" "org_id_and_folder_id_are_both_empty" {
   }
 }
 
+resource "null_resource" "email_without_sendgrid_api_key" {
+  count = var.inventory_email_summary_enabled == "true" && var.sendgrid_api_key == "" ? 1 : 0
+
+  provisioner "local-exec" {
+    command     = "echo 'inventory_email_summary_enabled=${var.inventory_email_summary_enabled} sendgrid_api_key=${var.sendgrid_api_key}' >&2; false"
+    interpreter = ["bash", "-c"]
+  }
+}
+
 #--------#
 # Locals #
 #--------#
 locals {
-  random_hash     = random_id.random_hash_suffix.hex
+  random_hash     = var.resource_name_suffix == null ? random_id.random_hash_suffix.hex : var.resource_name_suffix
   network_project = var.network_project != "" ? var.network_project : var.project_id
 
   services_list = [
@@ -80,10 +89,8 @@ module "client" {
 
   project_id               = var.project_id
   client_boot_image        = var.client_boot_image
-  server_address           = module.server.forseti-server-vm-ip
   subnetwork               = var.subnetwork
   forseti_home             = var.forseti_home
-  storage_bucket_location  = var.storage_bucket_location
   forseti_version          = var.forseti_version
   forseti_repo_url         = var.forseti_repo_url
   client_type              = var.client_type
@@ -96,6 +103,9 @@ module "client" {
   client_tags              = var.client_tags
   client_access_config     = var.client_access_config
   client_private           = var.client_private
+  client_iam_module        = module.client_iam
+  client_gcs_module        = module.client_gcs
+  client_config_module     = module.client_config
 
   services = google_project_service.main.*.service
 }
@@ -103,43 +113,97 @@ module "client" {
 module "server" {
   source = "./modules/server"
 
-  enable_cai_bucket                                   = var.enable_cai_bucket
-  project_id                                          = var.project_id
-  gsuite_admin_email                                  = var.gsuite_admin_email
-  forseti_version                                     = var.forseti_version
-  forseti_repo_url                                    = var.forseti_repo_url
+  project_id               = var.project_id
+  forseti_version          = var.forseti_version
+  forseti_repo_url         = var.forseti_repo_url
+  forseti_home             = var.forseti_home
+  forseti_run_frequency    = var.forseti_run_frequency
+  server_type              = var.server_type
+  server_region            = var.server_region
+  server_boot_image        = var.server_boot_image
+  server_boot_disk_size    = var.server_boot_disk_size
+  server_boot_disk_type    = var.server_boot_disk_type
+  server_tags              = var.server_tags
+  server_access_config     = var.server_access_config
+  server_private           = var.server_private
+  cloudsql_proxy_arch      = var.cloudsql_proxy_arch
+  network                  = var.network
+  subnetwork               = var.subnetwork
+  network_project          = var.network_project
+  server_grpc_allow_ranges = var.server_grpc_allow_ranges
+  server_ssh_allow_ranges  = var.server_ssh_allow_ranges
+  server_instance_metadata = var.server_instance_metadata
+  suffix                   = local.random_hash
+
+  policy_library_home                    = var.policy_library_home
+  policy_library_repository_url          = var.policy_library_repository_url
+  policy_library_sync_enabled            = var.policy_library_sync_enabled
+  policy_library_sync_gcs_directory_name = var.policy_library_sync_gcs_directory_name
+  policy_library_sync_git_sync_tag       = var.policy_library_sync_git_sync_tag
+  policy_library_sync_ssh_known_hosts    = var.policy_library_sync_ssh_known_hosts
+
+  client_iam_module    = module.client_iam
+  cloudsql_module      = module.cloudsql
+  server_config_module = module.server_config
+  server_gcs_module    = module.server_gcs
+  server_iam_module    = module.server_iam
+  server_rules_module  = module.server_rules
+
+  services = google_project_service.main.*.service
+}
+
+module "cloudsql" {
+  source             = "./modules/cloudsql"
+  cloudsql_disk_size = var.cloudsql_disk_size
+  cloudsql_private   = var.cloudsql_private
+  cloudsql_region    = var.cloudsql_region
+  cloudsql_type      = var.cloudsql_type
+  network_project    = var.network_project
+  project_id         = var.project_id
+  services           = google_project_service.main.*.service
+  suffix             = local.random_hash
+}
+
+module "server_iam" {
+  source                  = "./modules/server_iam"
+  cscc_violations_enabled = var.cscc_violations_enabled
+  enable_write            = var.enable_write
+  folder_id               = var.folder_id
+  org_id                  = var.org_id
+  project_id              = var.project_id
+  suffix                  = local.random_hash
+}
+
+module "server_gcs" {
+  source                   = "./modules/server_gcs"
+  project_id               = var.project_id
+  bucket_cai_location      = var.bucket_cai_location
+  bucket_cai_lifecycle_age = var.bucket_cai_lifecycle_age
+  enable_cai_bucket        = var.enable_cai_bucket
+  storage_bucket_location  = var.storage_bucket_location
+  services                 = google_project_service.main.*.service
+  suffix                   = local.random_hash
+}
+
+module "server_rules" {
+  source               = "./modules/rules"
+  server_gcs_module    = module.server_gcs
+  org_id               = var.org_id
+  domain               = var.domain
+  manage_rules_enabled = var.manage_rules_enabled
+}
+
+module "server_config" {
+  source                                              = "./modules/server_config"
+  composite_root_resources                            = var.composite_root_resources
+  server_gcs_module                                   = module.server_gcs
   forseti_email_recipient                             = var.forseti_email_recipient
   forseti_email_sender                                = var.forseti_email_sender
-  forseti_home                                        = var.forseti_home
-  forseti_run_frequency                               = var.forseti_run_frequency
-  client_service_account_email                        = module.client.forseti-client-service-account
-  server_type                                         = var.server_type
-  server_region                                       = var.server_region
-  server_boot_image                                   = var.server_boot_image
-  server_tags                                         = var.server_tags
-  server_access_config                                = var.server_access_config
-  server_private                                      = var.server_private
-  cloudsql_region                                     = var.cloudsql_region
-  cloudsql_db_name                                    = var.cloudsql_db_name
-  cloudsql_db_port                                    = var.cloudsql_db_port
-  cloudsql_proxy_arch                                 = var.cloudsql_proxy_arch
-  cloudsql_type                                       = var.cloudsql_type
-  storage_bucket_location                             = var.storage_bucket_location
-  bucket_cai_location                                 = var.bucket_cai_location
-  bucket_cai_lifecycle_age                            = var.bucket_cai_lifecycle_age
-  network                                             = var.network
-  subnetwork                                          = var.subnetwork
-  network_project                                     = var.network_project
-  server_grpc_allow_ranges                            = var.server_grpc_allow_ranges
-  server_ssh_allow_ranges                             = var.server_ssh_allow_ranges
-  enable_write                                        = var.enable_write
-  domain                                              = var.domain
+  sendgrid_api_key                                    = var.sendgrid_api_key
   org_id                                              = var.org_id
   folder_id                                           = var.folder_id
-  composite_root_resources                            = var.composite_root_resources
-  sendgrid_api_key                                    = var.sendgrid_api_key
-  suffix                                              = local.random_hash
-  server_instance_metadata                            = var.server_instance_metadata
+  domain                                              = var.domain
+  gsuite_admin_email                                  = var.gsuite_admin_email
   storage_disable_polling                             = var.storage_disable_polling
   sqladmin_period                                     = var.sqladmin_period
   sqladmin_max_calls                                  = var.sqladmin_max_calls
@@ -229,17 +293,35 @@ module "server" {
   blacklist_violations_should_notify                  = var.blacklist_violations_should_notify
   bigquery_acl_violations_should_notify               = var.bigquery_acl_violations_should_notify
   audit_logging_violations_should_notify              = var.audit_logging_violations_should_notify
-
-  violations_slack_webhook = var.violations_slack_webhook
-  cscc_violations_enabled  = var.cscc_violations_enabled
-  cscc_source_id           = var.cscc_source_id
+  excluded_resources                                  = var.excluded_resources
+  violations_slack_webhook                            = var.violations_slack_webhook
+  cscc_violations_enabled                             = var.cscc_violations_enabled
+  cscc_source_id                                      = var.cscc_source_id
 
   groups_settings_max_calls                = var.groups_settings_max_calls
   groups_settings_period                   = var.groups_settings_period
   groups_settings_disable_polling          = var.groups_settings_disable_polling
   groups_settings_enabled                  = var.groups_settings_enabled
   groups_settings_violations_should_notify = var.groups_settings_violations_should_notify
+}
+
+module "client_iam" {
+  source     = "./modules/client_iam"
+  project_id = var.project_id
+  suffix     = local.random_hash
+}
+
+module "client_gcs" {
+  source                  = "./modules/client_gcs"
+  project_id              = var.project_id
+  storage_bucket_location = var.storage_bucket_location
+  suffix                  = local.random_hash
 
   services = google_project_service.main.*.service
 }
 
+module "client_config" {
+  source            = "./modules/client_config"
+  client_gcs_module = module.client_gcs
+  server_address    = module.server.forseti-server-vm-ip
+}

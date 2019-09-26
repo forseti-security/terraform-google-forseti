@@ -2,8 +2,7 @@
 
 This example illustrates how to set up a minimal Forseti installation.
 
-[^]: (autogen_docs_start)
-
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -11,8 +10,8 @@ This example illustrates how to set up a minimal Forseti installation.
 | credentials\_path | Path to service account json | string | n/a | yes |
 | domain | The domain associated with the GCP Organization ID | string | n/a | yes |
 | gsuite\_admin\_email | The email of a GSuite super admin, used for pulling user directory information *and* sending notifications. | string | n/a | yes |
-| instance\_metadata | Metadata key/value pairs to make available from within the client and server instances. | map | `<map>` | no |
-| instance\_tags | Tags to assign the client and server instances. | list | `<list>` | no |
+| instance\_metadata | Metadata key/value pairs to make available from within the client and server instances. | map(string) | `<map>` | no |
+| instance\_tags | Tags to assign the client and server instances. | list(string) | `<list>` | no |
 | org\_id | GCP Organization ID that Forseti will have purview over | string | n/a | yes |
 | project\_id | The ID of an existing Google project where Forseti will be installed | string | n/a | yes |
 | public\_ptr\_domain\_name | Forseti server DNS name | string | `""` | no |
@@ -32,4 +31,4 @@ This example illustrates how to set up a minimal Forseti installation.
 | forseti-server-vm-ip | Forseti Server VM private IP address |
 | forseti-server-vm-name | Forseti Server VM name |
 
-[^]: (autogen_docs_end)
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

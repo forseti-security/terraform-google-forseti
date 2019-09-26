@@ -2,8 +2,7 @@
 
 This example illustrates how to set up a Forseti installation with shared VPC.
 
-[^]: (autogen_docs_start)
-
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -11,7 +10,7 @@ This example illustrates how to set up a Forseti installation with shared VPC.
 | credentials\_path | Path to service account json | string | n/a | yes |
 | domain | Organization domain | string | n/a | yes |
 | gsuite\_admin\_email | G Suite admin email | string | n/a | yes |
-| instance\_metadata | Metadata key/value pairs to make available from within the client and server instances. | map | `<map>` | no |
+| instance\_metadata | Metadata key/value pairs to make available from within the client and server instances. | map(string) | `<map>` | no |
 | network | Name of the shared VPC | string | n/a | yes |
 | network\_project | ID of the project that will have shared VPC | string | n/a | yes |
 | org\_id | Organization ID | string | n/a | yes |
@@ -23,7 +22,7 @@ This example illustrates how to set up a Forseti installation with shared VPC.
 
 | Name | Description |
 |------|-------------|
-| credentials\_path | Pass through the `credentials_path` variable so that InSpec can reuse the credentials |
+| credentials\_path | Pass through the `credentials\_path` variable so that InSpec can reuse the credentials |
 | forseti-client-service-account | Forseti Client service account |
 | forseti-client-storage-bucket | Forseti Client storage bucket |
 | forseti-client-vm-ip | Forseti Client VM private IP address |
@@ -39,4 +38,4 @@ This example illustrates how to set up a Forseti installation with shared VPC.
 | subnetwork | Subnetwork where server and client will be deployed |
 | suffix | The random suffix appended to Forseti resources |
 
-[^]: (autogen_docs_end)
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

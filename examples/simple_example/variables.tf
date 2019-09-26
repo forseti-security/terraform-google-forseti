@@ -14,17 +14,25 @@
  * limitations under the License.
  */
 
-variable "credentials_path" {
-  description = "Path to service account json"
-  default     = "../../credentials.json"
-}
-
 variable "gsuite_admin_email" {
   description = "The email of a GSuite super admin, used for pulling user directory information *and* sending notifications."
 }
 
 variable "project_id" {
   description = "The ID of an existing Google project where Forseti will be installed"
+}
+
+variable "region" {
+  description = "Region where forseti subnetwork will be deployed"
+  default     = "us-central1"
+}
+
+variable "network" {
+  description = "Name of the shared VPC"
+}
+
+variable "subnetwork" {
+  description = "Name of the subnetwork where forseti will be deployed"
 }
 
 variable "org_id" {
@@ -48,8 +56,9 @@ variable "instance_tags" {
 }
 
 variable "private" {
-  description = "Private client and server instances (no public IPs)"
+  description = "Private client, server, and CloudSQL instances (no public IPs)"
   default     = true
+  type        = bool
 }
 
 variable "sendgrid_api_key" {
@@ -66,4 +75,3 @@ variable "forseti_email_recipient" {
   description = "Forseti email recipient."
   default     = ""
 }
-

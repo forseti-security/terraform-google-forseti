@@ -14,9 +14,18 @@
  * limitations under the License.
  */
 
-variable "bucket" {
-  description = "The GCS bucket where rules will be uploaded"
-  type        = string
+#--------------------#
+# Forseti server GCS #
+#--------------------#
+
+variable "server_gcs_module" {
+  description = "The Forseti Server GCS module"
+}
+
+variable "manage_rules_enabled" {
+  description = "A toggle to enable or disable the management of rules"
+  type        = bool
+  default     = true
 }
 
 variable "org_id" {
@@ -26,4 +35,3 @@ variable "org_id" {
 variable "domain" {
   description = "The domain associated with the GCP Organization ID"
 }
-
