@@ -65,7 +65,6 @@ locals {
   cscc_violations_enabled_services_list = [
     "securitycenter.googleapis.com",
   ]
-
 }
 
 #-------------------#
