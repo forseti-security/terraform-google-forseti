@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+resource "random_integer" "random_minute" {
+  min     = 0
+  max     = 59
+}
+
 #--------#
 # Locals #
 #--------#
@@ -94,6 +99,8 @@ locals {
   }
   missing_emails    = ((var.sendgrid_api_key != "") && (var.forseti_email_sender == "" || var.forseti_email_recipient == "") ? 1 : 0)
   network_interface = local.network_interface_base[var.server_private ? "private" : "public"]
+
+  forseti_run_frequency = var.forseti_run_frequency == null ? ${random_integer.random_minute.result} */2 * * *" : var.forseti_run_frequency
 }
 
 #------------------#
@@ -120,7 +127,7 @@ data "template_file" "forseti_server_startup_script" {
     forseti_environment                    = data.template_file.forseti_server_environment.rendered
     forseti_home                           = var.forseti_home
     forseti_repo_url                       = var.forseti_repo_url
-    forseti_run_frequency                  = var.forseti_run_frequency
+    forseti_run_frequency                  = local.forseti_run_frequency
     forseti_server_conf_path               = local.server_conf_path
     forseti_version                        = var.forseti_version
     policy_library_home                    = var.policy_library_home
