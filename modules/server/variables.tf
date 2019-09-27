@@ -13,6 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+resource "random_integer" "random_minute" {
+  min     = 0
+  max     = 59
+}
+
 #----------------#
 # Forseti config #
 #----------------#
@@ -50,8 +56,8 @@ variable "forseti_home" {
 }
 
 variable "forseti_run_frequency" {
-  description = "Schedule of running the Forseti scans"
-  default     = "0 */2 * * *"
+  description = "Schedule of running the Forseti scans. Run every 2 hours at random minutes."
+  default     = "${random_integer.random_minute.result} */2 * * *"
 }
 
 #--------------------------#
