@@ -36,12 +36,6 @@ resource "null_resource" "email_without_sendgrid_api_key" {
   }
 }
 
-resource "random_integer" "random_minute" {
-  min     = 0
-  max     = 59
-}
-
-
 #--------#
 # Locals #
 #--------#
@@ -72,7 +66,6 @@ locals {
     "securitycenter.googleapis.com",
   ]
 
-  forseti_run_frequency = var.forseti_run_frequency == null ? ${random_integer.random_minute.result} */2 * * *" : var.forseti_run_frequency
 }
 
 #-------------------#
@@ -128,7 +121,7 @@ module "server" {
   forseti_email_recipient                             = var.forseti_email_recipient
   forseti_email_sender                                = var.forseti_email_sender
   forseti_home                                        = var.forseti_home
-  forseti_run_frequency                               = local.forseti_run_frequency
+  forseti_run_frequency                               = var.forseti_run_frequency
   client_service_account_email                        = module.client.forseti-client-service-account
   server_type                                         = var.server_type
   server_region                                       = var.server_region
