@@ -18,6 +18,11 @@ resource "random_id" "random_hash_suffix" {
   byte_length = 4
 }
 
+resource "random_integer" "random_minute" {
+  min = 0
+  max = 59
+}
+
 resource "null_resource" "org_id_and_folder_id_are_both_empty" {
   count = length(var.composite_root_resources) == 0 && var.org_id == "" && var.folder_id == "" ? 1 : 0
 
@@ -67,6 +72,8 @@ locals {
   workload_identity               = "${var.project_id}.svc.id.goog"
   workload_identity_server_suffix = "[${local.kubernetes_namespace}/forseti-server]"
   workload_identity_client_suffix = "[${local.kubernetes_namespace}/forseti-orchestrator]"
+
+  forseti_run_frequency = var.forseti_run_frequency == null ? "${random_integer.random_minute.result} */2 * * *" : var.forseti_run_frequency
 }
 
 //*****************************************
@@ -252,7 +259,7 @@ resource "helm_release" "forseti-security" {
 
   set {
     name  = "forsetiRunFrequency"
-    value = var.forseti_run_frequency
+    value = local.forseti_run_frequency
   }
 
   set {

@@ -15,8 +15,8 @@
  */
 
 resource "random_integer" "random_minute" {
-  min     = 0
-  max     = 59
+  min = 0
+  max = 59
 }
 
 #--------#
