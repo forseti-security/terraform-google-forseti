@@ -46,7 +46,7 @@ fi
 
 # Download Forseti source code
 echo "Forseti Startup - Cloning Forseti repo."
-git clone --branch ${forseti_version} --single-branch ${forseti_repo_url}
+git clone --branch ${forseti_version} --depth 1 ${forseti_repo_url}
 cd forseti-security
 
 # Forseti host dependencies
