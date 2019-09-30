@@ -473,35 +473,15 @@ variable "manage_rules_enabled" {
   default     = true
 }
 
-variable "policy_library_home" {
-  description = "The local policy library directory."
-  default     = "$USER_HOME/policy-library"
-}
 
 variable "policy_library_repository_url" {
   description = "The git repository containing the policy-library."
   default     = ""
 }
 
-variable "policy_library_sync_enabled" {
-  description = "Sync config validator policy library from private repository."
-  type        = bool
-  default     = false
-}
-
-variable "policy_library_sync_gcs_directory_name" {
-  description = "The directory name of the GCS folder used for the policy library sync config."
-  default     = "policy_library_sync"
-}
-
 variable "policy_library_sync_git_sync_tag" {
   description = "Tag for the git-sync image."
   default     = "v3.1.2"
-}
-
-variable "policy_library_sync_ssh_known_hosts" {
-  description = "List of authorized public keys for SSH host of the policy library repository."
-  default     = ""
 }
 
 variable "resource_enabled" {
@@ -818,11 +798,6 @@ variable "cloudsql_db_name" {
   default     = "forseti_security"
 }
 
-variable "cloudsql_db_port" {
-  description = "CloudSQL database port"
-  default     = "3306"
-}
-
 variable "cloudsql_disk_size" {
   description = "The size of data disk, in GB. Size of a running instance cannot be reduced but can be increased."
   default     = "25"
@@ -832,11 +807,6 @@ variable "cloudsql_private" {
   description = "Whether to enable private network and not to create public IP for CloudSQL Instance"
   default     = false
   type        = bool
-}
-
-variable "cloudsql_proxy_arch" {
-  description = "CloudSQL Proxy architecture"
-  default     = "linux.amd64"
 }
 
 variable "cloudsql_type" {
@@ -856,11 +826,6 @@ variable "cloudsql_user_host" {
 variable "git_sync_image" {
   description = "The container image used by the config-validator git-sync side-car"
   default     = "gcr.io/google-containers/git-sync"
-}
-
-variable "git_sync_image_tag" {
-  description = "The container image tag used by the config-validator git-sync side-car"
-  default     = "v3.1.2"
 }
 
 variable "git_sync_private_ssh_key" {

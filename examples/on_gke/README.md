@@ -7,12 +7,10 @@ This example deploys the following:
    * CloudSQL Database
    * Forseti Server GCS Bucket
    * Forseti Client GCS Bucket
-   * Forseti Server VM
    * Forseti Client VM
    * Forseti Server IAM Service Account
    * Forseti Client IAM Service Account
-3. A new GKE cluster - terraform-google-modules/kubernetes-engine/google
-4. Forseti on GKE - forseti-on-gke
+3. Forseti on GKE - forseti-on-gke
 
 ## Requirements
 
@@ -22,6 +20,7 @@ Before this module can be used on a project, you must ensure that the following 
 2. The Service Account you execute the module with has the right [permissions](#configure-a-service-account).
 3. The Compute Engine, Kubernetes Engine, and Container Registry APIs are [active](#enable-apis) on the project you will launch the cluster in.
 4. If you are using a Shared VPC, the APIs must also be activated on the Shared VPC host project and your service account needs the proper permissions there.
+5. A GKE cluser (v1.12+) with the [workload-identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity) addon enabled.
 
 The [project factory](https://github.com/terraform-google-modules/terraform-google-project-factory) can be used to provision projects with the correct APIs active and the necessary Shared VPC connections.
 

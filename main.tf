@@ -158,6 +158,8 @@ module "cloudsql" {
   cloudsql_private   = var.cloudsql_private
   cloudsql_region    = var.cloudsql_region
   cloudsql_type      = var.cloudsql_type
+  cloudsql_db_name   = var.cloudsql_db_name
+  cloudsql_user_host = var.cloudsql_user_host
   network_project    = var.network_project
   project_id         = var.project_id
   services           = google_project_service.main.*.service

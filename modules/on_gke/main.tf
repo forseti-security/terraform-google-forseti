@@ -104,12 +104,19 @@ data "google_compute_subnetwork" "forseti_subnetwork" {
 //*****************************************
 
 data "google_storage_object_signed_url" "file_url" {
-  bucket = module.server_gcs.forseti-server-storage-bucket
-  path   = "configs/forseti_conf_server.yaml"
+  bucket      = module.server_gcs.forseti-server-storage-bucket
+  path        = "configs/forseti_conf_server.yaml"
+  content_md5 = module.server_config.forseti-server-config-md5
+
 }
 
 data "http" "server_config_contents" {
-  url        = data.google_storage_object_signed_url.file_url.signed_url
+  url = data.google_storage_object_signed_url.file_url.signed_url
+  
+  request_headers = {
+    "Content-MD5" = module.server_config.forseti-server-config-md5
+  }
+
   depends_on = ["data.google_storage_object_signed_url.file_url"]
 }
 
@@ -237,7 +244,7 @@ resource "helm_release" "forseti-security" {
 
   set {
     name  = "gitSyncImageTag"
-    value = var.git_sync_image_tag
+    value = var.policy_library_sync_git_sync_tag
   }
 
   set_sensitive {
@@ -417,6 +424,8 @@ module "cloudsql" {
   cloudsql_private   = var.cloudsql_private
   cloudsql_region    = var.cloudsql_region
   cloudsql_type      = var.cloudsql_type
+  cloudsql_db_name   = var.cloudsql_db_name
+  cloudsql_user_host = var.cloudsql_user_host
   network_project    = var.network_project
   project_id         = var.project_id
   services           = google_project_service.main.*.service
