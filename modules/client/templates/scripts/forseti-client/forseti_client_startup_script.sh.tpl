@@ -23,10 +23,8 @@ cd $USER_HOME
 rm -rf *forseti*
 
 # Download Forseti source code
-git clone ${forseti_repo_url}
+git clone --branch ${forseti_version} --depth 1 ${forseti_repo_url}
 cd forseti-security
-git fetch --all
-git checkout ${forseti_version}
 
 # Forseti host dependencies
 sudo apt-get install -y $(cat install/dependencies/apt_packages.txt | grep -v "#" | xargs)
