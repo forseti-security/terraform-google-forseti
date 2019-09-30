@@ -14,9 +14,6 @@
  * limitations under the License.
  */
 
-variable "credentials_path" {
-  description = "Path to service account json"
-}
 
 variable "config_validator_enabled" {
   description = "Config Validator scanner enabled."
@@ -41,12 +38,6 @@ variable "git_sync_image_tag" {
 variable "git_sync_private_ssh_key_file" {
   description = "The file containing the private SSH key allowing the git-sync to clone the policy library repository."
   default     = ""
-}
-
-variable "git_sync_ssh" {
-  description = "Use SSH for git-sync operations"
-  type        = bool
-  default     = false
 }
 
 variable "git_sync_wait" {
@@ -150,7 +141,6 @@ variable "org_id" {
 
 variable "policy_library_repository_url" {
   description = "The git repository containing the policy-library."
-  default     = "https://github.com/forseti-security/policy-library"
 }
 
 variable "policy_library_repository_branch" {

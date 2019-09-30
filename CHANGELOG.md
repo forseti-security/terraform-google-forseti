@@ -9,6 +9,8 @@ Extending the adopted spec, each change should have a link to its corresponding 
 ## [v5.0.0] - 2019-09-23
 Version 5.0.0 is a backwards-incompatible release. Please see the [upgrade instructions](./docs/upgrading_to_v5.0.md) for details.
 
+- Added additional submodules for Forseti infrastructure components [#284]
+
 ## [v4.2.0] - 2019-09-23
 
 ### Added
@@ -261,6 +263,7 @@ Version 4.0.0 is a backwards-incompatible release. Please see the [upgrade instr
 [v4.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.0.1...v4.1.0
 [v4.2.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.1.0...v4.2.0
 
+[#284]: https://github.com/forseti-security/terraform-google-forseti/pull/284
 [#255]: https://github.com/forseti-security/terraform-google-forseti/pull/266
 [#254]: https://github.com/forseti-security/terraform-google-forseti/pull/257
 [#253]: https://github.com/forseti-security/terraform-google-forseti/pull/253

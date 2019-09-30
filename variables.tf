@@ -364,97 +364,116 @@ variable "inventory_retention_days" {
 #-------------------------------#
 variable "audit_logging_enabled" {
   description = "Audit Logging scanner enabled."
-  default     = "false"
+  type        = bool
+  default     = false
 }
 
 variable "bigquery_enabled" {
   description = "Big Query scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "blacklist_enabled" {
   description = "Audit Logging scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "bucket_acl_enabled" {
   description = "Bucket ACL scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "cloudsql_acl_enabled" {
   description = "Cloud SQL scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "config_validator_enabled" {
   description = "Config Validator scanner enabled."
-  default     = "false"
+  type        = bool
+  default     = false
 }
 
 variable "enabled_apis_enabled" {
   description = "Enabled APIs scanner enabled."
-  default     = "false"
+  type        = bool
+  default     = false
 }
 
 variable "firewall_rule_enabled" {
   description = "Firewall rule scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "forwarding_rule_enabled" {
   description = "Forwarding rule scanner enabled."
-  default     = "false"
+  type        = bool
+  default     = false
 }
 
 variable "group_enabled" {
   description = "Group scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "iam_policy_enabled" {
   description = "IAM Policy scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "iap_enabled" {
   description = "IAP scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "instance_network_interface_enabled" {
   description = "Instance network interface scanner enabled."
-  default     = "false"
+  type        = bool
+  default     = false
 }
 
 variable "ke_scanner_enabled" {
   description = "KE scanner enabled."
-  default     = "false"
+  type        = bool
+  default     = false
 }
 
 variable "ke_version_scanner_enabled" {
   description = "KE version scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "kms_scanner_enabled" {
   description = "KMS scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "lien_enabled" {
   description = "Lien scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "location_enabled" {
   description = "Location scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "log_sink_enabled" {
   description = "Log sink scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "manage_rules_enabled" {
@@ -496,12 +515,14 @@ variable "policy_library_sync_ssh_known_hosts" {
 
 variable "resource_enabled" {
   description = "Resource scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "service_account_key_enabled" {
   description = "Service account key scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 #--------------------------------#
@@ -514,7 +535,8 @@ variable "violations_slack_webhook" {
 
 variable "iam_policy_violations_should_notify" {
   description = "Notify for IAM Policy violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "iam_policy_violations_slack_webhook" {
@@ -524,62 +546,74 @@ variable "iam_policy_violations_slack_webhook" {
 
 variable "audit_logging_violations_should_notify" {
   description = "Notify for Audit logging violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "blacklist_violations_should_notify" {
   description = "Notify for Blacklist violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "bigquery_acl_violations_should_notify" {
   description = "Notify for BigQuery ACL violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "buckets_acl_violations_should_notify" {
   description = "Notify for Buckets ACL violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "cloudsql_acl_violations_should_notify" {
   description = "Notify for CloudSQL ACL violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "config_validator_violations_should_notify" {
   description = "Notify for Config Validator violations."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "enabled_apis_violations_should_notify" {
   description = "Notify for enabled APIs violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "firewall_rule_violations_should_notify" {
   description = "Notify for Firewall rule violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "forwarding_rule_violations_should_notify" {
   description = "Notify for forwarding rule violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "ke_version_violations_should_notify" {
   description = "Notify for KE version violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "ke_violations_should_notify" {
   description = "Notify for KE violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "kms_violations_should_notify" {
   description = "Notify for KMS violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "kms_violations_slack_webhook" {
@@ -589,47 +623,56 @@ variable "kms_violations_slack_webhook" {
 
 variable "groups_violations_should_notify" {
   description = "Notify for Groups violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "instance_network_interface_violations_should_notify" {
   description = "Notify for instance network interface violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "iap_violations_should_notify" {
   description = "Notify for IAP violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "lien_violations_should_notify" {
   description = "Notify for lien violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "location_violations_should_notify" {
   description = "Notify for location violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "log_sink_violations_should_notify" {
   description = "Notify for log sink violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "resource_violations_should_notify" {
   description = "Notify for resource violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "service_account_key_violations_should_notify" {
   description = "Notify for service account key violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "external_project_access_violations_should_notify" {
   description = "Notify for External Project Access violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "cscc_violations_enabled" {
@@ -645,12 +688,14 @@ variable "cscc_source_id" {
 
 variable "inventory_gcs_summary_enabled" {
   description = "GCS summary for inventory enabled"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "inventory_email_summary_enabled" {
   description = "Email summary for inventory enabled"
-  default     = "false"
+  type        = bool
+  default     = false
 }
 
 #---------------------------------------#
@@ -675,12 +720,14 @@ variable "groups_settings_disable_polling" {
 
 variable "groups_settings_enabled" {
   description = "Groups settings scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "groups_settings_violations_should_notify" {
   description = "Notify for groups settings violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 #----------------#

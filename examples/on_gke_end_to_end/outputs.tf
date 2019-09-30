@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+/*
 output "suffix" {
   description = "The random suffix appended to Forseti resources"
   value       = module.forseti.suffix
@@ -59,3 +60,4 @@ output "forseti-server-storage-bucket" {
   value       = module.forseti.forseti-server-storage-bucket
 }
 
+ */

@@ -17,7 +17,7 @@
 //*****************************************
 //  Setup Google providers
 //*****************************************
-
+/*
 provider "google" {
   version     = "~> 2.7.0"
   credentials = "${file(var.credentials_path)}"
@@ -90,3 +90,4 @@ module "forseti-on-gke" {
   load_balancer                      = "${var.load_balancer}"
   server_log_level                   = "${var.server_log_level}"
 }
+*/
