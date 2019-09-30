@@ -74,10 +74,10 @@ locals {
 //*****************************************
 
 resource "google_project_iam_member" "cluster_service_account-storage_reader" {
-  count      = var.gke_service_account == "default" ? 1 : 0
-  project    = var.project_id
-  role       = "roles/storage.objectViewer"
-  member     = "serviceAccount:${var.gke_service_account}"
+  count   = var.gke_service_account == "default" ? 1 : 0
+  project = var.project_id
+  role    = "roles/storage.objectViewer"
+  member  = "serviceAccount:${var.gke_service_account}"
 }
 
 #-------------------#
@@ -107,12 +107,11 @@ data "google_storage_object_signed_url" "file_url" {
   bucket      = module.server_gcs.forseti-server-storage-bucket
   path        = "configs/forseti_conf_server.yaml"
   content_md5 = module.server_config.forseti-server-config-md5
-
 }
 
 data "http" "server_config_contents" {
   url = data.google_storage_object_signed_url.file_url.signed_url
-  
+
   request_headers = {
     "Content-MD5" = module.server_config.forseti-server-config-md5
   }
@@ -208,14 +207,13 @@ resource "kubernetes_role_binding" "tiller" {
 resource "helm_release" "forseti-security" {
   name          = "forseti"
   namespace     = local.kubernetes_namespace
-  # repository    = var.helm_repository_url
-  repository    = "local"
+  repository    = var.helm_repository_url
   chart         = "forseti-security"
   recreate_pods = var.recreate_pods
-  depends_on    = ["kubernetes_role_binding.tiller", 
-                   "kubernetes_namespace.forseti",
-                   "google_service_account_iam_binding.forseti_server_workload_identity",
-                   "google_service_account_iam_binding.forseti_client_workload_identity"]
+  depends_on = ["kubernetes_role_binding.tiller",
+    "kubernetes_namespace.forseti",
+    "google_service_account_iam_binding.forseti_server_workload_identity",
+  "google_service_account_iam_binding.forseti_client_workload_identity"]
 
   set {
     name  = "cloudsqlConnection"
@@ -323,12 +321,12 @@ resource "helm_release" "forseti-security" {
   }
 
   set {
-    name = "serverWorkloadIdentity"
+    name  = "serverWorkloadIdentity"
     value = module.server_iam.forseti-server-service-account
   }
 
   set {
-    name = "orchestratorWorkloadIdentity"
+    name  = "orchestratorWorkloadIdentity"
     value = module.client_iam.forseti-client-service-account
   }
 

@@ -25,6 +25,26 @@ variable "domain" {
   description = "The domain associated with the GCP Organization ID"
 }
 
+variable "gsuite_admin_email" {
+  description = "G-Suite administrator email address to manage your Forseti installation"
+}
+
+variable "sendgrid_api_key" {
+  description = "Sendgrid.com API key to enable email notifications"
+  default     = ""
+}
+
+variable "forseti_email_recipient" {
+  description = "Email address that receives Forseti notifications"
+  default     = ""
+}
+
+variable "forseti_email_sender" {
+  description = "Email address that sends the Forseti notifications"
+  default     = ""
+}
+
+
 variable "gke_cluster_name" {
   description = "The name of the GKE Cluster"
 }
@@ -36,10 +56,6 @@ variable "gke_cluster_location" {
 variable "gke_node_pool_name" {
   description = "The name of the GKE node-pool where Forseti is being deployed"
   default     = "default-pool"
-}
-
-variable "gsuite_admin_email" {
-  description = "G-Suite administrator email address to manage your Forseti installation"
 }
 
 variable "org_id" {

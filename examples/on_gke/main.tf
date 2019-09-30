@@ -19,7 +19,7 @@
 #--------#
 
 locals {
-  node_pool_index = [for index, node_pool in data.google_container_cluster.forseti_cluster.node_pool: index if node_pool.name == var.gke_node_pool_name][0]
+  node_pool_index = [for index, node_pool in data.google_container_cluster.forseti_cluster.node_pool : index if node_pool.name == var.gke_node_pool_name][0]
 }
 
 #------------------#
@@ -92,11 +92,16 @@ module "forseti" {
     kubernetes = "kubernetes.forseti"
     helm       = "helm.forseti"
   }
-  source              = "../../modules/on_gke"
-  domain              = var.domain
-  org_id              = var.org_id
-  gke_service_account = data.google_container_cluster.forseti_cluster.node_pool[local.node_pool_index].node_config.0.service_account
-  gsuite_admin_email  = var.gsuite_admin_email
+  source     = "../../modules/on_gke"
+  domain     = var.domain
+  org_id     = var.org_id
+  project_id = var.project_id
+
   network_policy      = data.google_container_cluster.forseti_cluster.network_policy.0.enabled
-  project_id          = var.project_id
+  gke_service_account = data.google_container_cluster.forseti_cluster.node_pool[local.node_pool_index].node_config.0.service_account
+
+  gsuite_admin_email      = var.gsuite_admin_email
+  sendgrid_api_key        = var.sendgrid_api_key
+  forseti_email_sender    = var.forseti_email_sender
+  forseti_email_recipient = var.forseti_email_recipient
 }
