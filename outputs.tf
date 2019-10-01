@@ -26,7 +26,7 @@ output "forseti-client-storage-bucket" {
 
 output "forseti-cloudsql-connection-name" {
   description = "Forseti CloudSQL Connection String"
-  value       = module.cloudsql.forseti-cloudsql-connection-name
+  value       = module.server.forseti-cloudsql-connection-name
 }
 
 output "forseti-client-vm-ip" {
@@ -68,4 +68,3 @@ output "suffix" {
   description = "The random suffix appended to Forseti resources"
   value       = local.random_hash
 }
-

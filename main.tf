@@ -40,7 +40,7 @@ resource "null_resource" "email_without_sendgrid_api_key" {
 # Locals #
 #--------#
 locals {
-  random_hash     = random_id.random_hash_suffix.hex
+  random_hash     = var.resource_name_suffix == null ? random_id.random_hash_suffix.hex : var.resource_name_suffix
   network_project = var.network_project != "" ? var.network_project : var.project_id
 
   services_list = [
@@ -130,8 +130,11 @@ module "server" {
   server_tags                                         = var.server_tags
   server_access_config                                = var.server_access_config
   server_private                                      = var.server_private
-  cloudsql_module                                     = module.cloudsql
+  cloudsql_region                                     = var.cloudsql_region
+  cloudsql_db_name                                    = var.cloudsql_db_name
+  cloudsql_db_port                                    = var.cloudsql_db_port
   cloudsql_proxy_arch                                 = var.cloudsql_proxy_arch
+  cloudsql_type                                       = var.cloudsql_type
   storage_bucket_location                             = var.storage_bucket_location
   bucket_cai_location                                 = var.bucket_cai_location
   bucket_cai_lifecycle_age                            = var.bucket_cai_lifecycle_age
@@ -204,6 +207,7 @@ module "server" {
   group_enabled                                       = var.group_enabled
   forwarding_rule_enabled                             = var.forwarding_rule_enabled
   firewall_rule_enabled                               = var.firewall_rule_enabled
+  manage_rules_enabled                                = var.manage_rules_enabled
   enabled_apis_enabled                                = var.enabled_apis_enabled
   cloudsql_acl_enabled                                = var.cloudsql_acl_enabled
   config_validator_enabled                            = var.config_validator_enabled
@@ -255,16 +259,4 @@ module "server" {
   groups_settings_violations_should_notify = var.groups_settings_violations_should_notify
 
   services = google_project_service.main.*.service
-}
-
-module "cloudsql" {
-  source             = "./modules/cloudsql"
-  cloudsql_disk_size = var.cloudsql_disk_size
-  cloudsql_private   = var.cloudsql_private
-  cloudsql_region    = var.cloudsql_region
-  cloudsql_type      = var.cloudsql_type
-  network_project    = var.network_project
-  project_id         = var.project_id
-  services           = google_project_service.main.*.service
-  suffix             = local.random_hash
 }

@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+resource "random_integer" "random_minute" {
+  min     = 0
+  max     = 59
+}
+
 #--------#
 # Locals #
 #--------#
@@ -36,6 +41,7 @@ locals {
   server_conf_path        = "${var.forseti_home}/configs/forseti_conf_server.yaml"
   server_name             = "forseti-server-vm-${local.random_hash}"
   server_sa_name          = "forseti-server-gcp-${local.random_hash}"
+  cloudsql_name           = "forseti-server-db-${local.random_hash}"
   storage_bucket_name     = "forseti-server-${local.random_hash}"
   storage_cai_bucket_name = "forseti-cai-export-${local.random_hash}"
   server_bucket_name      = "forseti-server-${local.random_hash}"
@@ -93,6 +99,8 @@ locals {
   }
   missing_emails    = ((var.sendgrid_api_key != "") && (var.forseti_email_sender == "" || var.forseti_email_recipient == "") ? 1 : 0)
   network_interface = local.network_interface_base[var.server_private ? "private" : "public"]
+
+  forseti_run_frequency = var.forseti_run_frequency == null ? "${random_integer.random_minute.result} */2 * * *" : var.forseti_run_frequency
 }
 
 #------------------#
@@ -119,7 +127,7 @@ data "template_file" "forseti_server_startup_script" {
     forseti_environment                    = data.template_file.forseti_server_environment.rendered
     forseti_home                           = var.forseti_home
     forseti_repo_url                       = var.forseti_repo_url
-    forseti_run_frequency                  = var.forseti_run_frequency
+    forseti_run_frequency                  = local.forseti_run_frequency
     forseti_server_conf_path               = local.server_conf_path
     forseti_version                        = var.forseti_version
     policy_library_home                    = var.policy_library_home
@@ -148,10 +156,10 @@ data "template_file" "forseti_server_env" {
 
   vars = {
     project_id             = var.project_id
-    cloudsql_db_name       = var.cloudsql_module.forseti-cloudsql-db-name
-    cloudsql_db_port       = var.cloudsql_module.forseti-clodusql-db-port
-    cloudsql_region        = var.cloudsql_module.forseti-cloudsql-region
-    cloudsql_instance_name = var.cloudsql_module.forseti-cloudsql-instance-name
+    cloudsql_db_name       = var.cloudsql_db_name
+    cloudsql_db_port       = var.cloudsql_db_port
+    cloudsql_region        = var.cloudsql_region
+    cloudsql_instance_name = google_sql_database_instance.master.name
   }
 }
 
@@ -405,10 +413,11 @@ resource "google_storage_bucket_object" "forseti_server_config" {
 }
 
 module "server_rules" {
-  source = "../rules"
-  bucket = google_storage_bucket.server_config.name
-  org_id = var.org_id
-  domain = var.domain
+  source               = "../rules"
+  bucket               = google_storage_bucket.server_config.name
+  org_id               = var.org_id
+  domain               = var.domain
+  manage_rules_enabled = var.manage_rules_enabled
 }
 
 resource "google_storage_bucket" "cai_export" {
@@ -523,6 +532,48 @@ resource "google_compute_instance" "forseti-server" {
     module.server_rules,
     null_resource.services-dependency,
   ]
+}
+
+#----------------------#
+# Forseti SQL database #
+#----------------------#
+resource "google_sql_database_instance" "master" {
+  name             = local.cloudsql_name
+  project          = var.project_id
+  region           = var.cloudsql_region
+  database_version = "MYSQL_5_7"
+
+  settings {
+    tier              = var.cloudsql_type
+    activation_policy = "ALWAYS"
+    disk_size         = "25"
+    disk_type         = "PD_SSD"
+
+    backup_configuration {
+      enabled            = true
+      binary_log_enabled = true
+    }
+
+    ip_configuration {
+      ipv4_enabled = true
+      require_ssl  = true
+    }
+  }
+
+  depends_on = [null_resource.services-dependency]
+}
+
+resource "google_sql_database" "forseti-db" {
+  name     = var.cloudsql_db_name
+  project  = var.project_id
+  instance = google_sql_database_instance.master.name
+}
+
+resource "google_sql_user" "root" {
+  name     = "root"
+  instance = google_sql_database_instance.master.name
+  project  = var.project_id
+  host     = var.cloudsql_user_host
 }
 
 resource "null_resource" "services-dependency" {
