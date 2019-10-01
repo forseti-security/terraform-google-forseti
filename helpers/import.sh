@@ -181,7 +181,7 @@ fi
 terraform import "module.$MODULE_LOCAL_NAME.module.server.google_compute_firewall.forseti-server-allow-grpc" "$NETWORK_PROJECT_ID/forseti-server-allow-grpc-$RESOURCE_NAME_SUFFIX"
 terraform import "module.$MODULE_LOCAL_NAME.module.server_gcs.google_storage_bucket.server_config" "$PROJECT_ID/forseti-server-$RESOURCE_NAME_SUFFIX"
 terraform import "module.$MODULE_LOCAL_NAME.module.server_gcs.google_storage_bucket.cai_export" "$PROJECT_ID/forseti-cai-export-$RESOURCE_NAME_SUFFIX"
-terraform import "module.$MODULE_LOCAL_NAME.module.server.google_compute_instance.forseti-server" "$PROJECT_ID/us-central1-c/forseti-server-vm-$RESOURCE_NAME_SUFFIX"
+terraform import "module.$MODULE_LOCAL_NAME.module.server.google_compute_instance.forseti-server" "$PROJECT_ID/$GCE_ZONE/forseti-server-vm-$RESOURCE_NAME_SUFFIX"
 terraform import "module.$MODULE_LOCAL_NAME.module.cloudsql.google_sql_database_instance.master" "$PROJECT_ID/forseti-server-db-$RESOURCE_NAME_SUFFIX"
 terraform import "module.$MODULE_LOCAL_NAME.module.cloudsql.google_sql_database.forseti-db" "$PROJECT_ID/forseti-server-db-$RESOURCE_NAME_SUFFIX/forseti_security"
 terraform import "module.$MODULE_LOCAL_NAME.module.cloudsql.google_sql_user.root" "$PROJECT_ID/forseti-server-db-$RESOURCE_NAME_SUFFIX/%/root"
