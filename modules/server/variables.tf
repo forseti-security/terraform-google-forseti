@@ -26,7 +26,7 @@ variable "gsuite_admin_email" {
 
 variable "forseti_version" {
   description = "The version of Forseti to install"
-  default     = "v2.20.0"
+  default     = "v2.21.0"
 }
 
 variable "forseti_repo_url" {
@@ -51,7 +51,8 @@ variable "forseti_home" {
 
 variable "forseti_run_frequency" {
   description = "Schedule of running the Forseti scans"
-  default     = "0 */2 * * *"
+  type        = string
+  default     = null
 }
 
 #--------------------------#
@@ -385,6 +386,12 @@ variable "log_sink_enabled" {
   default     = "true"
 }
 
+variable "manage_rules_enabled" {
+  description = "A toggle to enable or disable the management of rules"
+  type        = bool
+  default     = true
+}
+
 variable "policy_library_home" {
   description = "The local policy library directory."
   default     = "$USER_HOME/policy-library"
@@ -578,7 +585,7 @@ variable "inventory_email_summary_enabled" {
 #----------------#
 variable "server_type" {
   description = "GCE Forseti Server machine type"
-  default     = "n1-standard-2"
+  default     = "n1-standard-8"
 }
 
 variable "server_region" {
@@ -626,6 +633,39 @@ variable "server_private" {
 
 variable "client_service_account_email" {
   description = "Service account of the forseti client"
+}
+
+#------------#
+# Forseti db #
+#------------#
+variable "cloudsql_region" {
+  description = "CloudSQL region"
+  default     = "us-central1"
+}
+
+variable "cloudsql_db_name" {
+  description = "CloudSQL database name"
+  default     = "forseti_security"
+}
+
+variable "cloudsql_db_port" {
+  description = "CloudSQL database port"
+  default     = "3306"
+}
+
+variable "cloudsql_proxy_arch" {
+  description = "CloudSQL Proxy architecture"
+  default     = "linux.amd64"
+}
+
+variable "cloudsql_type" {
+  description = "CloudSQL Instance size"
+  default     = "db-n1-standard-1"
+}
+
+variable "cloudsql_user_host" {
+  description = "The host the user can connect from. Can be an IP address or IP address range. Changing this forces a new resource to be created."
+  default     = "%"
 }
 
 #----------------#
@@ -724,19 +764,6 @@ variable "services" {
   description = "An artificial dependency to bypass #10462"
   type        = list(string)
   default     = []
-}
-
-#------------#
-# Forseti db #
-#------------#
-
-variable "cloudsql_module" {
-  description = "The CloudSQL module"
-}
-
-variable "cloudsql_proxy_arch" {
-  description = "CloudSQL Proxy architecture"
-  default     = "linux.amd64"
 }
 
 #---------------------------------------#

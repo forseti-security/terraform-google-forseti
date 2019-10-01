@@ -4,45 +4,57 @@ set -eu
 # Env variables
 USER=ubuntu
 USER_HOME=/home/ubuntu
+INTERNET_CONNECTION="$(ping -q -w1 -c1 google.com &>/dev/null && echo online || echo offline)"
+
+# Log status of internet connection
+if [ $INTERNET_CONNECTION == "offline" ]; then
+  echo "Forseti Startup - A connection to the internet was not detected."
+fi
 
 # forseti_conf_server digest: ${forseti_conf_server_checksum}
 # This digest is included in the startup script to rebuild the Forseti server VM
 # whenever the server configuration changes.
 
 # Ubuntu update.
+echo "Forseti Startup - Updating Ubuntu."
 sudo apt-get update -y
 sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade
 sudo apt-get update -y
 sudo apt-get --assume-yes install google-cloud-sdk git unzip
 
 if ! [ -e "/usr/sbin/google-fluentd" ]; then
-    cd $USER_HOME
-    curl -sSO https://dl.google.com/cloudagents/install-logging-agent.sh
-    bash install-logging-agent.sh
+  echo "Forseti Startup - Installing GCP Logging agent."
+  cd $USER_HOME
+  curl -sSO https://dl.google.com/cloudagents/install-logging-agent.sh
+  bash install-logging-agent.sh
 fi
 
 # Check whether Cloud SQL proxy is installed.
 if [ -z "$(which cloud_sql_proxy)" ]; then
-      cd $USER_HOME
-      wget https://dl.google.com/cloudsql/cloud_sql_proxy.${cloudsql_proxy_arch}
-      sudo mv cloud_sql_proxy.${cloudsql_proxy_arch} /usr/local/bin/cloud_sql_proxy
-      chmod +x /usr/local/bin/cloud_sql_proxy
+  echo "Forseti Startup - Installing GCP Cloud SQL Proxy."
+  cd $USER_HOME
+  wget https://dl.google.com/cloudsql/cloud_sql_proxy.${cloudsql_proxy_arch}
+  sudo mv cloud_sql_proxy.${cloudsql_proxy_arch} /usr/local/bin/cloud_sql_proxy
+  chmod +x /usr/local/bin/cloud_sql_proxy
 fi
 
 # Install Forseti Security.
 cd $USER_HOME
-rm -rf *forseti*
+if [ $INTERNET_CONNECTION == "online" ]; then
+  rm -rf *forseti*
+fi
 
 # Download Forseti source code
-git clone ${forseti_repo_url}
+echo "Forseti Startup - Cloning Forseti repo."
+git clone --branch ${forseti_version} --depth 1 ${forseti_repo_url}
 cd forseti-security
-git fetch --all
-git checkout ${forseti_version}
 
 # Forseti host dependencies
+echo "Forseti Startup - Installing Forseti linux dependencies."
 sudo apt-get install -y $(cat install/dependencies/apt_packages.txt | grep -v "#" | xargs)
 
 # Forseti dependencies
+echo "Forseti Startup - Installing Forseti python dependencies."
 python3 -m pip install -q --upgrade setuptools wheel
 python3 -m pip install -q --upgrade -r requirements.txt
 
@@ -59,7 +71,7 @@ logrotate /etc/logrotate.conf
 chmod -R ug+rwx ${forseti_home}/configs ${forseti_home}/rules ${forseti_home}/install/gcp/scripts/run_forseti.sh
 
 # Install Forseti
-echo "Installing Forseti"
+echo "Forseti Startup - Installing Forseti python package."
 python3 setup.py install
 
 # Export variables required by initialize_forseti_services.sh.
@@ -73,6 +85,7 @@ ${forseti_environment}
 echo "${forseti_environment}" > /etc/profile.d/forseti_environment.sh | sudo sh
 
 # Download server configuration from GCS
+echo "Forseti Startup - Downloading Forseti configuration from GCS."
 gsutil cp gs://${storage_bucket_name}/configs/forseti_conf_server.yaml ${forseti_server_conf_path}
 gsutil cp -r gs://${storage_bucket_name}/rules ${forseti_home}/
 
@@ -84,7 +97,7 @@ if [ "${policy_library_sync_enabled}" == "true" ]; then
 
   # Install Docker
   if [ -z "$(which docker)" ]; then
-    echo "Forseti Startup - Installing Docker."
+    echo "Forseti Startup - Installing Docker for the Policy Library sync."
     sudo apt-get update
     sudo apt -y install apt-transport-https ca-certificates curl software-properties-common
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
@@ -110,8 +123,8 @@ else
 fi
 
 # Start Forseti service depends on vars defined above.
+echo "Forseti Startup - Starting services."
 bash ./install/gcp/scripts/initialize_forseti_services.sh
-echo "Starting services."
 systemctl start cloudsqlproxy
 if [ "${policy_library_sync_enabled}" == "true" ]; then
   systemctl start policy-library-sync
@@ -120,11 +133,13 @@ fi
 systemctl start config-validator
 sleep 5
 
-echo "Attempting to update database schema, if necessary."
+echo "Forseti Startup - Attempting to update database schema, if necessary."
 python3 $USER_HOME/forseti-security/install/gcp/upgrade_tools/db_migrator.py
 
+# Start main Forseti service
+echo "Forseti Startup - Starting Forseti service."
 systemctl start forseti
-echo "Success! The Forseti API server has been started."
+echo "Forseti Startup - Success! The Forseti API server has been started."
 
 # Create a Forseti env script
 FORSETI_ENV="$(cat << EOF
@@ -147,5 +162,5 @@ USER=ubuntu
 # queue up the jobs.
 # If the cron job failed the acquire lock on the process, it will log a warning message to syslog.
 (echo "${forseti_run_frequency} (/usr/bin/flock -n ${forseti_home}/forseti_cron_runner.lock ${forseti_home}/install/gcp/scripts/run_forseti.sh -b ${storage_bucket_name} || echo '[forseti-security] Warning: New Forseti cron job will not be started, because previous Forseti job is still running.') 2>&1 | logger") | crontab -u $USER -
-echo "Added the run_forseti.sh to crontab under user $USER"
-echo "Execution of startup script finished"
+echo "Forseti Startup - Added the run_forseti.sh to crontab under user $USER."
+echo "Forseti Startup - Execution of startup script finished."

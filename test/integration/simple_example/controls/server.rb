@@ -14,7 +14,7 @@
 
 require "yaml"
 
-forseti_version = "2.20.0"
+forseti_version = "2.21.0"
 
 control "server" do
   title "Forseti server instance resources"
