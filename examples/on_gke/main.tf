@@ -19,7 +19,8 @@
 #--------#
 
 locals {
-  node_pool_index = [for index, node_pool in data.google_container_cluster.forseti_cluster.node_pool : index if node_pool.name == var.gke_node_pool_name][0]
+  node_pool_index          = [for index, node_pool in data.google_container_cluster.forseti_cluster.node_pool : index if node_pool.name == var.gke_node_pool_name][0]
+  git_sync_private_ssh_key = var.git_sync_private_ssh_key_file != null ? data.local_file.git_sync_private_ssh_key_file[0].content_base64 : ""
 }
 
 #------------------#
@@ -50,6 +51,15 @@ data "google_container_cluster" "forseti_cluster" {
   name     = var.gke_cluster_name
   location = var.gke_cluster_location
   project  = var.project_id
+}
+
+#------------------------------#
+# git-sync SSH Key Data Source #
+#------------------------------#
+
+data "local_file" "git_sync_private_ssh_key_file" {
+  count    = var.git_sync_private_ssh_key_file != null ? 1 : 0
+  filename = var.git_sync_private_ssh_key_file
 }
 
 #---------------------#
@@ -104,4 +114,11 @@ module "forseti" {
   sendgrid_api_key        = var.sendgrid_api_key
   forseti_email_sender    = var.forseti_email_sender
   forseti_email_recipient = var.forseti_email_recipient
+
+  helm_repository_url           = var.helm_repository_url
+  config_validator_enabled      = var.config_validator_enabled
+  git_sync_private_ssh_key      = local.git_sync_private_ssh_key
+  policy_library_repository_url = var.policy_library_repository_url
+
+  
 }

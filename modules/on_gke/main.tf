@@ -223,68 +223,118 @@ resource "helm_release" "forseti-security" {
   "google_service_account_iam_binding.forseti_client_workload_identity"]
 
   set {
-    name  = "cloudsqlConnection"
+    name  = "server.cloudsqlConnection"
     value = module.cloudsql.forseti-cloudsql-connection-name
   }
 
   set {
-    name  = "configValidator"
-    value = var.config_validator_enabled
+    name  = "server.image"
+    value = var.k8s_forseti_server_image
   }
 
   set {
-    name  = "configValidatorImage"
-    value = var.k8s_config_validator_image
+    name  = "server.imageTag"
+    value = var.k8s_forseti_server_image_tag
   }
 
   set {
-    name  = "configValidatorImageTag"
-    value = var.k8s_config_validator_image_tag
+    name  = "server.bucket"
+    value = module.server_gcs.forseti-server-storage-bucket
+  }
+
+  set_string {
+    name  = "server.config.contents"
+    value = "${base64encode(data.http.server_config_contents.body)}"
   }
 
   set {
-    name  = "gitSyncImage"
-    value = var.git_sync_image
+    name  = "server.logLevel"
+    value = var.server_log_level
   }
 
   set {
-    name  = "gitSyncImageTag"
-    value = var.policy_library_sync_git_sync_tag
-  }
-
-  set_sensitive {
-    name  = "gitSyncPrivateSSHKey"
-    value = var.git_sync_private_ssh_key
+    name  = "server.workloadIdentity"
+    value = module.server_iam.forseti-server-service-account
   }
 
   set {
-    name  = "forsetiRunFrequency"
-    value = local.forseti_run_frequency
-  }
-
-  set {
-    name  = "gitSyncWait"
-    value = var.git_sync_wait
-  }
-
-  set {
-    name  = "loadBalancer"
+    name  = "server.loadBalancer"
     value = var.load_balancer
   }
 
   set {
-    name  = "networkPolicyEnable"
-    value = var.network_policy
+    name  = "orchestrator.runFrequency"
+    value = local.forseti_run_frequency
   }
 
   set {
-    name  = "orchestratorImage"
+    name  = "orchestrator.image"
     value = var.k8s_forseti_orchestrator_image
   }
 
   set {
-    name  = "orchestratorImageTag"
+    name  = "orchestrator.imageTag"
     value = var.k8s_forseti_orchestrator_image_tag
+  }
+
+  set {
+    name  = "orchestrator.workloadIdentity"
+    value = module.client_iam.forseti-client-service-account
+  }
+
+  set {
+    name  = "configValidator.enabled"
+    value = var.config_validator_enabled
+  }
+
+  set {
+    name  = "configValidator.image"
+    value = var.k8s_config_validator_image
+  }
+
+  set {
+    name  = "configValidator.imageTag"
+    value = var.k8s_config_validator_image_tag
+  }
+
+  set {
+    name  = "configValidator.gitSync.image"
+    value = var.git_sync_image
+  }
+
+  set {
+    name  = "configValidator.gitSync.imageTag"
+    value = var.policy_library_sync_git_sync_tag
+  }
+
+  set_sensitive {
+    name  = "configValidator.gitSync.privateSSHKey"
+    value = var.git_sync_private_ssh_key
+  }
+
+  set {
+    name  = "configValidator.policyLibrary.repositoryURL"
+    value = var.policy_library_repository_url
+  }
+
+  set {
+    name  = "configValidator.policyLibrary.repositoryBranch"
+    value = var.policy_library_repository_branch
+  }
+
+  set {
+    name  = "configValidator.gitSync.wait"
+    value = var.git_sync_wait
+  }
+
+  set {
+    name  = "configValidator.networkPolicy.enabled"
+    value = var.network_policy
+  }
+
+  set {
+    name  = "networkPolicy.enabled"
+    value = var.network_policy
   }
 
   set {
@@ -292,54 +342,8 @@ resource "helm_release" "forseti-security" {
     value = var.production
   }
 
-  set {
-    name  = "policyLibraryRepositoryURL"
-    value = var.policy_library_repository_url
-  }
-
-  set {
-    name  = "policyLibraryRepositoryBranch"
-    value = var.policy_library_repository_branch
-  }
-
-  set {
-    name  = "serverImage"
-    value = var.k8s_forseti_server_image
-  }
-
-  set {
-    name  = "serverImageTag"
-    value = var.k8s_forseti_server_image_tag
-  }
-
-  set {
-    name  = "serverBucket"
-    value = module.server_gcs.forseti-server-storage-bucket
-  }
-
-  set_string {
-    name  = "serverConfigContents"
-    value = "${base64encode(data.http.server_config_contents.body)}"
-  }
-
-  set {
-    name  = "serverLogLevel"
-    value = var.server_log_level
-  }
-
-  set {
-    name  = "serverWorkloadIdentity"
-    value = module.server_iam.forseti-server-service-account
-  }
-
-  set {
-    name  = "orchestratorWorkloadIdentity"
-    value = module.client_iam.forseti-client-service-account
-  }
-
-
   values = [
-    "networkPolicyIngressCidr: [${data.google_compute_subnetwork.forseti_subnetwork.ip_cidr_range}]",
+    "networkPolicy.ingressCidr: [${data.google_compute_subnetwork.forseti_subnetwork.ip_cidr_range}]",
     "nodeSelectors: ['cloud.google.com/gke-nodepool=${var.gke_node_pool_name}']"
   ]
 }

@@ -44,7 +44,6 @@ variable "forseti_email_sender" {
   default     = ""
 }
 
-
 variable "gke_cluster_name" {
   description = "The name of the GKE Cluster"
 }
@@ -69,4 +68,78 @@ variable "project_id" {
 variable "k8s_tiller_sa_name" {
   description = "The Kubernetes Service Account used by Tiller"
   default     = "tiller"
+}
+
+#-------------#
+# Helm config #
+#-------------#
+
+variable "git_sync_image" {
+  description = "The container image used by the config-validator git-sync side-car"
+  default     = "gcr.io/google-containers/git-sync"
+}
+
+variable "git_sync_private_ssh_key_file" {
+  description = "The file containing the SSH key allowing the git-sync to clone the policy library repository."
+  default     = null
+}
+
+variable "git_sync_wait" {
+  description = "The time number of seconds between git-syncs"
+  default     = 30
+}
+
+variable "helm_repository_url" {
+  description = "The Helm repository containing the 'forseti-security' Helm charts"
+  default     = "https://forseti-security-charts.storage.googleapis.com/release/"
+}
+
+variable "k8s_config_validator_image" {
+  description = "The container image used by the config-validator"
+  default     = "gcr.io/forseti-containers/config-validator"
+}
+
+variable "k8s_config_validator_image_tag" {
+  description = "The tag for the config-validator image."
+  default     = "latest"
+}
+
+variable "k8s_forseti_namespace" {
+  description = "The Kubernetes namespace in which to deploy Forseti."
+  default     = "forseti"
+}
+
+variable "k8s_forseti_orchestrator_image" {
+  description = "The container image for the Forseti orchestrator"
+  default     = "gcr.io/forseti-containers/forseti"
+}
+
+variable "k8s_forseti_orchestrator_image_tag" {
+  description = "The tag for the container image for the Forseti orchestrator"
+  default     = "v2.21.0"
+}
+
+variable "k8s_forseti_server_image" {
+  description = "The container image for the Forseti server"
+  default     = "gcr.io/forseti-containers/forseti"
+}
+
+variable "k8s_forseti_server_image_tag" {
+  description = "The tag for the container image for the Forseti server"
+  default     = "v2.21.0"
+}
+
+variable "policy_library_repository_url" {
+  description = "The git repository containing the policy-library."
+  default     = "https://github.com/forseti-security/policy-library.git"
+}
+
+variable "policy_library_repository_branch" {
+  description = "The specific git branch containing the policies."
+  default     = "master"
+}
+
+variable "server_log_level" {
+  description = "The log level of the Forseti server container."
+  default     = "info"
 }
