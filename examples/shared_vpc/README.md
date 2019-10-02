@@ -7,7 +7,6 @@ This example illustrates how to set up a Forseti installation with shared VPC.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| credentials\_path | Path to service account json | string | n/a | yes |
 | domain | Organization domain | string | n/a | yes |
 | gsuite\_admin\_email | G Suite admin email | string | n/a | yes |
 | instance\_metadata | Metadata key/value pairs to make available from within the client and server instances. | map(string) | `<map>` | no |
@@ -22,7 +21,6 @@ This example illustrates how to set up a Forseti installation with shared VPC.
 
 | Name | Description |
 |------|-------------|
-| credentials\_path | Pass through the `credentials_path` variable so that InSpec can reuse the credentials |
 | forseti-client-service-account | Forseti Client service account |
 | forseti-client-storage-bucket | Forseti Client storage bucket |
 | forseti-client-vm-ip | Forseti Client VM private IP address |

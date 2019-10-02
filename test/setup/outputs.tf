@@ -26,9 +26,9 @@ output "project_id" {
   value = module.forseti-service-project.project_id
 }
 
-output "enforcer_project_id" {
-  value = module.forseti-enforcer-project.project_id
-}
+#output "enforcer_project_id" {
+#  value = module.forseti-enforcer-project.project_id
+#}
 
 output "network" {
   value = module.forseti-host-network.network_name

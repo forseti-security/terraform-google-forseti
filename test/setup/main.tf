@@ -21,25 +21,25 @@ resource "random_string" "project_suffix" {
   special = false
 }
 
-module "forseti-enforcer-project" {
-  source  = "terraform-google-modules/project-factory/google"
-  version = "~> 3.0"
-
-  name              = "ci-forseti-enforcer"
-  random_project_id = true
-  org_id            = var.org_id
-  folder_id         = var.folder_id
-  billing_account   = var.billing_account
-
-  activate_apis = [
-    "compute.googleapis.com",
-    "storage-api.googleapis.com",
-    "storage-component.googleapis.com",
-    "pubsub.googleapis.com",
-    "logging.googleapis.com",
-    "monitoring.googleapis.com",
-  ]
-}
+#module "forseti-enforcer-project" {
+#  source  = "terraform-google-modules/project-factory/google"
+#  version = "~> 3.0"
+#
+#  name              = "ci-forseti-enforcer"
+#  random_project_id = true
+#  org_id            = var.org_id
+#  folder_id         = var.folder_id
+#  billing_account   = var.billing_account
+#
+#  activate_apis = [
+#    "compute.googleapis.com",
+#    "storage-api.googleapis.com",
+#    "storage-component.googleapis.com",
+#    "pubsub.googleapis.com",
+#    "logging.googleapis.com",
+#    "monitoring.googleapis.com",
+#  ]
+#}
 
 module "forseti-host-project" {
   source  = "terraform-google-modules/project-factory/google"

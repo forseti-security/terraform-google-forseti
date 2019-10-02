@@ -22,10 +22,9 @@ echo "export TF_VAR_pubsub_project_id='$project_id'" >> ../source.sh
 network_project=$(terraform output network_project)
 echo "export TF_VAR_network_project='$network_project'" >> ../source.sh
 
-enforcer_project_id=$(terraform output enforcer_project_id)
-echo "export TF_VAR_enforcer_project_id='$network_project'" >> ../source.sh
-
-echo "export TF_VAR_sink_project_id='$enforcer_project_id'" >> ../source.sh
+#enforcer_project_id=$(terraform output enforcer_project_id)
+#echo "export TF_VAR_enforcer_project_id='$network_project'" >> ../source.sh
+#echo "export TF_VAR_sink_project_id='$enforcer_project_id'" >> ../source.sh
 
 network=$(terraform output network)
 echo "export TF_VAR_network='$network'" >> ../source.sh
@@ -37,8 +36,6 @@ region="us-central1"
 echo "export TF_VAR_region='$region'" >> ../source.sh
 gsuite_admin_email=$(terraform output gsuite_admin_email)
 echo "export TF_VAR_gsuite_admin_email='$gsuite_admin_email'" >> ../source.sh
-
-
 org_id=$(terraform output org_id)
 echo "export TF_VAR_org_id='$org_id'" >> ../source.sh
 folder_id=$(terraform output folder_id)
