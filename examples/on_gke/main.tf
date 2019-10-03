@@ -59,7 +59,7 @@ data "google_container_cluster" "forseti_cluster" {
 #------------------------#
 data "google_compute_subnetwork" "forseti_subnetwork" {
   name    = var.subnetwork
-  region  = var.client_region
+  region  = var.region
   project = var.project_id
 }
 
@@ -117,6 +117,9 @@ module "forseti" {
   org_id     = var.org_id
   project_id = var.project_id
 
+  client_region   = var.region
+  cloudsql_region = var.region
+
   network_policy      = data.google_container_cluster.forseti_cluster.network_policy.0.enabled
   gke_service_account = data.google_container_cluster.forseti_cluster.node_pool[local.node_pool_index].node_config.0.service_account
 
@@ -129,9 +132,6 @@ module "forseti" {
   git_sync_private_ssh_key        = local.git_sync_private_ssh_key
   k8s_forseti_server_ingress_cidr = data.google_compute_subnetwork.forseti_subnetwork.ip_cidr_range
   helm_repository_url             = var.helm_repository_url
-  
-  
-  policy_library_repository_url = var.policy_library_repository_url
-  
-  
+  policy_library_repository_url   = var.policy_library_repository_url
+  server_log_level                = var.server_log_level
 }

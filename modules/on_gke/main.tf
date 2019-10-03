@@ -335,7 +335,7 @@ resource "helm_release" "forseti-security" {
   }
 
   set {
-    name = "networkPolicy.ingressCidr"
+    name  = "networkPolicy.ingressCidr"
     value = "{${var.k8s_forseti_server_ingress_cidr}}"
   }
 

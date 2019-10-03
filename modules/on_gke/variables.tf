@@ -841,7 +841,7 @@ variable "git_sync_wait" {
 
 variable "helm_chart_version" {
   description = "The version of the Helm chart to use"
-  default = "2.0.0"
+  default     = "2.0.0"
 }
 
 variable "helm_repository_url" {
@@ -886,7 +886,7 @@ variable "k8s_forseti_server_image_tag" {
 
 variable "k8s_forseti_server_ingress_cidr" {
   description = "If network_policy is true, k8s_forseti_server_ingress_cidr will restrict connections to the Forseti Server service from the CIDR's specified"
-  default = ""
+  default     = ""
 }
 
 variable "k8s_tiller_sa_name" {

@@ -56,14 +56,20 @@ In order to operate with the Service Account you must activate the following API
 | domain | The domain associated with the GCP Organization ID | string | n/a | yes |
 | forseti\_email\_recipient | Email address that receives Forseti notifications | string | `""` | no |
 | forseti\_email\_sender | Email address that sends the Forseti notifications | string | `""` | no |
+| git\_sync\_private\_ssh\_key\_file | The file containing the SSH key allowing the git-sync to clone the policy library repository. | string | `"null"` | no |
 | gke\_cluster\_location | The location of the GKE Cluster | string | n/a | yes |
 | gke\_cluster\_name | The name of the GKE Cluster | string | n/a | yes |
 | gke\_node\_pool\_name | The name of the GKE node-pool where Forseti is being deployed | string | `"default-pool"` | no |
 | gsuite\_admin\_email | G-Suite administrator email address to manage your Forseti installation | string | n/a | yes |
+| helm\_repository\_url | The Helm repository containing the 'forseti-security' Helm charts | string | `"https://forseti-security-charts.storage.googleapis.com/release/"` | no |
 | k8s\_tiller\_sa\_name | The Kubernetes Service Account used by Tiller | string | `"tiller"` | no |
+| network | The VPC where the Forseti client and server will be created | string | `"default"` | no |
 | org\_id | GCP Organization ID that Forseti will have purview over | string | n/a | yes |
 | project\_id | The ID of an existing Google project where Forseti will be installed | string | n/a | yes |
+| region | Region where forseti subnetwork will be deployed | string | `"us-central1"` | no |
 | sendgrid\_api\_key | Sendgrid.com API key to enable email notifications | string | `""` | no |
+| server\_log\_level | The log level of the Forseti server container. | string | `"info"` | no |
+| subnetwork | The VPC subnetwork where the Forseti client and server will be created | string | `"default"` | no |
 
 ## Outputs
 
