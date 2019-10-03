@@ -166,7 +166,10 @@ terraform import "module.$MODULE_LOCAL_NAME.google_project_service.main[14]" "$P
 terraform import "module.$MODULE_LOCAL_NAME.google_project_service.main[15]" "$PROJECT_ID/groupssettings.googleapis.com"
 terraform import "module.$MODULE_LOCAL_NAME.module.client.google_compute_instance.forseti-client" "$PROJECT_ID/$GCE_ZONE/forseti-client-vm-$RESOURCE_NAME_SUFFIX"
 terraform import "module.$MODULE_LOCAL_NAME.module.client.google_compute_firewall.forseti-client-deny-all" "$NETWORK_PROJECT_ID/forseti-client-deny-all-$RESOURCE_NAME_SUFFIX"
-terraform import "module.$MODULE_LOCAL_NAME.module.client.google_compute_firewall.forseti-client-ssh-external" "$NETWORK_PROJECT_ID/forseti-client-allow-ssh-external-$RESOURCE_NAME_SUFFIX"
+if ! terraform import "module.$MODULE_LOCAL_NAME.module.client.google_compute_firewall.forseti-client-ssh-external" "$NETWORK_PROJECT_ID/forseti-client-allow-ssh-external-$RESOURCE_NAME_SUFFIX"
+then
+  terraform import "module.$MODULE_LOCAL_NAME.module.client.google_compute_firewall.forseti-client-ssh-external" "$NETWORK_PROJECT_ID/forseti-client-ssh-external-$RESOURCE_NAME_SUFFIX"
+fi
 terraform import "module.$MODULE_LOCAL_NAME.module.client.google_project_iam_member.client_roles[0]" "$PROJECT_ID roles/storage.objectViewer serviceAccount:forseti-client-gcp-$RESOURCE_NAME_SUFFIX@$PROJECT_ID.iam.gserviceaccount.com"
 terraform import "module.$MODULE_LOCAL_NAME.module.client.google_service_account.forseti_client" "$PROJECT_ID/forseti-client-gcp-$RESOURCE_NAME_SUFFIX@$PROJECT_ID.iam.gserviceaccount.com"
 terraform import "module.$MODULE_LOCAL_NAME.module.client.google_storage_bucket.client_config" "$PROJECT_ID/forseti-client-$RESOURCE_NAME_SUFFIX"
@@ -187,7 +190,10 @@ terraform import "module.$MODULE_LOCAL_NAME.module.server.google_organization_ia
 terraform import "module.$MODULE_LOCAL_NAME.module.server.google_organization_iam_member.org_read[9]" "$ORG_ID roles/serviceusage.serviceUsageConsumer serviceAccount:forseti-server-gcp-$RESOURCE_NAME_SUFFIX@$PROJECT_ID.iam.gserviceaccount.com"
 terraform import "module.$MODULE_LOCAL_NAME.module.server.google_organization_iam_member.org_write[0]" "$ORG_ID roles/compute.securityAdmin serviceAccount:forseti-server-gcp-$RESOURCE_NAME_SUFFIX@$PROJECT_ID.iam.gserviceaccount.com"
 terraform import "module.$MODULE_LOCAL_NAME.module.server.google_compute_firewall.forseti-server-deny-all" "$NETWORK_PROJECT_ID/forseti-server-deny-all-$RESOURCE_NAME_SUFFIX"
-terraform import "module.$MODULE_LOCAL_NAME.module.server.google_compute_firewall.forseti-server-ssh-external" "$NETWORK_PROJECT_ID/forseti-server-allow-ssh-external-$RESOURCE_NAME_SUFFIX"
+if ! terraform import "module.$MODULE_LOCAL_NAME.module.server.google_compute_firewall.forseti-server-ssh-external" "$NETWORK_PROJECT_ID/forseti-server-allow-ssh-external-$RESOURCE_NAME_SUFFIX"
+then
+  terraform import "module.$MODULE_LOCAL_NAME.module.server.google_compute_firewall.forseti-server-ssh-external" "$NETWORK_PROJECT_ID/forseti-server-ssh-external-$RESOURCE_NAME_SUFFIX"
+fi
 terraform import "module.$MODULE_LOCAL_NAME.module.server.google_compute_firewall.forseti-server-allow-grpc" "$NETWORK_PROJECT_ID/forseti-server-allow-grpc-$RESOURCE_NAME_SUFFIX"
 terraform import "module.$MODULE_LOCAL_NAME.module.server.google_storage_bucket.server_config" "$PROJECT_ID/forseti-server-$RESOURCE_NAME_SUFFIX"
 terraform import "module.$MODULE_LOCAL_NAME.module.server.google_storage_bucket.cai_export" "$PROJECT_ID/forseti-cai-export-$RESOURCE_NAME_SUFFIX"
