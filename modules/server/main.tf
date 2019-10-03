@@ -23,8 +23,8 @@ resource "random_integer" "random_minute" {
 # Locals #
 #--------#
 locals {
-  random_hash          = var.suffix
-  network_project      = var.network_project != "" ? var.network_project : var.project_id
+  random_hash     = var.suffix
+  network_project = var.network_project != "" ? var.network_project : var.project_id
   server_zone     = "${var.server_region}-c"
   server_startup_script = file(
     "${path.module}/templates/scripts/forseti-server/forseti_server_startup_script.sh.tpl",
