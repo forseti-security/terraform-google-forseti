@@ -653,6 +653,16 @@ variable "cloudsql_db_port" {
   default     = "3306"
 }
 
+variable "cloudsql_db_user" {
+  description = "CloudSQL database user"
+  default     = "forseti_security_user"
+}
+
+variable "cloudsql_db_password" {
+  description = "CloudSQL database password"
+  default     = ""
+}
+
 variable "cloudsql_proxy_arch" {
   description = "CloudSQL Proxy architecture"
   default     = "linux.amd64"

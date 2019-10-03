@@ -84,6 +84,8 @@ your environment.
 | cloudsql\_acl\_violations\_should\_notify | Notify for CloudSQL ACL violations | string | `"true"` | no |
 | cloudsql\_db\_name | CloudSQL database name | string | `"forseti_security"` | no |
 | cloudsql\_db\_port | CloudSQL database port | string | `"3306"` | no |
+| cloudsql\_db\_user | CloudSQL database name | string | `"forseti_security_user"` | no |
+| cloudsql\_db\_password | CloudSQL database name | string | `a randomized password` | no |
 | cloudsql\_proxy\_arch | CloudSQL Proxy architecture | string | `"linux.amd64"` | no |
 | cloudsql\_region | CloudSQL region | string | `"us-central1"` | no |
 | cloudsql\_type | CloudSQL Instance size | string | `"db-n1-standard-4"` | no |

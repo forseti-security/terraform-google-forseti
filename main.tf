@@ -18,6 +18,12 @@ resource "random_id" "random_hash_suffix" {
   byte_length = 4
 }
 
+resource "random_password" "password" {
+  length = 16
+  special = true
+  override_special = "_%@"
+}
+
 resource "null_resource" "org_id_and_folder_id_are_both_empty" {
   count = length(var.composite_root_resources) == 0 && var.org_id == "" && var.folder_id == "" ? 1 : 0
 
@@ -40,8 +46,9 @@ resource "null_resource" "email_without_sendgrid_api_key" {
 # Locals #
 #--------#
 locals {
-  random_hash     = var.resource_name_suffix == null ? random_id.random_hash_suffix.hex : var.resource_name_suffix
-  network_project = var.network_project != "" ? var.network_project : var.project_id
+  random_hash          = var.resource_name_suffix == null ? random_id.random_hash_suffix.hex : var.resource_name_suffix
+  network_project      = var.network_project != "" ? var.network_project : var.project_id
+  cloudsql_db_password = var.cloudsql_db_password == "" ? random_password.password.result : var.cloudsql_db_password
 
   services_list = [
     "admin.googleapis.com",
@@ -132,6 +139,8 @@ module "server" {
   server_private                                      = var.server_private
   cloudsql_region                                     = var.cloudsql_region
   cloudsql_db_name                                    = var.cloudsql_db_name
+  cloudsql_db_user                                    = var.cloudsql_db_user
+  cloudsql_db_password                                = local.cloudsql_db_password
   cloudsql_db_port                                    = var.cloudsql_db_port
   cloudsql_proxy_arch                                 = var.cloudsql_proxy_arch
   cloudsql_type                                       = var.cloudsql_type

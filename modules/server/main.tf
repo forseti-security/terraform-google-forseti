@@ -23,8 +23,8 @@ resource "random_integer" "random_minute" {
 # Locals #
 #--------#
 locals {
-  random_hash     = var.suffix
-  network_project = var.network_project != "" ? var.network_project : var.project_id
+  random_hash          = var.suffix
+  network_project      = var.network_project != "" ? var.network_project : var.project_id
   server_zone     = "${var.server_region}-c"
   server_startup_script = file(
     "${path.module}/templates/scripts/forseti-server/forseti_server_startup_script.sh.tpl",
@@ -158,6 +158,8 @@ data "template_file" "forseti_server_env" {
     project_id             = var.project_id
     cloudsql_db_name       = var.cloudsql_db_name
     cloudsql_db_port       = var.cloudsql_db_port
+    cloudsql_db_user       = var.cloudsql_db_user
+    cloudsql_db_password   = local.cloudsql_db_password
     cloudsql_region        = var.cloudsql_region
     cloudsql_instance_name = google_sql_database_instance.master.name
   }
@@ -569,11 +571,12 @@ resource "google_sql_database" "forseti-db" {
   instance = google_sql_database_instance.master.name
 }
 
-resource "google_sql_user" "root" {
-  name     = "root"
+resource "google_sql_user" "forseti_db_user" {
+  name     = var.cloudsql_db_user
   instance = google_sql_database_instance.master.name
   project  = var.project_id
   host     = var.cloudsql_user_host
+  password = var.cloudsql_db_password
 }
 
 resource "null_resource" "services-dependency" {
