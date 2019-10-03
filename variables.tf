@@ -53,7 +53,8 @@ variable "forseti_home" {
 
 variable "forseti_run_frequency" {
   description = "Schedule of running the Forseti scans"
-  default     = "0 */2 * * *"
+  type        = string
+  default     = null
 }
 
 variable "resource_name_suffix" {

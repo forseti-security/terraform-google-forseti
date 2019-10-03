@@ -21,6 +21,7 @@ resource "random_string" "project_suffix" {
   special = false
 }
 
+# Temporarily disabled due to issue #285
 #module "forseti-enforcer-project" {
 #  source  = "terraform-google-modules/project-factory/google"
 #  version = "~> 3.0"

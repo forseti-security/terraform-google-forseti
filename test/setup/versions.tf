@@ -25,3 +25,11 @@ provider "google" {
 provider "google-beta" {
   version = "~> 2.13.0"
 }
+
+provider "null" {
+  version = "~> 2.0"
+}
+
+provider "random" {
+  version = "~> 2.0"
+}

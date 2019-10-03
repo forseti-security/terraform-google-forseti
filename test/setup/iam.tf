@@ -109,11 +109,12 @@ resource "google_project_iam_member" "forseti" {
   member  = "serviceAccount:${google_service_account.int_test.email}"
 }
 
-resource "google_project_iam_member" "forseti-enforcer" {
-  count = length(local.forseti_enforcer_project_required_roles)
-
-  project = module.forseti-host-project.project_id
-  role    = local.forseti_enforcer_project_required_roles[count.index]
-  member  = "serviceAccount:${google_service_account.int_test.email}"
-}
+# Temporarily disabled due to issue #285
+#resource "google_project_iam_member" "forseti-enforcer" {
+#  count = length(local.forseti_enforcer_project_required_roles)
+#
+#  project = module.forseti-host-project.project_id
+#  role    = local.forseti_enforcer_project_required_roles[count.index]
+#  member  = "serviceAccount:${google_service_account.int_test.email}"
+#}
 

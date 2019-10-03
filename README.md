@@ -116,7 +116,7 @@ your environment.
 | forseti\_email\_sender | Email address that sends the Forseti notifications | string | `""` | no |
 | forseti\_home | Forseti installation directory | string | `"$USER_HOME/forseti-security"` | no |
 | forseti\_repo\_url | Git repo for the Forseti installation | string | `"https://github.com/forseti-security/forseti-security"` | no |
-| forseti\_run\_frequency | Schedule of running the Forseti scans | string | `"0 */2 * * *"` | no |
+| forseti\_run\_frequency | Schedule of running the Forseti scans | string | `"null"` | no |
 | forseti\_version | The version of Forseti to install | string | `"v2.21.0"` | no |
 | forwarding\_rule\_enabled | Forwarding rule scanner enabled. | string | `"false"` | no |
 | forwarding\_rule\_violations\_should\_notify | Notify for forwarding rule violations | string | `"true"` | no |

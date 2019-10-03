@@ -26,6 +26,7 @@ output "project_id" {
   value = module.forseti-service-project.project_id
 }
 
+# Temporarily disabled due to issue #285
 #output "enforcer_project_id" {
 #  value = module.forseti-enforcer-project.project_id
 #}
