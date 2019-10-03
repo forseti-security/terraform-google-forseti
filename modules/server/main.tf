@@ -159,7 +159,7 @@ data "template_file" "forseti_server_env" {
     cloudsql_db_name       = var.cloudsql_db_name
     cloudsql_db_port       = var.cloudsql_db_port
     cloudsql_db_user       = var.cloudsql_db_user
-    cloudsql_db_password   = local.cloudsql_db_password
+    cloudsql_db_password   = var.cloudsql_db_password
     cloudsql_region        = var.cloudsql_region
     cloudsql_instance_name = google_sql_database_instance.master.name
   }
