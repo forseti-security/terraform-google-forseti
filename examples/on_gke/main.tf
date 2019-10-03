@@ -53,6 +53,16 @@ data "google_container_cluster" "forseti_cluster" {
   project  = var.project_id
 }
 
+
+#------------------------#
+# Subnetwork data source #
+#------------------------#
+data "google_compute_subnetwork" "forseti_subnetwork" {
+  name    = var.subnetwork
+  region  = var.client_region
+  project = var.project_id
+}
+
 #------------------------------#
 # git-sync SSH Key Data Source #
 #------------------------------#
@@ -115,10 +125,13 @@ module "forseti" {
   forseti_email_sender    = var.forseti_email_sender
   forseti_email_recipient = var.forseti_email_recipient
 
-  helm_repository_url           = var.helm_repository_url
-  config_validator_enabled      = var.config_validator_enabled
-  git_sync_private_ssh_key      = local.git_sync_private_ssh_key
+  config_validator_enabled        = var.config_validator_enabled
+  git_sync_private_ssh_key        = local.git_sync_private_ssh_key
+  k8s_forseti_server_ingress_cidr = data.google_compute_subnetwork.forseti_subnetwork.ip_cidr_range
+  helm_repository_url             = var.helm_repository_url
+  
+  
   policy_library_repository_url = var.policy_library_repository_url
-
+  
   
 }

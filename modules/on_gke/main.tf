@@ -81,7 +81,7 @@ locals {
 //*****************************************
 
 resource "google_project_iam_member" "cluster_service_account-storage_reader" {
-  count   = var.gke_service_account == "default" ? 1 : 0
+  count   = var.gke_service_account != "default" ? 1 : 0
   project = var.project_id
   role    = "roles/storage.objectViewer"
   member  = "serviceAccount:${var.gke_service_account}"
@@ -95,15 +95,6 @@ resource "google_project_service" "main" {
   project            = var.project_id
   service            = local.services_list[count.index]
   disable_on_destroy = "false"
-}
-
-#------------------------#
-# Subnetwork data source #
-#------------------------#
-data "google_compute_subnetwork" "forseti_subnetwork" {
-  name    = var.subnetwork
-  region  = var.client_region
-  project = var.project_id
 }
 
 //*****************************************
@@ -215,6 +206,7 @@ resource "helm_release" "forseti-security" {
   name          = "forseti"
   namespace     = local.kubernetes_namespace
   repository    = var.helm_repository_url
+  version       = var.helm_chart_version
   chart         = "forseti-security"
   recreate_pods = var.recreate_pods
   depends_on = ["kubernetes_role_binding.tiller",
@@ -342,8 +334,12 @@ resource "helm_release" "forseti-security" {
     value = var.production
   }
 
+  set {
+    name = "networkPolicy.ingressCidr"
+    value = "{${var.k8s_forseti_server_ingress_cidr}}"
+  }
+
   values = [
-    "networkPolicy.ingressCidr: [${data.google_compute_subnetwork.forseti_subnetwork.ip_cidr_range}]",
     "nodeSelectors: ['cloud.google.com/gke-nodepool=${var.gke_node_pool_name}']"
   ]
 }
