@@ -24,7 +24,7 @@ The [project factory](https://github.com/terraform-google-modules/terraform-goog
 
 ### Configure a Service Account
 In addition to the [roles](https://github.com/forseti-security/terraform-google-forseti#iam-roles) required for the core module function, the Service Account must have these roles for this example.
-- roles/container.developer
+- roles/container.admin
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
