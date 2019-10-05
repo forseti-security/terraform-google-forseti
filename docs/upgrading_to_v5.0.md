@@ -1,6 +1,6 @@
 # Upgrading to v5.0
 
-The v4.0 release of the *forseti* module is a backwards incompatible
+The v5.0 release of the *forseti* module is a backwards incompatible
 release.
 
 ## Migration Instructions
