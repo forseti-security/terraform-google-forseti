@@ -98,10 +98,6 @@ inventory:
           max_calls: ${LOGGING_MAX_CALLS}
           period: ${LOGGING_PERIOD}
           disable_polling: ${LOGGING_DISABLE_POLLING}
-        securitycenter:
-          max_calls: ${SECURITYCENTER_MAX_CALLS}
-          period: ${SECURITYCENTER_PERIOD}
-          disable_polling: ${SECURITYCENTER_DISABLE_POLLING}
         servicemanagement:
           max_calls: ${SERVICEMANAGEMENT_MAX_CALLS}
           period: ${SERVICEMANAGEMENT_PERIOD}
@@ -272,6 +268,10 @@ scanner:
 ##############################################################################
 
 notifier:
+    api_quota:
+        securitycenter:
+            max_calls: ${SECURITYCENTER_MAX_CALLS}
+            period: ${SECURITYCENTER_PERIOD}
 
     # Provide connector details
     %{ if SENDGRID_API_KEY != "" }
