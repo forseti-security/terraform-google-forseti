@@ -9,8 +9,8 @@ Version 5.0.0 of this module introduces a breaking change.  The various componen
 
 Following these instructions will import existing Forseti infrastructure resources to a state compatible with version 5.x of this module.
 
-### Clean-up Existing State
-Do ONE of the following.
+### Forseti Deployed/Upgraded with Terraform
+If Forseti was previously deployed or upgraded via Terraform, do ONE of the following.
 1. Use Terraform to clean up the state and [automatically create a backup](https://www.terraform.io/docs/commands/state/index.html#backups).
 ```
 terraform state rm $(terraform state list)
@@ -23,7 +23,9 @@ OR<br />
     - This may also be in a remote storage.
   - Remove current state file: terraform.tfstate
 
-### Steps to Import State
+Perform the steps in the next section to import the state.
+
+### Steps to Import State (e.g. Forseti Deployed with DM)
 1. Execute the import script: [helpers/import.sh](../helpers/import.sh)
 2. Re-initialize Terraform. 
 ```

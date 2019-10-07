@@ -36,7 +36,7 @@ resource "google_project_service" "service_networking" {
   count              = var.cloudsql_private ? 1 : 0
   project            = var.project_id
   service            = "servicenetworking.googleapis.com"
-  disable_on_destroy = "false"
+  disable_on_destroy = false
 }
 
 resource "google_compute_global_address" "private_ip_address" {
@@ -78,7 +78,7 @@ resource "google_sql_database_instance" "master" {
     }
 
     ip_configuration {
-      ipv4_enabled    = var.cloudsql_private ? "false" : "true"
+      ipv4_enabled    = var.cloudsql_private ? false : true
       require_ssl     = true
       private_network = var.cloudsql_private ? data.google_compute_network.cloudsql_private_network.self_link : ""
     }
