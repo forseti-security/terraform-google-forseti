@@ -209,7 +209,6 @@ control 'forseti-org-iam' do
     let(:expected_roles) do
       [
         "roles/appengine.appViewer",
-        "roles/bigquery.dataViewer",
         "roles/bigquery.metadataViewer",
         "roles/browser",
         "roles/cloudasset.viewer",
