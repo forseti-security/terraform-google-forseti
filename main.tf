@@ -216,7 +216,6 @@ module "server_config" {
   servicemanagement_disable_polling                   = var.servicemanagement_disable_polling
   securitycenter_period                               = var.securitycenter_period
   securitycenter_max_calls                            = var.securitycenter_max_calls
-  securitycenter_disable_polling                      = var.securitycenter_disable_polling
   logging_period                                      = var.logging_period
   logging_max_calls                                   = var.logging_max_calls
   logging_disable_polling                             = var.logging_disable_polling

@@ -306,12 +306,6 @@ variable "securitycenter_period" {
   default     = "1.0"
 }
 
-variable "securitycenter_disable_polling" {
-  description = "Whether to disable polling for Security Center API"
-  type        = bool
-  default     = false
-}
-
 variable "servicemanagement_max_calls" {
   description = "Maximum calls that can be made to Service Management API"
   default     = "2"
