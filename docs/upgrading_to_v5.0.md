@@ -27,7 +27,7 @@ Perform the steps in the next section to import the state.
 
 ### Steps to Import State (e.g. Forseti Deployed with DM)
 1. Execute the import script: [helpers/import.sh](../helpers/import.sh)
-2. Re-initialize Terraform. 
+2. Re-initialize Terraform.
 ```
 terraform init
 ```
