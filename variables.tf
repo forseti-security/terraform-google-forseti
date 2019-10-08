@@ -297,18 +297,12 @@ variable "logging_disable_polling" {
 
 variable "securitycenter_max_calls" {
   description = "Maximum calls that can be made to Security Center API"
-  default     = "1"
+  default     = "14"
 }
 
 variable "securitycenter_period" {
   description = "The period of max calls for the Security Center API (in seconds)"
-  default     = "1.1"
-}
-
-variable "securitycenter_disable_polling" {
-  description = "Whether to disable polling for Security Center API"
-  type        = bool
-  default     = false
+  default     = "1.0"
 }
 
 variable "servicemanagement_max_calls" {
