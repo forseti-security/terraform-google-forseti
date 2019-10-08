@@ -65,7 +65,7 @@ In order to operate with the Service Account you must activate the following API
 | gke\_cluster\_name | The name of the GKE Cluster | string | `"forseti-cluster"` | no |
 | gke\_node\_ip\_range | The IP range for the GKE nodes. | string | `"10.1.0.0/20"` | no |
 | gke\_pod\_ip\_range | The IP range of the Kubernetes pods | string | `"10.2.0.0/20"` | no |
-| gke\_service\_account | The service account to run nodes as if not overridden in node\_pools. The default value will cause a cluster-specific service account to be created. | string | `"create"` | no |
+| gke\_service\_account | The service account to run nodes as if not overridden in node_pools. The default value will cause a cluster-specific service account to be created. | string | `"create"` | no |
 | gke\_service\_ip\_range | The IP range of the Kubernetes services. | string | `"10.3.0.0/20"` | no |
 | gsuite\_admin\_email | G-Suite administrator email address to manage your Forseti installation | string | n/a | yes |
 | helm\_repository\_url | The Helm repository containing the 'forseti-security' Helm charts | string | `"https://forseti-security-charts.storage.googleapis.com/release/"` | no |

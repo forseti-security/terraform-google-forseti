@@ -1,6 +1,3 @@
-# encoding: utf-8
-# copyright: 2018, The Authors
-
 # Copyright 2018 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+# encoding: utf-8
 
 org_id = attribute('org_id')
 project_id = attribute('project_id')
@@ -44,7 +42,7 @@ control 'forseti' do
     name: forseti_server_vm_name
   ) do
     it { should exist }
-    its('machine_size') { should eq 'n1-standard-2' }
+    its('machine_size') { should eq 'n1-standard-8' }
   end
 
   describe google_sql_database_instances(project: project_id) do
@@ -211,7 +209,6 @@ control 'forseti-org-iam' do
     let(:expected_roles) do
       [
         "roles/appengine.appViewer",
-        "roles/bigquery.dataViewer",
         "roles/bigquery.metadataViewer",
         "roles/browser",
         "roles/cloudasset.viewer",

@@ -66,7 +66,7 @@ your environment.
 | bucket\_cai\_location | GCS CAI storage bucket location | string | `"us-central1"` | no |
 | buckets\_acl\_violations\_should\_notify | Notify for Buckets ACL violations | string | `"true"` | no |
 | cai\_api\_timeout | Timeout in seconds to wait for the exportAssets API to return success. | string | `"3600"` | no |
-| client\_access\_config | Client instance 'access\_config' block | map(any) | `<map>` | no |
+| client\_access\_config | Client instance 'access_config' block | map(any) | `<map>` | no |
 | client\_boot\_image | GCE Forseti Client boot image | string | `"ubuntu-os-cloud/ubuntu-1804-lts"` | no |
 | client\_instance\_metadata | Metadata key/value pairs to make available from within the client instance. | map(string) | `<map>` | no |
 | client\_private | Private GCE Forseti Client VM (no public IP) | string | `"false"` | no |
@@ -88,7 +88,7 @@ your environment.
 | cloudsql\_region | CloudSQL region | string | `"us-central1"` | no |
 | cloudsql\_type | CloudSQL Instance size | string | `"db-n1-standard-4"` | no |
 | cloudsql\_user\_host | The host the user can connect from.  Can be an IP address or IP address range. Changing this forces a new resource to be created. | string | `"%"` | no |
-| composite\_root\_resources | A list of root resources that Forseti will monitor. This supersedes the root\_resource\_id when set. | list(string) | `<list>` | no |
+| composite\_root\_resources | A list of root resources that Forseti will monitor. This supersedes the root_resource_id when set. | list(string) | `<list>` | no |
 | compute\_disable\_polling | Whether to disable polling for Compute API | bool | `"false"` | no |
 | compute\_max\_calls | Maximum calls that can be made to Compute API | string | `"18"` | no |
 | compute\_period | The period of max calls for the Compute API (in seconds) | string | `"1.0"` | no |
@@ -116,7 +116,7 @@ your environment.
 | forseti\_email\_sender | Email address that sends the Forseti notifications | string | `""` | no |
 | forseti\_home | Forseti installation directory | string | `"$USER_HOME/forseti-security"` | no |
 | forseti\_repo\_url | Git repo for the Forseti installation | string | `"https://github.com/forseti-security/forseti-security"` | no |
-| forseti\_run\_frequency | Schedule of running the Forseti scans | string | `"0 */2 * * *"` | no |
+| forseti\_run\_frequency | Schedule of running the Forseti scans | string | `"null"` | no |
 | forseti\_version | The version of Forseti to install | string | `"v2.21.0"` | no |
 | forwarding\_rule\_enabled | Forwarding rule scanner enabled. | string | `"false"` | no |
 | forwarding\_rule\_violations\_should\_notify | Notify for forwarding rule violations | string | `"true"` | no |
@@ -175,7 +175,7 @@ your environment.
 | securitycenter\_max\_calls | Maximum calls that can be made to Security Center API | string | `"1"` | no |
 | securitycenter\_period | The period of max calls for the Security Center API (in seconds) | string | `"1.1"` | no |
 | sendgrid\_api\_key | Sendgrid.com API key to enable email notifications | string | `""` | no |
-| server\_access\_config | Server instance 'access\_config' block | map(any) | `<map>` | no |
+| server\_access\_config | Server instance 'access_config' block | map(any) | `<map>` | no |
 | server\_boot\_disk\_size | Size of the GCE instance boot disk in GBs. | string | `"100"` | no |
 | server\_boot\_disk\_type | GCE instance boot disk type, can be pd-standard or pd-ssd. | string | `"pd-ssd"` | no |
 | server\_boot\_image | GCE Forseti Server boot image - Currently only Ubuntu is supported | string | `"ubuntu-os-cloud/ubuntu-1804-lts"` | no |
@@ -195,7 +195,7 @@ your environment.
 | sqladmin\_max\_calls | Maximum calls that can be made to SQL Admin API | string | `"1"` | no |
 | sqladmin\_period | The period of max calls for the SQL Admin API (in seconds) | string | `"1.1"` | no |
 | storage\_bucket\_location | GCS storage bucket location | string | `"us-central1"` | no |
-| storage\_disable\_polling | Whetservicemanagement\_disable\_pollingher to disable polling for Storage API | bool | `"false"` | no |
+| storage\_disable\_polling | Whetservicemanagement_disable_pollingher to disable polling for Storage API | bool | `"false"` | no |
 | subnetwork | The VPC subnetwork where the Forseti client and server will be created | string | `"default"` | no |
 | violations\_slack\_webhook | Slack webhook for any violation. Will apply to all scanner violation notifiers. | string | `""` | no |
 

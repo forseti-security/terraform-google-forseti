@@ -41,12 +41,12 @@ module "bastion" {
   project_id = var.project_id
   subnetwork = var.subnetwork
   zone       = data.google_compute_zones.main.names[0]
+  key_suffix = "_simple_example"
 }
 
 module "forseti-install-simple" {
   source = "../../../examples/simple_example"
 
-  credentials_path   = var.credentials_path
   gsuite_admin_email = var.gsuite_admin_email
   project_id         = var.project_id
   org_id             = var.org_id
