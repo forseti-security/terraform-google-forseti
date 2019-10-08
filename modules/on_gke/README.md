@@ -81,10 +81,10 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | forwarding\_rule\_enabled | Forwarding rule scanner enabled. | bool | `"false"` | no |
 | forwarding\_rule\_violations\_should\_notify | Notify for forwarding rule violations | bool | `"true"` | no |
 | git\_sync\_image | The container image used by the config-validator git-sync side-car | string | `"gcr.io/google-containers/git-sync"` | no |
+| git\_sync\_image\_tag | The container image tag used by the config-validator git-sync side-car | string | `"v3.1.2"` | no |
 | git\_sync\_private\_ssh\_key | The SSH key allowing the git-sync to clone the policy library repository. | string | `""` | no |
 | git\_sync\_wait | The time number of seconds between git-syncs | string | `"30"` | no |
 | gke\_node\_pool\_name | The name of the GKE node-pool where Forseti is being deployed | string | `"default-pool"` | no |
-| gke\_service\_account | The IAM service account assigned to the GKE node pool where Forseti is deployed. | string | n/a | yes |
 | group\_enabled | Group scanner enabled. | bool | `"true"` | no |
 | groups\_settings\_disable\_polling | Whether to disable polling for the G Suite Groups API | bool | `"false"` | no |
 | groups\_settings\_enabled | Groups settings scanner enabled. | bool | `"true"` | no |

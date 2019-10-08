@@ -76,17 +76,6 @@ locals {
   forseti_run_frequency = var.forseti_run_frequency == null ? "${random_integer.random_minute.result} */2 * * *" : var.forseti_run_frequency
 }
 
-//*****************************************
-//  Allow GKE Service Account to read GCS
-//*****************************************
-
-resource "google_project_iam_member" "cluster_service_account-storage_reader" {
-  count   = var.gke_service_account != "default" ? 1 : 0
-  project = var.project_id
-  role    = "roles/storage.objectViewer"
-  member  = "serviceAccount:${var.gke_service_account}"
-}
-
 #-------------------#
 # Activate services #
 #-------------------#

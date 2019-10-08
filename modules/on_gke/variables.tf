@@ -60,9 +60,6 @@ variable "sendgrid_api_key" {
 #------------#
 # GKE config #
 #------------#
-variable "gke_service_account" {
-  description = "The IAM service account assigned to the GKE node pool where Forseti is deployed."
-}
 
 variable "gke_node_pool_name" {
   description = "The name of the GKE node-pool where Forseti is being deployed"
@@ -827,6 +824,11 @@ variable "cloudsql_user_host" {
 variable "git_sync_image" {
   description = "The container image used by the config-validator git-sync side-car"
   default     = "gcr.io/google-containers/git-sync"
+}
+
+variable "git_sync_image_tag" {
+  description = "The container image tag used by the config-validator git-sync side-car"
+  default     = "v3.1.2"
 }
 
 variable "git_sync_private_ssh_key" {
