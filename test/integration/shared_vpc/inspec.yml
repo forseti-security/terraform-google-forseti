@@ -61,9 +61,6 @@ attributes:
   - name: network
     required: true
     description: "Network where server and client are deployed"
-  - name: credentials_path
-    required: true
-    description: "Path to service account credentials file"
   - name: forseti-client-storage-bucket
     required: true
     description: "Forseti Client Storage Bucket"

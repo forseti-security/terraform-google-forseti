@@ -25,7 +25,7 @@ resource "tls_private_key" "main" {
 
 resource "local_file" "main" {
   content  = tls_private_key.main.private_key_pem
-  filename = "${path.module}/tls_private_key"
+  filename = "${path.module}/tls_private_key${var.key_suffix}"
 }
 
 resource "random_pet" "main" {

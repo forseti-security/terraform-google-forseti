@@ -428,7 +428,7 @@ control "server" do
       end
 
       it "configures inventory_email_summary_enabled" do
-        expect(config["notifier"]["inventory"]["email_summary"]["enabled"]).to eq true
+        expect(config["notifier"]["inventory"]["email_summary"]["enabled"]).to eq false
       end
     end
   end
