@@ -149,8 +149,8 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | resource\_name\_suffix | A suffix which will be appended to resource names. | string | `"null"` | no |
 | resource\_violations\_should\_notify | Notify for resource violations | bool | `"true"` | no |
 | securitycenter\_disable\_polling | Whether to disable polling for Security Center API | bool | `"false"` | no |
-| securitycenter\_max\_calls | Maximum calls that can be made to Security Center API | string | `"1"` | no |
-| securitycenter\_period | The period of max calls for the Security Center API (in seconds) | string | `"1.1"` | no |
+| securitycenter\_max\_calls | Maximum calls that can be made to Security Center API | string | `"14"` | no |
+| securitycenter\_period | The period of max calls for the Security Center API (in seconds) | string | `"1.0"` | no |
 | sendgrid\_api\_key | Sendgrid.com API key to enable email notifications | string | `""` | no |
 | server\_log\_level | The log level of the Forseti server container. | string | `"info"` | no |
 | service\_account\_key\_enabled | Service account key scanner enabled. | bool | `"true"` | no |
