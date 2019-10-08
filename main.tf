@@ -161,6 +161,7 @@ module "cloudsql" {
   cloudsql_db_name   = var.cloudsql_db_name
   cloudsql_user_host = var.cloudsql_user_host
   network_project    = var.network_project
+  network            = var.network
   project_id         = var.project_id
   services           = google_project_service.main.*.service
   suffix             = local.random_hash
