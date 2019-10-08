@@ -186,18 +186,6 @@ control "server" do
           expect(config["inventory"]["api_quota"]["logging"]["disable_polling"]).to eq false
         end
 
-        it "configures securitycenter_max_calls" do
-          expect(config["inventory"]["api_quota"]["securitycenter"]["max_calls"]).to eq 1
-        end
-
-        it "configures securitycenter_period" do
-          expect(config["inventory"]["api_quota"]["securitycenter"]["period"]).to eq 1.1
-        end
-
-        it "configures securitycenter_disable_polling" do
-          expect(config["inventory"]["api_quota"]["securitycenter"]["disable_polling"]).to eq false
-        end
-
         it "configures servicemanagement_max_calls" do
           expect(config["inventory"]["api_quota"]["servicemanagement"]["max_calls"]).to eq 2
         end
@@ -319,6 +307,17 @@ control "server" do
     end
 
     describe "notifier" do
+      describe "api_quota" do
+
+        it "configures securitycenter_max_calls" do
+          expect(config["notifier"]["api_quota"]["securitycenter"]["max_calls"]).to eq 14
+        end
+
+        it "configures securitycenter_period" do
+          expect(config["notifier"]["api_quota"]["securitycenter"]["period"]).to eq 1.0
+        end
+      end
+
       describe "resources" do
         it "configures iam_policy_violations_should_notify" do
           expect(config["notifier"]["resources"]).to include(
