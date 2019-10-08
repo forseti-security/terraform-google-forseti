@@ -14,10 +14,6 @@
  * limitations under the License.
  */
 
-variable "credentials_path" {
-  description = "Path to service account json"
-}
-
 variable "network_project" {
   description = "ID of the project that will have shared VPC"
 }

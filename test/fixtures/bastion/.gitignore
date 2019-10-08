@@ -1,2 +1,2 @@
 terraform.tfvars
-sshkey
+tls_private_key*
