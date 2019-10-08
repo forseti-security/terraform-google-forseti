@@ -26,7 +26,7 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | bucket\_cai\_location | GCS CAI storage bucket location | string | `"us-central1"` | no |
 | buckets\_acl\_violations\_should\_notify | Notify for Buckets ACL violations | bool | `"true"` | no |
 | cai\_api\_timeout | Timeout in seconds to wait for the exportAssets API to return success. | string | `"3600"` | no |
-| client\_access\_config | Client instance 'access\_config' block | map(any) | `<map>` | no |
+| client\_access\_config | Client instance 'access_config' block | map(any) | `<map>` | no |
 | client\_boot\_image | GCE Forseti Client boot image | string | `"ubuntu-os-cloud/ubuntu-1804-lts"` | no |
 | client\_instance\_metadata | Metadata key/value pairs to make available from within the client instance. | map(string) | `<map>` | no |
 | client\_private | Private GCE Forseti Client VM (no public IP) | bool | `"false"` | no |
@@ -48,7 +48,7 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | cloudsql\_region | CloudSQL region | string | `"us-central1"` | no |
 | cloudsql\_type | CloudSQL Instance size | string | `"db-n1-standard-4"` | no |
 | cloudsql\_user\_host | The host the user can connect from.  Can be an IP address or IP address range. Changing this forces a new resource to be created. | string | `"%"` | no |
-| composite\_root\_resources | A list of root resources that Forseti will monitor. This supersedes the root\_resource\_id when set. | list(string) | `<list>` | no |
+| composite\_root\_resources | A list of root resources that Forseti will monitor. This supersedes the root_resource_id when set. | list(string) | `<list>` | no |
 | compute\_disable\_polling | Whether to disable polling for Compute API | bool | `"false"` | no |
 | compute\_max\_calls | Maximum calls that can be made to Compute API | string | `"18"` | no |
 | compute\_period | The period of max calls for the Compute API (in seconds) | string | `"1.0"` | no |
@@ -115,7 +115,7 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | k8s\_forseti\_orchestrator\_image\_tag | The tag for the container image for the Forseti orchestrator | string | `"v2.21.0"` | no |
 | k8s\_forseti\_server\_image | The container image for the Forseti server | string | `"gcr.io/forseti-containers/forseti"` | no |
 | k8s\_forseti\_server\_image\_tag | The tag for the container image for the Forseti server | string | `"v2.21.0"` | no |
-| k8s\_forseti\_server\_ingress\_cidr | If network\_policy is true, k8s\_forseti\_server\_ingress\_cidr will restrict connections to the Forseti Server service from the CIDR's specified | string | `""` | no |
+| k8s\_forseti\_server\_ingress\_cidr | If network_policy is true, k8s_forseti_server_ingress_cidr will restrict connections to the Forseti Server service from the CIDR's specified | string | `""` | no |
 | k8s\_tiller\_sa\_name | The Kubernetes Service Account used by Tiller | string | `"tiller"` | no |
 | ke\_scanner\_enabled | KE scanner enabled. | bool | `"false"` | no |
 | ke\_version\_scanner\_enabled | KE version scanner enabled. | bool | `"true"` | no |
@@ -144,7 +144,7 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | policy\_library\_sync\_git\_sync\_tag | Tag for the git-sync image. | string | `"v3.1.2"` | no |
 | production | Whether or not to deploy Forseti on GKE in a production configuration | bool | `"true"` | no |
 | project\_id | Google Project ID that you want Forseti deployed into | string | n/a | yes |
-| recreate\_pods | Instructs the helm\_release resource to, on update, perform pod restarts for the resources if applicable. | bool | `"true"` | no |
+| recreate\_pods | Instructs the helm_release resource to, on update, perform pod restarts for the resources if applicable. | bool | `"true"` | no |
 | resource\_enabled | Resource scanner enabled. | bool | `"true"` | no |
 | resource\_name\_suffix | A suffix which will be appended to resource names. | string | `"null"` | no |
 | resource\_violations\_should\_notify | Notify for resource violations | bool | `"true"` | no |
