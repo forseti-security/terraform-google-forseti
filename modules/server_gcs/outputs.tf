@@ -13,3 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+output "forseti-server-storage-bucket" {
+  description = "Forseti Server storage bucket"
+  value       = google_storage_bucket.server_config.id
+}
+
+output "forseti-cai-storage-bucket" {
+  description = "Forseti CAI storage bucket"
+  value       = google_storage_bucket.cai_export[0].id
+}
+
+output "forseti-cai-bucket-enabled" {
+  description = "Whether or not the GCS bucket for CAI exports is enabled"
+  value       = var.enable_cai_bucket
+}

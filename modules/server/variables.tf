@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #----------------#
 # Forseti config #
 #----------------#
@@ -20,28 +21,14 @@ variable "project_id" {
   description = "Google Project ID that you want Forseti deployed into"
 }
 
-variable "gsuite_admin_email" {
-  description = "G-Suite administrator email address to manage your Forseti installation"
-}
-
 variable "forseti_version" {
   description = "The version of Forseti to install"
-  default     = "v2.21.0"
+  default     = "v2.22.0"
 }
 
 variable "forseti_repo_url" {
   description = "Git repo for the Forseti installation"
   default     = "https://github.com/forseti-security/forseti-security"
-}
-
-variable "forseti_email_recipient" {
-  description = "Email address that receives Forseti notifications"
-  default     = ""
-}
-
-variable "forseti_email_sender" {
-  description = "Email address that sends the Forseti notifications"
-  default     = ""
 }
 
 variable "forseti_home" {
@@ -392,36 +379,6 @@ variable "manage_rules_enabled" {
   default     = true
 }
 
-variable "policy_library_home" {
-  description = "The local policy library directory."
-  default     = "$USER_HOME/policy-library"
-}
-
-variable "policy_library_repository_url" {
-  description = "The git repository containing the policy-library."
-  default     = ""
-}
-
-variable "policy_library_sync_enabled" {
-  description = "Sync config validator policy library from private repository."
-  default     = "false"
-}
-
-variable "policy_library_sync_gcs_directory_name" {
-  description = "The directory name of the GCS folder used for the policy library sync config."
-  default     = "policy_library_sync"
-}
-
-variable "policy_library_sync_git_sync_tag" {
-  description = "Tag for the git-sync image."
-  default     = "v3.1.2"
-}
-
-variable "policy_library_sync_ssh_known_hosts" {
-  description = "List of authorized public keys for SSH host of the policy library repository."
-  default     = ""
-}
-
 variable "resource_enabled" {
   description = "Resource scanner enabled."
   default     = "true"
@@ -631,61 +588,6 @@ variable "server_private" {
   default     = "false"
 }
 
-variable "client_service_account_email" {
-  description = "Service account of the forseti client"
-}
-
-#------------#
-# Forseti db #
-#------------#
-variable "cloudsql_region" {
-  description = "CloudSQL region"
-  default     = "us-central1"
-}
-
-variable "cloudsql_db_name" {
-  description = "CloudSQL database name"
-  default     = "forseti_security"
-}
-
-variable "cloudsql_db_port" {
-  description = "CloudSQL database port"
-  default     = "3306"
-}
-
-variable "cloudsql_proxy_arch" {
-  description = "CloudSQL Proxy architecture"
-  default     = "linux.amd64"
-}
-
-variable "cloudsql_type" {
-  description = "CloudSQL Instance size"
-  default     = "db-n1-standard-1"
-}
-
-variable "cloudsql_user_host" {
-  description = "The host the user can connect from. Can be an IP address or IP address range. Changing this forces a new resource to be created."
-  default     = "%"
-}
-
-#----------------#
-# Forseti bucket #
-#----------------#
-variable "storage_bucket_location" {
-  description = "GCS storage bucket location"
-  default     = "us-central1"
-}
-
-variable "bucket_cai_location" {
-  description = "GCS CAI storage bucket location"
-  default     = "us-central1"
-}
-
-variable "bucket_cai_lifecycle_age" {
-  description = "GCS CAI lifecycle age value"
-  default     = "14"
-}
-
 ##---------#
 ## Network #
 ##---------#
@@ -716,46 +618,9 @@ variable "server_ssh_allow_ranges" {
   default     = ["0.0.0.0/0"]
 }
 
-#-------#
-# Flags #
-#-------#
-variable "enable_write" {
-  description = "Enabling/Disabling write actions"
-  default     = "false"
-}
-
-variable "enable_cai_bucket" {
-  description = "Create a GCS bucket for CAI exports"
-  default     = "true"
-}
-
 #--------#
 # Config #
 #--------#
-variable "org_id" {
-  description = "GCP Organization ID that Forseti will have purview over"
-}
-
-variable "domain" {
-  description = "The domain associated with the GCP Organization ID"
-}
-
-variable "folder_id" {
-  description = "GCP Folder that the Forseti project will be deployed into"
-  default     = ""
-}
-
-variable "composite_root_resources" {
-  description = "A list of root resources that Forseti will monitor. This supersedes the root_resource_id when set."
-  type        = list(string)
-  default     = []
-}
-
-variable "sendgrid_api_key" {
-  description = "Sendgrid.com API key to enable email notifications"
-  default     = ""
-}
-
 variable "suffix" {
   description = "The random suffix to append to all Forseti resources"
 }
@@ -766,32 +631,89 @@ variable "services" {
   default     = []
 }
 
-#---------------------------------------#
-# Groups Settings scanner configuration #
-#---------------------------------------#
+#------------------------#
+# Forseti policy-library #
+#------------------------#
 
-variable "groups_settings_max_calls" {
-  description = "Maximum calls that can be made to the G Suite Groups API"
-  default     = "5"
+variable "policy_library_home" {
+  description = "The local policy library directory."
+  default     = "$USER_HOME/policy-library"
 }
 
-variable "groups_settings_period" {
-  description = "the period of max calls to the G Suite Groups API"
-  default     = "1.1"
+variable "policy_library_repository_url" {
+  description = "The git repository containing the policy-library."
+  default     = ""
 }
 
-variable "groups_settings_disable_polling" {
-  description = "Whether to disable polling for the G Suite Groups API"
-  type        = bool
-  default     = false
+variable "policy_library_sync_enabled" {
+  description = "Sync config validator policy library from private repository."
+  default     = "false"
 }
 
-variable "groups_settings_enabled" {
-  description = "Groups settings scanner enabled."
-  default     = "true"
+variable "policy_library_sync_gcs_directory_name" {
+  description = "The directory name of the GCS folder used for the policy library sync config."
+  default     = "policy_library_sync"
 }
 
-variable "groups_settings_violations_should_notify" {
-  description = "Notify for groups settings violations"
-  default     = "true"
+variable "policy_library_sync_git_sync_tag" {
+  description = "Tag for the git-sync image."
+  default     = "v3.1.2"
+}
+
+variable "policy_library_sync_ssh_known_hosts" {
+  description = "List of authorized public keys for SSH host of the policy library repository."
+  default     = ""
+}
+
+#------------#
+# Forseti db #
+#------------#
+
+variable "cloudsql_module" {
+  description = "The CloudSQL module"
+}
+
+variable "cloudsql_proxy_arch" {
+  description = "CloudSQL Proxy architecture"
+  default     = "linux.amd64"
+}
+
+#--------------------#
+# Forseti client IAM #
+#--------------------#
+
+variable "server_iam_module" {
+  description = "The Forseti Server IAM module"
+}
+
+#--------------------#
+# Forseti server GCS #
+#--------------------#
+
+variable "server_gcs_module" {
+  description = "The Forseti Server GCS module"
+}
+
+#----------------------#
+# Forseti server Rules #
+#----------------------#
+
+variable "server_rules_module" {
+  description = "The Forseti Server rules module"
+}
+
+#-----------------------#
+# Forseti server config #
+#-----------------------#
+
+variable "server_config_module" {
+  description = "The Forseti Server config module"
+}
+
+#--------------------#
+# Forseti client IAM #
+#--------------------#
+
+variable "client_iam_module" {
+  description = "The Forseti Client IAM module"
 }
