@@ -172,7 +172,7 @@ your environment.
 | project\_id | Google Project ID that you want Forseti deployed into | string | n/a | yes |
 | resource\_enabled | Resource scanner enabled. | bool | `"true"` | no |
 | resource\_name\_suffix | A suffix which will be appended to resource names. | string | `"null"` | no |
-| resource\_violations\_should\_notify | Notify for resource violations | string | `"true"` | no |
+| resource\_violations\_should\_notify | Notify for resource violations | bool | `"true"` | no |
 | securitycenter\_max\_calls | Maximum calls that can be made to Security Center API | string | `"14"` | no |
 | securitycenter\_period | The period of max calls for the Security Center API (in seconds) | string | `"1.0"` | no |
 | sendgrid\_api\_key | Sendgrid.com API key to enable email notifications | string | `""` | no |
