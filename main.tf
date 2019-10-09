@@ -161,8 +161,8 @@ module "server" {
   server_iam_module    = module.server_iam
   server_rules_module  = module.server_rules
 
-  services               = google_project_service.main.*.service
-  
+  services = google_project_service.main.*.service
+
 }
 
 module "cloudsql" {
