@@ -15,8 +15,8 @@
  */
 
 provider "google" {
-  credentials = file(var.credentials_path)
-  version     = "~> 2.11.0"
+  version = "~> 2.11.0"
+  project = var.project_id
 }
 
 provider "local" {
@@ -47,6 +47,7 @@ module "forseti-install-simple" {
   server_tags              = var.instance_tags
   client_private           = var.private
   server_private           = var.private
+  cloudsql_private         = var.private
   server_region            = var.region
   client_region            = var.region
   network                  = var.network

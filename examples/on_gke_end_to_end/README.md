@@ -1,5 +1,5 @@
 # Forseti on GKE - End-to-End
-Follow this example to deploy Forseti on GKE but are starting from an empty GCP project.  In otherwords, Forseti has not been yet been deployed.
+Follow this example to deploy Forseti on-GKE but are starting from an empty GCP project.  In otherwords a GKE cluster does not yet exist.
 
 This example deploys the following:
 1. A new VPC
@@ -7,12 +7,13 @@ This example deploys the following:
    * CloudSQL Database
    * Forseti Server GCS Bucket
    * Forseti Client GCS Bucket
-   * Forseti Server VM
-   * Forseti Client VM
    * Forseti Server IAM Service Account
    * Forseti Client IAM Service Account
 3. A new GKE cluster - terraform-google-modules/kubernetes-engine/google
 4. Forseti on GKE - forseti-on-gke
+
+## Import an Existing Forseti Deployment
+If you previously deployed Forseti either with Terraform or Deployment manager, that deployment can be migrated to Forseti on-GKE.  Please follow the [upgrade guide](../../docs/upgrading_to_v5.0.md) if you wish to reuse components (GCS buckets, CloudSQL etc.) for Forseti on-GKE.
 
 ## Requirements
 
@@ -55,39 +56,31 @@ In order to operate with the Service Account you must activate the following API
 |------|-------------|:----:|:-----:|:-----:|
 | auto\_create\_subnetworks | When set to true, the network is created in 'auto subnet mode' and it will create a subnet for each region automatically across the 10.128.0.0/9 address range. When set to false, the network is created in 'custom subnet mode' so the user can explicitly connect subnetwork resources. | bool | `"false"` | no |
 | config\_validator\_enabled | Config Validator scanner enabled. | bool | `"false"` | no |
-| credentials\_path | Path to service account json | string | n/a | yes |
 | domain | The domain associated with the GCP Organization ID | string | n/a | yes |
-| git\_sync\_image | The container image used by the config-validator git-sync side-car | string | `"gcr.io/google-containers/git-sync"` | no |
-| git\_sync\_image\_tag | The container image tag used by the config-validator git-sync side-car | string | `"v3.1.2"` | no |
+| forseti\_email\_recipient | Email address that receives Forseti notifications | string | `""` | no |
+| forseti\_email\_sender | Email address that sends the Forseti notifications | string | `""` | no |
 | git\_sync\_private\_ssh\_key\_file | The file containing the private SSH key allowing the git-sync to clone the policy library repository. | string | `""` | no |
-| git\_sync\_ssh | Use SSH for git-sync operations | bool | `"false"` | no |
-| git\_sync\_wait | The time number of seconds between git-syncs | string | `"30"` | no |
 | gke\_cluster\_name | The name of the GKE Cluster | string | `"forseti-cluster"` | no |
 | gke\_node\_ip\_range | The IP range for the GKE nodes. | string | `"10.1.0.0/20"` | no |
 | gke\_pod\_ip\_range | The IP range of the Kubernetes pods | string | `"10.2.0.0/20"` | no |
-| gke\_service\_account | The service account to run nodes as if not overridden in node\_pools. The default value will cause a cluster-specific service account to be created. | string | `"create"` | no |
+| gke\_pod\_ip\_range\_name | The name of the IP range of the Kubernetes pods | string | `"gke-pod-ip-range"` | no |
+| gke\_service\_account | The service account to run nodes as if not overridden in node_pools. The default value will cause a cluster-specific service account to be created. | string | `"create"` | no |
 | gke\_service\_ip\_range | The IP range of the Kubernetes services. | string | `"10.3.0.0/20"` | no |
+| gke\_service\_ip\_range\_name | The name of the IP range of the Kubernetes services. | string | `"gke-service-ip-range"` | no |
 | gsuite\_admin\_email | G-Suite administrator email address to manage your Forseti installation | string | n/a | yes |
 | helm\_repository\_url | The Helm repository containing the 'forseti-security' Helm charts | string | `"https://forseti-security-charts.storage.googleapis.com/release/"` | no |
-| k8s\_config\_validator\_image | The container image used by the config-validator | string | `"gcr.io/forseti-containers/config-validator"` | no |
-| k8s\_config\_validator\_image\_tag | The tag for the config-validator image. | string | `"latest"` | no |
 | k8s\_forseti\_namespace | The Kubernetes namespace in which to deploy Forseti. | string | `"forseti"` | no |
-| k8s\_forseti\_orchestrator\_image | The container image for the Forseti orchestrator | string | `"gcr.io/forseti-containers/forseti"` | no |
-| k8s\_forseti\_orchestrator\_image\_tag | The tag for the container image for the Forseti orchestrator | string | `"v2.21.0"` | no |
-| k8s\_forseti\_server\_image | The container image for the Forseti server | string | `"gcr.io/forseti-containers/forseti"` | no |
-| k8s\_forseti\_server\_image\_tag | The tag for the container image for the Forseti server | string | `"v2.21.0"` | no |
 | k8s\_tiller\_sa\_name | The Kubernetes Service Account used by Tiller | string | `"tiller"` | no |
-| load\_balancer | The type of load balancer to deploy for the forseti-server if desired: none, external, internal | string | `"internal"` | no |
+| network | The name of the VPC being created | string | `"forseti-gke-network"` | no |
 | network\_description | An optional description of the network. The resource must be recreated to modify this field. | string | `""` | no |
-| network\_name | The name of the VPC being created | string | `"forseti-gke-network"` | no |
 | org\_id | GCP Organization ID that Forseti will have purview over | string | n/a | yes |
 | policy\_library\_repository\_branch | The specific git branch containing the policies. | string | `"master"` | no |
 | policy\_library\_repository\_url | The git repository containing the policy-library. | string | `"https://github.com/forseti-security/policy-library"` | no |
-| production | Whether or not to deploy Forseti on GKE in a production configuration | bool | `"true"` | no |
 | project\_id | The ID of an existing Google project where Forseti will be installed | string | n/a | yes |
 | region | Region where forseti subnetwork will be deployed | string | `"us-central1"` | no |
+| sendgrid\_api\_key | Sendgrid.com API key to enable email notifications | string | `""` | no |
 | server\_log\_level | The log level of the Forseti server container. | string | `"info"` | no |
-| sub\_network\_name | The name of the subnet being created | string | `"gke-sub-network"` | no |
+| subnetwork | The name of the subnet being created | string | `"gke-sub-network"` | no |
 | zones | The zones to host the cluster in. This is optional if the GKE cluster is regional.  It is required if the cluster is zonal. | list | `<list>` | no |
 
 ## Outputs
@@ -97,11 +90,12 @@ In order to operate with the Service Account you must activate the following API
 | forseti-client-service-account | Forseti Client service account |
 | forseti-client-storage-bucket | Forseti Client storage bucket |
 | forseti-client-vm-ip | Forseti Client VM private IP address |
-| forseti-client-vm-name | Forseti Client VM name |
+| forseti-cloudsql-connection-name | Forseti CloudSQL Connection String |
 | forseti-server-service-account | Forseti Server service account |
 | forseti-server-storage-bucket | Forseti Server storage bucket |
-| forseti-server-vm-ip | Forseti Server VM private IP address |
-| forseti-server-vm-name | Forseti Server VM name |
+| kubernetes-forseti-namespace | The Kubernetes namespace in which Forseti is deployed |
+| kubernetes-forseti-server-ingress | The loadbalancer ingress address of the forseti-server service in GKE |
+| kubernetes-forseti-tiller-sa-name | The name of the service account deploying Forseti |
 | suffix | The random suffix appended to Forseti resources |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

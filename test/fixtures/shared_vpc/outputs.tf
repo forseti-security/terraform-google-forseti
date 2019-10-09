@@ -63,11 +63,6 @@ output "network" {
   value       = var.network
 }
 
-output "credentials_path" {
-  description = "Pass through the `credentials_path` variable so that InSpec can reuse the credentials"
-  value       = var.credentials_path
-}
-
 output "org_id" {
   description = "A forwarded copy of `org_id` for InSpec"
   value       = var.org_id

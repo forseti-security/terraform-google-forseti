@@ -41,11 +41,11 @@ module "bastion" {
   project_id = var.network_project
   subnetwork = var.subnetwork
   zone       = data.google_compute_zones.main.names[0]
+  key_suffix = "_shared_vpc"
 }
 
 module "forseti-shared-vpc" {
   source             = "../../../examples/shared_vpc"
-  credentials_path   = var.credentials_path
   project_id         = var.project_id
   region             = var.region
   gsuite_admin_email = var.gsuite_admin_email
