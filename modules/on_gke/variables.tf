@@ -801,6 +801,11 @@ variable "cloudsql_disk_size" {
   default     = "25"
 }
 
+variable "cloudsql_net_write_timeout" {
+  description = "See MySQL documentation: https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_net_write_timeout"
+  default     = "240"
+}
+
 variable "cloudsql_private" {
   description = "Whether to enable private network and not to create public IP for CloudSQL Instance"
   default     = false
