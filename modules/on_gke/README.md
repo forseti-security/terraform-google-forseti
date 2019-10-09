@@ -77,7 +77,7 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | forseti\_home | Forseti installation directory | string | `"$USER_HOME/forseti-security"` | no |
 | forseti\_repo\_url | Git repo for the Forseti installation | string | `"https://github.com/forseti-security/forseti-security"` | no |
 | forseti\_run\_frequency | Schedule of running the Forseti scans | string | `"null"` | no |
-| forseti\_version | The version of Forseti to install | string | `"v2.21.0"` | no |
+| forseti\_version | The version of Forseti to install | string | `"v2.22.0"` | no |
 | forwarding\_rule\_enabled | Forwarding rule scanner enabled. | bool | `"false"` | no |
 | forwarding\_rule\_violations\_should\_notify | Notify for forwarding rule violations | bool | `"true"` | no |
 | git\_sync\_image | The container image used by the config-validator git-sync side-car | string | `"gcr.io/google-containers/git-sync"` | no |
