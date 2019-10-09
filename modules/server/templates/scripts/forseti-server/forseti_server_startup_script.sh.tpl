@@ -70,6 +70,7 @@ logrotate /etc/logrotate.conf
 # Change the access level of configs/ rules/ and run_forseti.sh
 chmod -R ug+rwx ${forseti_home}/configs ${forseti_home}/rules ${forseti_home}/install/gcp/scripts/run_forseti.sh
 
+
 # Install Forseti
 echo "Forseti Startup - Installing Forseti python package."
 python3 setup.py install
@@ -120,6 +121,12 @@ else
   # of policy files.  The config-validator is not required for the rest of Forseti
   # and should not halt installation.
   gsutil cp -r gs://${storage_bucket_name}/policy-library ${policy_library_home}/ || echo "No policy available, continuing with Forseti installation"
+fi
+
+# Enable cloud-profiler in the initialize_forseti_services.sh script
+if ${cloud_profiler_enabled}; then
+  pip3 install google-cloud-profiler
+  sed "/FORSETI_COMMAND+=\" --services/a FORSETI_COMMAND+=\" --enable_profiler\"" -i ./install/gcp/scripts/initialize_forseti_services.sh
 fi
 
 # Start Forseti service depends on vars defined above.

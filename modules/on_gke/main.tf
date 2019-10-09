@@ -244,6 +244,11 @@ resource "helm_release" "forseti-security" {
   }
 
   set {
+    name  = "server.cloudProfilerEnabled"
+    value = var.cloud_profiler_enabled
+  }
+
+  set {
     name  = "orchestrator.runFrequency"
     value = local.forseti_run_frequency
   }
@@ -433,6 +438,7 @@ module "cloudsql" {
 module "server_iam" {
   source                  = "../server_iam"
   cscc_violations_enabled = var.cscc_violations_enabled
+  cloud_profiler_enabled  = var.cloud_profiler_enabled
   enable_write            = var.enable_write
   folder_id               = var.folder_id
   org_id                  = var.org_id

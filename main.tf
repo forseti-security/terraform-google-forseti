@@ -65,6 +65,10 @@ locals {
   cscc_violations_enabled_services_list = [
     "securitycenter.googleapis.com",
   ]
+
+  cloud_profiler_enabled_services_list = [
+    "cloudprofiler.googleapis.com"
+  ]
 }
 
 #-------------------#
@@ -81,6 +85,13 @@ resource "google_project_service" "cscc_violations" {
   count              = var.cscc_violations_enabled ? length(local.cscc_violations_enabled_services_list) : 0
   project            = var.project_id
   service            = local.cscc_violations_enabled_services_list[count.index]
+  disable_on_destroy = "false"
+}
+
+resource "google_project_service" "cloud_profiler" {
+  count              = var.cloud_profiler_enabled ? length(local.cloud_profiler_enabled_services_list) : 0
+  project            = var.project_id
+  service            = local.cloud_profiler_enabled_services_list[count.index]
   disable_on_destroy = "false"
 }
 
@@ -127,6 +138,7 @@ module "server" {
   server_access_config     = var.server_access_config
   server_private           = var.server_private
   cloudsql_proxy_arch      = var.cloudsql_proxy_arch
+  cloud_profiler_enabled   = var.cloud_profiler_enabled
   network                  = var.network
   subnetwork               = var.subnetwork
   network_project          = var.network_project
@@ -149,7 +161,8 @@ module "server" {
   server_iam_module    = module.server_iam
   server_rules_module  = module.server_rules
 
-  services = google_project_service.main.*.service
+  services               = google_project_service.main.*.service
+  
 }
 
 module "cloudsql" {
@@ -170,6 +183,7 @@ module "cloudsql" {
 module "server_iam" {
   source                  = "./modules/server_iam"
   cscc_violations_enabled = var.cscc_violations_enabled
+  cloud_profiler_enabled  = var.cloud_profiler_enabled
   enable_write            = var.enable_write
   folder_id               = var.folder_id
   org_id                  = var.org_id
