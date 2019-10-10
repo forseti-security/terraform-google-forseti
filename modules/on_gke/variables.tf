@@ -831,11 +831,6 @@ variable "git_sync_image" {
   default     = "gcr.io/google-containers/git-sync"
 }
 
-variable "git_sync_image_tag" {
-  description = "The container image tag used by the config-validator git-sync side-car"
-  default     = "v3.1.2"
-}
-
 variable "git_sync_private_ssh_key" {
   description = "The SSH key allowing the git-sync to clone the policy library repository."
   default     = ""
