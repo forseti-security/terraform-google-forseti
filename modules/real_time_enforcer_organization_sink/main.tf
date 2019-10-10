@@ -46,9 +46,9 @@ EOD
 }
 
 resource "google_pubsub_topic_iam_member" "publisher" {
-  topic = google_pubsub_topic.main.name
-  role = "roles/pubsub.publisher"
+  topic   = google_pubsub_topic.main.name
+  role    = "roles/pubsub.publisher"
   project = var.pubsub_project_id
-  member = google_logging_organization_sink.main.writer_identity
+  member  = google_logging_organization_sink.main.writer_identity
 }
 
