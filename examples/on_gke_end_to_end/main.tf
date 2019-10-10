@@ -14,16 +14,35 @@
  * limitations under the License.
  */
 
-//*****************************************
-//  Setup Google providers
-//*****************************************
+#------------------#
+# Google Providers #
+#------------------#
 
 provider "google" {
-  credentials = "${file(var.credentials_path)}"
+  version = "~> 2.12.0"
+  project = var.project_id
 }
 
 provider "google-beta" {
-  credentials = "${file(var.credentials_path)}"
+  version = "~> 2.12.0"
+  project = var.project_id
+}
+
+#--------#
+# Locals #
+#--------#
+
+locals {
+  git_sync_private_ssh_key = var.git_sync_private_ssh_key_file != null ? data.local_file.git_sync_private_ssh_key_file[0].content_base64 : ""
+}
+
+#------------------------------#
+# git-sync SSH Key Data Source #
+#------------------------------#
+
+data "local_file" "git_sync_private_ssh_key_file" {
+  count    = var.git_sync_private_ssh_key_file != null ? 1 : 0
+  filename = var.git_sync_private_ssh_key_file
 }
 
 //*****************************************
@@ -36,7 +55,7 @@ provider "kubernetes" {
   alias                  = "forseti"
   load_config_file       = false
   host                   = "https://${module.gke.endpoint}"
-  token                  = "${data.google_client_config.default.access_token}"
+  token                  = data.google_client_config.default.access_token
   cluster_ca_certificate = "${base64decode(module.gke.ca_certificate)}"
 }
 
@@ -46,7 +65,7 @@ provider "kubernetes" {
 
 provider "helm" {
   alias           = "forseti"
-  service_account = "${var.k8s_tiller_sa_name}"
+  service_account = var.k8s_tiller_sa_name
   namespace       = "${var.k8s_forseti_namespace}-${module.forseti.suffix}"
   kubernetes {
     load_config_file       = false
@@ -59,66 +78,60 @@ provider "helm" {
   install_tiller                  = true
 }
 
+#--------------------#
+# Deploy Forseti VPC #
+#--------------------#
+
 module "vpc" {
   source                  = "terraform-google-modules/network/google"
   version                 = "1.1.0"
-  project_id              = "${var.project_id}"
-  network_name            = "${var.network_name}"
+  project_id              = var.project_id
+  network_name            = var.network
   routing_mode            = "GLOBAL"
-  description             = "${var.network_description}"
-  auto_create_subnetworks = "${var.auto_create_subnetworks}"
+  description             = var.network_description
+  auto_create_subnetworks = var.auto_create_subnetworks
 
   subnets = [{
-    subnet_name   = "${var.sub_network_name}"
-    subnet_ip     = "${var.gke_node_ip_range}"
-    subnet_region = "${var.region}"
+    subnet_name   = var.subnetwork
+    subnet_ip     = var.gke_node_ip_range
+    subnet_region = var.region
   }, ]
 
   secondary_ranges = {
-    "${var.sub_network_name}" = [
+    "${var.subnetwork}" = [
       {
-        range_name    = "gke-pod-ip-range"
-        ip_cidr_range = "${var.gke_pod_ip_range}"
+        range_name    = var.gke_pod_ip_range_name
+        ip_cidr_range = var.gke_pod_ip_range
       },
       {
-        range_name    = "gke-service-ip-range"
-        ip_cidr_range = "${var.gke_service_ip_range}"
+        range_name    = var.gke_service_ip_range_name
+        ip_cidr_range = var.gke_service_ip_range
       },
     ]
   }
 }
 
-module "forseti" {
-  source                      = "../../"
-  gsuite_admin_email          = "${var.gsuite_admin_email}"
-  config_validator_enabled    = "${var.config_validator_enabled}"
-  domain                      = "${var.domain}"
-  project_id                  = "${var.project_id}"
-  policy_library_sync_enabled = "${var.config_validator_enabled}"
-  org_id                      = "${var.org_id}"
-  network                     = "${module.vpc.network_name}"
-  subnetwork                  = "${var.sub_network_name}"
-  storage_bucket_location     = "${var.region}"
-  server_region               = "${var.region}"
-  client_region               = "${var.region}"
-  cloudsql_region             = "${var.region}"
-}
+#----------------------------#
+# Deploy Forseti GKE Cluster #
+#----------------------------#
 
 module "gke" {
-  source                   = "terraform-google-modules/kubernetes-engine/google"
-  version                  = "4.1.0"
-  project_id               = "${var.project_id}"
-  name                     = "${var.gke_cluster_name}"
+  source                   = "terraform-google-modules/kubernetes-engine/google//modules/beta-public-cluster"
+  version                  = "5.0.0"
+  project_id               = var.project_id
+  name                     = var.gke_cluster_name
   regional                 = false
-  region                   = "${var.region}"
-  zones                    = "${var.zones}"
-  network                  = "${module.vpc.network_name}"
-  subnetwork               = "${module.vpc.subnets_names[0]}"
-  ip_range_pods            = "gke-pod-ip-range"
-  ip_range_services        = "gke-service-ip-range"
-  service_account          = "${var.gke_service_account}"
+  region                   = var.region
+  zones                    = var.zones
+  network                  = module.vpc.network_name
+  subnetwork               = module.vpc.subnets_names[0]
+  ip_range_pods            = var.gke_pod_ip_range_name
+  ip_range_services        = var.gke_service_ip_range_name
+  service_account          = var.gke_service_account
   network_policy           = true
   remove_default_node_pool = true
+  identity_namespace       = "${var.project_id}.svc.id.goog"
+  node_metadata            = "GKE_METADATA_SERVER"
 
 
   node_pools = [{
@@ -144,40 +157,48 @@ module "gke" {
   }
 }
 
-//*****************************************
-//  Deploy Forseti on GKE
-//*****************************************
+#----------------------------------------#
+#  Allow GKE Service Account to read GCS #
+#----------------------------------------#
 
-module "forseti-on-gke" {
+resource "google_project_iam_member" "cluster_service_account-storage_reader" {
+  project = var.project_id
+  role    = "roles/storage.objectViewer"
+  member  = "serviceAccount:${module.gke.service_account}"
+}
+
+#-----------------------#
+# Deploy Forseti on-GKE #
+#-----------------------#
+
+module "forseti" {
   providers = {
     kubernetes = "kubernetes.forseti"
     helm       = "helm.forseti"
   }
-  source                             = "../../modules/on_gke"
-  config_validator_enabled           = "${var.config_validator_enabled}"
-  forseti_client_service_account     = "${module.forseti.forseti-client-service-account}"
-  forseti_client_vm_ip               = "${module.forseti.forseti-client-vm-ip}"
-  forseti_cloudsql_connection_name   = "${module.forseti.forseti-cloudsql-connection-name}"
-  forseti_server_service_account     = "${module.forseti.forseti-server-service-account}"
-  forseti_server_bucket              = "${module.forseti.forseti-server-storage-bucket}"
-  git_sync_image                     = "${var.git_sync_image}"
-  git_sync_image_tag                 = "${var.git_sync_image_tag}"
-  git_sync_private_ssh_key_file      = "${var.git_sync_private_ssh_key_file}"
-  git_sync_ssh                       = "${var.git_sync_ssh}"
-  git_sync_wait                      = "${var.git_sync_wait}"
-  gke_service_account                = "${module.gke.service_account}"
-  helm_repository_url                = "${var.helm_repository_url}"
-  k8s_config_validator_image         = "${var.k8s_config_validator_image}"
-  k8s_config_validator_image_tag     = "${var.k8s_config_validator_image_tag}"
-  k8s_forseti_namespace              = "${var.k8s_forseti_namespace}-${module.forseti.suffix}"
-  k8s_forseti_orchestrator_image     = "${var.k8s_forseti_orchestrator_image}"
-  k8s_forseti_orchestrator_image_tag = "${var.k8s_forseti_orchestrator_image_tag}"
-  k8s_forseti_server_image           = "${var.k8s_forseti_server_image}"
-  k8s_forseti_server_image_tag       = "${var.k8s_forseti_server_image_tag}"
-  load_balancer                      = "${var.load_balancer}"
-  network_policy                     = "${module.gke.network_policy_enabled}"
-  policy_library_repository_url      = "${var.policy_library_repository_url}"
-  policy_library_repository_branch   = "${var.policy_library_repository_branch}"
-  project_id                         = "${var.project_id}"
-  server_log_level                   = "${var.server_log_level}"
+  source     = "../../modules/on_gke"
+  domain     = var.domain
+  org_id     = var.org_id
+  project_id = var.project_id
+
+  client_region   = var.region
+  cloudsql_region = var.region
+  network         = var.network
+  subnetwork      = var.subnetwork
+
+  network_policy     = module.gke.network_policy_enabled
+  gke_node_pool_name = "default-node-pool"
+
+  gsuite_admin_email      = var.gsuite_admin_email
+  sendgrid_api_key        = var.sendgrid_api_key
+  forseti_email_sender    = var.forseti_email_sender
+  forseti_email_recipient = var.forseti_email_recipient
+
+  config_validator_enabled         = var.config_validator_enabled
+  git_sync_private_ssh_key         = local.git_sync_private_ssh_key
+  k8s_forseti_server_ingress_cidr  = module.vpc.subnets_ips[0]
+  helm_repository_url              = var.helm_repository_url
+  policy_library_repository_url    = var.policy_library_repository_url
+  policy_library_repository_branch = var.policy_library_repository_branch
+  server_log_level                 = var.server_log_level
 }

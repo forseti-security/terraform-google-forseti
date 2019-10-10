@@ -21,11 +21,6 @@ forseti_client_vm_name  = attribute("forseti-client-vm-name")
 region                  = attribute("region")
 subnetwork              = attribute("subnetwork")
 network_project         = attribute("network_project")
-credentials_path        = attribute('credentials_path')
-
-ENV['CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE'] = File.absolute_path(
-  credentials_path,
-  File.join(__dir__, "../../../fixtures/shared_vpc"))
 
 control 'forseti-subnetwork' do
   impact 1.0
