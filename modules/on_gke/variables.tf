@@ -801,6 +801,11 @@ variable "cloudsql_disk_size" {
   default     = "25"
 }
 
+variable "cloudsql_net_write_timeout" {
+  description = "See MySQL documentation: https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_net_write_timeout"
+  default     = "240"
+}
+
 variable "cloudsql_private" {
   description = "Whether to enable private network and not to create public IP for CloudSQL Instance"
   default     = false
@@ -824,11 +829,6 @@ variable "cloudsql_user_host" {
 variable "git_sync_image" {
   description = "The container image used by the config-validator git-sync side-car"
   default     = "gcr.io/google-containers/git-sync"
-}
-
-variable "git_sync_image_tag" {
-  description = "The container image tag used by the config-validator git-sync side-car"
-  default     = "v3.1.2"
 }
 
 variable "git_sync_private_ssh_key" {
