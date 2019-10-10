@@ -198,6 +198,18 @@ control "server" do
           expect(config["inventory"]["api_quota"]["servicemanagement"]["disable_polling"]).to eq false
         end
 
+        it "configures serviceusage_max_calls" do
+          expect(config["inventory"]["api_quota"]["serviceusage"]["max_calls"]).to eq 2
+        end
+
+        it "configures serviceusage_period" do
+          expect(config["inventory"]["api_quota"]["serviceusage"]["period"]).to eq 1.1
+        end
+
+        it "configures serviceusage_disable_polling" do
+          expect(config["inventory"]["api_quota"]["serviceusage"]["disable_polling"]).to eq false
+        end
+
         it "configures sqladmin_max_calls" do
           expect(config["inventory"]["api_quota"]["sqladmin"]["max_calls"]).to eq 1
         end

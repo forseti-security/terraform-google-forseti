@@ -56,6 +56,7 @@ locals {
     "cloudtrace.googleapis.com",
     "container.googleapis.com",
     "servicemanagement.googleapis.com",
+    "serviceusage.googleapis.com",
     "logging.googleapis.com",
     "cloudasset.googleapis.com",
     "storage-api.googleapis.com",
@@ -166,18 +167,19 @@ module "server" {
 }
 
 module "cloudsql" {
-  source             = "./modules/cloudsql"
-  cloudsql_disk_size = var.cloudsql_disk_size
-  cloudsql_private   = var.cloudsql_private
-  cloudsql_region    = var.cloudsql_region
-  cloudsql_type      = var.cloudsql_type
-  cloudsql_db_name   = var.cloudsql_db_name
-  cloudsql_user_host = var.cloudsql_user_host
-  network_project    = var.network_project
-  network            = var.network
-  project_id         = var.project_id
-  services           = google_project_service.main.*.service
-  suffix             = local.random_hash
+  source                     = "./modules/cloudsql"
+  cloudsql_disk_size         = var.cloudsql_disk_size
+  cloudsql_private           = var.cloudsql_private
+  cloudsql_region            = var.cloudsql_region
+  cloudsql_type              = var.cloudsql_type
+  cloudsql_db_name           = var.cloudsql_db_name
+  cloudsql_user_host         = var.cloudsql_user_host
+  cloudsql_net_write_timeout = var.cloudsql_net_write_timeout
+  network_project            = var.network_project
+  network                    = var.network
+  project_id                 = var.project_id
+  services                   = google_project_service.main.*.service
+  suffix                     = local.random_hash
 }
 
 module "server_iam" {
@@ -228,6 +230,9 @@ module "server_config" {
   servicemanagement_period                            = var.servicemanagement_period
   servicemanagement_max_calls                         = var.servicemanagement_max_calls
   servicemanagement_disable_polling                   = var.servicemanagement_disable_polling
+  serviceusage_period                                 = var.serviceusage_period
+  serviceusage_max_calls                              = var.serviceusage_max_calls
+  serviceusage_disable_polling                        = var.serviceusage_disable_polling
   securitycenter_period                               = var.securitycenter_period
   securitycenter_max_calls                            = var.securitycenter_max_calls
   logging_period                                      = var.logging_period

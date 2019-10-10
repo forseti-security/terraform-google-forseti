@@ -72,6 +72,12 @@ resource "google_sql_database_instance" "master" {
     activation_policy = "ALWAYS"
     disk_size         = var.cloudsql_disk_size
 
+    database_flags {
+      name  = "net_write_timeout"
+      value = var.cloudsql_net_write_timeout
+    }
+
+
     backup_configuration {
       enabled            = true
       binary_log_enabled = true

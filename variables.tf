@@ -328,6 +328,22 @@ variable "servicemanagement_disable_polling" {
   default     = false
 }
 
+variable "serviceusage_max_calls" {
+  description = "Maximum calls that can be made to Service Usage API"
+  default     = "4"
+}
+
+variable "serviceusage_period" {
+  description = "The period of max calls for the Service Usage API (in seconds)"
+  default     = "1.1"
+}
+
+variable "serviceusage_disable_polling" {
+  description = "Whether to disable polling for Service Usage API"
+  type        = bool
+  default     = false
+}
+
 variable "sqladmin_max_calls" {
   description = "Maximum calls that can be made to SQL Admin API"
   default     = "1"
@@ -821,6 +837,11 @@ variable "cloudsql_type" {
 variable "cloudsql_user_host" {
   description = "The host the user can connect from.  Can be an IP address or IP address range. Changing this forces a new resource to be created."
   default     = "%"
+}
+
+variable "cloudsql_net_write_timeout" {
+  description = "See MySQL documentation: https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_net_write_timeout"
+  default     = "240"
 }
 
 #----------------#
