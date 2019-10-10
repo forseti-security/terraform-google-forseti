@@ -115,6 +115,12 @@ variable "resource_name_suffix" {
   type        = string
 }
 
+variable "cloud_profiler_enabled" {
+  description = "Enable the Cloud Profiler"
+  default     = false
+  type        = bool
+}
+
 #---------------------------------#
 # Forseti server config inventory #
 #---------------------------------#

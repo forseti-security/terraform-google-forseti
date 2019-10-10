@@ -93,6 +93,12 @@ variable "server_private" {
   default     = "false"
 }
 
+variable "cloud_profiler_enabled" {
+  description = "Enable the Cloud Profiler"
+  default     = false
+  type        = bool
+}
+
 ##---------#
 ## Network #
 ##---------#

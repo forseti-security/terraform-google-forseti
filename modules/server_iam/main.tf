@@ -44,6 +44,10 @@ locals {
   server_cscc_roles = [
     "roles/securitycenter.findingsEditor",
   ]
+
+  server_cloud_profiler_roles = [
+    "roles/cloudprofiler.agent",
+  ]
 }
 
 #-------------------------#
@@ -93,6 +97,13 @@ resource "google_folder_iam_member" "folder_write" {
 resource "google_organization_iam_member" "org_cscc" {
   count  = var.org_id != "" && var.cscc_violations_enabled ? length(local.server_cscc_roles) : 0
   role   = local.server_cscc_roles[count.index]
+  org_id = var.org_id
+  member = "serviceAccount:${google_service_account.forseti_server.email}"
+}
+
+resource "google_organization_iam_member" "cloud_profiler" {
+  count  = var.cloud_profiler_enabled ? length(local.server_cloud_profiler_roles) : 0
+  role   = local.server_cloud_profiler_roles[count.index]
   org_id = var.org_id
   member = "serviceAccount:${google_service_account.forseti_server.email}"
 }

@@ -74,6 +74,7 @@ your environment.
 | client\_ssh\_allow\_ranges | List of CIDRs that will be allowed ssh access to forseti client | list(string) | `<list>` | no |
 | client\_tags | GCE Forseti Client VM Tags | list(string) | `<list>` | no |
 | client\_type | GCE Forseti Client machine type | string | `"n1-standard-2"` | no |
+| cloud\_profiler\_enabled | Enable the Cloud Profiler | bool | `"false"` | no |
 | cloudasset\_disable\_polling | Whether to disable polling for Cloud Asset API | bool | `"false"` | no |
 | cloudasset\_max\_calls | Maximum calls that can be made to Cloud Asset API | string | `"1"` | no |
 | cloudasset\_period | The period of max calls for the Cloud Asset API (in seconds) | string | `"1.0"` | no |

@@ -127,6 +127,12 @@ variable "server_private" {
   type        = bool
 }
 
+variable "cloud_profiler_enabled" {
+  description = "Enable the Cloud Profiler"
+  default     = false
+  type        = bool
+}
+
 #---------------------------------#
 # Forseti server config inventory #
 #---------------------------------#

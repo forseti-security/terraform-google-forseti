@@ -65,6 +65,7 @@ data "template_file" "forseti_server_startup_script" {
 
   vars = {
     cloudsql_proxy_arch                    = var.cloudsql_proxy_arch
+    cloud_profiler_enabled                 = var.cloud_profiler_enabled
     forseti_conf_server_checksum           = base64sha256(var.server_config_module.forseti-server-config)
     forseti_env                            = data.template_file.forseti_server_env.rendered
     forseti_environment                    = data.template_file.forseti_server_environment.rendered
