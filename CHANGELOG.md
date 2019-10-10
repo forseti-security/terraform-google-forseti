@@ -6,17 +6,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Extending the adopted spec, each change should have a link to its corresponding pull request appended.
 
-## [v5.0.0] - 2019-09-23
+## [Unreleased] - TBD
 Version 5.0.0 is a backwards-incompatible release. Please see the [upgrade instructions](./docs/upgrading_to_v5.0.md) for details.
-
-- Added additional submodules for Forseti infrastructure components [#284]
-
-## [v4.2.0] - 2019-09-23
 
 ### Added
 
-- Support for Forseti v2.21.0 [#255]
-- Verbose logging for the Forseti Server startup script [#254]
+- Added additional submodules for Forseti infrastructure components [#284]
+
+## [v4.3.0] - 2019-10-03
+
+### Added
+
+- Upgraded default forseti server vm and cloud sql instance size [#268]
+- Add READMEs to submodules [#270]
+- Set the crontab minute to be random [#280]
+- Fix to helper script [#282]
+- Only clone head of desired Forseti branch [#283]
+
+## [v4.2.1] - 2019-09-23
+
+### Added
+
+- Support for Forseti v2.22.0 [#266]
+- Verbose logging for the Forseti Server startup script [#257]
 - CloudSQL instance created in the same zone as GCE instances [#253]
 - Support for importing existing deployments created by the deprecated Python Installer. [#197]
   - A variable to override the random resource name suffix
@@ -261,11 +273,17 @@ Version 4.0.0 is a backwards-incompatible release. Please see the [upgrade instr
 [v4.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v3.0.0...v4.0.0
 [v4.0.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.0.0...v4.0.1
 [v4.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.0.1...v4.1.0
-[v4.2.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.1.0...v4.2.0
+[v4.2.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.1.0...v4.2.1
+[v4.3.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.2.1...v4.3.0
 
 [#284]: https://github.com/forseti-security/terraform-google-forseti/pull/284
-[#255]: https://github.com/forseti-security/terraform-google-forseti/pull/266
-[#254]: https://github.com/forseti-security/terraform-google-forseti/pull/257
+[#283]: https://github.com/forseti-security/terraform-google-forseti/pull/283
+[#282]: https://github.com/forseti-security/terraform-google-forseti/pull/282
+[#280]: https://github.com/forseti-security/terraform-google-forseti/pull/280
+[#270]: https://github.com/forseti-security/terraform-google-forseti/pull/270
+[#268]: https://github.com/forseti-security/terraform-google-forseti/pull/268
+[#266]: https://github.com/forseti-security/terraform-google-forseti/pull/266
+[#257]: https://github.com/forseti-security/terraform-google-forseti/pull/257
 [#253]: https://github.com/forseti-security/terraform-google-forseti/pull/253
 [#246]: https://github.com/forseti-security/terraform-google-forseti/pull/246
 [#239]: https://github.com/forseti-security/terraform-google-forseti/pull/239
