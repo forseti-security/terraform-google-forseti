@@ -817,6 +817,11 @@ variable "cloudsql_user_host" {
   default     = "%"
 }
 
+variable "cloudsql_net_write_timeout" {
+  description = "See MySQL documentation: https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_net_write_timeout"
+  default     = "240"
+}
+
 #----------------#
 # Forseti bucket #
 #----------------#
