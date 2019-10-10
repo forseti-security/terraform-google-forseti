@@ -56,6 +56,7 @@ locals {
     "cloudtrace.googleapis.com",
     "container.googleapis.com",
     "servicemanagement.googleapis.com",
+    "serviceusage.googleapis.com",
     "logging.googleapis.com",
     "cloudasset.googleapis.com",
     "storage-api.googleapis.com",
@@ -215,6 +216,9 @@ module "server_config" {
   servicemanagement_period                            = var.servicemanagement_period
   servicemanagement_max_calls                         = var.servicemanagement_max_calls
   servicemanagement_disable_polling                   = var.servicemanagement_disable_polling
+  serviceusage_period                                 = var.serviceusage_period
+  serviceusage_max_calls                              = var.serviceusage_max_calls
+  serviceusage_disable_polling                        = var.serviceusage_disable_polling
   securitycenter_period                               = var.securitycenter_period
   securitycenter_max_calls                            = var.securitycenter_max_calls
   logging_period                                      = var.logging_period

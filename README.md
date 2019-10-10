@@ -192,6 +192,9 @@ your environment.
 | servicemanagement\_disable\_polling | Whether to disable polling for Service Management API | bool | `"false"` | no |
 | servicemanagement\_max\_calls | Maximum calls that can be made to Service Management API | string | `"2"` | no |
 | servicemanagement\_period | The period of max calls for the Service Management API (in seconds) | string | `"1.1"` | no |
+| serviceusage\_disable\_polling | Whether to disable polling for Service Usage API | bool | `"false"` | no |
+| serviceusage\_max\_calls | Maximum calls that can be made to Service Usage API | string | `"4"` | no |
+| serviceusage\_period | The period of max calls for the Service Usage API (in seconds) | string | `"1.1"` | no |
 | sqladmin\_disable\_polling | Whether to disable polling for SQL Admin API | bool | `"false"` | no |
 | sqladmin\_max\_calls | Maximum calls that can be made to SQL Admin API | string | `"1"` | no |
 | sqladmin\_period | The period of max calls for the SQL Admin API (in seconds) | string | `"1.1"` | no |
