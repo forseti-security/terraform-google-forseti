@@ -55,6 +55,8 @@ In order to operate with the Service Account you must activate the following API
 |------|-------------|:----:|:-----:|:-----:|
 | auto\_create\_subnetworks | When set to true, the network is created in 'auto subnet mode' and it will create a subnet for each region automatically across the 10.128.0.0/9 address range. When set to false, the network is created in 'custom subnet mode' so the user can explicitly connect subnetwork resources. | bool | `"false"` | no |
 | config\_validator\_enabled | Config Validator scanner enabled. | bool | `"false"` | no |
+| cscc\_source\_id | Source ID for CSCC Beta API | string | `""` | no |
+| cscc\_violations\_enabled | Notify for CSCC violations | bool | `"false"` | no |
 | domain | The domain associated with the GCP Organization ID | string | n/a | yes |
 | forseti\_email\_recipient | Email address that receives Forseti notifications | string | `""` | no |
 | forseti\_email\_sender | Email address that sends the Forseti notifications | string | `""` | no |
