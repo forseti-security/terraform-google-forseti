@@ -74,6 +74,7 @@ data "template_file" "forseti_server_startup_script" {
     forseti_run_frequency                  = local.forseti_run_frequency
     forseti_server_conf_path               = local.server_conf_path
     forseti_version                        = var.forseti_version
+    mailjet_enabled                        = var.mailjet_enabled
     policy_library_home                    = var.policy_library_home
     policy_library_sync_enabled            = var.policy_library_sync_enabled
     policy_library_sync_gcs_directory_name = var.policy_library_sync_gcs_directory_name
