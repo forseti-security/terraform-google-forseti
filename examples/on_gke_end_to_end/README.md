@@ -34,19 +34,21 @@ The [project factory](https://github.com/terraform-google-modules/terraform-goog
 - [Terraform Provider for GCP](https://www.terraform.io/docs/providers/google/index.html) v2.9
 
 ### Configure a Service Account
-In addition to the [roles](https://github.com/forseti-security/terraform-google-forseti#iam-roles) required for the core module function, the Service Account must have these roles for this example.
-- roles/container.admin
-- roles/iam.serviceAccountAdmin
-- roles/iam.serviceAccountKeyAdmin
-- roles/compute.networkAdmin
-- roles/resourcemanager.projectIamAdmin (only required if `service_account` is set to `create`)
+### Create the Service Account and enable required APIs
+You can create the service account manually, or by running the following command:
 
-### Enable APIs
-In order to operate with the Service Account you must activate the following APIs on the project where the Service Account was created:
+```bash
+./helpers/setup.sh -p PROJECT_ID -o ORG_ID -k
+```
 
-- Compute Engine API - compute.googleapis.com
-- Kubernetes Engine API - container.googleapis.com
-- Container Registry API - containerregistry.googleapis.com
+This will create a service account called `cloud-foundation-forseti-<suffix>`,
+give it the proper roles, and download service account credentials to
+`${PWD}/credentials.json`. Note, that using this script assumes that you are
+currently authenticated as a user that can create/authorize service accounts at
+both the organization and project levels.
+
+This script will also activate necessary APIs required for Terraform to deploy Forseti on-GKE end-to-end.
+```
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs

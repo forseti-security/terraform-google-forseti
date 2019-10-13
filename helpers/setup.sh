@@ -25,6 +25,7 @@ Options:
     -p PROJECT_ID    The project ID where Forseti resources will be created.
     -o ORG_ID        The organization ID that Forseti will be monitoring.
     -e               Add additional IAM roles for running the real time policy enforcer.
+    -k               Add additional IAM roles for running Forseti on-GKE
     -f HOST_PROJECT_ID  ID of a project holding shared vpc.
 
 Examples:
@@ -39,9 +40,10 @@ PROJECT_ID=""
 ORG_ID=""
 WITH_ENFORCER=""
 HOST_PROJECT_ID=""
+ON_GKE=""
 
 OPTIND=1
-while getopts ":hep:f:o:" opt; do
+while getopts ":hekp:f:o:" opt; do
   case "$opt" in
     h)
       show_help
@@ -58,6 +60,9 @@ while getopts ":hep:f:o:" opt; do
       ;;
     o)
       ORG_ID="$OPTARG"
+      ;;
+    k)
+      ON_GKE=1
       ;;
     *)
       echo "Unhandled option: -$opt" >&2
@@ -181,6 +186,18 @@ if [[ -n "$WITH_ENFORCER" ]]; then
     gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
         --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
         --role="$project_role" \
+        --user-output-enabled false
+  done
+fi
+
+if [[ -n "$ON_GKE" ]]; then
+  gke_roles=("roles/container.admin" "roles/iam.serviceAccountAdmin" "roles/compute.networkAdmin" "roles/resourcemanager.projectIamAdmin")
+
+  echo "Granting on-GKE related roles on project $PROJECT_ID..." 
+  for gke_role in "${gke_roles[@]}"; do
+    gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
+        --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
+        --role="$gke_role" \
         --user-output-enabled false
   done
 fi

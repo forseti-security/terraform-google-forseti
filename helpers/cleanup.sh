@@ -26,6 +26,7 @@ Options:
     -o ORG_ID               The organization ID to remove roles from the Forseti service account.
     -s SERVICE_ACCOUNT_NAME The service account to remove from the project and organization IAM roles.
     -e                      Remove additional IAM roles for running the real time policy enforcer.
+    -k                      Add additional IAM roles for running Forseti on-GKE
     -f HOST_PROJECT_ID      ID of a project holding shared VPC.
 
 Examples:
@@ -41,9 +42,10 @@ ORG_ID=""
 SERVICE_ACCOUNT_NAME=""
 WITH_ENFORCER=""
 HOST_PROJECT_ID=""
+ON_GKE=""
 
 OPTIND=1
-while getopts ":hef:p:o:s:" opt; do
+while getopts ":hekf:p:o:s:" opt; do
   case "$opt" in
     h)
       show_help
@@ -60,6 +62,9 @@ while getopts ":hef:p:o:s:" opt; do
       ;;
     o)
       ORG_ID="$OPTARG"
+      ;;
+    k)
+      ON_GKE=1
       ;;
     s)
       SERVICE_ACCOUNT_NAME="$OPTARG"
@@ -191,6 +196,19 @@ gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
     --role="roles/cloudsql.admin" \
     --user-output-enabled false
+
+if [[ -n "$ON_GKE" ]]; then
+  gke_roles=("roles/container.admin" "roles/compute.networkAdmin" "roles/resourcemanager.projectIamAdmin")
+
+  echo "Removing on-GKE related roles on project $PROJECT_ID..." 
+  for gke_role in "${gke_roles[@]}"; do
+    echo "Removing role: ${gke_role}"
+    gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
+        --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
+        --role="$gke_role" \
+        --user-output-enabled false
+  done
+fi
 
 if [[ $HOST_PROJECT_ID != "" ]];
 then
