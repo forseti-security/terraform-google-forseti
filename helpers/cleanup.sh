@@ -202,7 +202,6 @@ if [[ -n "$ON_GKE" ]]; then
 
   echo "Removing on-GKE related roles on project $PROJECT_ID..." 
   for gke_role in "${gke_roles[@]}"; do
-    echo "Removing role: ${gke_role}"
     gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
         --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
         --role="$gke_role" \
