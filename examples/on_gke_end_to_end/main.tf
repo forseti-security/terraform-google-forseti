@@ -132,6 +132,7 @@ module "gke" {
   remove_default_node_pool = true
   identity_namespace       = "${var.project_id}.svc.id.goog"
   node_metadata            = "GKE_METADATA_SERVER"
+  kubernetes_version       = "1.13"
 
 
   node_pools = [{
@@ -143,7 +144,7 @@ module "gke" {
     disk_type          = "pd-standard"
     image_type         = "COS"
     auto_repair        = true
-    auto_upgrade       = true
+    auto_upgrade       = false
     preemptible        = false
     initial_node_count = 1
   }, ]
