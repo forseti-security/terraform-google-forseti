@@ -33,7 +33,6 @@ The [project factory](https://github.com/terraform-google-modules/terraform-goog
 - [Terraform](https://www.terraform.io/downloads.html) 0.12
 - [Terraform Provider for GCP](https://www.terraform.io/docs/providers/google/index.html) v2.9
 
-### Configure a Service Account
 ### Create the Service Account and enable required APIs
 You can create the service account manually, or by running the following command:
 
