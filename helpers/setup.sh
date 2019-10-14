@@ -191,7 +191,7 @@ if [[ -n "$WITH_ENFORCER" ]]; then
 fi
 
 if [[ -n "$ON_GKE" ]]; then
-  gke_roles=("roles/container.admin" "roles/iam.serviceAccountAdmin" "roles/compute.networkAdmin" "roles/resourcemanager.projectIamAdmin")
+  gke_roles=("roles/container.admin" "roles/compute.networkAdmin" "roles/resourcemanager.projectIamAdmin")
 
   echo "Granting on-GKE related roles on project $PROJECT_ID..." 
   for gke_role in "${gke_roles[@]}"; do
