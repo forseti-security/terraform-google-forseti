@@ -14,6 +14,16 @@
  * limitations under the License.
  */
 
+variable "cscc_violations_enabled" {
+  description = "Notify for CSCC violations"
+  type        = bool
+  default     = false
+}
+
+variable "cscc_source_id" {
+  description = "Source ID for CSCC Beta API"
+  default     = ""
+}
 
 variable "config_validator_enabled" {
   description = "Config Validator scanner enabled."
