@@ -16,7 +16,9 @@ This can either be a dedicated Forseti project or an existing DevSecOps project.
 
 ## Activate APIs
 
-You will need to activate a few APIs on this project for Forseti to function:
+You will need to activate a few APIs on this project for Forseti to function.
+
+Note: If this step is blocked by an error "Unable to enable required APIs", navigate to the APIs and Services page on the GCP console and manually enable the APIs.
 
 <walkthrough-enable-apis apis=
   "cloudresourcemanager.googleapis.com,
