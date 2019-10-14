@@ -43,7 +43,7 @@ HOST_PROJECT_ID=""
 ON_GKE=""
 
 OPTIND=1
-while getopts ":hekp:f:o:" opt; do
+while getopts ":hekf:p:o:" opt; do
   case "$opt" in
     h)
       show_help
