@@ -132,6 +132,7 @@ module "gke" {
   remove_default_node_pool = true
   identity_namespace       = "${var.project_id}.svc.id.goog"
   node_metadata            = "GKE_METADATA_SERVER"
+  kubernetes_version       = "1.13"
 
 
   node_pools = [{
@@ -143,7 +144,7 @@ module "gke" {
     disk_type          = "pd-standard"
     image_type         = "COS"
     auto_repair        = true
-    auto_upgrade       = true
+    auto_upgrade       = false
     preemptible        = false
     initial_node_count = 1
   }, ]
@@ -193,6 +194,9 @@ module "forseti" {
   sendgrid_api_key        = var.sendgrid_api_key
   forseti_email_sender    = var.forseti_email_sender
   forseti_email_recipient = var.forseti_email_recipient
+  cscc_violations_enabled = var.cscc_violations_enabled
+  cscc_source_id          = var.cscc_source_id
+
 
   config_validator_enabled         = var.config_validator_enabled
   git_sync_private_ssh_key         = local.git_sync_private_ssh_key

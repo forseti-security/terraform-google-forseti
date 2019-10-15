@@ -20,10 +20,20 @@ variable "config_validator_enabled" {
   default     = false
 }
 
+variable "cscc_violations_enabled" {
+  description = "Notify for CSCC violations"
+  type        = bool
+  default     = false
+}
+
+variable "cscc_source_id" {
+  description = "Source ID for CSCC Beta API"
+  default     = ""
+}
+
 variable "domain" {
   description = "The domain associated with the GCP Organization ID"
 }
-
 
 variable "git_sync_private_ssh_key_file" {
   description = "The file containing the private SSH key allowing the git-sync to clone the policy library repository."
