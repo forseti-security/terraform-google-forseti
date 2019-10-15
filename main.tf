@@ -140,12 +140,13 @@ module "server" {
   server_private           = var.server_private
   cloudsql_proxy_arch      = var.cloudsql_proxy_arch
   cloud_profiler_enabled   = var.cloud_profiler_enabled
+  mailjet_enabled          = var.mailjet_enabled
   network                  = var.network
-  subnetwork               = var.subnetwork
   network_project          = var.network_project
   server_grpc_allow_ranges = var.server_grpc_allow_ranges
-  server_ssh_allow_ranges  = var.server_ssh_allow_ranges
   server_instance_metadata = var.server_instance_metadata
+  server_ssh_allow_ranges  = var.server_ssh_allow_ranges
+  subnetwork               = var.subnetwork
   suffix                   = local.random_hash
 
   policy_library_home                    = var.policy_library_home
