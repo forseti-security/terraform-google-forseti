@@ -21,6 +21,8 @@ You will need to activate a few APIs on this project for Forseti to function.
 Note: If this step is blocked by an error "Unable to enable required APIs", navigate to the APIs and Services page on the GCP console and manually enable the specified APIs. Alternatively, you can use the following `gcloud` commands:
 
 ```bash
+gcloud config set project PROJECT_ID
+
 gcloud services enable cloudresourcemanager.googleapis.com serviceusage.googleapis.com compute.googleapis.com
 ```
 
