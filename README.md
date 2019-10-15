@@ -86,6 +86,7 @@ your environment.
 | cloudsql\_db\_name | CloudSQL database name | string | `"forseti_security"` | no |
 | cloudsql\_db\_port | CloudSQL database port | string | `"3306"` | no |
 | cloudsql\_disk\_size | The size of data disk, in GB. Size of a running instance cannot be reduced but can be increased. | string | `"25"` | no |
+| cloudsql\_net\_write\_timeout | See MySQL documentation: https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_net_write_timeout | string | `"240"` | no |
 | cloudsql\_private | Whether to enable private network and not to create public IP for CloudSQL Instance | bool | `"false"` | no |
 | cloudsql\_proxy\_arch | CloudSQL Proxy architecture | string | `"linux.amd64"` | no |
 | cloudsql\_region | CloudSQL region | string | `"us-central1"` | no |
@@ -160,6 +161,7 @@ your environment.
 | logging\_disable\_polling | Whether to disable polling for Logging API | bool | `"false"` | no |
 | logging\_max\_calls | Maximum calls that can be made to Logging API | string | `"9"` | no |
 | logging\_period | The period of max calls for the Logging API (in seconds) | string | `"1.0"` | no |
+| mailjet\_enabled | Enable mailjet_rest library | bool | `"false"` | no |
 | manage\_rules\_enabled | A toggle to enable or disable the management of rules | bool | `"true"` | no |
 | network | The VPC where the Forseti client and server will be created | string | `"default"` | no |
 | network\_project | The project containing the VPC and subnetwork where the Forseti client and server will be created | string | `""` | no |
