@@ -16,7 +16,7 @@
 
 module "forseti-install-simple" {
   source  = "terraform-google-modules/forseti/google"
-  version = "~> 5.0"
+  version = "~> 4.3.0"
 
   project_id = var.project_id
   org_id     = var.org_id
