@@ -6,12 +6,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Extending the adopted spec, each change should have a link to its corresponding pull request appended.
 
-## [Unreleased] - TBD
+## [5.0.0] - 2019-10-17
 Version 5.0.0 is a backwards-incompatible release. Please see the [upgrade instructions](./docs/upgrading_to_v5.0.md) for details.
 
 ### Added
 
 - Added additional submodules for Forseti infrastructure components [#284]
+- Update Cloud Shell tutorial [#309]
+- Add variable to enable mailjet_rest library [#302]
+- Updating helper scripts to include GKE related roles [#306]
+- Setting the GKE version to a specific version [#307]
+- Fix serviceusage test [#308]
+- Adding cscc vars to on_gke examples [#304]
+- Optionally Enable Cloud Profiler [#297]
+- Add Service Usage API [#276]
+- Cleaning up unused input variables. [#300]
+- Add ability to set net_write_timeout for CloudSQL [#299]
+- Update server config template to reflect CSCC notifier changes [#292]
 
 ## [v4.3.0] - 2019-10-03
 
@@ -275,11 +286,24 @@ Version 4.0.0 is a backwards-incompatible release. Please see the [upgrade instr
 [v4.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.0.1...v4.1.0
 [v4.2.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.1.0...v4.2.1
 [v4.3.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.2.1...v4.3.0
+[v5.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.3.0...v5.0.0
 
+[#309]: https://github.com/forseti-security/terraform-google-forseti/pull/309
+[#308]: https://github.com/forseti-security/terraform-google-forseti/pull/308
+[#307]: https://github.com/forseti-security/terraform-google-forseti/pull/307
+[#306]: https://github.com/forseti-security/terraform-google-forseti/pull/306
+[#304]: https://github.com/forseti-security/terraform-google-forseti/pull/304
+[#302]: https://github.com/forseti-security/terraform-google-forseti/pull/302
+[#300]: https://github.com/forseti-security/terraform-google-forseti/pull/300
+[#299]: https://github.com/forseti-security/terraform-google-forseti/pull/299
+[#297]: https://github.com/forseti-security/terraform-google-forseti/pull/297
+[#292]: https://github.com/forseti-security/terraform-google-forseti/pull/292
+[#290]: https://github.com/forseti-security/terraform-google-forseti/pull/290
 [#284]: https://github.com/forseti-security/terraform-google-forseti/pull/284
 [#283]: https://github.com/forseti-security/terraform-google-forseti/pull/283
 [#282]: https://github.com/forseti-security/terraform-google-forseti/pull/282
 [#280]: https://github.com/forseti-security/terraform-google-forseti/pull/280
+[#276]: https://github.com/forseti-security/terraform-google-forseti/pull/276
 [#270]: https://github.com/forseti-security/terraform-google-forseti/pull/270
 [#268]: https://github.com/forseti-security/terraform-google-forseti/pull/268
 [#266]: https://github.com/forseti-security/terraform-google-forseti/pull/266
@@ -292,7 +316,7 @@ Version 4.0.0 is a backwards-incompatible release. Please see the [upgrade instr
 [#231]: https://github.com/forseti-security/terraform-google-forseti/pull/231
 [#225]: https://github.com/forseti-security/terraform-google-forseti/pull/225
 [#213]: https://github.com/forseti-security/terraform-google-forseti/pull/213
-[#197]: https://github.com/forseti-security/terraform-google-forseti/issues/197
+[#197]: https://github.com/forseti-security/terraform-google-forseti/pull/197
 [#182]: https://github.com/forseti-security/terraform-google-forseti/pull/182
 [#211]: https://github.com/forseti-security/terraform-google-forseti/pull/211
 [#223]: https://github.com/forseti-security/terraform-google-forseti/pull/223
