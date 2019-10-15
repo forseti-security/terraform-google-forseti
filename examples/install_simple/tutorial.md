@@ -22,7 +22,8 @@ Note: If this step is blocked by an error "Unable to enable required APIs", navi
 
 ```bash
 gcloud config set project {{project_id}}
-
+```
+```bash
 gcloud services enable cloudresourcemanager.googleapis.com serviceusage.googleapis.com compute.googleapis.com
 ```
 
