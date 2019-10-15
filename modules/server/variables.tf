@@ -99,6 +99,12 @@ variable "cloud_profiler_enabled" {
   type        = bool
 }
 
+variable "mailjet_enabled" {
+  description = "Enable mailjet_rest library"
+  default     = false
+  type        = bool
+}
+
 ##---------#
 ## Network #
 ##---------#
