@@ -58,6 +58,7 @@ data "template_file" "forseti_server_config" {
   # of modifications needed to convert the Python templates into
   # Terraform templates.
   vars = {
+    RULES_PATH                                          = var.rules_path
     ROOT_RESOURCE_ID                                    = local.root_resource_id
     COMPOSITE_ROOT_RESOURCES                            = local.composite_root_resources
     DOMAIN_SUPER_ADMIN_EMAIL                            = var.gsuite_admin_email

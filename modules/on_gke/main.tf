@@ -219,7 +219,7 @@ resource "helm_release" "forseti-security" {
   }
 
   set {
-    name  = "server.bucket"
+    name  = "server.config.bucket"
     value = module.server_gcs.forseti-server-storage-bucket
   }
 
@@ -477,6 +477,7 @@ module "server_rules" {
 #-----------------------#
 module "server_config" {
   source                                              = "../server_config"
+  rules_path                                          = "${module.server_gcs.forseti-server-storage-bucket}/rules"
   composite_root_resources                            = var.composite_root_resources
   server_gcs_module                                   = module.server_gcs
   forseti_email_recipient                             = var.forseti_email_recipient
