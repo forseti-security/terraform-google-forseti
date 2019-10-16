@@ -39,7 +39,7 @@ Version 5.0.0 is a backwards-incompatible release. Please see the [upgrade instr
 
 ### Added
 
-- Support for Forseti v2.23.0 [#266]
+- Support for Forseti v2.22.0 [#266]
 - Verbose logging for the Forseti Server startup script [#257]
 - CloudSQL instance created in the same zone as GCE instances [#253]
 - Support for importing existing deployments created by the deprecated Python Installer. [#197]
