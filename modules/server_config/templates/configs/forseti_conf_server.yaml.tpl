@@ -219,7 +219,7 @@ scanner:
     # gs://bucket-name/path/for/rules_path
     # if no rules_path is specified, rules are
     # searched in /path/to/forseti_security/rules/
-    rules_path: gs://${RULES_PATH}
+    rules_path: ${RULES_PATH}
 
     # Enable the scanners as default to true when integrated for Forseti 2.0.
 
