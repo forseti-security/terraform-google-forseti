@@ -200,7 +200,7 @@ gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
 if [[ -n "$ON_GKE" ]]; then
   gke_roles=("roles/container.admin" "roles/compute.networkAdmin" "roles/resourcemanager.projectIamAdmin")
 
-  echo "Removing on-GKE related roles on project $PROJECT_ID..." 
+  echo "Removing on-GKE related roles on project $PROJECT_ID..."
   for gke_role in "${gke_roles[@]}"; do
     gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
         --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \

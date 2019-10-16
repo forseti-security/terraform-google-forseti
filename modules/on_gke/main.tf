@@ -219,7 +219,7 @@ resource "helm_release" "forseti-security" {
   }
 
   set {
-    name  = "server.bucket"
+    name  = "server.config.bucket"
     value = module.server_gcs.forseti-server-storage-bucket
   }
 
@@ -246,6 +246,11 @@ resource "helm_release" "forseti-security" {
   set {
     name  = "server.cloudProfilerEnabled"
     value = var.cloud_profiler_enabled
+  }
+
+  set {
+    name  = "orchestrator.config.bucket"
+    value = module.client_gcs.forseti-client-storage-bucket
   }
 
   set {
