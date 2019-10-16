@@ -78,3 +78,13 @@ variable "cloudsql_user_host" {
   description = "The host the user can connect from. Can be an IP address or IP address range. Changing this forces a new resource to be created."
   default     = "%"
 }
+
+variable "cloudsql_db_user" {
+  description = "CloudSQL database user"
+  default     = "forseti_security_user"
+}
+
+variable "cloudsql_db_password" {
+  description = "CloudSQL database password"
+  default     = ""
+}
