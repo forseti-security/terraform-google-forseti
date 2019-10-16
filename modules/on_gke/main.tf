@@ -204,12 +204,12 @@ resource "helm_release" "forseti-security" {
   "google_service_account_iam_binding.forseti_client_workload_identity"]
 
   set {
-    name  = "server.cloudsqlConnection"
+    name  = "database.connectionName"
     value = module.cloudsql.forseti-cloudsql-connection-name
   }
 
   set {
-    name  = "server.cloudsqlDatabaseName"
+    name  = "database.name"
     value = module.cloudsql.forseti-cloudsql-db-name
   }
 
