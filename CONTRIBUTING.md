@@ -95,5 +95,4 @@ Run `make docker_test_lint`.
 [kitchen]: https://kitchen.ci/
 [make]: https://en.wikipedia.org/wiki/Make_(software)
 [shellcheck]: https://www.shellcheck.net/
-[terraform-docs]: https://github.com/segmentio/terraform-docs
 [terraform]: https://terraform.io/
