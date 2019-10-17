@@ -110,7 +110,7 @@ Now that Forseti has been deployed, there are additional steps that you can foll
 This section describes in detail the requirements necessary to deploy Forseti. The setup helper script automates the service account creation and enabling the APIs for you. Read through this section if you are not using the setup script or want to understand these details.
 
 1. Install Terraform.
-2. A GCP project to deploy Forseti into. The [Google Project Factory Terraform][terraform-google-project-factory] module can be used to provision the project with the required APIs enabled, along with a Shared VPC connection.
+2. A GCP project to deploy Forseti into. The [Google Project Factory Terraform][https://github.com/terraform-google-modules/terraform-google-project-factory] module can be used to provision the project with the required APIs enabled, along with a Shared VPC connection.
 3. The Service Account used to execute this module has the right permissions.
 4. Enable the required GCP APIs to allow the Terraform module to deploy Forseti.
 
@@ -122,7 +122,7 @@ This section describes in detail the requirements necessary to deploy Forseti. T
 - [Terraform Provider Templates](https://www.terraform.io/docs/providers/template/index.html) 2.0
 
 ### Service Account
-In order to execute this module you must have a Service Account with the following roles assigned. There is a helpful setup script documented below which can automatically create this account for you.
+In order to execute this module you must have a Service Account with the following IAM roles assigned.
 
 #### IAM Roles
 For this module to work, you need the following roles enabled on the Service Account.
@@ -337,15 +337,15 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 ## File structure
 The project has the following folders and files:
 
-- [/build](./build/): Google Cloud Build configuration
-- [/docs](./docs/): Additional documentation
-- [/examples](./examples/): examples for using this module
-- [/helpers](./helpers/): Helper scripts
-- [/modules](./modules/): Private and sub-modules
-- [/test](./test/): All integration tests are located here
-- [/CHANGELOG.md](./CHANGELOG.md): A list of changes made for each release
-- [/CONTRIBUTING.md](./CONTRIBUTING.md): Information on how to contribute to this project
-- [/LICENSE](./LICENSE): License terms and conditions
-- [/main.tf](./main.tf): Main Terraform configuration file for this module, contains all the resources to install Forseti
-- [/README.md](./README.md): This readme file
-- [/variables.tf](./variables.tf): All the variables for the module
+- [build/](./build/): Google Cloud Build configuration
+- [docs/](./docs/): Additional documentation
+- [examples/](./examples/): examples for using this module
+- [helpers/](./helpers/): Helper scripts
+- [modules/](./modules/): Private and sub-modules
+- [test/](./test/): All integration tests are located here
+- [CHANGELOG.md](./CHANGELOG.md): A list of changes made for each release
+- [CONTRIBUTING.md](./CONTRIBUTING.md): Information on how to contribute to this project
+- [LICENSE](./LICENSE): License terms and conditions
+- [main.tf](./main.tf): Main Terraform configuration file for this module, contains all the resources to install Forseti
+- [README.md](./README.md): This readme file
+- [variables.tf](./variables.tf): All the variables for the module
