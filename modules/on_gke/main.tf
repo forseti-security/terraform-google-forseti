@@ -249,11 +249,6 @@ resource "helm_release" "forseti-security" {
   }
 
   set {
-    name  = "orchestrator.config.bucket"
-    value = module.client_gcs.forseti-client-storage-bucket
-  }
-
-  set {
     name  = "orchestrator.runFrequency"
     value = local.forseti_run_frequency
   }
