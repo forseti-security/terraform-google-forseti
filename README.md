@@ -110,7 +110,7 @@ Now that Forseti has been deployed, there are additional steps that you can foll
 This section describes in detail the requirements necessary to deploy Forseti. The setup helper script automates the service account creation and enabling the APIs for you. Read through this section if you are not using the setup script or want to understand these details.
 
 1. Install Terraform.
-2. A GCP project to deploy Forseti into. The [Google Project Factory Terraform][https://github.com/terraform-google-modules/terraform-google-project-factory] module can be used to provision the project with the required APIs enabled, along with a Shared VPC connection.
+2. A GCP project to deploy Forseti into. The [Google Project Factory Terraform](https://github.com/terraform-google-modules/terraform-google-project-factory) module can be used to provision the project with the required APIs enabled, along with a Shared VPC connection.
 3. The Service Account used to execute this module has the right permissions.
 4. Enable the required GCP APIs to allow the Terraform module to deploy Forseti.
 
