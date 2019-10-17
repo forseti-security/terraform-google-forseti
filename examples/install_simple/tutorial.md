@@ -44,8 +44,6 @@ gcloud services enable cloudresourcemanager.googleapis.com compute.googleapis.co
 ## Configure Forseti
 There are a few required settings that you will need to update in the Forseti Terraform configuration <walkthrough-editor-open-file filePath="terraform-google-forseti/examples/install_simple/terraform.tfvars">terraform.tfvars</walkthrough-editor-open-file> file.
 
-__Note:__ Clicking the links below will open the Terraform configuration files and select the text that needs to be updated.
-
 ### Set project
 On line 1, update the <walkthrough-editor-select-regex
   filePath="terraform-google-forseti/examples/install_simple/terraform.tfvars"
