@@ -46,7 +46,7 @@ Example of required Terraform configuration:
 
     module "forseti" {
       source = "terraform-google-modules/forseti/google"
-      version = "~> 4.2"
+      version = "~> 5.0"
 
       domain               = "example.com"
       project_id           = "forseti-235k"
@@ -62,8 +62,9 @@ Example of required Terraform configuration:
       client_instance_metadata = {
         enable-oslogin = "TRUE"
       }
-      enable_write         = true
-      manage_rules_enabled = false
+      enable_write                 = true
+      manage_rules_enabled         = false
+      manage_server_config_enabled = false
     }
 
 EOF

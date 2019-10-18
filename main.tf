@@ -216,6 +216,7 @@ module "server_rules" {
 module "server_config" {
   source                                              = "./modules/server_config"
   composite_root_resources                            = var.composite_root_resources
+  manage_server_config_enabled                        = var.manage_server_config_enabled
   server_gcs_module                                   = module.server_gcs
   forseti_email_recipient                             = var.forseti_email_recipient
   forseti_email_sender                                = var.forseti_email_sender

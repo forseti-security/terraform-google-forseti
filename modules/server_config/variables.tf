@@ -23,6 +23,12 @@ variable "composite_root_resources" {
   default     = []
 }
 
+variable "manage_server_config_enabled" {
+  description = "A toggle to enable or disable the management of the server config. If the forseti_conf_server.yaml has been customized in GCS outside of Terraform, setting this to false will prevent Terraform from overwriting the configuration."
+  type        = bool
+  default     = true
+}
+
 variable "sendgrid_api_key" {
   description = "Sendgrid.com API key to enable email notifications"
   default     = ""

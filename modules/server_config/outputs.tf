@@ -16,10 +16,5 @@
 
 output "forseti-server-config" {
   description = "The rendered Forseti server configuration file"
-  value       = data.template_file.forseti_server_config.rendered
-}
-
-output "forseti-server-config-md5" {
-  description = "The Base64 encoded md5 hash for the server configuration file"
-  value       = google_storage_bucket_object.forseti_server_config.md5hash
+  value       = local.server_config_contents
 }

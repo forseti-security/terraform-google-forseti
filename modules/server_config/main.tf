@@ -22,6 +22,8 @@ locals {
     "${path.module}/templates/configs/forseti_conf_server.yaml.tpl",
   )
 
+  server_config_contents = var.manage_server_config_enabled ? data.template_file.forseti_server_config[0].rendered : data.http.server_config_contents.body
+
   # Determine the root resource. If a composite root resource list is available
   # then it will take precedence, otherwise we'll fall back to a singular root
   # resource.
@@ -51,6 +53,7 @@ resource "null_resource" "missing_emails" {
 #-------------------#
 
 data "template_file" "forseti_server_config" {
+  count = var.manage_server_config_enabled ? 1 : 0
   template = local.server_conf
 
   # The variable casing and naming used here is used to match the
@@ -179,7 +182,22 @@ data "template_file" "forseti_server_config" {
 #------------------------#
 
 resource "google_storage_bucket_object" "forseti_server_config" {
+  count   = var.manage_server_config_enabled ? 1 : 0
   name    = "configs/forseti_conf_server.yaml"
   bucket  = var.server_gcs_module.forseti-server-storage-bucket
-  content = data.template_file.forseti_server_config.rendered
+  content = data.template_file.forseti_server_config[count.index].rendered
+}
+
+//*****************************************
+//  Obtain Forseti Server Configuration
+//*****************************************
+
+data "google_storage_object_signed_url" "file_url" {
+  bucket      = var.server_gcs_module.forseti-server-storage-bucket
+  path        = "configs/forseti_conf_server.yaml"
+}
+
+data "http" "server_config_contents" {
+  url = data.google_storage_object_signed_url.file_url.signed_url
+  depends_on = ["data.google_storage_object_signed_url.file_url"]
 }

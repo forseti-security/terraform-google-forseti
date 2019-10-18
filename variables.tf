@@ -505,6 +505,12 @@ variable "manage_rules_enabled" {
   default     = true
 }
 
+variable "manage_server_config_enabled" {
+  description = "A toggle to enable or disable the management of the server config. If the forseti_conf_server.yaml has been customized in GCS outside of Terraform, setting this to false will prevent Terraform from overwriting the configuration."
+  type        = bool
+  default     = true
+}
+
 variable "policy_library_home" {
   description = "The local policy library directory."
   default     = "$USER_HOME/policy-library"
