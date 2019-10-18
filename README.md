@@ -45,12 +45,11 @@ Utilizing a shared VPC via a host project is supported with the `-f` flag:
 ```
 
 ### Terraform Configuration
-Example configurations are included in the [examples](./examples/) directory. You can copy these examples or use your own custom configuration.
+Example configurations are included in the [examples](./examples/) directory. You can copy these examples or use the snippet below as a starting point to your own custom configuration.
 
-The default Forseti Server VM [machine type](https://cloud.google.com/compute/docs/machine-types) and Cloud SQL [machine type](https://cloud.google.com/sql/pricing#2nd-gen-pricing) have been set to `n1-standard-8` and `db-n1-standard-4`
-to account for larger GCP environments.
+The default Forseti Server VM [machine type](https://cloud.google.com/compute/docs/machine-types) and Cloud SQL [machine type](https://cloud.google.com/sql/pricing#2nd-gen-pricing) have been set to `n1-standard-8` and `db-n1-standard-4` to account for larger GCP environments. These can be changed by providing the `server_type` and `cloudsql_type` variables.
 
-Simple usage of the module within your own main.tf file is as follows:
+Create a file named `main.tf` in an empty directory and copy the contents below into the file.
 
 ```hcl
     module "forseti" {
@@ -61,11 +60,10 @@ Simple usage of the module within your own main.tf file is as follows:
       domain             = "yourdomain.com"
       project_id         = "my-forseti-project"
       org_id             = "2313934234"
-
-      server_type        = "n1-standard-2"
-      cloudsql_type      = "db-n1-standard-2"
     }
 ```
+
+Forseti provides many optional settings for users to customize for their environment and security requirements. View the list of [inputs](#inputs) to see all of the available options.
 
 ### Run Terraform
 Forseti is ready to be installed! First you will need to initialize Terraform to download any of the module dependencies.
