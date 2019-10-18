@@ -24,6 +24,7 @@ Version 5.0.0 is a backwards-incompatible release. Please see the [upgrade instr
 - Cleaning up unused input variables. [#300]
 - Add ability to set net_write_timeout for CloudSQL [#299]
 - Update server config template to reflect CSCC notifier changes [#292]
+- Adding manage_server_config_enabled variable [#326]
 
 ## [v4.3.0] - 2019-10-03
 
@@ -289,6 +290,7 @@ Version 4.0.0 is a backwards-incompatible release. Please see the [upgrade instr
 [v4.3.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.2.1...v4.3.0
 [v5.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.3.0...v5.0.0
 
+[#326]: https://github.com/forseti-security/terraform-google-forseti/pull/326
 [#317]: https://github.com/forseti-security/terraform-google-forseti/pull/317
 [#309]: https://github.com/forseti-security/terraform-google-forseti/pull/309
 [#308]: https://github.com/forseti-security/terraform-google-forseti/pull/308
