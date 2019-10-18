@@ -39,6 +39,11 @@ output "forseti-client-vm-name" {
   value       = module.client.forseti-client-vm-name
 }
 
+output "forseti-client-vm-zone" {
+  description = "Forseti Client VM zone"
+  value       = module.client.forseti-client-vm-zone
+}
+
 output "forseti-server-git-public-key-openssh" {
   description = "The public OpenSSH key generated to allow the Forseti Server to clone the policy library repository."
   value       = module.server.forseti-server-git-public-key-openssh

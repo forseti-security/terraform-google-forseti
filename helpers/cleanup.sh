@@ -197,10 +197,22 @@ gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
     --role="roles/cloudsql.admin" \
     --user-output-enabled false
 
-if [[ -n "$ON_GKE" ]]; then
-  gke_roles=("roles/container.admin" "roles/compute.networkAdmin" "roles/resourcemanager.projectIamAdmin")
+# This is necessary for CloudSQL private services access
+gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
+    --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
+    --role="roles/compute.networkAdmin" \
+    --user-output-enabled false
 
-  echo "Removing on-GKE related roles on project $PROJECT_ID..." 
+# This is necessary for Configuring IAP tunneling
+gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
+    --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
+    --role="roles/iap.admin" \
+    --user-output-enabled false
+
+if [[ -n "$ON_GKE" ]]; then
+  gke_roles=("roles/container.admin" "roles/resourcemanager.projectIamAdmin")
+
+  echo "Removing on-GKE related roles on project $PROJECT_ID..."
   for gke_role in "${gke_roles[@]}"; do
     gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
         --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \

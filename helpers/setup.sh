@@ -169,6 +169,18 @@ gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
     --role="roles/cloudsql.admin" \
     --user-output-enabled false
 
+# This is necessary for CloudSQL private services access
+gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
+    --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
+    --role="roles/compute.networkAdmin" \
+    --user-output-enabled false
+
+# This is necessary for Configuring IAP tunneling
+gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
+    --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
+    --role="roles/iap.admin" \
+    --user-output-enabled false
+
 if [[ -n "$WITH_ENFORCER" ]]; then
   org_roles=("roles/logging.configWriter" "roles/iam.organizationRoleAdmin")
   project_roles=("roles/pubsub.admin")
@@ -191,9 +203,9 @@ if [[ -n "$WITH_ENFORCER" ]]; then
 fi
 
 if [[ -n "$ON_GKE" ]]; then
-  gke_roles=("roles/container.admin" "roles/compute.networkAdmin" "roles/resourcemanager.projectIamAdmin")
+  gke_roles=("roles/container.admin" "roles/resourcemanager.projectIamAdmin")
 
-  echo "Granting on-GKE related roles on project $PROJECT_ID..." 
+  echo "Granting on-GKE related roles on project $PROJECT_ID..."
   for gke_role in "${gke_roles[@]}"; do
     gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
         --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
