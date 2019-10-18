@@ -28,7 +28,7 @@ variable "gsuite_admin_email" {
 
 variable "forseti_version" {
   description = "The version of Forseti to install"
-  default     = "v2.21.0"
+  default     = "v2.22.0"
 }
 
 variable "forseti_repo_url" {
@@ -53,7 +53,8 @@ variable "forseti_home" {
 
 variable "forseti_run_frequency" {
   description = "Schedule of running the Forseti scans"
-  default     = "0 */2 * * *"
+  type        = string
+  default     = null
 }
 
 variable "resource_name_suffix" {
@@ -122,6 +123,18 @@ variable "server_access_config" {
 
 variable "server_private" {
   description = "Private GCE Forseti Server VM (no public IP)"
+  default     = false
+  type        = bool
+}
+
+variable "cloud_profiler_enabled" {
+  description = "Enable the Cloud Profiler"
+  default     = false
+  type        = bool
+}
+
+variable "mailjet_enabled" {
+  description = "Enable mailjet_rest library"
   default     = false
   type        = bool
 }
@@ -297,18 +310,12 @@ variable "logging_disable_polling" {
 
 variable "securitycenter_max_calls" {
   description = "Maximum calls that can be made to Security Center API"
-  default     = "1"
+  default     = "14"
 }
 
 variable "securitycenter_period" {
   description = "The period of max calls for the Security Center API (in seconds)"
-  default     = "1.1"
-}
-
-variable "securitycenter_disable_polling" {
-  description = "Whether to disable polling for Security Center API"
-  type        = bool
-  default     = false
+  default     = "1.0"
 }
 
 variable "servicemanagement_max_calls" {
@@ -323,6 +330,22 @@ variable "servicemanagement_period" {
 
 variable "servicemanagement_disable_polling" {
   description = "Whether to disable polling for Service Management API"
+  type        = bool
+  default     = false
+}
+
+variable "serviceusage_max_calls" {
+  description = "Maximum calls that can be made to Service Usage API"
+  default     = "4"
+}
+
+variable "serviceusage_period" {
+  description = "The period of max calls for the Service Usage API (in seconds)"
+  default     = "1.1"
+}
+
+variable "serviceusage_disable_polling" {
+  description = "Whether to disable polling for Service Usage API"
   type        = bool
   default     = false
 }
@@ -364,97 +387,116 @@ variable "inventory_retention_days" {
 #-------------------------------#
 variable "audit_logging_enabled" {
   description = "Audit Logging scanner enabled."
-  default     = "false"
+  type        = bool
+  default     = false
 }
 
 variable "bigquery_enabled" {
   description = "Big Query scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "blacklist_enabled" {
   description = "Audit Logging scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "bucket_acl_enabled" {
   description = "Bucket ACL scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "cloudsql_acl_enabled" {
   description = "Cloud SQL scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "config_validator_enabled" {
   description = "Config Validator scanner enabled."
-  default     = "false"
+  type        = bool
+  default     = false
 }
 
 variable "enabled_apis_enabled" {
   description = "Enabled APIs scanner enabled."
-  default     = "false"
+  type        = bool
+  default     = false
 }
 
 variable "firewall_rule_enabled" {
   description = "Firewall rule scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "forwarding_rule_enabled" {
   description = "Forwarding rule scanner enabled."
-  default     = "false"
+  type        = bool
+  default     = false
 }
 
 variable "group_enabled" {
   description = "Group scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "iam_policy_enabled" {
   description = "IAM Policy scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "iap_enabled" {
   description = "IAP scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "instance_network_interface_enabled" {
   description = "Instance network interface scanner enabled."
-  default     = "false"
+  type        = bool
+  default     = false
 }
 
 variable "ke_scanner_enabled" {
   description = "KE scanner enabled."
-  default     = "false"
+  type        = bool
+  default     = false
 }
 
 variable "ke_version_scanner_enabled" {
   description = "KE version scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "kms_scanner_enabled" {
   description = "KMS scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "lien_enabled" {
   description = "Lien scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "location_enabled" {
   description = "Location scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "log_sink_enabled" {
   description = "Log sink scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "manage_rules_enabled" {
@@ -496,12 +538,14 @@ variable "policy_library_sync_ssh_known_hosts" {
 
 variable "resource_enabled" {
   description = "Resource scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "service_account_key_enabled" {
   description = "Service account key scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 #--------------------------------#
@@ -514,7 +558,8 @@ variable "violations_slack_webhook" {
 
 variable "iam_policy_violations_should_notify" {
   description = "Notify for IAM Policy violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "iam_policy_violations_slack_webhook" {
@@ -524,62 +569,74 @@ variable "iam_policy_violations_slack_webhook" {
 
 variable "audit_logging_violations_should_notify" {
   description = "Notify for Audit logging violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "blacklist_violations_should_notify" {
   description = "Notify for Blacklist violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "bigquery_acl_violations_should_notify" {
   description = "Notify for BigQuery ACL violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "buckets_acl_violations_should_notify" {
   description = "Notify for Buckets ACL violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "cloudsql_acl_violations_should_notify" {
   description = "Notify for CloudSQL ACL violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "config_validator_violations_should_notify" {
   description = "Notify for Config Validator violations."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "enabled_apis_violations_should_notify" {
   description = "Notify for enabled APIs violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "firewall_rule_violations_should_notify" {
   description = "Notify for Firewall rule violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "forwarding_rule_violations_should_notify" {
   description = "Notify for forwarding rule violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "ke_version_violations_should_notify" {
   description = "Notify for KE version violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "ke_violations_should_notify" {
   description = "Notify for KE violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "kms_violations_should_notify" {
   description = "Notify for KMS violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "kms_violations_slack_webhook" {
@@ -589,47 +646,56 @@ variable "kms_violations_slack_webhook" {
 
 variable "groups_violations_should_notify" {
   description = "Notify for Groups violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "instance_network_interface_violations_should_notify" {
   description = "Notify for instance network interface violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "iap_violations_should_notify" {
   description = "Notify for IAP violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "lien_violations_should_notify" {
   description = "Notify for lien violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "location_violations_should_notify" {
   description = "Notify for location violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "log_sink_violations_should_notify" {
   description = "Notify for log sink violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "resource_violations_should_notify" {
   description = "Notify for resource violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "service_account_key_violations_should_notify" {
   description = "Notify for service account key violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "external_project_access_violations_should_notify" {
   description = "Notify for External Project Access violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "cscc_violations_enabled" {
@@ -645,12 +711,14 @@ variable "cscc_source_id" {
 
 variable "inventory_gcs_summary_enabled" {
   description = "GCS summary for inventory enabled"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "inventory_email_summary_enabled" {
   description = "Email summary for inventory enabled"
-  default     = "false"
+  type        = bool
+  default     = false
 }
 
 #---------------------------------------#
@@ -675,12 +743,14 @@ variable "groups_settings_disable_polling" {
 
 variable "groups_settings_enabled" {
   description = "Groups settings scanner enabled."
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 variable "groups_settings_violations_should_notify" {
   description = "Notify for groups settings violations"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
 #----------------#
@@ -773,6 +843,11 @@ variable "cloudsql_type" {
 variable "cloudsql_user_host" {
   description = "The host the user can connect from.  Can be an IP address or IP address range. Changing this forces a new resource to be created."
   default     = "%"
+}
+
+variable "cloudsql_net_write_timeout" {
+  description = "See MySQL documentation: https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_net_write_timeout"
+  default     = "240"
 }
 
 #----------------#

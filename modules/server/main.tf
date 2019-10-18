@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+resource "random_integer" "random_minute" {
+  min = 0
+  max = 59
+}
+
 #--------#
 # Locals #
 #--------#
@@ -48,6 +53,8 @@ locals {
 
   }
   network_interface = local.network_interface_base[var.server_private ? "private" : "public"]
+
+  forseti_run_frequency = var.forseti_run_frequency == null ? "${random_integer.random_minute.result} */2 * * *" : var.forseti_run_frequency
 }
 
 #-------------------#
@@ -58,14 +65,16 @@ data "template_file" "forseti_server_startup_script" {
 
   vars = {
     cloudsql_proxy_arch                    = var.cloudsql_proxy_arch
+    cloud_profiler_enabled                 = var.cloud_profiler_enabled
     forseti_conf_server_checksum           = base64sha256(var.server_config_module.forseti-server-config)
     forseti_env                            = data.template_file.forseti_server_env.rendered
     forseti_environment                    = data.template_file.forseti_server_environment.rendered
     forseti_home                           = var.forseti_home
     forseti_repo_url                       = var.forseti_repo_url
-    forseti_run_frequency                  = var.forseti_run_frequency
+    forseti_run_frequency                  = local.forseti_run_frequency
     forseti_server_conf_path               = local.server_conf_path
     forseti_version                        = var.forseti_version
+    mailjet_enabled                        = var.mailjet_enabled
     policy_library_home                    = var.policy_library_home
     policy_library_sync_enabled            = var.policy_library_sync_enabled
     policy_library_sync_gcs_directory_name = var.policy_library_sync_gcs_directory_name

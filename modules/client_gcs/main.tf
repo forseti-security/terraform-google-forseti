@@ -28,7 +28,7 @@ resource "google_storage_bucket" "client_config" {
   name          = local.client_bucket_name
   location      = var.storage_bucket_location
   project       = var.project_id
-  force_destroy = "true"
+  force_destroy = true
 
   depends_on = [null_resource.services-dependency]
 }

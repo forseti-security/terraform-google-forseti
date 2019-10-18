@@ -23,7 +23,7 @@ variable "project_id" {
 
 variable "forseti_version" {
   description = "The version of Forseti to install"
-  default     = "v2.21.0"
+  default     = "v2.22.0"
 }
 
 variable "forseti_repo_url" {
@@ -66,7 +66,6 @@ variable "subnetwork" {
 
 variable "network_project" {
   description = "The project containing the VPC and subnetwork where the Forseti client and server will be created"
-  default     = ""
 }
 
 variable "client_ssh_allow_ranges" {

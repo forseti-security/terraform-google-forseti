@@ -23,7 +23,7 @@ variable "project_id" {
 
 variable "forseti_version" {
   description = "The version of Forseti to install"
-  default     = "v2.21.0"
+  default     = "v2.22.0"
 }
 
 variable "forseti_repo_url" {
@@ -38,7 +38,8 @@ variable "forseti_home" {
 
 variable "forseti_run_frequency" {
   description = "Schedule of running the Forseti scans"
-  default     = "0 */2 * * *"
+  type        = string
+  default     = null
 }
 
 #----------------#
@@ -90,6 +91,18 @@ variable "server_access_config" {
 variable "server_private" {
   description = "Enable private Forseti server VM (no public IP)"
   default     = "false"
+}
+
+variable "cloud_profiler_enabled" {
+  description = "Enable the Cloud Profiler"
+  default     = false
+  type        = bool
+}
+
+variable "mailjet_enabled" {
+  description = "Enable mailjet_rest library"
+  default     = false
+  type        = bool
 }
 
 ##---------#
@@ -183,7 +196,7 @@ variable "cloudsql_proxy_arch" {
 }
 
 #--------------------#
-# Forseti server IAM #
+# Forseti client IAM #
 #--------------------#
 
 variable "server_iam_module" {

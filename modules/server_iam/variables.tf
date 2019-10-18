@@ -33,6 +33,12 @@ variable "folder_id" {
   default     = ""
 }
 
+variable "cloud_profiler_enabled" {
+  description = "Enable the Cloud Profiler"
+  default     = false
+  type        = bool
+}
+
 #-------#
 # Flags #
 #-------#

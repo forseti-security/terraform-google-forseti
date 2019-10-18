@@ -52,7 +52,7 @@ fi
 
 # Download Forseti source code
 echo "Forseti Startup - Cloning Forseti repo."
-git clone --branch ${forseti_version} --single-branch ${forseti_repo_url}
+git clone --branch ${forseti_version} --depth 1 ${forseti_repo_url}
 cd forseti-security
 
 # Forseti host dependencies
@@ -75,6 +75,7 @@ logrotate /etc/logrotate.conf
 
 # Change the access level of configs/ rules/ and run_forseti.sh
 chmod -R ug+rwx ${forseti_home}/configs ${forseti_home}/rules ${forseti_home}/install/gcp/scripts/run_forseti.sh
+
 
 # Install Forseti
 echo "Forseti Startup - Installing Forseti python package."
@@ -126,6 +127,18 @@ else
   # of policy files.  The config-validator is not required for the rest of Forseti
   # and should not halt installation.
   gsutil cp -r gs://${storage_bucket_name}/policy-library ${policy_library_home}/ || echo "No policy available, continuing with Forseti installation"
+fi
+
+# Enable cloud-profiler in the initialize_forseti_services.sh script
+if ${cloud_profiler_enabled}; then
+  pip3 install google-cloud-profiler
+  sed "/FORSETI_COMMAND+=\" --services/a FORSETI_COMMAND+=\" --enable_profiler\"" -i ./install/gcp/scripts/initialize_forseti_services.sh
+fi
+
+# Install mailjet_rest library
+if ${mailjet_enabled}; then
+  echo "Forseti Startup - mailjet_rest library is enabled."
+  pip3 install mailjet_rest
 fi
 
 # Start Forseti service depends on vars defined above.
