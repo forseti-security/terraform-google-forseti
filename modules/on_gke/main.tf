@@ -208,7 +208,7 @@ resource "helm_release" "forseti-security" {
     value = module.cloudsql.forseti-cloudsql-user
   }
 
-  set-sensitive {
+  set_sensitive {
     name  = "database.password"
     value = module.cloudsql.forseti-cloudsql-password
   }
