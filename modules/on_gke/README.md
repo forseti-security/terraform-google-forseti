@@ -136,6 +136,7 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | logging\_max\_calls | Maximum calls that can be made to Logging API | string | `"9"` | no |
 | logging\_period | The period of max calls for the Logging API (in seconds) | string | `"1.0"` | no |
 | manage\_rules\_enabled | A toggle to enable or disable the management of rules | bool | `"true"` | no |
+| manage\_server\_config\_enabled | A toggle to enable or disable the management of the server config. If the forseti_conf_server.yaml has been customized in GCS outside of Terraform, setting this to false will prevent Terraform from overwriting the configuration. | bool | `"true"` | no |
 | network | The VPC where the Forseti client and server will be created | string | `"default"` | no |
 | network\_policy | Apply pod network policies | bool | `"false"` | no |
 | network\_project | The project containing the VPC and subnetwork where the Forseti client and server will be created | string | `""` | no |

@@ -53,7 +53,7 @@ resource "null_resource" "missing_emails" {
 #-------------------#
 
 data "template_file" "forseti_server_config" {
-  count = var.manage_server_config_enabled ? 1 : 0
+  count    = var.manage_server_config_enabled ? 1 : 0
   template = local.server_conf
 
   # The variable casing and naming used here is used to match the
@@ -193,11 +193,11 @@ resource "google_storage_bucket_object" "forseti_server_config" {
 //*****************************************
 
 data "google_storage_object_signed_url" "file_url" {
-  bucket      = var.server_gcs_module.forseti-server-storage-bucket
-  path        = "configs/forseti_conf_server.yaml"
+  bucket = var.server_gcs_module.forseti-server-storage-bucket
+  path   = "configs/forseti_conf_server.yaml"
 }
 
 data "http" "server_config_contents" {
-  url = data.google_storage_object_signed_url.file_url.signed_url
+  url        = data.google_storage_object_signed_url.file_url.signed_url
   depends_on = ["data.google_storage_object_signed_url.file_url"]
 }

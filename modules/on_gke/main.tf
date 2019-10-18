@@ -205,7 +205,7 @@ resource "helm_release" "forseti-security" {
 
   set_string {
     name  = "server.config.contents"
-    value = "${base64encode(module.server_gcs.forseti-server-config)}"
+    value = "${base64encode(module.server_config.forseti-server-config)}"
   }
 
   set {

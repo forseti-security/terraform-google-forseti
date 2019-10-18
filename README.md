@@ -163,6 +163,7 @@ your environment.
 | logging\_period | The period of max calls for the Logging API (in seconds) | string | `"1.0"` | no |
 | mailjet\_enabled | Enable mailjet_rest library | bool | `"false"` | no |
 | manage\_rules\_enabled | A toggle to enable or disable the management of rules | bool | `"true"` | no |
+| manage\_server\_config\_enabled | A toggle to enable or disable the management of the server config. If the forseti_conf_server.yaml has been customized in GCS outside of Terraform, setting this to false will prevent Terraform from overwriting the configuration. | bool | `"true"` | no |
 | network | The VPC where the Forseti client and server will be created | string | `"default"` | no |
 | network\_project | The project containing the VPC and subnetwork where the Forseti client and server will be created | string | `""` | no |
 | org\_id | GCP Organization ID that Forseti will have purview over | string | `""` | no |
