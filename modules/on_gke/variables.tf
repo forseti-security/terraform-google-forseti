@@ -828,6 +828,16 @@ variable "cloudsql_user_host" {
   default     = "%"
 }
 
+variable "cloudsql_db_user" {
+  description = "CloudSQL database user"
+  default     = "forseti_security_user"
+}
+
+variable "cloudsql_db_password" {
+  description = "CloudSQL database password"
+  default     = ""
+}
+
 #-------------#
 # Helm config #
 #-------------#
