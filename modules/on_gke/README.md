@@ -43,6 +43,8 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | cloudbilling\_period | The period of max calls for the Cloud Billing API (in seconds) | string | `"1.2"` | no |
 | cloudsql\_acl\_enabled | Cloud SQL scanner enabled. | bool | `"true"` | no |
 | cloudsql\_acl\_violations\_should\_notify | Notify for CloudSQL ACL violations | bool | `"true"` | no |
+| cloudsql\_user | CloudSQL user | string | `"forseti_security_user"` | no |
+| cloudsql\_password | CloudSQL password | string | `a randomized password` | no |
 | cloudsql\_db\_name | CloudSQL database name | string | `"forseti_security"` | no |
 | cloudsql\_disk\_size | The size of data disk, in GB. Size of a running instance cannot be reduced but can be increased. | string | `"25"` | no |
 | cloudsql\_net\_write\_timeout | See MySQL documentation: https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_net_write_timeout | string | `"240"` | no |

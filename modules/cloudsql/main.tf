@@ -21,7 +21,7 @@ locals {
   random_hash     = var.suffix
   cloudsql_name   = "forseti-server-db-${local.random_hash}"
   network_project = var.network_project != "" ? var.network_project : var.project_id
-  cloudsql_db_password = var.cloudsql_db_password == "" ? random_password.password.result : var.cloudsql_db_password
+  cloudsql_db_password = var.cloudsql_password == "" ? random_password.password.result : var.cloudsql_password
 }
 
 #------------------------------------#
@@ -99,8 +99,8 @@ resource "google_sql_database" "forseti-db" {
   instance = google_sql_database_instance.master.name
 }
 
-resource "google_sql_user" "forseti_db_user" {
-  name     = var.cloudsql_db_user
+resource "google_sql_user" "forseti_user" {
+  name     = var.cloudsql_user
   instance = google_sql_database_instance.master.name
   project  = var.project_id
   host     = var.cloudsql_user_host

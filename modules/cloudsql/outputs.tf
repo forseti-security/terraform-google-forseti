@@ -41,10 +41,10 @@ output "forseti-clodusql-db-port" {
 
 output "forseti-cloudsql-user" {
   description = "CloudSQL user"
-  value       = var.cloudsql_db_user
+  value       = var.cloudsql_user
 }
 
 output "forseti-cloudsql-password" {
   description = "CloudSQL password"
-  value       = var.cloudsql_db_password
+  value       = var.cloudsql_password
 }
