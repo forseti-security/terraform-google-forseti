@@ -1,48 +1,35 @@
 # Deploy Forseti
 
 ## Introduction
-
 <walkthrough-tutorial-duration duration="10"></walkthrough-tutorial-duration>
 
-This tutorial explains how to set up [Forseti](https://forsetisecurity.org/about/) in a GCP project using Cloud Shell.
+This walkthrough explains how to deploy [Forseti](https://forsetisecurity.org/about/) in a GCP project using Terraform.
 
-## Choose Project
-
-<walkthrough-project-billing-setup billing="true"></walkthrough-project-billing-setup>
-
-First, select a project to install Forseti in.
-
-This can either be a dedicated Forseti project or an existing DevSecOps project.
-
- You must be logged in with a Google Account that has permission to access the Project. If you need to login as a different user, use gcloud to switch users:
+### Authentication
+In order to run this module you will need to be authenticated as a user that has access to the project and can create/authorize service accounts at both the organization and project levels. You can login as this user with Chrome or by using gcloud from a shell:
 
  ```bash
  gcloud auth login
 ```
 
-## Activate APIs
+## Select Project
+<walkthrough-project-billing-setup billing="true"></walkthrough-project-billing-setup>
 
-You will need to activate a few APIs on this project to allow the Terraform module to install Forseti.
+First, create a new Project or select an existing Project where Forseti will be deployed.
 
-__Note:__ If this step is blocked by an error "Unable to enable required APIs", navigate to [APIs and Services](https://pantheon.corp.google.com/apis/dashboard?project={{project_id}}) on the GCP console and manually enable the specified APIs.
+This can be a dedicated Forseti project or an existing DevSecOps project.
 
-Alternatively you can use the following gcloud commands:
+## Prerequisites
+In order to execute this module a temporary Service Account will be created with the roles required. A few GCP APIs also need to be enabled. These steps have been automated with a setup script. The [IAM Roles](/README.md#iam-roles) given to the Service Account and the [APIs](/README.md#apis) that will be enabled are listed on the README.
+
+You can run this setup script by providing the Organization ID and Project ID:
 
 ```bash
-gcloud config set project {{project_id}}
+. ../../helpers/setup.sh -o ORG_ID -p {{project_id}}
 ```
 
-```bash
-gcloud services enable cloudresourcemanager.googleapis.com compute.googleapis.com serviceusage.googleapis.com
-```
-
-<walkthrough-enable-apis apis=
-  "cloudresourcemanager.googleapis.com,
-  compute.googleapis.com,
-  serviceusage.googleapis.com"></walkthrough-enable-apis>
-
-## Configure Forseti
-There are a few required settings that you will need to update in the Forseti Terraform configuration <walkthrough-editor-open-file filePath="terraform-google-forseti/examples/install_simple/terraform.tfvars">terraform.tfvars</walkthrough-editor-open-file> file.
+## Forseti Terraform module configuration
+There are a few required settings that need to updated in the Forseti Terraform configuration <walkthrough-editor-open-file filePath="terraform-google-forseti/examples/install_simple/terraform.tfvars">terraform.tfvars</walkthrough-editor-open-file> file.
 
 ### Set project
 On line 1, update the <walkthrough-editor-select-regex
@@ -54,13 +41,13 @@ to match your chosen project (`{{project_id}}`).
 On line 2, update the <walkthrough-editor-select-regex
   filePath="terraform-google-forseti/examples/install_simple/terraform.tfvars"
   regex="11111111">organization ID</walkthrough-editor-select-regex>
-to match your organization ID, which can be found in the URL bar.
+to match your organization ID.
 
 ### Set domain
 On line 3, update the <walkthrough-editor-select-regex
   filePath="terraform-google-forseti/examples/install_simple/terraform.tfvars"
   regex="mydomain.com">domain</walkthrough-editor-select-regex>
-to match your company Cloud Identity domain, which can be found in the URL bar.
+to match your company Cloud Identity domain.
 
 ### Set region
 On line 4, update the <walkthrough-editor-select-regex
@@ -69,9 +56,9 @@ On line 4, update the <walkthrough-editor-select-regex
 you wish to deploy Forseti in.
 
 ### Set network (Optional)
-If you want to deploy Forseti onto a specific Network, you can configure the following settings. Otherwise, you can leave the defaults.
+If you want to deploy Forseti onto a specific Network, you can configure the following settings. Otherwise you can leave the defaults.
 
-__Note:__ By default Forseti will run on VMs with external IPs.**
+__Note:__ By default Forseti will run on GCE VMs with external IPs.**
 
 On line 6, update the <walkthrough-editor-select-regex
   filePath="terraform-google-forseti/examples/install_simple/terraform.tfvars"
@@ -94,9 +81,7 @@ If you are deploying on a Shared VPC, you need to set the <walkthrough-editor-se
 on line 8. Otherwise, you can leave this empty.
 
 ## Enable Optional Features
-There are additional settings which you can configure in the settings file to enable advanced Forseti functionality.
-
-If you don't need these features, you can skip these steps.
+Forseti provides many optional settings for users to customize for their environment and security requirements. The features below are recommended, but are not required.
 
 ### Configure G Suite
 On line 10, set the <walkthrough-editor-select-regex
@@ -107,11 +92,11 @@ Ask your G Suite Admin if you don’t know the super admin email.
 This is part of the [G Suite data collection](https://forsetisecurity.org/docs/latest/configure/inventory/gsuite.html). The following functionalities will not work without G Suite integration:
 
 - G Suite Groups and Users in Inventory
-- G Suite Groups Scanner and Groups Settings Scanner
-- Group expansion in Explain
+- G Suite Groups Scanners
+- G Suite Group expansion in Explain
 
 ### Configure email notifications
-Forseti can be configured to [send email notifications](https://forsetisecurity.org/docs/latest/configure/notifier/index.html#email-notifications).
+Forseti can be configured to [send email notifications](https://forsetisecurity.org/docs/latest/configure/notifier/index.html#email-notifications) when violations are found.
 
 To enable this, add a <walkthrough-editor-select-line
   filePath="terraform-google-forseti/examples/install_simple/terraform.tfvars"
@@ -134,32 +119,31 @@ and <walkthrough-editor-select-line
 settings.
 
 ## Deploy Forseti
-Now that you have updated your configuration settings, you are ready to install Forseti.
-
-This will be done using Terraform, which comes pre-installed with this Cloud Shell Walkthrough.
+Now that you have updated your configuration settings, Forseti is ready to be deployed.
 
 ### Initialize Terraform
-To download the Forseti module, you will need to initialize Terraform:
+Initialize Terraform to download the Forseti module:
+
 ```bash
 terraform init
 ```
 
 ### Apply Terraform
-You are now ready to deploy Forseti with Terraform by running the apply command:
+Deploy Forseti by running the Terraform apply command:
 
 ```bash
 terraform apply
 ```
 
-This can take a few minutes as all the necessary resources are provisioned.
+This can take a few minutes to provision all the necessary resources.
 
 ### Get Help
-If you encounter errors during installation, you can check your configuration and permissions, then run `terraform apply` again. If you need any help, please [Contact Us](https://forsetisecurity.org/docs/latest/use/get-help.html).
+If you encounter any errors, check the configuration and permissions; then run `terraform apply` again. If you need any help, please [Contact Us](https://forsetisecurity.org/docs/latest/use/get-help.html).
 
 ## Save Terraform State
-Congratulations, you have now installed Forseti!
+Congratulations, you have now deployed Forseti!
 
-As a final step, you will want to save your configuration so it can be used to upgrade Forseti in the future. This can be saved to a Google Cloud Storage (GCS) bucket.
+As a final step, you will want to save the Terraform configuration so it can be used to upgrade Forseti in the future. This can be saved to a Google Cloud Storage (GCS) bucket.
 
 ### Create Terraform state bucket
 Create a Google Cloud Storage bucket to [store your Terraform state](https://www.terraform.io/docs/state/).
@@ -168,7 +152,7 @@ Create a Google Cloud Storage bucket to [store your Terraform state](https://www
 gsutil mb gs://{{project_id}}-tfstate
 ```
 
-### Update state configuration
+### Upload state configuration
 Open <walkthrough-editor-open-file filePath="terraform-google-forseti/examples/install_simple/backend.tf">backend.tf</walkthrough-editor-open-file> and uncomment the contents.
 
 On line 3, update the <walkthrough-editor-select-regex
@@ -184,11 +168,8 @@ terraform init
 
 At the prompt, type `yes`.
 
-## Save configuration to git
+## Save Terraform Configuration
 As a best practice, you should save your Terraform configuration to source control. This can be done using Cloud Source Repositories.
-
-__Note:__ The Terraform state can contain sensitive information that should not be committed to source control. These state files will be ignored by the <walkthrough-editor-open-file
-filePath="terraform-google-forseti/examples/install_simple/.gitignore">.gitignore</walkthrough-editor-open-file> file.
 
 ### Create a repo
 ```bash
@@ -221,17 +202,25 @@ git remote add origin https://source.developers.google.com/p/{{project_id}}/r/te
 git push origin master
 ```
 
-## Installation Complete
+## Cleanup Service Account
+The last step is to cleanup the Service Account that was created for this walkthrough. This will deprovision and delete the service account, and then delete the credentials file. You will need to supply the Organization ID.
+
+Run the cleanup script:
+
+```bash
+../../helpers/cleanup.sh -p {{project_id}} -o ORG_ID
+```
+
+## Conclusion
+You have completed deploying Forseti and saving your configuration!
 
 <walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
-
-You have completed installing Forseti and saving your configuration!
 
 ### Periodic Scan
 Forseti is setup to run a periodic scan every 2 hours. This scan performs the various steps:
 - Collect an inventory of the GCP resources and G Suite Groups
 - Scan the inventory with the default set of [rules](https://github.com/forseti-security/terraform-google-forseti/tree/master/modules/rules/templates/rules)
-- Save the violation findings to a GCS bucket
+- Save the violation findings to a GCS bucket and send email notifications (if this was enabled)
 
 ### Configure Forseti
 There are [many options available](https://github.com/forseti-security/terraform-google-forseti#inputs) to configure Forseti to meet your security needs. This Walkthrough only exposes the required inputs along with a few commonly used options. You can start adding these additional inputs into this example's

@@ -100,6 +100,7 @@ SERVICE_ACCOUNT_NAME="cloud-foundation-forseti-${RANDOM}"
 SERVICE_ACCOUNT_EMAIL="${SERVICE_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
 STAGING_DIR="${PWD}"
 KEY_FILE="${STAGING_DIR}/credentials.json"
+export FORSETI_SETUP_SERVICE_ACCOUNT_NAME="${SERVICE_ACCOUNT_NAME}"
 
 echo "Enabling services"
 gcloud services enable \
@@ -116,6 +117,8 @@ echo "Downloading key to credentials.json..."
 gcloud iam service-accounts keys create "${KEY_FILE}" \
     --iam-account "${SERVICE_ACCOUNT_EMAIL}" \
     --user-output-enabled false
+
+export GOOGLE_APPLICATION_CREDENTIALS="${KEY_FILE}"
 
 echo "Applying permissions for org $ORG_ID and project $PROJECT_ID..."
 
@@ -193,7 +196,7 @@ fi
 if [[ -n "$ON_GKE" ]]; then
   gke_roles=("roles/container.admin" "roles/compute.networkAdmin" "roles/resourcemanager.projectIamAdmin")
 
-  echo "Granting on-GKE related roles on project $PROJECT_ID..." 
+  echo "Granting on-GKE related roles on project $PROJECT_ID..."
   for gke_role in "${gke_roles[@]}"; do
     gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
         --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
