@@ -5,7 +5,7 @@
 
 This walkthrough explains how to deploy [Forseti](https://forsetisecurity.org/about/) in a GCP project using Terraform.
 
-### Authentication
+## Authentication
 In order to run this module you will need to be authenticated as a user that has access to the project and can create/authorize service accounts at both the organization and project levels. You can login as this user with Chrome or by using gcloud from a shell:
 
  ```bash
@@ -22,10 +22,16 @@ This can be a dedicated Forseti project or an existing DevSecOps project.
 ## Prerequisites
 In order to execute this module a temporary Service Account will be created with the roles required. A few GCP APIs also need to be enabled. These steps have been automated with a setup script. The [IAM Roles](/README.md#iam-roles) given to the Service Account and the [APIs](/README.md#apis) that will be enabled are listed on the README.
 
-You can run this setup script by providing the Organization ID and Project ID:
+Set the project ID for future gcloud commands:
 
 ```bash
-. ../../helpers/setup.sh -o ORG_ID -p {{project_id}}
+gcloud config set project {{project_id}}
+```
+
+Run the setup script by providing the Organization ID:
+
+```bash
+. ../../helpers/setup.sh -p {{project_id}} -o ORG_ID
 ```
 
 ## Forseti Terraform module configuration
@@ -143,22 +149,22 @@ If you encounter any errors, check the configuration and permissions; then run `
 ## Save Terraform State
 Congratulations, you have now deployed Forseti!
 
-As a final step, you will want to save the Terraform configuration so it can be used to upgrade Forseti in the future. This can be saved to a Google Cloud Storage (GCS) bucket.
+You will want to save the Terraform configuration so it can be used to upgrade Forseti in the future. This can be saved to a Google Cloud Storage (GCS) bucket.
 
 ### Create Terraform state bucket
 Create a Google Cloud Storage bucket to [store your Terraform state](https://www.terraform.io/docs/state/).
 
 ```bash
-gsutil mb gs://{{project_id}}-tfstate
+gsutil mb -p {{project_id}} gs://{{project_id}}-tfstate
 ```
 
 ### Upload state configuration
 Open <walkthrough-editor-open-file filePath="terraform-google-forseti/examples/install_simple/backend.tf">backend.tf</walkthrough-editor-open-file> and uncomment the contents.
 
-On line 3, update the <walkthrough-editor-select-regex
+Update the <walkthrough-editor-select-regex
   filePath="terraform-google-forseti/examples/install_simple/backend.tf"
   regex="my-project">project ID</walkthrough-editor-select-regex>
-project ID to match your project ID (`{{project_id}}`).
+in the bucket variable to match your project ID (`{{project_id}}`).
 
 Run the Terraform init command to upload the state to the GCS bucket:
 
@@ -169,7 +175,7 @@ terraform init
 At the prompt, type `yes`.
 
 ## Save Terraform Configuration
-As a best practice, you should save your Terraform configuration to source control. This can be done using Cloud Source Repositories.
+As a best practice, you should save the Terraform configuration to source control. This can be done using Cloud Source Repositories. If you choose to perform this step, the Cloud Source Repositories API will need to be enabled.
 
 ### Create a repo
 ```bash
@@ -181,6 +187,15 @@ gcloud source repos create terraform-forseti
 git init
 ```
 
+### Configure the Git user email and name
+```
+git config --global user.email "{YOUR_EMAIL_ADDRESS}"
+```
+
+```
+git config --global user.name "{YOUR_NAME}"
+```
+
 ### Add and commit your files
 
 ```bash
@@ -190,8 +205,6 @@ git add -A
 ```bash
 git commit -m "Initial commit"
 ```
-
-You may be prompted to configure your identity for Git. If you are, follow the provided commands to do so and run commit again.
 
 ### Push your configuration
 ```bash
