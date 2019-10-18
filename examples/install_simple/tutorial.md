@@ -6,7 +6,7 @@
 This walkthrough explains how to deploy [Forseti](https://forsetisecurity.org/about/) in a GCP project using Terraform.
 
 ## Authentication
-In order to run this module you will need to be authenticated as a user that has access to the project and can create/authorize service accounts at both the organization and project levels. You can login as this user with Chrome or by using gcloud from a shell:
+In order to run this module you will need to be authenticated as a user that has access to the project and can create/authorize service accounts at both the organization and project levels. You can login as this user with Chrome or by using gcloud:
 
  ```bash
  gcloud auth login
@@ -35,7 +35,7 @@ Run the setup script by providing the Organization ID:
 ```
 
 ## Forseti Terraform module configuration
-There are a few required settings that need to updated in the Forseti Terraform configuration <walkthrough-editor-open-file filePath="terraform-google-forseti/examples/install_simple/terraform.tfvars">terraform.tfvars</walkthrough-editor-open-file> file.
+There are a few required settings that need to be updated in the Forseti Terraform configuration <walkthrough-editor-open-file filePath="terraform-google-forseti/examples/install_simple/terraform.tfvars">terraform.tfvars</walkthrough-editor-open-file> file.
 
 ### Set project
 On line 1, update the <walkthrough-editor-select-regex
