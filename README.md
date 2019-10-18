@@ -3,11 +3,11 @@
 The Forseti Terraform module is the only supported method of installing [Forseti Security](https://forsetisecurity.org/). The default infrastructure for Forseti is Google Compute Engine. This module also supports installing Forseti on Google Kubernetes Engine (GKE), and at some point in the future will become the default. For more information on installing Forseti on GKE, please see the [detailed guide on the Forseti Security website](https://forsetisecurity.org/docs/latest/setup/forseti-on-gke.html).
 
 ## Google Cloud Shell Walkthrough
-A Google Cloud Shell Walkthrough has been setup to make it easy for users who are new to Forseti and Terraform. This walkthrough provides a set of instructions to get a default installation of Forseti setup that can be used as a production environment.
+A Google Cloud Shell Walkthrough has been setup to make it easy for users who are new to Forseti and Terraform. This walkthrough provides a set of instructions to get a default installation of Forseti setup that can be used in a production environment.
 
 If you are familiar with Terraform and would like to run Terraform from a different machine, you can skip this walkthrough and move onto the [How to Deploy](#how-to-deploy) section.
 
-[![Open in Google Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fforseti-security%2Fterraform-google-forseti.git&cloudshell_git_branch=feature/cloud-shell-docs&cloudshell_working_dir=examples/install_simple&cloudshell_image=gcr.io%2Fgraphite-cloud-shell-images%2Fterraform%3Alatest&cloudshell_tutorial=.%2Ftutorial.md)
+[![Open in Google Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fforseti-security%2Fterraform-google-forseti.git&cloudshell_git_branch=module-release-5.0.0&cloudshell_working_dir=examples/install_simple&cloudshell_image=gcr.io%2Fgraphite-cloud-shell-images%2Fterraform%3Alatest&cloudshell_tutorial=.%2Ftutorial.md)
 
 ## How to Deploy
 In order to run this module you will need to be authenticated as a user that has access to the project and can create/authorize service accounts at both the organization and project levels. To login to GCP from a shell:
