@@ -39,8 +39,8 @@ provider "random" {
 }
 
 module "forseti" {
-  source     = "terraform-google-modules/forseti/google"
-  version    = "~> 5.0.0"
+  source  = "terraform-google-modules/forseti/google"
+  version = "~> 5.0.0"
 
   # Replace these argument values with those obtained in the Prerequisites section
   domain               = "DOMAIN"
@@ -48,8 +48,8 @@ module "forseti" {
   resource_name_suffix = "RESOURCE_NAME_SUFFIX"
   org_id               = "ORG_ID"
 
-  network         = "default"
-  subnetwork      = "default"
+  network    = "default"
+  subnetwork = "default"
 
   # Uncomment this input variables if using a shared VPC.
   # network_project = "SHARED_VPC_PROJECT_ID"

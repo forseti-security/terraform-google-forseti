@@ -18,7 +18,7 @@ This can either be a dedicated Forseti project or an existing DevSecOps project.
 
 You will need to activate a few APIs on this project for Forseti to function.
 
-Note: If this step is blocked by an error "Unable to enable required APIs", navigate to the APIs and Services page on the GCP console and manually enable the specified APIs. 
+Note: If this step is blocked by an error "Unable to enable required APIs", navigate to the APIs and Services page on the GCP console and manually enable the specified APIs.
 
 Alternatively, you can use the following `gcloud` commands:
 
@@ -50,7 +50,7 @@ chmod +x setup.sh
 ### Run the Setup Script
 Execute the setup script replacing **ORG_ID** and **PROJECT_ID** with the orgainization ID and project ID respectively.
 ```sh
-setup.sh -o ORG_ID -p PROJECT_ID 
+setup.sh -o ORG_ID -p PROJECT_ID
 ```
 The above command will result in a *credentials.json* being downloaded to the your current working directory.
 
