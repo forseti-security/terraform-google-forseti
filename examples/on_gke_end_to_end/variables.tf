@@ -109,6 +109,16 @@ variable "k8s_tiller_sa_name" {
   default     = "tiller"
 }
 
+variable "k8s_forseti_orchestrator_image_tag" {
+  description = "The tag for the container image for the Forseti orchestrator"
+  default     = "v2.23.0"
+}
+
+variable "k8s_forseti_server_image_tag" {
+  description = "The tag for the container image for the Forseti server"
+  default     = "v2.23.0"
+}
+
 variable "network" {
   description = "The name of the VPC being created"
   default     = "forseti-gke-network"
