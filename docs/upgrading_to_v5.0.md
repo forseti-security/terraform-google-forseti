@@ -9,35 +9,12 @@ Version 5.0.0 of this module introduces a breaking change.  The various componen
 
 Following these instructions will import existing Forseti infrastructure resources to a state compatible with version 5.x of this module.
 
-### Forseti Deployed/Upgraded with Terraform
-If Forseti was previously deployed or upgraded via Terraform, do ONE of the following.
-1. Use Terraform to clean up the state and [automatically create a backup](https://www.terraform.io/docs/commands/state/index.html#backups).
-```
-terraform state rm $(terraform state list)
-```
-OR<br />
+### Migrating from the Python Installer
+A Cloud Shell walkthrough is provided to assist with migrating Forseti previously deployed with the Python installer.  Completing this guide will also result in a Forseti deployment upgraded to the most recent version.
 
-2. Manually backup and delete the current state.
-  - Make a backup of the existing Terraform state state (terraform.tfstate).
-    - This may be on a local filesystem in the directory from where you execute the Terraform command.
-    - This may also be in a remote storage.
-  - Remove current state file: terraform.tfstate
+[![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fforseti-security%2Fterraform-google-forseti.git&cloudshell_git_branch=master&cloudshell_working_dir=examples/migrate_forseti&cloudshell_image=gcr.io%2Fgraphite-cloud-shell-images%2Fterraform%3Alatest&cloudshell_tutorial=.%2Ftutorial.md)
 
-Perform the steps in the next section to import the state.
+### Upgrading Forseti Deployed/Upgraded with Terraform
+A Cloud Shell walkthrough is provided to assist with upgrading Forseti previously deployed with Terraform.  Completing this guide will also result in a Forseti deployment upgraded to the most recent version.
 
-### Steps to Import State (e.g. Forseti Deployed with DM)
-1. Execute the import script: [helpers/import.sh](../helpers/import.sh)
-2. Re-initialize Terraform.
-```
-terraform init
-```
-3. Review the Terraform plan.
-```
-terraform plan
-```
-**NOTE:** After reviewing the plan, if there are *any* questions about what's being created, destroyed or changed, please feel free to contact the [Forseti Security](https://forsetisecurity.org/docs/latest/use/get-help.html) team.
-
-4. Apply the plan.
-```
-terraform apply
-```
+[![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fforseti-security%2Fterraform-google-forseti.git&cloudshell_git_branch=master&cloudshell_working_dir=examples/migrate_forseti&cloudshell_image=gcr.io%2Fgraphite-cloud-shell-images%2Fterraform%3Alatest&cloudshell_tutorial=.%2Ftutorial.md)

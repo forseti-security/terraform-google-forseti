@@ -39,7 +39,8 @@ provider "random" {
 }
 
 module "forseti" {
-  source = "../../"
+  source     = "terraform-google-modules/forseti/google"
+  version    = "5.0.0"
 
   # Replace these argument values with those obtained in the Prerequisites section
   domain               = "DOMAIN"
@@ -58,6 +59,10 @@ module "forseti" {
   }
   enable_write         = true
   manage_rules_enabled = false
+
+  cloudsql_region = "us-central1"
+  server_region   = "us-central1"
+  client_region   = "us-central1"
 
   ### Add any Forseti Server Configuration Variables Below this Line ###
 

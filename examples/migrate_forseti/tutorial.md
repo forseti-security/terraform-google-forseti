@@ -12,7 +12,7 @@ Completing this guide will also result in a Forseti deployment upgraded to the m
 
 If you have any
 questions about this process, please contact us by
-[email](mailto:discuss@forsetisecurity.org) or on
+e-mail at discuss@forsetisecurity.org or on
 [Slack](https://forsetisecurity.slack.com/join/shared_invite/enQtNDIyMzg4Nzg1NjcxLTM1NTUzZmM2ODVmNzE5MWEwYzAwNjUxMjVkZjhmYWZiOGZjMjY3ZjllNDlkYjk1OGU4MTVhZGM4NzgyZjZhNTE).
 
 ## Prerequisites
@@ -83,18 +83,19 @@ On line 49, update the <walkthrough-editor-select-regex
   regex="ORG_ID">org_id</walkthrough-editor-select-regex>
 to match your organization id.
 
-### Choose network
-On line 50, update the <walkthrough-editor-select-regex
+### Choose Network
+On line 51, update the <walkthrough-editor-select-regex
   filePath="terraform-google-forseti/examples/migrate_forseti/main.tf"
   regex="default">network</walkthrough-editor-select-regex>
 you wish to deploy Forseti in.
 
-On line 51, update the <walkthrough-editor-select-line
+On line 52, update the <walkthrough-editor-select-line
   filePath="terraform-google-forseti/examples/migrate_forseti/main.tf"
-  startLine=50
-  endLine=50
+  startLine=51
+  endLine=51
   startCharacterOffset=21
   endCharacterOffset=28>subnetwork</walkthrough-editor-select-line>.
+
 
 ### Shared VPC
 If using a shared VPC, you'll need to update the related input variables.
@@ -103,6 +104,31 @@ On line 56, update the <walkthrough-editor-select-regex
   filePath="terraform-google-forseti/examples/migrate_forseti/main.tf"
   regex="SHARED_VPC_PROJECT_ID">network_project</walkthrough-editor-select-regex>
 to match the project in which your shared VPC exists.
+
+### Update Region
+By default, Forseti deploys into us-central1.  If you deployed Forseti in a different region, you will need to
+update the cloudsql_region, server_region, and client_region input variables.
+
+On line 62, update the <walkthrough-editor-select-regex
+  filePath="terraform-google-forseti/examples/migrate_forseti/main.tf"
+  regex="us-central1">cloudsql_region</walkthrough-editor-select-regex>
+to match the region where CloudSQL is deployed.
+
+On line 63, update the <walkthrough-editor-select-line
+  filePath="terraform-google-forseti/examples/migrate_forseti/main.tf"
+  startLine=63
+  endLine=63
+  startCharacterOffset=21
+  endCharacterOffset=33>server_region</walkthrough-editor-select-line>
+to match the region where the Forseti Server VM is deployed.
+
+On line 64, update the <walkthrough-editor-select-line
+  filePath="terraform-google-forseti/examples/migrate_forseti/main.tf"
+  startLine=64
+  endLine=64
+  startCharacterOffset=21
+  endCharacterOffset=33>client_region</walkthrough-editor-select-line>
+to match the region where the Forseti Client VM is deployed.
 
 ## Add Input Variables for Custom Configurations
 Starting with Forseti Security 2.23, Terraform will manage your server configuration file for you.  Configuration options will now be input variables that are defined in the Terraform module.  This will ensure upgrading Forseti will be as easy as possible going forward.
@@ -150,24 +176,14 @@ uppercase values with the aforementioned values:
 
 Observe the expected Terraform changes.  As stated in the introduction, if you have any
 questions about this process, please contact us by
-e-mail at discuss@forsetisecurity.org) or on
+e-mail at discuss@forsetisecurity.org or on
 [Slack](https://forsetisecurity.slack.com/join/shared_invite/enQtNDIyMzg4Nzg1NjcxLTM1NTUzZmM2ODVmNzE5MWEwYzAwNjUxMjVkZjhmYWZiOGZjMjY3ZjllNDlkYjk1OGU4MTVhZGM4NzgyZjZhNTE).
-
 
 ```sh
 terraform plan
 ```
 
-Apply the Terraform changes:
-
-```sh
-terraform apply
-```
-
-At this point, the existing Forseti deployment has been migrated to a
-Terraform state.
-
-## Terraform Changes
+### Terraform Changes
 
 Because there is not an exact mapping between the deprecated Python
 Installer and the Terraform module, some changes will occur when
@@ -176,7 +192,7 @@ Terraform assumes management of the Forseti deployment.
 You should carefully review this section as well as the output from
 `terraform plan` to ensure that all changes are expected and acceptable.
 
-### Created
+#### Created
 
 - The `forseti-client-gcp-RESOURCE_NAME_SUFFIX` service account will
   gain the Cloud Trace Agent (`roles/cloudtrace.agent`) role
@@ -205,7 +221,7 @@ You should carefully review this section as well as the output from
   - Stackdriver Log Writer (`roles/logging.logWriter`)
   - Service Account Token Creator (`roles/iam.serviceAccountTokenCreator`)
 
-### Updated In-Place
+#### Updated In-Place
 
 - The `forseti-client-deny-all-RESOURCE_NAME_SUFFIX` firewall rule and
   the `forseti-server-deny-all-RESOURCE_NAME_SUFFIX` firewall rule will
@@ -225,7 +241,7 @@ You should carefully review this section as well as the output from
   flag.
   
 
-### Destroyed and Replaced
+#### Destroyed and Replaced
 
 - The `forseti-client-allow-ssh-external-RESOURCE_NAME_SUFFIX` firewall
   rule and the `forseti-server-allow-ssh-external-RESOURCE_NAME_SUFFIX`
@@ -241,6 +257,15 @@ You should carefully review this section as well as the output from
   `configs/forseti_conf_server.yaml` object in the
   `forseti-server-RESOURCE_NAME_SUFFIX` storage bucket will be replaced
   due to a lack of Terraform import support
+
+## Apply the Terraform Changes
+Execute the following to apply the Terraform plan.
+```sh
+terraform apply
+```
+
+At this point, the existing Forseti deployment has been migrated to a
+Terraform state.
 
 ## Save state to GCS
 Congratulations, you have now installed Forseti!
