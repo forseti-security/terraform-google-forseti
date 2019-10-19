@@ -19,8 +19,8 @@ e-mail at discuss@forsetisecurity.org or on
 
 Before you begin the migration process, you will need:
 
-- A Forseti deployment of at least v2.18.0; follow the
-  [upgrade guide](https://forsetisecurity.org/docs/latest/setup/upgrade.html) as necessary.
+- A Forseti deployment of at least v2.18.0.  You must follow the
+  [upgrade guide](https://forsetisecurity.org/docs/latest/setup/upgrade.html) to be at least v2.18.0.
 - A version of the
   [Terraform command-line interface](https://www.terraform.io/downloads.html)
   in the 0.12 series.
@@ -29,8 +29,8 @@ Before you begin the migration process, you will need:
 - The ID of the GCP project in which Forseti is deployed.
 - The suffix appended to the names of the Forseti resources; this is
   likely a string of seven characters like a1b2c3d.
-- A service account in and key for the organization with the
-  [roles required by the Terraform module](https://registry.terraform.io/modules/terraform-google-modules/forseti/google/4.3.0#iam-roles).
+- A service account for the organization with the
+  [roles required by the Terraform module](https://registry.terraform.io/modules/terraform-google-modules/forseti/google/5.0.0#iam-roles).
 - A
   [JSON key file](https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys)
   for the service account.
@@ -131,9 +131,13 @@ On line 64, update the <walkthrough-editor-select-line
 to match the region where the Forseti Client VM is deployed.
 
 ## Add Input Variables for Custom Configurations
-Starting with Forseti Security 2.23, Terraform will manage your server configuration file for you.  Configuration options will now be input variables that are defined in the Terraform module.  This will ensure upgrading Forseti will be as easy as possible going forward.
+Starting with Forseti Security 2.23, Terraform will manage your server
+ configuration file for you.  Configuration options will now be input
+ variables that are defined in the Terraform module.  This will ensure 
+ upgrading Forseti will be as easy as possible going forward.
 
-Please identitify any Forseti server configuration variables that have been customized and add them to your <walkthrough-editor-open-file filePath="terraform-google-forseti/examples/migrate_forseti/main.tf">main.tf</walkthrough-editor-open-file>.
+Please identitify any Forseti server configuration variables that have 
+been customized and add them to your <walkthrough-editor-open-file filePath="terraform-google-forseti/examples/migrate_forseti/main.tf">main.tf</walkthrough-editor-open-file>.
 
 For example, if you modified the e-mail connector recipient in the **forseti_conf_server.yaml** file in the Forseti Server GCS bucket:
 ```yaml
@@ -174,16 +178,19 @@ uppercase values with the aforementioned values:
 ./import.sh -m MODULE_LOCAL_NAME -o ORG_ID -p PROJECT_ID -s RESOURCE_NAME_SUFFIX -z GCE_ZONE [-n NETWORK_PROJECT_ID]
 ```
 
-Observe the expected Terraform changes.  As stated in the introduction, if you have any
-questions about this process, please contact us by
-e-mail at discuss@forsetisecurity.org or on
-[Slack](https://forsetisecurity.slack.com/join/shared_invite/enQtNDIyMzg4Nzg1NjcxLTM1NTUzZmM2ODVmNzE5MWEwYzAwNjUxMjVkZjhmYWZiOGZjMjY3ZjllNDlkYjk1OGU4MTVhZGM4NzgyZjZhNTE).
+## Terraform Plan
+It is strongly recommend to execute `terraform plan` before `terraform apply`.  This
+will provide you an opportunity to review changes Terraform is planning to make
+to your deployment.
 
 ```sh
 terraform plan
 ```
 
-### Terraform Changes
+### Review Terraform Changes
+Observe the expected Terraform changes.  As stated in the introduction, if you have any
+questions about this process, please contact us bye-mail at discuss@forsetisecurity.org
+or on [Slack](https://forsetisecurity.slack.com/join/shared_invite/enQtNDIyMzg4Nzg1NjcxLTM1NTUzZmM2ODVmNzE5MWEwYzAwNjUxMjVkZjhmYWZiOGZjMjY3ZjllNDlkYjk1OGU4MTVhZGM4NzgyZjZhNTE).
 
 Because there is not an exact mapping between the deprecated Python
 Installer and the Terraform module, some changes will occur when
@@ -270,7 +277,7 @@ Terraform state.
 ## Save state to GCS
 Congratulations, you have now installed Forseti!
 
-As a final step, you will want to save your configuration so it can be used to upgrade Forseti in the future.
+**IMPORTANT:** As a final step, you will want to save your configuration so it can be used to upgrade Forseti in the future.
 
 ### Create Terraform state bucket
 Create a Google Cloud Storage bucket to [store your Terraform state](https://www.terraform.io/docs/state/).

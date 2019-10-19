@@ -79,10 +79,10 @@ server_region   = "us-central1"
 client_region   = "us-central1"
 ```
 ### Credentials path
-Remove the **credentials_path** variable if present.  The `google` provider now solely relies on the _GOOGLE_APPLICACTION_CREDENTIALS_ environment variable.
+Remove the **credentials_path** variable if present.  The `google` provider now solely relies on the _GOOGLE_APPLICATION_CREDENTIALS_ environment variable.
 
 ### Root Resource identity
-Add the ***resource_name_suffix** variable and set it to the resource suffix.  The suffix can be found appended to the Forseti Server VM, for example.
+Add the **resource_name_suffix** variable and set it to the resource suffix.  The suffix can be found appended to the Forseti Server VM, for example.
 ```
 resource_name_suffix = "abc123efg" 
 ```
@@ -113,10 +113,15 @@ questions about this process, please contact us by
 [email](mailto:discuss@forsetisecurity.org) or on
 [Slack](https://forsetisecurity.slack.com/join/shared_invite/enQtNDIyMzg4Nzg1NjcxLTM1NTUzZmM2ODVmNzE5MWEwYzAwNjUxMjVkZjhmYWZiOGZjMjY3ZjllNDlkYjk1OGU4MTVhZGM4NzgyZjZhNTE).
 
+## Terraform Plan
+It is strongly recommend to execute `terraform plan` before `terraform apply`.  This
+will provide you an opportunity to review changes Terraform is planning to make
+to your deployment.
 
 ```sh
 terraform plan
 ```
+
 ### Terraform Changes
 
 Because there is not an exact mapping between the deprecated Python
