@@ -18,7 +18,7 @@ This can either be a dedicated Forseti project or an existing DevSecOps project.
 
 You will need to activate a few APIs on this project for Forseti to function.
 
-Note: If this step is blocked by an error "Unable to enable required APIs", navigate to the APIs and Services page on the GCP console and manually enable the specified APIs. 
+Note: If this step is blocked by an error "Unable to enable required APIs", navigate to the APIs and Services page on the GCP console and manually enable the specified APIs.
 
 Alternatively, you can use the following `gcloud` commands:
 
@@ -33,6 +33,34 @@ gcloud services enable cloudresourcemanager.googleapis.com serviceusage.googleap
   "cloudresourcemanager.googleapis.com,
   serviceusage.googleapis.com,
   compute.googleapis.com"></walkthrough-enable-apis>
+
+## Service Account Credentials
+Terraform uses an IAM Service Account to deploy and configure resources on behalf of the user.  This
+service account and key can be created by executing the [setup.sh](https://github.com/forseti-security/terraform-google-forseti/blob/master/helpers/setup.sh)
+helper script.
+
+### Obtain the Setup Script
+The following will download the setup script locally.
+```sh
+curl --location --remote-name https://raw.githubusercontent.com/forseti-security/terraform-google-forseti/master/helpers/setup.sh
+chmod +x setup.sh
+./setup.sh -h
+```
+
+### Run the Setup Script
+Execute the setup script replacing **ORG_ID** and **PROJECT_ID** with the orgainization ID and project ID respectively.
+```sh
+setup.sh -o ORG_ID -p PROJECT_ID
+```
+The above command will result in a *credentials.json* being downloaded to the your current working directory.
+
+### Export the Credentials
+Set the appropriate environment variable to the path of the service account JSON
+key file:
+
+```sh
+export GOOGLE_APPLICATION_CREDENTIALS=credentials.json
+```
 
 ## Configure Forseti
 To install Forseti, you will need to update a few settings in the <walkthrough-editor-open-file filePath="terraform-google-forseti/examples/install_simple/terraform.tfvars">terraform.tfvars</walkthrough-editor-open-file>.
