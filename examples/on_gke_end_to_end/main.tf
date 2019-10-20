@@ -198,11 +198,13 @@ module "forseti" {
   cscc_source_id          = var.cscc_source_id
 
 
-  config_validator_enabled         = var.config_validator_enabled
-  git_sync_private_ssh_key         = local.git_sync_private_ssh_key
-  k8s_forseti_server_ingress_cidr  = module.vpc.subnets_ips[0]
-  helm_repository_url              = var.helm_repository_url
-  policy_library_repository_url    = var.policy_library_repository_url
-  policy_library_repository_branch = var.policy_library_repository_branch
-  server_log_level                 = var.server_log_level
+  config_validator_enabled           = var.config_validator_enabled
+  git_sync_private_ssh_key           = local.git_sync_private_ssh_key
+  k8s_forseti_server_ingress_cidr    = module.vpc.subnets_ips[0]
+  k8s_forseti_server_image_tag       = var.k8s_forseti_server_image_tag
+  k8s_forseti_orchestrator_image_tag = var.k8s_forseti_orchestrator_image_tag
+  helm_repository_url                = var.helm_repository_url
+  policy_library_repository_url      = var.policy_library_repository_url
+  policy_library_repository_branch   = var.policy_library_repository_branch
+  server_log_level                   = var.server_log_level
 }
