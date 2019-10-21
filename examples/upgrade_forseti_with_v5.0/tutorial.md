@@ -7,7 +7,8 @@
 This guide explains how to upgrade Forseti previously installed with Terraform,
 to version 2.23.  This is due to a breaking change introduced in this Terraform
 module, now version 5.0.0.  The steps outlined in this guide should not be needed
-when upgrading Forseti to versions newer than 2.23.
+after Forseti has been upgraded versions 2.23 or above.
+
 
 If you have any
 questions about this process, please contact us by
@@ -19,8 +20,9 @@ questions about this process, please contact us by
 Before you begin the migration process, you will need:
 
 - A Forseti deployment of at least v2.18.0; follow the
-  [upgrade guide]({% link _docs/latest/setup/upgrade.md %}) as
-  necessary deployed via the [terraform-google-forseti Terraform module](https://github.com/forseti-security/terraform-google-forseti)
+  [upgrade guide](https://forsetisecurity.org/docs/latest/setup/upgrade.html) as
+  necessary deployed via the [terraform-google-forseti Terraform module](https://github.com/forseti-security/terraform-google-forseti).
+  Please note that the upper bound of the upgrades possible for the Python installer is 2.22.
 - A version of the
   [Terraform command-line interface](https://www.terraform.io/downloads.html)
   in the 0.12 series.
@@ -30,6 +32,12 @@ Before you begin the migration process, you will need:
 - A
   [JSON key file](https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys)
   for the service account.
+- If you are an Org Admin in the organization in which you deploying Forseti, a separate Service Account and Key are recommended,
+  but not required.
+- **Strongly Recommended:** A backup of your current state.
+  - A backup of all scanner rules in the Forseti Server's GCS bucket
+  - Server config file in the Forseti Server's GCS bucket
+  - [CloudSQL database](https://cloud.google.com/sql/docs/mysql/backup-recovery/backups)
 
 ## Configuring Terraform
 
@@ -69,7 +77,11 @@ version = "5.0.0"
 If you have set the **source** path to the directory containing the module, omit the **version** variable.
 
 ### Region
-If you have a **region**, it will need to be split into the cloudsql_region, server_region, and client_region variables.
+If you have a **region**, it will need to be split into the cloudsql_region, server_region, and client_region 
+variables.
+
+**NOTE:** In order to prevent data loss to your CloudSQL database, please double check the region where
+your CloudSQL instance currently exists and update the **cloudsql_region** variable, accourdingly.
 
 Before (example):
 ```
@@ -89,6 +101,16 @@ Add the **resource_name_suffix** variable and set it to the resource suffix.  Th
 ```
 resource_name_suffix = "abc123efg"
 ```
+### Server Rules and Login
+Add the following clause to the bottom of your main.tf.
+```
+  client_instance_metadata = {
+        enable-oslogin = "TRUE"
+      }
+  enable_write         = true
+  manage_rules_enabled = false
+```
+
 ## Obtain and Run the Import Script
 ### Obtain the Import Script
 This [import script](https://github.com/forseti-security/terraform-google-forseti/blob/master/helpers/import.sh) will import the Forseti GCP resources into a local state file.

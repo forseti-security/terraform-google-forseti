@@ -34,6 +34,12 @@ Before you begin the migration process, you will need:
 - A
   [JSON key file](https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys)
   for the service account.
+- If you are an Org Admin in the organization in which you deploying Forseti, a separate Service Account and Key are recommended,
+  but not required.
+- **Strongly Recommended:** A backup of your current state.
+  - A backup of all scanner rules in the Forseti Server's GCS bucket
+  - Server config file in the Forseti Server's GCS bucket
+  - [CloudSQL database](https://cloud.google.com/sql/docs/mysql/backup-recovery/backups)
 
 If you deployed Forseti in a shared VPC then you will also need:
 
@@ -59,37 +65,38 @@ key file:
 ```sh
 export GOOGLE_APPLICATION_CREDENTIALS="PATH_TO_JSON_KEY_FILE"
 ```
+As state in the pre-requisites, if you have Org Admin privilges, you do not need to complete this step.
 
 ## Configure Forseti
 To install Forseti, you will need to update a few settings in the <walkthrough-editor-open-file filePath="terraform-google-forseti/examples/migrate_forseti/main.tf">main.tf</walkthrough-editor-open-file>.
 
-On line 46, update the <walkthrough-editor-select-regex
+Update the <walkthrough-editor-select-regex
   filePath="terraform-google-forseti/examples/migrate_forseti/main.tf"
   regex="DOMAIN">domain</walkthrough-editor-select-regex>
 to match your domain.
 
-On line 47, update the <walkthrough-editor-select-regex
+Update the <walkthrough-editor-select-regex
   filePath="terraform-google-forseti/examples/migrate_forseti/main.tf"
   regex="PROJECT_ID">project_id</walkthrough-editor-select-regex>
 to match your chosen project_id.
 
-On line 48, update the <walkthrough-editor-select-regex
+Update the <walkthrough-editor-select-regex
   filePath="terraform-google-forseti/examples/migrate_forseti/main.tf"
   regex="RESOURCE_NAME_SUFFIX">resource_name_suffix</walkthrough-editor-select-regex>
 to match the string appended to the GCP resources used by Forseti.  For example, this string can be found appended to the name of either the Forseti Server or Forseti Client VM's.
 
-On line 49, update the <walkthrough-editor-select-regex
+Update the <walkthrough-editor-select-regex
   filePath="terraform-google-forseti/examples/migrate_forseti/main.tf"
   regex="ORG_ID">org_id</walkthrough-editor-select-regex>
 to match your organization id.
 
 ### Choose Network
-On line 51, update the <walkthrough-editor-select-regex
+Update the <walkthrough-editor-select-regex
   filePath="terraform-google-forseti/examples/migrate_forseti/main.tf"
   regex="default">network</walkthrough-editor-select-regex>
 you wish to deploy Forseti in.
 
-On line 52, update the <walkthrough-editor-select-line
+Update the <walkthrough-editor-select-line
   filePath="terraform-google-forseti/examples/migrate_forseti/main.tf"
   startLine=51
   endLine=51
@@ -100,7 +107,7 @@ On line 52, update the <walkthrough-editor-select-line
 ### Shared VPC
 If using a shared VPC, you'll need to update the related input variables.
 
-On line 56, update the <walkthrough-editor-select-regex
+Update the <walkthrough-editor-select-regex
   filePath="terraform-google-forseti/examples/migrate_forseti/main.tf"
   regex="SHARED_VPC_PROJECT_ID">network_project</walkthrough-editor-select-regex>
 to match the project in which your shared VPC exists.
@@ -109,12 +116,12 @@ to match the project in which your shared VPC exists.
 By default, Forseti deploys into us-central1.  If you deployed Forseti in a different region, you will need to
 update the cloudsql_region, server_region, and client_region input variables.
 
-On line 62, update the <walkthrough-editor-select-regex
+Update the <walkthrough-editor-select-regex
   filePath="terraform-google-forseti/examples/migrate_forseti/main.tf"
   regex="us-central1">cloudsql_region</walkthrough-editor-select-regex>
 to match the region where CloudSQL is deployed.
 
-On line 63, update the <walkthrough-editor-select-line
+Update the <walkthrough-editor-select-line
   filePath="terraform-google-forseti/examples/migrate_forseti/main.tf"
   startLine=63
   endLine=63
@@ -122,7 +129,7 @@ On line 63, update the <walkthrough-editor-select-line
   endCharacterOffset=33>server_region</walkthrough-editor-select-line>
 to match the region where the Forseti Server VM is deployed.
 
-On line 64, update the <walkthrough-editor-select-line
+Update the <walkthrough-editor-select-line
   filePath="terraform-google-forseti/examples/migrate_forseti/main.tf"
   startLine=64
   endLine=64
@@ -136,7 +143,7 @@ Starting with Forseti Security 2.23, Terraform will manage your server
  variables that are defined in the Terraform module.  This will ensure
  upgrading Forseti will be as easy as possible going forward.
 
-Please identitify any Forseti server configuration variables that have
+Please identify any Forseti server configuration variables that have
 been customized and add them to your <walkthrough-editor-open-file filePath="terraform-google-forseti/examples/migrate_forseti/main.tf">main.tf</walkthrough-editor-open-file>.
 
 For example, if you modified the e-mail connector recipient in the **forseti_conf_server.yaml** file in the Forseti Server GCS bucket:
