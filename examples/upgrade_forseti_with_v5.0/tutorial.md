@@ -236,6 +236,15 @@ Execute the following to apply the Terraform plan.
 ```sh
 terraform apply
 ```
+## Client VM Endpoint
+It is possible that the *forseti_conf_client.yaml* did not get updated with the right
+**server_ip** address.  This is a known issue and is being investigated.  Please perform
+the following steps.
+
+1. Update the **server_ip** in your `forseti-client-RESOURCE_NAME_SUFFIX/configs/forseti_config_client.yaml`
+file if necessary.
+
+2. Reset your client VM.
 
 ## Upgrade Complete
 
