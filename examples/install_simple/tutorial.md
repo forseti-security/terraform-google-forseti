@@ -16,7 +16,18 @@ This can either be a dedicated Forseti project or an existing DevSecOps project.
 
 ## Activate APIs
 
-You will need to activate a few APIs on this project for Forseti to function:
+You will need to activate a few APIs on this project for Forseti to function.
+
+Note: If this step is blocked by an error "Unable to enable required APIs", navigate to the APIs and Services page on the GCP console and manually enable the specified APIs. 
+
+Alternatively, you can use the following `gcloud` commands:
+
+```bash
+gcloud config set project {{project_id}}
+```
+```bash
+gcloud services enable cloudresourcemanager.googleapis.com serviceusage.googleapis.com compute.googleapis.com
+```
 
 <walkthrough-enable-apis apis=
   "cloudresourcemanager.googleapis.com,

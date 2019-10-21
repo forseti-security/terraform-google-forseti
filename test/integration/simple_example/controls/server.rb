@@ -199,7 +199,7 @@ control "server" do
         end
 
         it "configures serviceusage_max_calls" do
-          expect(config["inventory"]["api_quota"]["serviceusage"]["max_calls"]).to eq 2
+          expect(config["inventory"]["api_quota"]["serviceusage"]["max_calls"]).to eq 4
         end
 
         it "configures serviceusage_period" do

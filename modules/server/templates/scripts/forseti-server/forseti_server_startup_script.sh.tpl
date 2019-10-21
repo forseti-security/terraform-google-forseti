@@ -129,6 +129,12 @@ if ${cloud_profiler_enabled}; then
   sed "/FORSETI_COMMAND+=\" --services/a FORSETI_COMMAND+=\" --enable_profiler\"" -i ./install/gcp/scripts/initialize_forseti_services.sh
 fi
 
+# Install mailjet_rest library
+if ${mailjet_enabled}; then
+  echo "Forseti Startup - mailjet_rest library is enabled."
+  pip3 install mailjet_rest
+fi
+
 # Start Forseti service depends on vars defined above.
 echo "Forseti Startup - Starting services."
 bash ./install/gcp/scripts/initialize_forseti_services.sh

@@ -33,20 +33,21 @@ The [project factory](https://github.com/terraform-google-modules/terraform-goog
 - [Terraform](https://www.terraform.io/downloads.html) 0.12
 - [Terraform Provider for GCP](https://www.terraform.io/docs/providers/google/index.html) v2.9
 
-### Configure a Service Account
-In addition to the [roles](https://github.com/forseti-security/terraform-google-forseti#iam-roles) required for the core module function, the Service Account must have these roles for this example.
-- roles/container.admin
-- roles/iam.serviceAccountAdmin
-- roles/iam.serviceAccountKeyAdmin
-- roles/compute.networkAdmin
-- roles/resourcemanager.projectIamAdmin (only required if `service_account` is set to `create`)
+### Create the Service Account and enable required APIs
+You can create the service account manually, or by running the following command:
 
-### Enable APIs
-In order to operate with the Service Account you must activate the following APIs on the project where the Service Account was created:
+```bash
+./helpers/setup.sh -p PROJECT_ID -o ORG_ID -k
+```
 
-- Compute Engine API - compute.googleapis.com
-- Kubernetes Engine API - container.googleapis.com
-- Container Registry API - containerregistry.googleapis.com
+This will create a service account called `cloud-foundation-forseti-<suffix>`,
+give it the proper roles, and download service account credentials to
+`${PWD}/credentials.json`. Note, that using this script assumes that you are
+currently authenticated as a user that can create/authorize service accounts at
+both the organization and project levels.
+
+This script will also activate necessary APIs required for Terraform to deploy Forseti on-GKE end-to-end.
+```
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
@@ -55,6 +56,8 @@ In order to operate with the Service Account you must activate the following API
 |------|-------------|:----:|:-----:|:-----:|
 | auto\_create\_subnetworks | When set to true, the network is created in 'auto subnet mode' and it will create a subnet for each region automatically across the 10.128.0.0/9 address range. When set to false, the network is created in 'custom subnet mode' so the user can explicitly connect subnetwork resources. | bool | `"false"` | no |
 | config\_validator\_enabled | Config Validator scanner enabled. | bool | `"false"` | no |
+| cscc\_source\_id | Source ID for CSCC Beta API | string | `""` | no |
+| cscc\_violations\_enabled | Notify for CSCC violations | bool | `"false"` | no |
 | domain | The domain associated with the GCP Organization ID | string | n/a | yes |
 | forseti\_email\_recipient | Email address that receives Forseti notifications | string | `""` | no |
 | forseti\_email\_sender | Email address that sends the Forseti notifications | string | `""` | no |
