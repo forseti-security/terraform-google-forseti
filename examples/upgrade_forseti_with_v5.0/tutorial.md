@@ -34,9 +34,12 @@ Before you begin the migration process, you will need:
   for the service account.
 - If you are an Org Admin in the organization in which you deploying Forseti, a separate Service Account and Key are recommended,
   but not required.
-- **Strongly Recommended:** A backup of your current state.
-  - A backup of all scanner rules in the Forseti Server's GCS bucket
-  - Server config file in the Forseti Server's GCS bucket
+- **Strongly recommended out of an overabundance of caution:** A backup of your current state.
+  - In the Forseti Server's GCS Bucket
+    - Scanner rules
+    - Server config file
+    - Scanner Violations
+    - Inventory summary
   - [CloudSQL database](https://cloud.google.com/sql/docs/mysql/backup-recovery/backups)
 
 ## Configuring Terraform
@@ -51,6 +54,8 @@ key file:
 ```sh
 export GOOGLE_APPLICATION_CREDENTIALS="PATH_TO_JSON_KEY_FILE"
 ```
+As stated in the pre-requisites, if you have Org Admin privilges, you do not need to complete this step.
+
 ## Backup the Terraform State
 In a shell, navigate to the folder containing your user-defined Terraform module, most likely in a **main.tf**.
 
