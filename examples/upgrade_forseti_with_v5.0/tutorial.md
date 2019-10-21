@@ -77,7 +77,7 @@ version = "5.0.0"
 If you have set the **source** path to the directory containing the module, omit the **version** variable.
 
 ### Region
-If you have a **region**, it will need to be split into the cloudsql_region, server_region, and client_region 
+If you have a **region**, it will need to be split into the cloudsql_region, server_region, and client_region
 variables.
 
 **NOTE:** In order to prevent data loss to your CloudSQL database, please double check the region where
@@ -166,7 +166,7 @@ e-mail at discuss@forsetisecurity.org or on
 
 - The `forseti-client-gcp-RESOURCE_NAME_SUFFIX` service account will
   gain the Cloud Trace Agent (`roles/cloudtrace.agent`) role
-* - The `forseti-client-gcp-RESOURCE_NAME_SUFFIX` service account will
+- The `forseti-client-gcp-RESOURCE_NAME_SUFFIX` service account will
   gain the Cloud Trace Agent (`roles/storage.objectViewer`) role
 - The `forseti-server-gcp-RESOURCE_NAME_SUFFIX` service account will
   gain the following roles.  Note your server service account likely
@@ -200,11 +200,11 @@ e-mail at discuss@forsetisecurity.org or on
   will update to only allow traffic from the
   `forseti-client-gcp-RESOURCE_NAME_SUFFIX` service account and to allow
   traffic to port 50052 in addition to 50051
-*- The `forseti-cai-export-RESOURCE_NAME_SUFFIX`, `forseti-client-RESOURCE_NAME_SUFFIX` and `forseti-server-RESOURCE_NAME_SUFFIX`
+- The `forseti-cai-export-RESOURCE_NAME_SUFFIX`, `forseti-client-RESOURCE_NAME_SUFFIX` and `forseti-server-RESOURCE_NAME_SUFFIX`
   GCS bucket to set `force_destroy` to `true`.
 - The `forseti-client-gcp-RESOURCE_NAME_SUFFIX` and `forseti-server-gcp-RESOURCE_NAME_SUFFIX`
   service accounts will be updated in place to change the display name
-* - The `forseti-server-db-RESOURCE_NAME_SUFFIX` CloudSQL database will
+- The `forseti-server-db-RESOURCE_NAME_SUFFIX` CloudSQL database will
   increase in resource size.  It will also gain the `net_write_timeout`
   flag.
 
@@ -215,12 +215,12 @@ e-mail at discuss@forsetisecurity.org or on
   rule and the `forseti-server-allow-ssh-external-RESOURCE_NAME_SUFFIX`
   firewall rule will both be replaced due to a naming change, but the new firewall
   rules will be equivalent
-* - The `forseti-client-vm-RESOURCE_NAME_SUFFIX` compute instance and the
+- The `forseti-client-vm-RESOURCE_NAME_SUFFIX` compute instance and the
   `forseti-server-vm-RESOURCE_NAME_SUFFIX` compute instance will be
   replaced due to changes in metadata startup scripts, boot disk sizes
   and boot disk types; these VMs should be stateless but ensure that
   any customizations are captured before applying this change
-* - The `configs/forseti_conf_client.yaml` object in the
+- The `configs/forseti_conf_client.yaml` object in the
   `forseti-client-RESOURCE_NAME_SUFFIX` storage bucket and the
   `configs/forseti_conf_server.yaml` object in the
   `forseti-server-RESOURCE_NAME_SUFFIX` storage bucket will be replaced
