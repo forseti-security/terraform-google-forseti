@@ -149,18 +149,40 @@ Starting with Forseti Security 2.23, Terraform will manage your server
 Please identify any Forseti server configuration variables that have
 been customized and add them to your <walkthrough-editor-open-file filePath="terraform-google-forseti/examples/migrate_forseti/main.tf">main.tf</walkthrough-editor-open-file>.
 
-For example, if you modified the e-mail connector recipient in the **forseti_conf_server.yaml** file in the Forseti Server GCS bucket:
+The default values for the variables can be found 
+[here](https://github.com/forseti-security/terraform-google-forseti/blob/module-release-5.0.0/variables.tf), and will 
+be set to the default if they are not explicitly added.
+
+The following variables have been listed to help you identify and set any customized values:
+- [composite_root_resources](https://github.com/forseti-security/terraform-google-forseti/blob/f509a4ba687dd30855a35da1fffcad454892a5e3/variables.tf#L921-L925)
+- [cscc_source_id](https://github.com/forseti-security/terraform-google-forseti/blob/f509a4ba687dd30855a35da1fffcad454892a5e3/variables.tf#L707-L710)
+- [cscc_violations_enabled](https://github.com/forseti-security/terraform-google-forseti/blob/f509a4ba687dd30855a35da1fffcad454892a5e3/variables.tf#L701-L705)
+- [excluded_resources](https://github.com/forseti-security/terraform-google-forseti/blob/f509a4ba687dd30855a35da1fffcad454892a5e3/variables.tf#L273-L277)
+- [forseti_email_recipient](https://github.com/forseti-security/terraform-google-forseti/blob/f509a4ba687dd30855a35da1fffcad454892a5e3/variables.tf#L39-L42)
+- [forseti_email_sender](https://github.com/forseti-security/terraform-google-forseti/blob/f509a4ba687dd30855a35da1fffcad454892a5e3/variables.tf#L44-L47)
+- [gsuite_admin_email](https://github.com/forseti-security/terraform-google-forseti/blob/f509a4ba687dd30855a35da1fffcad454892a5e3/variables.tf#L24-L27)
+- [inventory_email_summary_enabled](https://github.com/forseti-security/terraform-google-forseti/blob/f509a4ba687dd30855a35da1fffcad454892a5e3/variables.tf#L718-L722)
+- [inventory_gcs_summary_enabled](https://github.com/forseti-security/terraform-google-forseti/blob/f509a4ba687dd30855a35da1fffcad454892a5e3/variables.tf#L712-L716)
+- [sendgrid_api_key](https://github.com/forseti-security/terraform-google-forseti/blob/f509a4ba687dd30855a35da1fffcad454892a5e3/variables.tf#L927-L930)
+- [violations_slack_webhook](https://github.com/forseti-security/terraform-google-forseti/blob/f509a4ba687dd30855a35da1fffcad454892a5e3/variables.tf#L554-L557)
+
+For example, if you added a SendGrid API Key to receive email notifications in the **forseti_conf_server.yaml** file in 
+the Forseti Server GCS bucket:
 ```yaml
 email_connector:
       name: sendgrid
       auth:
-        api_key: ...
-      sender: ...
+        api_key: SENDGRID_API_KEY
+      sender: forseti@localhost.com
       recipient: myemail@example.com
       data_format: csv
 ```
-You will want to add the
-`forseti_email_recipient = myemail@example.com`
+You will want to add
+```
+sendgrid_api_key        = "SENDGRID_API_KEY"
+forseti_email_sender    = "forseti@localhost.com"
+forseti_email_recipient = "myemail@example.com"
+```
 to your <walkthrough-editor-select-regex
   filePath="terraform-google-forseti/examples/migrate_forseti/main.tf"
   regex="Add any Forseti Server Configuration Variables Here">main.tf</walkthrough-editor-select-regex>
