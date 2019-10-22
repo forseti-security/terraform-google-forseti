@@ -146,14 +146,15 @@ Starting with Forseti Security 2.23, Terraform will manage your server
  variables that are defined in the Terraform module.  This will ensure
  upgrading Forseti will be as easy as possible going forward.
 
-Please identify any Forseti server configuration variables that have
+**IMPORTANT**: Please identify any Forseti server configuration variables that have
 been customized and add them to your <walkthrough-editor-open-file filePath="terraform-google-forseti/examples/migrate_forseti/main.tf">main.tf</walkthrough-editor-open-file>.
 
 The default values for the variables can be found 
 [here](https://github.com/forseti-security/terraform-google-forseti/blob/module-release-5.0.0/variables.tf), and will 
 be set to the default if they are not explicitly added.
 
-The following variables have been listed to help you identify and set any customized values:
+The following variables have been listed as a sample to help you identify and set any customized values. 
+There may be other variables with customized values that will need to be set.
 - [composite_root_resources](https://github.com/forseti-security/terraform-google-forseti/blob/f509a4ba687dd30855a35da1fffcad454892a5e3/variables.tf#L921-L925)
 - [cscc_source_id](https://github.com/forseti-security/terraform-google-forseti/blob/f509a4ba687dd30855a35da1fffcad454892a5e3/variables.tf#L707-L710)
 - [cscc_violations_enabled](https://github.com/forseti-security/terraform-google-forseti/blob/f509a4ba687dd30855a35da1fffcad454892a5e3/variables.tf#L701-L705)
