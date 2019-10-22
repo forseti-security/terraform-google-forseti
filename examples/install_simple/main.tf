@@ -15,29 +15,30 @@
  */
 
 module "forseti-install-simple" {
-  source  = "terraform-google-modules/forseti/google"
-  version = "~> 5.0.0"
+  source                   = "terraform-google-modules/forseti/google"
+  version                  = "~> 5.0.0"
 
-  project_id = var.project_id
-  org_id     = var.org_id
-  domain     = var.domain
+  project_id               = var.project_id
+  org_id                   = var.org_id
+  domain                   = var.domain
 
-  server_region = var.region
-  client_region = var.region
-  network       = var.network
-  subnetwork    = var.subnetwork
+  server_region            = var.region
+  client_region            = var.region
+  cloudsql_region          = var.region
+  network                  = var.network
+  subnetwork               = var.subnetwork
 
-  gsuite_admin_email      = var.gsuite_admin_email
-  sendgrid_api_key        = var.sendgrid_api_key
-  forseti_email_sender    = var.forseti_email_sender
-  forseti_email_recipient = var.forseti_email_recipient
+  gsuite_admin_email       = var.gsuite_admin_email
+  sendgrid_api_key         = var.sendgrid_api_key
+  forseti_email_sender     = var.forseti_email_sender
+  forseti_email_recipient  = var.forseti_email_recipient
 
   client_instance_metadata = var.instance_metadata
   server_instance_metadata = var.instance_metadata
 
-  client_tags = var.instance_tags
-  server_tags = var.instance_tags
+  client_tags              = var.instance_tags
+  server_tags              = var.instance_tags
 
-  client_private = var.private
-  server_private = var.private
+  client_private           = var.private
+  server_private           = var.private
 }
