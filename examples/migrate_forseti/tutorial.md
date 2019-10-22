@@ -185,7 +185,7 @@ forseti_email_recipient = "myemail@example.com"
 ```
 to your <walkthrough-editor-select-regex
   filePath="terraform-google-forseti/examples/migrate_forseti/main.tf"
-  regex="Add any Forseti Server Configuration Variables Here">main.tf</walkthrough-editor-select-regex>
+  regex="Add any Forseti Server Configuration Variables Here">main.tf</walkthrough-editor-select-regex>.
 
 ## Obtain and Run the Import Script
 This [import script](https://github.com/forseti-security/terraform-google-forseti/blob/master/helpers/import.sh) will import the Forseti GCP resources into a local state file.
