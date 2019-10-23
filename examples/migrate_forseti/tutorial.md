@@ -143,15 +143,13 @@ to match the region where the Forseti Client VM is deployed.
 ## Add Input Variables for Custom Configurations
 Starting with Forseti Security 2.23, Terraform will manage your server
  configuration file for you.  Configuration options will now be input
- variables that are defined in the Terraform module.  This will ensure
- upgrading Forseti will be as easy as possible going forward.
+ variables that are defined in the Terraform module. Available variables
+ and their default values can be found [here](https://github.com/forseti-security/terraform-google-forseti/blob/module-release-5.0.0/variables.tf).
+ Default values will be used if values are not explicitly added. 
+ This will ensure upgrading Forseti will be as easy as possible going forward.
 
 **IMPORTANT**: Please identify any Forseti server configuration variables that have
 been customized and add them to your <walkthrough-editor-open-file filePath="terraform-google-forseti/examples/migrate_forseti/main.tf">main.tf</walkthrough-editor-open-file>.
-
-The default values for the variables can be found 
-[here](https://github.com/forseti-security/terraform-google-forseti/blob/module-release-5.0.0/variables.tf), and will 
-be set to the default if they are not explicitly added.
 
 The following variables have been listed as a sample to help you identify and set any customized values. There may be other variables with customized values that will need to be set.
 - [composite_root_resources](https://github.com/forseti-security/terraform-google-forseti/blob/f509a4ba687dd30855a35da1fffcad454892a5e3/variables.tf#L921-L925)
@@ -187,14 +185,6 @@ to your <walkthrough-editor-select-regex
   filePath="terraform-google-forseti/examples/migrate_forseti/main.tf"
   regex="Add any Forseti Server Configuration Variables Here">main.tf</walkthrough-editor-select-regex>.
 
-## Obtain and Run the Import Script
-This [import script](https://github.com/forseti-security/terraform-google-forseti/blob/master/helpers/import.sh) will import the Forseti GCP resources into a local state file.
-
-```sh
-curl --location --remote-name https://raw.githubusercontent.com/forseti-security/terraform-google-forseti/master/helpers/import.sh
-chmod +x import.sh
-./import.sh -h
-```
 ## Importing Existing Resources
 
 Initialize the Terraform state:
@@ -210,6 +200,16 @@ uppercase values with the aforementioned values:
 ./import.sh -m MODULE_LOCAL_NAME -o ORG_ID -p PROJECT_ID -s RESOURCE_NAME_SUFFIX -z GCE_ZONE [-n NETWORK_PROJECT_ID]
 ```
 
+## Obtain and Run the Import Script
+This [import script](https://github.com/forseti-security/terraform-google-forseti/blob/master/helpers/import.sh) will import the Forseti GCP resources into a local state file.
+Please look at the output of `import.sh -h` to populate the needed flags. Import scri
+
+```sh
+curl --location --remote-name https://raw.githubusercontent.com/forseti-security/terraform-google-forseti/master/helpers/import.sh
+chmod +x import.sh
+./import.sh -h
+```
+
 ## Terraform Plan
 It is strongly recommend to execute `terraform plan` before `terraform apply`.  This
 will provide you an opportunity to review changes Terraform is planning to make
@@ -221,7 +221,7 @@ terraform plan
 
 ### Review Terraform Changes
 Observe the expected Terraform changes.  As stated in the introduction, if you have any
-questions about this process, please contact us bye-mail at discuss@forsetisecurity.org
+questions about this process, please contact us by [email](mailto:discuss@forsetisecurity.org)
 or on [Slack](https://forsetisecurity.slack.com/join/shared_invite/enQtNDIyMzg4Nzg1NjcxLTM1NTUzZmM2ODVmNzE5MWEwYzAwNjUxMjVkZjhmYWZiOGZjMjY3ZjllNDlkYjk1OGU4MTVhZGM4NzgyZjZhNTE).
 
 Because there is not an exact mapping between the deprecated Python
@@ -234,14 +234,11 @@ You should carefully review this section as well as the output from
 #### Created
 
 - The `forseti-client-gcp-RESOURCE_NAME_SUFFIX` service account will
-  gain the Cloud Trace Agent (`roles/cloudtrace.agent`) role
-- The `forseti-client-gcp-RESOURCE_NAME_SUFFIX` service account will
   gain the Cloud Trace Agent (`roles/storage.objectViewer`) role
 - The `forseti-server-gcp-RESOURCE_NAME_SUFFIX` service account will
   gain the following roles.  Note your server service account likely
   has these roles already.  Terraform re-applying them is essentially
   a no-op.
-  - Cloud Trace Agent (`roles/cloudtrace.agent`)
   - IAM Service Account Token Creator (`roles/iam.serviceAccountTokenCreator`)
   - App Engine Viewer (`roles/appengine.appViewer`)
   - BigQuery Meta-data Viewer (`roles/bigquery.metadataViewer`)
