@@ -104,6 +104,7 @@ export FORSETI_SETUP_SERVICE_ACCOUNT_NAME="${SERVICE_ACCOUNT_NAME}"
 
 echo "Enabling services"
 gcloud services enable \
+    compute.googleapis.com \
     cloudresourcemanager.googleapis.com \
     serviceusage.googleapis.com \
     --project "${PROJECT_ID}"
