@@ -118,10 +118,10 @@ Add the following clause to the bottom of your main.tf.
 
 ## Obtain and Run the Import Script
 ### Obtain the Import Script
-This [import script](https://github.com/forseti-security/terraform-google-forseti/blob/master/helpers/import.sh) will import the Forseti GCP resources into a local state file.
+This [import script](https://github.com/forseti-security/terraform-google-forseti/blob/module-release-5.0.0/helpers/import.sh) will import the Forseti GCP resources into a local state file.
 
 ```sh
-curl --location --remote-name https://raw.githubusercontent.com/forseti-security/terraform-google-forseti/master/helpers/import.sh
+curl --location --remote-name https://raw.githubusercontent.com/forseti-security/terraform-google-forseti/module-release-5.0.0/helpers/import.sh
 chmod +x import.sh
 ./import.sh -h
 ```
