@@ -16,14 +16,22 @@ In order to run this module you will need to be authenticated as a user that has
 gcloud auth login
 ```
 
+### Clone the Forseti Terraform Module repository
+The repository has several helper scripts that can be used with the deployment process.
+
+```bash
+git clone --branch module-release-5.0.0 --depth 1 https://github.com/forseti-security/terraform-google-forseti.git
+```
+
 ### Install Terraform
 Terraform version 0.12 is required for this module, which can be downloaded from the [Terraform website](https://www.terraform.io/downloads.html).
 
 ### Create the Service Account and enable required APIs
 The Service Account and required APIs can be setup automatically with a provided script. This can also be done manually by reviewing the [Requirements](#requirements) section.
+__Note:__ The setup script should be sourced by calling it with a preceding `.` so that exported environment variables are preserved.
 
 ```bash
-./helpers/setup.sh -p PROJECT_ID -o ORG_ID
+. ./helpers/setup.sh -p PROJECT_ID -o ORG_ID
 ```
 
 This will create a service account called `cloud-foundation-forseti-<suffix>`,
@@ -35,13 +43,13 @@ service account with a few extra roles. This can be enabled with the `-e`
 flag:
 
 ```bash
-./helpers/setup.sh -p PROJECT_ID -o ORG_ID -e
+. ./helpers/setup.sh -p PROJECT_ID -o ORG_ID -e
 ```
 
 Utilizing a shared VPC via a host project is supported with the `-f` flag:
 
 ```bash
-./helpers/setup.sh -p PROJECT_ID -f HOST_PROJECT_ID -o ORG_ID
+. ./helpers/setup.sh -p PROJECT_ID -f HOST_PROJECT_ID -o ORG_ID
 ```
 
 ### Terraform Configuration

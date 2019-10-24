@@ -185,6 +185,14 @@ to your <walkthrough-editor-select-regex
   filePath="terraform-google-forseti/examples/migrate_forseti/main.tf"
   regex="Add any Forseti Server Configuration Variables Here">main.tf</walkthrough-editor-select-regex>.
 
+## Obtain and Run the Import Script
+This [import script](https://github.com/forseti-security/terraform-google-forseti/blob/module-release-5.0.0/helpers/import.sh) will import the Forseti GCP resources into a local state file.
+
+```sh
+curl --location --remote-name https://raw.githubusercontent.com/forseti-security/terraform-google-forseti/module-release-5.0.0/helpers/import.sh
+chmod +x import.sh
+./import.sh -h
+```
 ## Importing Existing Resources
 
 Initialize the Terraform state:
