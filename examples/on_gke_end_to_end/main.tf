@@ -120,9 +120,7 @@ module "gke" {
   version                  = "5.0.0"
   project_id               = var.project_id
   name                     = var.gke_cluster_name
-  regional                 = false
   region                   = var.region
-  zones                    = var.zones
   network                  = module.vpc.network_name
   subnetwork               = module.vpc.subnets_names[0]
   ip_range_pods            = var.gke_pod_ip_range_name
@@ -132,7 +130,7 @@ module "gke" {
   remove_default_node_pool = true
   identity_namespace       = "${var.project_id}.svc.id.goog"
   node_metadata            = "GKE_METADATA_SERVER"
-  kubernetes_version       = "1.13"
+  kubernetes_version       = "1.13.11-gke.5"
 
 
   node_pools = [{
