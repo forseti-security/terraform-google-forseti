@@ -160,6 +160,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
+
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | admin\_disable\_polling | Whether to disable polling for Admin API | bool | `"false"` | no |
@@ -323,6 +324,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | violations\_slack\_webhook | Slack webhook for any violation. Will apply to all scanner violation notifiers. | string | `""` | no |
 
 ## Outputs
+
 | Name | Description |
 |------|-------------|
 | forseti-client-service-account | Forseti Client service account |
