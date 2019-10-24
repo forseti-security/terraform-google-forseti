@@ -149,8 +149,8 @@ Starting with Forseti Security 2.23, Terraform will manage your server
 **IMPORTANT**: Please identify any Forseti server configuration variables that have
 been customized and add them to your <walkthrough-editor-open-file filePath="terraform-google-forseti/examples/migrate_forseti/main.tf">main.tf</walkthrough-editor-open-file>.
 
-The default values for the variables can be found 
-[here](https://github.com/forseti-security/terraform-google-forseti/blob/module-release-5.0.0/variables.tf), and will 
+The default values for the variables can be found
+[here](https://github.com/forseti-security/terraform-google-forseti/blob/module-release-5.0.0/variables.tf), and will
 be set to the default if they are not explicitly added.
 
 The following variables have been listed as a sample to help you identify and set any customized values. There may be other variables with customized values that will need to be set.
@@ -166,7 +166,7 @@ The following variables have been listed as a sample to help you identify and se
 - [sendgrid_api_key](https://github.com/forseti-security/terraform-google-forseti/blob/f509a4ba687dd30855a35da1fffcad454892a5e3/variables.tf#L927-L930)
 - [violations_slack_webhook](https://github.com/forseti-security/terraform-google-forseti/blob/f509a4ba687dd30855a35da1fffcad454892a5e3/variables.tf#L554-L557)
 
-For example, if you added a SendGrid API Key to receive email notifications in the **forseti_conf_server.yaml** file in 
+For example, if you added a SendGrid API Key to receive email notifications in the **forseti_conf_server.yaml** file in
 the Forseti Server GCS bucket:
 ```yaml
 email_connector:

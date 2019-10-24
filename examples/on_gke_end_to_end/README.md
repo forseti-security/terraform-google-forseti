@@ -61,7 +61,7 @@ This script will also activate necessary APIs required for Terraform to deploy F
 | domain | The domain associated with the GCP Organization ID | string | n/a | yes |
 | forseti\_email\_recipient | Email address that receives Forseti notifications | string | `""` | no |
 | forseti\_email\_sender | Email address that sends the Forseti notifications | string | `""` | no |
-| git\_sync\_private\_ssh\_key\_file | The file containing the private SSH key allowing the git-sync to clone the policy library repository. | string | `""` | no |
+| git\_sync\_private\_ssh\_key\_file | The file containing the private SSH key allowing the git-sync to clone the policy library repository. | string | `"null"` | no |
 | gke\_cluster\_name | The name of the GKE Cluster | string | `"forseti-cluster"` | no |
 | gke\_node\_ip\_range | The IP range for the GKE nodes. | string | `"10.1.0.0/20"` | no |
 | gke\_pod\_ip\_range | The IP range of the Kubernetes pods | string | `"10.2.0.0/20"` | no |
@@ -81,11 +81,10 @@ This script will also activate necessary APIs required for Terraform to deploy F
 | policy\_library\_repository\_branch | The specific git branch containing the policies. | string | `"master"` | no |
 | policy\_library\_repository\_url | The git repository containing the policy-library. | string | `"https://github.com/forseti-security/policy-library"` | no |
 | project\_id | The ID of an existing Google project where Forseti will be installed | string | n/a | yes |
-| region | Region where forseti subnetwork will be deployed | string | `"us-central1"` | no |
+| region | Region where Forseti will be deployed | string | `"us-central1"` | no |
 | sendgrid\_api\_key | Sendgrid.com API key to enable email notifications | string | `""` | no |
 | server\_log\_level | The log level of the Forseti server container. | string | `"info"` | no |
 | subnetwork | The name of the subnet being created | string | `"gke-sub-network"` | no |
-| zones | The zones to host the cluster in. This is optional if the GKE cluster is regional.  It is required if the cluster is zonal. | list | `<list>` | no |
 
 ## Outputs
 
