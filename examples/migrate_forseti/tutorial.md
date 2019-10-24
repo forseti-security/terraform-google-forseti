@@ -131,7 +131,7 @@ Update the <walkthrough-editor-select-line
   startCharacterOffset=21
   endCharacterOffset=33>server_region</walkthrough-editor-select-line>
 to match the region where the Forseti Server VM is deployed.
-main
+
 Update the <walkthrough-editor-select-line
   filePath="terraform-google-forseti/examples/migrate_forseti/main.tf"
   startLine=64
