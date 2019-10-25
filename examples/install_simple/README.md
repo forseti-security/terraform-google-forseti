@@ -2,7 +2,7 @@
 
 This configuration is used to simply install Forseti. It includes a full Cloud Shell [tutorial](./tutorial.md).
 
-[![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fforseti-security%2Fterraform-google-forseti.git&cloudshell_git_branch=master&cloudshell_working_dir=examples/install_simple&cloudshell_image=gcr.io%2Fgraphite-cloud-shell-images%2Fterraform%3Alatest&cloudshell_tutorial=.%2Ftutorial.md)
+[![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fforseti-security%2Fterraform-google-forseti.git&cloudshell_git_branch=module-release-5.0.0&cloudshell_working_dir=examples/install_simple&cloudshell_image=gcr.io%2Fgraphite-cloud-shell-images%2Fterraform%3Alatest&cloudshell_tutorial=.%2Ftutorial.md)
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
@@ -20,7 +20,7 @@ This configuration is used to simply install Forseti. It includes a full Cloud S
 | org\_id | GCP Organization ID that Forseti will have purview over | string | n/a | yes |
 | private | Private client and server instances (no public IPs) | bool | `"false"` | no |
 | project\_id | The ID of an existing Google project where Forseti will be installed | string | n/a | yes |
-| region | GCP region where Forseti will be deployed | string | n/a | yes |
+| region | The region where the Forseti GCE Instance VMs and CloudSQL Instances will be deployed | string | n/a | yes |
 | sendgrid\_api\_key | Sendgrid API key. | string | `""` | no |
 | subnetwork | The VPC subnetwork where the Forseti client and server will be created | string | n/a | yes |
 

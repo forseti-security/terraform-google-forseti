@@ -61,10 +61,6 @@ control 'forseti' do
     it { should exist }
     its('members') { should include "serviceAccount:#{forseti_server_service_account}" }
   end
-  describe google_project_iam_binding(project: project_id, role: "roles/cloudtrace.agent") do
-    it { should exist }
-    its('members') { should include "serviceAccount:#{forseti_server_service_account}" }
-  end
   describe google_project_iam_binding(project: project_id, role: "roles/logging.logWriter") do
     it { should exist }
     its('members') { should include "serviceAccount:#{forseti_server_service_account}" }

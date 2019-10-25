@@ -53,7 +53,6 @@ locals {
     "sqladmin.googleapis.com",
     "compute.googleapis.com",
     "iam.googleapis.com",
-    "cloudtrace.googleapis.com",
     "container.googleapis.com",
     "servicemanagement.googleapis.com",
     "serviceusage.googleapis.com",

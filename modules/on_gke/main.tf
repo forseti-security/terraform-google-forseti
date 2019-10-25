@@ -60,7 +60,6 @@ locals {
     "sqladmin.googleapis.com",
     "compute.googleapis.com",
     "iam.googleapis.com",
-    "cloudtrace.googleapis.com",
     "container.googleapis.com",
     "containerregistry.googleapis.com",
     "servicemanagement.googleapis.com",
@@ -224,7 +223,7 @@ resource "helm_release" "forseti-security" {
   }
 
   set {
-    name  = "server.bucket"
+    name  = "server.config.bucket"
     value = module.server_gcs.forseti-server-storage-bucket
   }
 

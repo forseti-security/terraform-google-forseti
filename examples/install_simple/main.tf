@@ -16,16 +16,17 @@
 
 module "forseti-install-simple" {
   source  = "terraform-google-modules/forseti/google"
-  version = "~> 4.3.0"
+  version = "~> 5.0.0"
 
   project_id = var.project_id
   org_id     = var.org_id
   domain     = var.domain
 
-  server_region = var.region
-  client_region = var.region
-  network       = var.network
-  subnetwork    = var.subnetwork
+  server_region   = var.region
+  client_region   = var.region
+  cloudsql_region = var.region
+  network         = var.network
+  subnetwork      = var.subnetwork
 
   gsuite_admin_email      = var.gsuite_admin_email
   sendgrid_api_key        = var.sendgrid_api_key
