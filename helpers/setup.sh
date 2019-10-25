@@ -15,24 +15,19 @@
 
 show_help() {
   cat <<EOF
-Usage: ${0##*/} -p PROJECT_ID -o ORG_ID [-e] [-f HOST_PROJECT]
+Usage: ${0##*/} -p PROJECT_ID -o ORG_ID [-e] [-k] [-f HOST_PROJECT] [-s SERVICE_ACCOUNT]
        ${0##*/} -h
-
-Generate a service account with the IAM roles needed to run the Forseti Terraform module.
-
+Generate or updates a service account with the IAM roles needed to run the Forseti Terraform module.
 Options:
-
-    -p PROJECT_ID    The project ID where Forseti resources will be created.
-    -o ORG_ID        The organization ID that Forseti will be monitoring.
-    -e               Add additional IAM roles for running the real time policy enforcer.
-    -k               Add additional IAM roles for running Forseti on-GKE
+    -p PROJECT_ID       The project ID where Forseti resources will be created.
+    -o ORG_ID           The organization ID that Forseti will be monitoring.
+    -e                  Add additional IAM roles for running the real time policy enforcer.
+    -k                  Add additional IAM roles for running Forseti on-GKE
     -f HOST_PROJECT_ID  ID of a project holding shared vpc.
-
+    -s SERVICE_ACCOUNT  Specify a service account name to create (if already exists will be updated) 
 Examples:
-
     ${0##*/} -p forseti-235k -o 22592784945
     ${0##*/} -p forseti-enforcer-99e4 -o 22592784945 -e
-
 EOF
 }
 
@@ -41,6 +36,7 @@ ORG_ID=""
 WITH_ENFORCER=""
 HOST_PROJECT_ID=""
 ON_GKE=""
+SERVICE_ACCOUNT_NAME="cloud-foundation-forseti-${RANDOM}"
 
 OPTIND=1
 while getopts ":hekf:p:o:" opt; do
@@ -64,6 +60,9 @@ while getopts ":hekf:p:o:" opt; do
     k)
       ON_GKE=1
       ;;
+    s)
+      SERVICE_ACCOUNT_NAME="$OPTARG"
+      ;;
     *)
       echo "Unhandled option: -$opt" >&2
       show_help >&2
@@ -84,6 +83,12 @@ if [[ -z "$ORG_ID" ]]; then
   exit 1
 fi
 
+if [[ -z "$PROJECT_ID" ]]; then
+  echo "ERROR: PROJECT_ID must be set."
+  show_help >&2
+  exit 1
+fi
+
 # Ensure that we can fetch the IAM policy on the Forseti project.
 if ! gcloud projects get-iam-policy "$PROJECT_ID" 2>&- 1>&-; then
   echo "ERROR: Unable to fetch IAM policy on project $PROJECT_ID."
@@ -96,7 +101,7 @@ if ! gcloud organizations get-iam-policy "$ORG_ID" 2>&- 1>&-; then
   exit 1
 fi
 
-SERVICE_ACCOUNT_NAME="cloud-foundation-forseti-${RANDOM}"
+
 SERVICE_ACCOUNT_EMAIL="${SERVICE_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
 STAGING_DIR="${PWD}"
 KEY_FILE="${STAGING_DIR}/credentials.json"
@@ -169,6 +174,11 @@ gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
     --role="roles/cloudsql.admin" \
     --user-output-enabled false
 
+gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
+    --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
+    --role="roles/iam.serviceAccountKeyAdmin"
+    --user-output-enabled false
+
 if [[ -n "$WITH_ENFORCER" ]]; then
   org_roles=("roles/logging.configWriter" "roles/iam.organizationRoleAdmin")
   project_roles=("roles/pubsub.admin")
@@ -221,4 +231,5 @@ then
         --role="roles/compute.networkAdmin" \
         --user-output-enabled false
 fi
+
 echo "All done."
