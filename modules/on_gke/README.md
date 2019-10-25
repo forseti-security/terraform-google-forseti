@@ -142,6 +142,7 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | org\_id | GCP Organization ID that Forseti will have purview over | string | `""` | no |
 | policy\_library\_repository\_branch | The specific git branch containing the policies. | string | `"master"` | no |
 | policy\_library\_repository\_url | The git repository containing the policy-library. | string | `""` | no |
+| policy\_library\_sync\_enabled | Sync config validator policy library from private repository. | bool | `"false"` | no |
 | policy\_library\_sync\_git\_sync\_tag | Tag for the git-sync image. | string | `"v3.1.2"` | no |
 | production | Whether or not to deploy Forseti on GKE in a production configuration | bool | `"true"` | no |
 | project\_id | Google Project ID that you want Forseti deployed into | string | n/a | yes |

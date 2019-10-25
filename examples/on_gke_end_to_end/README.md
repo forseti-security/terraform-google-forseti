@@ -79,7 +79,8 @@ This script will also activate necessary APIs required for Terraform to deploy F
 | network\_description | An optional description of the network. The resource must be recreated to modify this field. | string | `""` | no |
 | org\_id | GCP Organization ID that Forseti will have purview over | string | n/a | yes |
 | policy\_library\_repository\_branch | The specific git branch containing the policies. | string | `"master"` | no |
-| policy\_library\_repository\_url | The git repository containing the policy-library. | string | `"https://github.com/forseti-security/policy-library"` | no |
+| policy\_library\_repository\_url | The git repository containing the policy-library. | string | `""` | no |
+| policy\_library\_sync\_enabled | Sync config validator policy library from private repository. | bool | `"false"` | no |
 | project\_id | The ID of an existing Google project where Forseti will be installed | string | n/a | yes |
 | region | Region where Forseti will be deployed | string | `"us-central1"` | no |
 | sendgrid\_api\_key | Sendgrid.com API key to enable email notifications | string | `""` | no |
