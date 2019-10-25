@@ -69,7 +69,9 @@ In order to operate with the Service Account you must activate the following API
 | k8s\_tiller\_sa\_name | The Kubernetes Service Account used by Tiller | string | `"tiller"` | no |
 | network | The VPC where the Forseti client and server will be created | string | `"default"` | no |
 | org\_id | GCP Organization ID that Forseti will have purview over | string | n/a | yes |
-| policy\_library\_repository\_url | The git repository containing the policy-library. | string | `"https://github.com/forseti-security/policy-library"` | no |
+| policy\_library\_repository\_branch | The specific git branch containing the policies. | string | `"master"` | no |
+| policy\_library\_repository\_url | The git repository containing the policy-library. | string | `""` | no |
+| policy\_library\_sync\_enabled | Sync config validator policy library from private repository. | bool | `"false"` | no |
 | project\_id | The ID of an existing Google project where Forseti will be installed | string | n/a | yes |
 | region | Region where forseti subnetwork will be deployed | string | `"us-central1"` | no |
 | sendgrid\_api\_key | Sendgrid.com API key to enable email notifications | string | `""` | no |
