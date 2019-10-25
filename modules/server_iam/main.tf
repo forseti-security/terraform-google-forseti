@@ -22,7 +22,6 @@ locals {
     "roles/storage.objectViewer",
     "roles/storage.objectCreator",
     "roles/cloudsql.client",
-    "roles/cloudtrace.agent",
     "roles/logging.logWriter",
     "roles/iam.serviceAccountTokenCreator",
   ]

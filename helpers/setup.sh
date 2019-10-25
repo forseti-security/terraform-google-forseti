@@ -100,9 +100,11 @@ SERVICE_ACCOUNT_NAME="cloud-foundation-forseti-${RANDOM}"
 SERVICE_ACCOUNT_EMAIL="${SERVICE_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
 STAGING_DIR="${PWD}"
 KEY_FILE="${STAGING_DIR}/credentials.json"
+export FORSETI_SETUP_SERVICE_ACCOUNT_NAME="${SERVICE_ACCOUNT_NAME}"
 
 echo "Enabling services"
 gcloud services enable \
+    compute.googleapis.com \
     cloudresourcemanager.googleapis.com \
     serviceusage.googleapis.com \
     --project "${PROJECT_ID}"
@@ -116,6 +118,8 @@ echo "Downloading key to credentials.json..."
 gcloud iam service-accounts keys create "${KEY_FILE}" \
     --iam-account "${SERVICE_ACCOUNT_EMAIL}" \
     --user-output-enabled false
+
+export GOOGLE_APPLICATION_CREDENTIALS="${KEY_FILE}"
 
 echo "Applying permissions for org $ORG_ID and project $PROJECT_ID..."
 
