@@ -204,5 +204,6 @@ module "forseti" {
   helm_repository_url                = var.helm_repository_url
   policy_library_repository_url      = var.policy_library_repository_url
   policy_library_repository_branch   = var.policy_library_repository_branch
+  policy_library_sync_enabled        = var.policy_library_sync_enabled
   server_log_level                   = var.server_log_level
 }

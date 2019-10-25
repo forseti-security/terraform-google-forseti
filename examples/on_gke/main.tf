@@ -138,10 +138,12 @@ module "forseti" {
   cscc_violations_enabled = var.cscc_violations_enabled
   cscc_source_id          = var.cscc_source_id
 
-  config_validator_enabled        = var.config_validator_enabled
-  git_sync_private_ssh_key        = local.git_sync_private_ssh_key
-  k8s_forseti_server_ingress_cidr = data.google_compute_subnetwork.forseti_subnetwork.ip_cidr_range
-  helm_repository_url             = var.helm_repository_url
-  policy_library_repository_url   = var.policy_library_repository_url
-  server_log_level                = var.server_log_level
+  config_validator_enabled         = var.config_validator_enabled
+  git_sync_private_ssh_key         = local.git_sync_private_ssh_key
+  k8s_forseti_server_ingress_cidr  = data.google_compute_subnetwork.forseti_subnetwork.ip_cidr_range
+  helm_repository_url              = var.helm_repository_url
+  policy_library_repository_url    = var.policy_library_repository_url
+  policy_library_repository_branch = var.policy_library_repository_branch
+  policy_library_sync_enabled      = var.policy_library_sync_enabled
+  server_log_level                 = var.server_log_level
 }
