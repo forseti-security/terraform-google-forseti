@@ -39,7 +39,7 @@ EOF
 
 PROJECT_ID=""
 ORG_ID=""
-SERVICE_ACCOUNT_NAME=""
+SERVICE_ACCOUNT_NAME=$FORSETI_SETUP_SERVICE_ACCOUNT_NAME
 WITH_ENFORCER=""
 HOST_PROJECT_ID=""
 ON_GKE=""
@@ -85,12 +85,6 @@ fi
 
 if [[ -z "$ORG_ID" ]]; then
   echo "ERROR: ORG_ID must be set."
-  show_help >&2
-  exit 1
-fi
-
-if [[ -z "$SERVICE_ACCOUNT_NAME" ]]; then
-  echo "ERROR: SERVICE_ACCOUNT_NAME must be set."
   show_help >&2
   exit 1
 fi
@@ -200,7 +194,7 @@ gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
 if [[ -n "$ON_GKE" ]]; then
   gke_roles=("roles/container.admin" "roles/compute.networkAdmin" "roles/resourcemanager.projectIamAdmin")
 
-  echo "Removing on-GKE related roles on project $PROJECT_ID..." 
+  echo "Removing on-GKE related roles on project $PROJECT_ID..."
   for gke_role in "${gke_roles[@]}"; do
     gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
         --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
