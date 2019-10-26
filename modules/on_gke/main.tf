@@ -218,7 +218,7 @@ resource "helm_release" "forseti-security" {
   }
 
   set {
-    name  = "server.bucket"
+    name  = "server.config.bucket"
     value = module.server_gcs.forseti-server-storage-bucket
   }
 
