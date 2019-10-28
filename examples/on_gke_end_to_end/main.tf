@@ -28,23 +28,6 @@ provider "google-beta" {
   project = var.project_id
 }
 
-#--------#
-# Locals #
-#--------#
-
-locals {
-  git_sync_private_ssh_key = var.git_sync_private_ssh_key_file != null ? data.local_file.git_sync_private_ssh_key_file[0].content_base64 : ""
-}
-
-#------------------------------#
-# git-sync SSH Key Data Source #
-#------------------------------#
-
-data "local_file" "git_sync_private_ssh_key_file" {
-  count    = var.git_sync_private_ssh_key_file != null ? 1 : 0
-  filename = var.git_sync_private_ssh_key_file
-}
-
 //*****************************************
 //  Setup the Kubernetes Provider
 //*****************************************
@@ -197,7 +180,7 @@ module "forseti" {
 
 
   config_validator_enabled           = var.config_validator_enabled
-  git_sync_private_ssh_key           = local.git_sync_private_ssh_key
+  git_sync_private_ssh_key_file      = var.git_sync_private_ssh_key_file
   k8s_forseti_server_ingress_cidr    = module.vpc.subnets_ips[0]
   k8s_forseti_server_image_tag       = var.k8s_forseti_server_image_tag
   k8s_forseti_orchestrator_image_tag = var.k8s_forseti_orchestrator_image_tag

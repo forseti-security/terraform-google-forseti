@@ -41,6 +41,7 @@ resource "null_resource" "email_without_sendgrid_api_key" {
   }
 }
 
+
 #--------#
 # Locals #
 #--------#
@@ -74,6 +75,11 @@ locals {
   workload_config_validator_suffix = "[${local.kubernetes_namespace}/config-validator]"
 
   forseti_run_frequency = var.forseti_run_frequency == null ? "${random_integer.random_minute.result} */2 * * *" : var.forseti_run_frequency
+
+  create_policy_library_key = var.policy_library_sync_enabled && var.git_sync_private_ssh_key_file == null
+
+  git_sync_private_ssh_key_from_file = var.git_sync_private_ssh_key_file != null ? data.local_file.git_sync_private_ssh_key_file[0].content : ""
+  git_sync_private_ssh_key           = local.create_policy_library_key ? tls_private_key.policy_library_sync_ssh[0].private_key_pem : local.git_sync_private_ssh_key_from_file
 }
 
 #-------------------#
@@ -84,6 +90,43 @@ resource "google_project_service" "main" {
   project            = var.project_id
   service            = local.services_list[count.index]
   disable_on_destroy = false
+}
+
+#---------#
+# SSH Key #
+#---------#
+resource "tls_private_key" "policy_library_sync_ssh" {
+  count     = local.create_policy_library_key ? 1 : 0
+  algorithm = "RSA"
+}
+
+resource "google_storage_bucket_object" "policy_library_sync_ssh_key" {
+  count   = local.create_policy_library_key && var.policy_library_repository_url != "" ? 1 : 0
+  name    = "${var.policy_library_sync_gcs_directory_name}/ssh"
+  content = tls_private_key.policy_library_sync_ssh[0].private_key_pem
+  bucket  = module.server_gcs.forseti-server-storage-bucket
+
+  depends_on = [
+    tls_private_key.policy_library_sync_ssh,
+  ]
+}
+
+#------------------------------#
+# git-sync SSH Key Data Source #
+#------------------------------#
+
+data "local_file" "git_sync_private_ssh_key_file" {
+  count    = var.git_sync_private_ssh_key_file != null ? 1 : 0
+  filename = var.git_sync_private_ssh_key_file
+}
+
+#------------------------------#
+# git-sync Public SSH Key Data Source #
+#------------------------------#
+
+data "tls_public_key" "git_sync_public_ssh_key" {
+  count           = var.policy_library_sync_enabled ? 1 : 0
+  private_key_pem = local.git_sync_private_ssh_key
 }
 
 //*****************************************
@@ -206,7 +249,7 @@ resource "helm_release" "forseti-security" {
   "google_service_account_iam_binding.forseti_client_workload_identity"]
 
   set {
-    name  = "server.cloudsqlConnection"
+    name  = "database.connectionName"
     value = module.cloudsql.forseti-cloudsql-connection-name
   }
 
@@ -292,12 +335,12 @@ resource "helm_release" "forseti-security" {
 
   set {
     name  = "configValidator.policyLibrary.gitSync.imageTag"
-    value = var.policy_library_sync_git_sync_tag
+    value = "${base64encode(var.policy_library_sync_git_sync_tag)}"
   }
 
   set_sensitive {
     name  = "configValidator.policyLibrary.gitSync.privateSSHKey"
-    value = var.git_sync_private_ssh_key
+    value = local.git_sync_private_ssh_key
   }
 
   set {

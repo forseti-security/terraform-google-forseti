@@ -20,7 +20,6 @@
 
 locals {
   node_pool_index          = [for index, node_pool in data.google_container_cluster.forseti_cluster.node_pool : index if node_pool.name == var.gke_node_pool_name][0]
-  git_sync_private_ssh_key = var.git_sync_private_ssh_key_file != null ? data.local_file.git_sync_private_ssh_key_file[0].content_base64 : ""
 }
 
 #------------------#
@@ -60,15 +59,6 @@ data "google_compute_subnetwork" "forseti_subnetwork" {
   name    = var.subnetwork
   region  = var.region
   project = var.project_id
-}
-
-#------------------------------#
-# git-sync SSH Key Data Source #
-#------------------------------#
-
-data "local_file" "git_sync_private_ssh_key_file" {
-  count    = var.git_sync_private_ssh_key_file != null ? 1 : 0
-  filename = var.git_sync_private_ssh_key_file
 }
 
 #---------------------#
@@ -139,7 +129,7 @@ module "forseti" {
   cscc_source_id          = var.cscc_source_id
 
   config_validator_enabled         = var.config_validator_enabled
-  git_sync_private_ssh_key         = local.git_sync_private_ssh_key
+  git_sync_private_ssh_key_file    = var.git_sync_private_ssh_key_file
   k8s_forseti_server_ingress_cidr  = data.google_compute_subnetwork.forseti_subnetwork.ip_cidr_range
   helm_repository_url              = var.helm_repository_url
   policy_library_repository_url    = var.policy_library_repository_url
