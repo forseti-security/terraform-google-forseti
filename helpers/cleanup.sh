@@ -39,7 +39,7 @@ EOF
 
 PROJECT_ID=""
 ORG_ID=""
-SERVICE_ACCOUNT_NAME=""
+SERVICE_ACCOUNT_NAME=$FORSETI_SETUP_SERVICE_ACCOUNT_NAME
 WITH_ENFORCER=""
 HOST_PROJECT_ID=""
 ON_GKE=""
@@ -85,12 +85,6 @@ fi
 
 if [[ -z "$ORG_ID" ]]; then
   echo "ERROR: ORG_ID must be set."
-  show_help >&2
-  exit 1
-fi
-
-if [[ -z "$SERVICE_ACCOUNT_NAME" ]]; then
-  echo "ERROR: SERVICE_ACCOUNT_NAME must be set."
   show_help >&2
   exit 1
 fi
