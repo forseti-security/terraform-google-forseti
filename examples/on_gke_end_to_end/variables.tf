@@ -174,3 +174,16 @@ variable "server_log_level" {
   description = "The log level of the Forseti server container."
   default     = "info"
 }
+
+#----------------#
+# Forseti bucket #
+#----------------#
+variable "storage_bucket_location" {
+  description = "GCS storage bucket location"
+  default     = "us-central1"
+}
+
+variable "bucket_cai_location" {
+  description = "GCS CAI storage bucket location"
+  default     = "us-central1"
+}

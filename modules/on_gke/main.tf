@@ -76,7 +76,7 @@ locals {
 
   forseti_run_frequency = var.forseti_run_frequency == null ? "${random_integer.random_minute.result} */2 * * *" : var.forseti_run_frequency
 
-  create_policy_library_key = var.policy_library_sync_enabled && var.git_sync_private_ssh_key_file == null
+  create_policy_library_key = var.config_validator_enabled && var.policy_library_sync_enabled && var.git_sync_private_ssh_key_file == null
 
   git_sync_private_ssh_key_from_file = var.git_sync_private_ssh_key_file != null ? data.local_file.git_sync_private_ssh_key_file[0].content : ""
   git_sync_private_ssh_key           = local.create_policy_library_key ? tls_private_key.policy_library_sync_ssh[0].private_key_pem : local.git_sync_private_ssh_key_from_file
@@ -100,17 +100,6 @@ resource "tls_private_key" "policy_library_sync_ssh" {
   algorithm = "RSA"
 }
 
-resource "google_storage_bucket_object" "policy_library_sync_ssh_key" {
-  count   = local.create_policy_library_key && var.policy_library_repository_url != "" ? 1 : 0
-  name    = "${var.policy_library_sync_gcs_directory_name}/ssh"
-  content = tls_private_key.policy_library_sync_ssh[0].private_key_pem
-  bucket  = module.server_gcs.forseti-server-storage-bucket
-
-  depends_on = [
-    tls_private_key.policy_library_sync_ssh,
-  ]
-}
-
 #------------------------------#
 # git-sync SSH Key Data Source #
 #------------------------------#
@@ -125,7 +114,7 @@ data "local_file" "git_sync_private_ssh_key_file" {
 #------------------------------#
 
 data "tls_public_key" "git_sync_public_ssh_key" {
-  count           = var.policy_library_sync_enabled ? 1 : 0
+  count           = var.config_validator_enabled && var.policy_library_sync_enabled ? 1 : 0
   private_key_pem = local.git_sync_private_ssh_key
 }
 
@@ -340,19 +329,18 @@ resource "helm_release" "forseti-security" {
 
   set {
     name  = "configValidator.policyLibrary.gitSync.imageTag"
-    value = "${base64encode(var.policy_library_sync_git_sync_tag)}"
+    value = var.policy_library_sync_git_sync_tag
   }
 
   set_sensitive {
     name  = "configValidator.policyLibrary.gitSync.privateSSHKey"
-    value = local.git_sync_private_ssh_key
+    value = "${base64encode(local.git_sync_private_ssh_key)}"
   }
 
   set {
     name  = "configValidator.policyLibrary.bucket"
     value = module.server_gcs.forseti-server-storage-bucket
   }
-
 
   set {
     name  = "configValidator.policyLibrary.repositoryURL"
