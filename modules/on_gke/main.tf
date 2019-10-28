@@ -254,6 +254,11 @@ resource "helm_release" "forseti-security" {
   }
 
   set {
+    name  = "database.name"
+    value = module.cloudsql.forseti-cloudsql-db-name
+  }
+
+  set {
     name  = "server.image"
     value = var.k8s_forseti_server_image
   }
