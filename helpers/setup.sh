@@ -17,22 +17,17 @@ show_help() {
   cat <<EOF
 Usage: ${0##*/} -p PROJECT_ID -o ORG_ID [-e] [-f HOST_PROJECT]
        ${0##*/} -h
-
-Generate a service account with the IAM roles needed to run the Forseti Terraform module.
-
+Generate or updates a service account with the IAM roles needed to run the Forseti Terraform module.
 Options:
-
-    -p PROJECT_ID    The project ID where Forseti resources will be created.
-    -o ORG_ID        The organization ID that Forseti will be monitoring.
-    -e               Add additional IAM roles for running the real time policy enforcer.
-    -k               Add additional IAM roles for running Forseti on-GKE
+    -p PROJECT_ID       The project ID where Forseti resources will be created.
+    -o ORG_ID           The organization ID that Forseti will be monitoring.
+    -e                  Add additional IAM roles for running the real time policy enforcer.
+    -k                  Add additional IAM roles for running Forseti on-GKE
     -f HOST_PROJECT_ID  ID of a project holding shared vpc.
-
+    -s SERVICE_ACCOUNT  Specify a service account to create (if already exists will be updated) 
 Examples:
-
     ${0##*/} -p forseti-235k -o 22592784945
     ${0##*/} -p forseti-enforcer-99e4 -o 22592784945 -e
-
 EOF
 }
 
@@ -41,9 +36,11 @@ ORG_ID=""
 WITH_ENFORCER=""
 HOST_PROJECT_ID=""
 ON_GKE=""
+SERVICE_ACCOUNT_NAME="cloud-foundation-forseti-${RANDOM}"
+IS_UPDATE=0
 
 OPTIND=1
-while getopts ":hekf:p:o:" opt; do
+while getopts ":hekfs:p:o:" opt; do
   case "$opt" in
     h)
       show_help
@@ -63,6 +60,9 @@ while getopts ":hekf:p:o:" opt; do
       ;;
     k)
       ON_GKE=1
+      ;;
+    s)
+      SERVICE_ACCOUNT_NAME="$OPTARG"
       ;;
     *)
       echo "Unhandled option: -$opt" >&2
@@ -96,30 +96,58 @@ if ! gcloud organizations get-iam-policy "$ORG_ID" 2>&- 1>&-; then
   exit 1
 fi
 
-SERVICE_ACCOUNT_NAME="cloud-foundation-forseti-${RANDOM}"
+
 SERVICE_ACCOUNT_EMAIL="${SERVICE_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
 STAGING_DIR="${PWD}"
 KEY_FILE="${STAGING_DIR}/credentials.json"
-export FORSETI_SETUP_SERVICE_ACCOUNT_NAME="${SERVICE_ACCOUNT_NAME}"
+COMMAND_CHECK="gcloud iam service-accounts --project "${PROJECT_ID}" list --filter=disabled:"
+
+
+for email in $(${COMMAND_CHECK}"False")
+do
+    if [[ "$email" == "${SERVICE_ACCOUNT_EMAIL}" ]]; then
+        echo "${SERVICE_ACCOUNT_EMAIL} already exists and is enabled"
+        IS_UPDATE=1
+        break 
+    fi; 
+done 
+if [[ "$IS_UPDATE" == "0" ]]; then
+
+    for email in $(${COMMAND_CHECK}"True")
+    do
+        if [[ "$email" == "${SERVICE_ACCOUNT_EMAIL}" ]]; then
+            echo "${SERVICE_ACCOUNT_EMAIL} already exists and is disabled"
+            IS_UPDATE=2
+            echo "The service account must be enabled manually or deleted"
+            exit 1
+            break 
+        fi;
+    done 
+fi;
+
 
 echo "Enabling services"
 gcloud services enable \
-    compute.googleapis.com \
     cloudresourcemanager.googleapis.com \
     serviceusage.googleapis.com \
     --project "${PROJECT_ID}"
 
-gcloud iam service-accounts \
-    --project "${PROJECT_ID}" create ${SERVICE_ACCOUNT_NAME} \
-    --display-name "${SERVICE_ACCOUNT_NAME}"
 
-echo "Downloading key to credentials.json..."
 
-gcloud iam service-accounts keys create "${KEY_FILE}" \
-    --iam-account "${SERVICE_ACCOUNT_EMAIL}" \
-    --user-output-enabled false
+if [[ "$IS_UPDATE" == "0" ]]; then
 
-export GOOGLE_APPLICATION_CREDENTIALS="${KEY_FILE}"
+    # If is an update i don't create service accout and re-download credentials
+    echo "Creating a new service account ${SERVICE_ACCOUNT_EMAIL} ..."
+    gcloud iam service-accounts \
+        --project "${PROJECT_ID}" create ${SERVICE_ACCOUNT_NAME} \
+        --display-name "${SERVICE_ACCOUNT_NAME}"
+
+    echo "Downloading key to credentials.json..."
+
+    gcloud iam service-accounts keys create "${KEY_FILE}" \
+        --iam-account "${SERVICE_ACCOUNT_EMAIL}" \
+        --user-output-enabled false
+fi
 
 echo "Applying permissions for org $ORG_ID and project $PROJECT_ID..."
 
@@ -173,6 +201,11 @@ gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
     --role="roles/cloudsql.admin" \
     --user-output-enabled false
 
+gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
+    --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
+    --role="roles/iam.serviceAccountKeyAdmin"
+    --user-output-enabled false
+
 if [[ -n "$WITH_ENFORCER" ]]; then
   org_roles=("roles/logging.configWriter" "roles/iam.organizationRoleAdmin")
   project_roles=("roles/pubsub.admin")
@@ -197,7 +230,7 @@ fi
 if [[ -n "$ON_GKE" ]]; then
   gke_roles=("roles/container.admin" "roles/compute.networkAdmin" "roles/resourcemanager.projectIamAdmin")
 
-  echo "Granting on-GKE related roles on project $PROJECT_ID..."
+  echo "Granting on-GKE related roles on project $PROJECT_ID..." 
   for gke_role in "${gke_roles[@]}"; do
     gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
         --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
@@ -225,4 +258,5 @@ then
         --role="roles/compute.networkAdmin" \
         --user-output-enabled false
 fi
+
 echo "All done."
