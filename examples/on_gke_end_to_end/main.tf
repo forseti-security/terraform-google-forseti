@@ -167,7 +167,7 @@ module "forseti" {
   cloudsql_region = var.region
   network         = var.network
   subnetwork      = var.subnetwork
-  
+
   network_policy     = module.gke.network_policy_enabled
   gke_node_pool_name = "default-node-pool"
 

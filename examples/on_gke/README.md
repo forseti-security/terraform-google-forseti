@@ -82,6 +82,7 @@ In order to operate with the Service Account you must activate the following API
 
 | Name | Description |
 |------|-------------|
+| config-validator-git-public-key-openssh | The public OpenSSH key generated to allow the Forseti Server to clone the policy library repository. |
 | forseti-client-service-account | Forseti Client service account |
 | forseti-client-storage-bucket | Forseti Client storage bucket |
 | forseti-client-vm-ip | Forseti Client VM private IP address |
