@@ -61,7 +61,7 @@ This script will also activate necessary APIs required for Terraform to deploy F
 | domain | The domain associated with the GCP Organization ID | string | n/a | yes |
 | forseti\_email\_recipient | Email address that receives Forseti notifications | string | `""` | no |
 | forseti\_email\_sender | Email address that sends the Forseti notifications | string | `""` | no |
-| git\_sync\_private\_ssh\_key\_file | The file containing the private SSH key allowing the git-sync to clone the policy library repository. | string | `""` | no |
+| git\_sync\_private\_ssh\_key\_file | The file containing the private SSH key allowing the git-sync to clone the policy library repository. | string | `"null"` | no |
 | gke\_cluster\_name | The name of the GKE Cluster | string | `"forseti-cluster"` | no |
 | gke\_node\_ip\_range | The IP range for the GKE nodes. | string | `"10.1.0.0/20"` | no |
 | gke\_pod\_ip\_range | The IP range of the Kubernetes pods | string | `"10.2.0.0/20"` | no |
@@ -72,6 +72,8 @@ This script will also activate necessary APIs required for Terraform to deploy F
 | gsuite\_admin\_email | G-Suite administrator email address to manage your Forseti installation | string | n/a | yes |
 | helm\_repository\_url | The Helm repository containing the 'forseti-security' Helm charts | string | `"https://forseti-security-charts.storage.googleapis.com/release/"` | no |
 | k8s\_forseti\_namespace | The Kubernetes namespace in which to deploy Forseti. | string | `"forseti"` | no |
+| k8s\_forseti\_orchestrator\_image\_tag | The tag for the container image for the Forseti orchestrator | string | `"v2.23.0"` | no |
+| k8s\_forseti\_server\_image\_tag | The tag for the container image for the Forseti server | string | `"v2.23.0"` | no |
 | k8s\_tiller\_sa\_name | The Kubernetes Service Account used by Tiller | string | `"tiller"` | no |
 | network | The name of the VPC being created | string | `"forseti-gke-network"` | no |
 | network\_description | An optional description of the network. The resource must be recreated to modify this field. | string | `""` | no |
@@ -79,11 +81,10 @@ This script will also activate necessary APIs required for Terraform to deploy F
 | policy\_library\_repository\_branch | The specific git branch containing the policies. | string | `"master"` | no |
 | policy\_library\_repository\_url | The git repository containing the policy-library. | string | `"https://github.com/forseti-security/policy-library"` | no |
 | project\_id | The ID of an existing Google project where Forseti will be installed | string | n/a | yes |
-| region | Region where forseti subnetwork will be deployed | string | `"us-central1"` | no |
+| region | Region where Forseti will be deployed | string | `"us-central1"` | no |
 | sendgrid\_api\_key | Sendgrid.com API key to enable email notifications | string | `""` | no |
 | server\_log\_level | The log level of the Forseti server container. | string | `"info"` | no |
 | subnetwork | The name of the subnet being created | string | `"gke-sub-network"` | no |
-| zones | The zones to host the cluster in. This is optional if the GKE cluster is regional.  It is required if the cluster is zonal. | list | `<list>` | no |
 
 ## Outputs
 
