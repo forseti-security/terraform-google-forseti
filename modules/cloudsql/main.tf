@@ -18,11 +18,11 @@
 # Locals #
 #--------#
 locals {
-  cloudsql_name   = "forseti-server-db-${local.random_hash}"
-  cloudsql_zone   = "${var.cloudsql_region}-c"
-  network_project = var.network_project != "" ? var.network_project : var.project_id
+  cloudsql_name     = "forseti-server-db-${local.random_hash}"
+  cloudsql_zone     = "${var.cloudsql_region}-c"
+  network_project   = var.network_project != "" ? var.network_project : var.project_id
   cloudsql_password = var.cloudsql_password == "" ? random_password.password.result : var.cloudsql_password
-  random_hash     = var.suffix
+  random_hash       = var.suffix
 }
 
 #------------------------------------#
@@ -111,8 +111,8 @@ resource "google_sql_user" "forseti_user" {
 }
 
 resource "random_password" "password" {
-  length = 16
-  special = true
+  length           = 16
+  special          = true
   override_special = "_%@"
 }
 
