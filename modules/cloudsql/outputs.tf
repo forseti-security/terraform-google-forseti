@@ -46,5 +46,5 @@ output "forseti-cloudsql-user" {
 
 output "forseti-cloudsql-password" {
   description = "CloudSQL password"
-  value       = var.cloudsql_password
+  value       = local.cloudsql_password
 }
