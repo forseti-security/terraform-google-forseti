@@ -64,7 +64,7 @@ variable "forseti_email_recipient" {
 }
 
 variable "region" {
-  description = "GCP region where Forseti will be deployed"
+  description = "The region where the Forseti GCE Instance VMs and CloudSQL Instances will be deployed"
 }
 
 variable "network" {

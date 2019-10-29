@@ -37,7 +37,7 @@ variable "domain" {
 
 variable "git_sync_private_ssh_key_file" {
   description = "The file containing the private SSH key allowing the git-sync to clone the policy library repository."
-  default     = ""
+  default     = null
 }
 
 variable "gke_cluster_name" {
@@ -109,6 +109,16 @@ variable "k8s_tiller_sa_name" {
   default     = "tiller"
 }
 
+variable "k8s_forseti_orchestrator_image_tag" {
+  description = "The tag for the container image for the Forseti orchestrator"
+  default     = "v2.23.0"
+}
+
+variable "k8s_forseti_server_image_tag" {
+  description = "The tag for the container image for the Forseti server"
+  default     = "v2.23.0"
+}
+
 variable "network" {
   description = "The name of the VPC being created"
   default     = "forseti-gke-network"
@@ -133,18 +143,13 @@ variable "project_id" {
 }
 
 variable "region" {
-  description = "Region where forseti subnetwork will be deployed"
+  description = "Region where Forseti will be deployed"
   default     = "us-central1"
 }
 
 variable "subnetwork" {
   description = "The name of the subnet being created"
   default     = "gke-sub-network"
-}
-
-variable "zones" {
-  description = "The zones to host the cluster in. This is optional if the GKE cluster is regional.  It is required if the cluster is zonal."
-  default     = ["us-central1-a"]
 }
 
 variable "network_description" {

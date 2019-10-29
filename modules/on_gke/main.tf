@@ -60,7 +60,6 @@ locals {
     "sqladmin.googleapis.com",
     "compute.googleapis.com",
     "iam.googleapis.com",
-    "cloudtrace.googleapis.com",
     "container.googleapis.com",
     "containerregistry.googleapis.com",
     "servicemanagement.googleapis.com",
@@ -214,8 +213,13 @@ resource "helm_release" "forseti-security" {
   }
 
   set {
-    name  = "server.cloudsqlConnection"
+    name  = "database.connectionName"
     value = module.cloudsql.forseti-cloudsql-connection-name
+  }
+
+  set {
+    name  = "database.name"
+    value = module.cloudsql.forseti-cloudsql-db-name
   }
 
   set {
@@ -229,7 +233,7 @@ resource "helm_release" "forseti-security" {
   }
 
   set {
-    name  = "server.bucket"
+    name  = "server.config.bucket"
     value = module.server_gcs.forseti-server-storage-bucket
   }
 

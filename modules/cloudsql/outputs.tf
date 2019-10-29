@@ -30,7 +30,7 @@ output "forseti-cloudsql-region" {
 }
 
 output "forseti-cloudsql-db-name" {
-  description = "CloudSQL region"
+  description = "CloudSQL database name"
   value       = var.cloudsql_db_name
 }
 

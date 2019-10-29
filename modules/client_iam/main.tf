@@ -21,8 +21,7 @@ locals {
   client_sa_name = "forseti-client-gcp-${var.suffix}"
 
   client_project_roles = [
-    "roles/storage.objectViewer",
-    "roles/cloudtrace.agent",
+    "roles/storage.objectViewer"
   ]
 
 }
