@@ -55,6 +55,8 @@ locals {
   network_interface = local.network_interface_base[var.server_private ? "private" : "public"]
 
   forseti_run_frequency = var.forseti_run_frequency == null ? "${random_integer.random_minute.result} */2 * * *" : var.forseti_run_frequency
+
+  git_sync_public_ssh_key = length(tls_private_key.policy_library_sync_ssh) == 1 ? tls_private_key.policy_library_sync_ssh[0].public_key_openssh : ""
 }
 
 #-------------------#
