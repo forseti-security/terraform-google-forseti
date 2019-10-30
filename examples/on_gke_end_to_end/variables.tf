@@ -130,12 +130,18 @@ variable "org_id" {
 
 variable "policy_library_repository_url" {
   description = "The git repository containing the policy-library."
-  default     = "https://github.com/forseti-security/policy-library"
+  default     = ""
 }
 
 variable "policy_library_repository_branch" {
   description = "The specific git branch containing the policies."
   default     = "master"
+}
+
+variable "policy_library_sync_enabled" {
+  description = "Sync config validator policy library from private repository."
+  type        = bool
+  default     = false
 }
 
 variable "project_id" {
@@ -167,4 +173,17 @@ variable "auto_create_subnetworks" {
 variable "server_log_level" {
   description = "The log level of the Forseti server container."
   default     = "info"
+}
+
+#----------------#
+# Forseti bucket #
+#----------------#
+variable "storage_bucket_location" {
+  description = "GCS storage bucket location"
+  default     = "us-central1"
+}
+
+variable "bucket_cai_location" {
+  description = "GCS CAI storage bucket location"
+  default     = "us-central1"
 }
