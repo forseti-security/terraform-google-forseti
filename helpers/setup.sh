@@ -40,7 +40,7 @@ SERVICE_ACCOUNT_NAME="cloud-foundation-forseti-${RANDOM}"
 IS_UPDATE=0
 
 OPTIND=1
-while getopts ":hekfs:p:o:" opt; do
+while getopts ":hekf:s:p:o:" opt; do
   case "$opt" in
     h)
       show_help
@@ -199,11 +199,6 @@ gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
 gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
     --role="roles/cloudsql.admin" \
-    --user-output-enabled false
-
-gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
-    --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
-    --role="roles/iam.serviceAccountKeyAdmin"
     --user-output-enabled false
 
 if [[ -n "$WITH_ENFORCER" ]]; then
