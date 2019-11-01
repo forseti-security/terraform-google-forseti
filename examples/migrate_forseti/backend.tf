@@ -14,17 +14,9 @@
  * limitations under the License.
  */
 
-output "forseti-server-git-public-key-openssh" {
-  description = "The public OpenSSH key generated to allow the Forseti Server to clone the policy library repository."
-  value       = local.git_sync_public_ssh_key
-}
-
-output "forseti-server-vm-ip" {
-  description = "Forseti Server VM private IP address"
-  value       = google_compute_instance.forseti-server.network_interface[0].network_ip
-}
-
-output "forseti-server-vm-name" {
-  description = "Forseti Server VM name"
-  value       = google_compute_instance.forseti-server.name
-}
+# terraform {
+#   backend "gcs" {
+#     bucket  = "my-project-tfstate"
+#     prefix  = "terraform/forseti"
+#   }
+# }

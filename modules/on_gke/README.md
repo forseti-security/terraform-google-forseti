@@ -79,11 +79,11 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | forseti\_home | Forseti installation directory | string | `"$USER_HOME/forseti-security"` | no |
 | forseti\_repo\_url | Git repo for the Forseti installation | string | `"https://github.com/forseti-security/forseti-security"` | no |
 | forseti\_run\_frequency | Schedule of running the Forseti scans | string | `"null"` | no |
-| forseti\_version | The version of Forseti to install | string | `"v2.22.0"` | no |
+| forseti\_version | The version of Forseti to install | string | `"v2.23.0"` | no |
 | forwarding\_rule\_enabled | Forwarding rule scanner enabled. | bool | `"false"` | no |
 | forwarding\_rule\_violations\_should\_notify | Notify for forwarding rule violations | bool | `"true"` | no |
 | git\_sync\_image | The container image used by the config-validator git-sync side-car | string | `"gcr.io/google-containers/git-sync"` | no |
-| git\_sync\_private\_ssh\_key | The SSH key allowing the git-sync to clone the policy library repository. | string | `""` | no |
+| git\_sync\_private\_ssh\_key\_file | The file containing the private SSH key allowing the git-sync to clone the policy library repository. | string | `"null"` | no |
 | git\_sync\_wait | The time number of seconds between git-syncs | string | `"30"` | no |
 | gke\_node\_pool\_name | The name of the GKE node-pool where Forseti is being deployed | string | `"default-pool"` | no |
 | group\_enabled | Group scanner enabled. | bool | `"true"` | no |
@@ -113,9 +113,9 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | k8s\_config\_validator\_image\_tag | The tag for the config-validator image. | string | `"latest"` | no |
 | k8s\_forseti\_namespace | The Kubernetes namespace in which to deploy Forseti. | string | `"forseti"` | no |
 | k8s\_forseti\_orchestrator\_image | The container image for the Forseti orchestrator | string | `"gcr.io/forseti-containers/forseti"` | no |
-| k8s\_forseti\_orchestrator\_image\_tag | The tag for the container image for the Forseti orchestrator | string | `"v2.22.0"` | no |
+| k8s\_forseti\_orchestrator\_image\_tag | The tag for the container image for the Forseti orchestrator | string | `"v2.23.0"` | no |
 | k8s\_forseti\_server\_image | The container image for the Forseti server | string | `"gcr.io/forseti-containers/forseti"` | no |
-| k8s\_forseti\_server\_image\_tag | The tag for the container image for the Forseti server | string | `"v2.22.0"` | no |
+| k8s\_forseti\_server\_image\_tag | The tag for the container image for the Forseti server | string | `"v2.23.0"` | no |
 | k8s\_forseti\_server\_ingress\_cidr | If network_policy is true, k8s_forseti_server_ingress_cidr will restrict connections to the Forseti Server service from the CIDR's specified | string | `""` | no |
 | k8s\_tiller\_sa\_name | The Kubernetes Service Account used by Tiller | string | `"tiller"` | no |
 | ke\_scanner\_enabled | KE scanner enabled. | bool | `"false"` | no |
@@ -142,6 +142,8 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | org\_id | GCP Organization ID that Forseti will have purview over | string | `""` | no |
 | policy\_library\_repository\_branch | The specific git branch containing the policies. | string | `"master"` | no |
 | policy\_library\_repository\_url | The git repository containing the policy-library. | string | `""` | no |
+| policy\_library\_sync\_enabled | Sync config validator policy library from private repository. | bool | `"false"` | no |
+| policy\_library\_sync\_gcs\_directory\_name | The directory name of the GCS folder used for the policy library sync config. | string | `"policy_library_sync"` | no |
 | policy\_library\_sync\_git\_sync\_tag | Tag for the git-sync image. | string | `"v3.1.2"` | no |
 | production | Whether or not to deploy Forseti on GKE in a production configuration | bool | `"true"` | no |
 | project\_id | Google Project ID that you want Forseti deployed into | string | n/a | yes |
@@ -171,6 +173,7 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 
 | Name | Description |
 |------|-------------|
+| config-validator-git-public-key-openssh | The public OpenSSH key generated to allow the Forseti Server to clone the policy library repository. |
 | forseti-client-service-account | Forseti Client service account |
 | forseti-client-storage-bucket | Forseti Client storage bucket |
 | forseti-client-vm-ip | Forseti Client VM private IP address |

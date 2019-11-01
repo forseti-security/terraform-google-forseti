@@ -28,23 +28,6 @@ provider "google-beta" {
   project = var.project_id
 }
 
-#--------#
-# Locals #
-#--------#
-
-locals {
-  git_sync_private_ssh_key = var.git_sync_private_ssh_key_file != null ? data.local_file.git_sync_private_ssh_key_file[0].content_base64 : ""
-}
-
-#------------------------------#
-# git-sync SSH Key Data Source #
-#------------------------------#
-
-data "local_file" "git_sync_private_ssh_key_file" {
-  count    = var.git_sync_private_ssh_key_file != null ? 1 : 0
-  filename = var.git_sync_private_ssh_key_file
-}
-
 //*****************************************
 //  Setup the Kubernetes Provider
 //*****************************************
@@ -120,9 +103,7 @@ module "gke" {
   version                  = "5.0.0"
   project_id               = var.project_id
   name                     = var.gke_cluster_name
-  regional                 = false
   region                   = var.region
-  zones                    = var.zones
   network                  = module.vpc.network_name
   subnetwork               = module.vpc.subnets_names[0]
   ip_range_pods            = var.gke_pod_ip_range_name
@@ -132,7 +113,7 @@ module "gke" {
   remove_default_node_pool = true
   identity_namespace       = "${var.project_id}.svc.id.goog"
   node_metadata            = "GKE_METADATA_SERVER"
-  kubernetes_version       = "1.13"
+  kubernetes_version       = "1.13.11-gke.5"
 
 
   node_pools = [{
@@ -198,11 +179,14 @@ module "forseti" {
   cscc_source_id          = var.cscc_source_id
 
 
-  config_validator_enabled         = var.config_validator_enabled
-  git_sync_private_ssh_key         = local.git_sync_private_ssh_key
-  k8s_forseti_server_ingress_cidr  = module.vpc.subnets_ips[0]
-  helm_repository_url              = var.helm_repository_url
-  policy_library_repository_url    = var.policy_library_repository_url
-  policy_library_repository_branch = var.policy_library_repository_branch
-  server_log_level                 = var.server_log_level
+  config_validator_enabled           = var.config_validator_enabled
+  git_sync_private_ssh_key_file      = var.git_sync_private_ssh_key_file
+  k8s_forseti_server_ingress_cidr    = module.vpc.subnets_ips[0]
+  k8s_forseti_server_image_tag       = var.k8s_forseti_server_image_tag
+  k8s_forseti_orchestrator_image_tag = var.k8s_forseti_orchestrator_image_tag
+  helm_repository_url                = var.helm_repository_url
+  policy_library_repository_url      = var.policy_library_repository_url
+  policy_library_repository_branch   = var.policy_library_repository_branch
+  policy_library_sync_enabled        = var.policy_library_sync_enabled
+  server_log_level                   = var.server_log_level
 }
