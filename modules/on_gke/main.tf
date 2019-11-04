@@ -238,6 +238,16 @@ resource "helm_release" "forseti-security" {
   "google_service_account_iam_binding.forseti_client_workload_identity"]
 
   set {
+    name  = "database.username"
+    value = module.cloudsql.forseti-cloudsql-user
+  }
+
+  set_sensitive {
+    name  = "database.password"
+    value = module.cloudsql.forseti-cloudsql-password
+  }
+
+  set {
     name  = "database.connectionName"
     value = module.cloudsql.forseti-cloudsql-connection-name
   }
