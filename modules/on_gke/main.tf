@@ -41,6 +41,7 @@ resource "null_resource" "email_without_sendgrid_api_key" {
   }
 }
 
+
 #--------#
 # Locals #
 #--------#
@@ -68,11 +69,17 @@ locals {
     "storage-api.googleapis.com",
     "groupssettings.googleapis.com",
   ]
-  workload_identity               = "${var.project_id}.svc.id.goog"
-  workload_identity_server_suffix = "[${local.kubernetes_namespace}/forseti-server]"
-  workload_identity_client_suffix = "[${local.kubernetes_namespace}/forseti-orchestrator]"
+  workload_identity                = "${var.project_id}.svc.id.goog"
+  workload_identity_server_suffix  = "[${local.kubernetes_namespace}/forseti-server]"
+  workload_identity_client_suffix  = "[${local.kubernetes_namespace}/forseti-orchestrator]"
+  workload_config_validator_suffix = "[${local.kubernetes_namespace}/config-validator]"
 
   forseti_run_frequency = var.forseti_run_frequency == null ? "${random_integer.random_minute.result} */2 * * *" : var.forseti_run_frequency
+
+  create_policy_library_key = var.config_validator_enabled && var.policy_library_sync_enabled && var.git_sync_private_ssh_key_file == null
+
+  git_sync_private_ssh_key_from_file = var.git_sync_private_ssh_key_file != null ? data.local_file.git_sync_private_ssh_key_file[0].content : ""
+  git_sync_private_ssh_key           = local.create_policy_library_key ? tls_private_key.policy_library_sync_ssh[0].private_key_pem : local.git_sync_private_ssh_key_from_file
 }
 
 #-------------------#
@@ -83,6 +90,32 @@ resource "google_project_service" "main" {
   project            = var.project_id
   service            = local.services_list[count.index]
   disable_on_destroy = false
+}
+
+#---------#
+# SSH Key #
+#---------#
+resource "tls_private_key" "policy_library_sync_ssh" {
+  count     = local.create_policy_library_key ? 1 : 0
+  algorithm = "RSA"
+}
+
+#------------------------------#
+# git-sync SSH Key Data Source #
+#------------------------------#
+
+data "local_file" "git_sync_private_ssh_key_file" {
+  count    = var.git_sync_private_ssh_key_file != null ? 1 : 0
+  filename = var.git_sync_private_ssh_key_file
+}
+
+#------------------------------#
+# git-sync Public SSH Key Data Source #
+#------------------------------#
+
+data "tls_public_key" "git_sync_public_ssh_key" {
+  count           = var.config_validator_enabled && var.policy_library_sync_enabled ? 1 : 0
+  private_key_pem = local.git_sync_private_ssh_key
 }
 
 //*****************************************
@@ -133,9 +166,11 @@ resource "google_service_account_iam_binding" "forseti_client_workload_identity"
   role               = "roles/iam.workloadIdentityUser"
 
   members = [
-    "serviceAccount:${local.workload_identity}${local.workload_identity_client_suffix}"
+    "serviceAccount:${local.workload_identity}${local.workload_identity_client_suffix}",
+    "serviceAccount:${local.workload_identity}${local.workload_config_validator_suffix}"
   ]
 }
+
 
 //*****************************************
 //  Create Tiller Kubernetes Service Account
@@ -298,18 +333,23 @@ resource "helm_release" "forseti-security" {
   }
 
   set {
-    name  = "configValidator.gitSync.image"
+    name  = "configValidator.policyLibrary.gitSync.image"
     value = var.git_sync_image
   }
 
   set {
-    name  = "configValidator.gitSync.imageTag"
+    name  = "configValidator.policyLibrary.gitSync.imageTag"
     value = var.policy_library_sync_git_sync_tag
   }
 
   set_sensitive {
-    name  = "configValidator.gitSync.privateSSHKey"
-    value = var.git_sync_private_ssh_key
+    name  = "configValidator.policyLibrary.gitSync.privateSSHKey"
+    value = "${base64encode(local.git_sync_private_ssh_key)}"
+  }
+
+  set {
+    name  = "configValidator.policyLibrary.bucket"
+    value = module.server_gcs.forseti-server-storage-bucket
   }
 
   set {
@@ -323,13 +363,23 @@ resource "helm_release" "forseti-security" {
   }
 
   set {
-    name  = "configValidator.gitSync.wait"
+    name  = "configValidator.policyLibrary.gitSync.enabled"
+    value = var.policy_library_sync_enabled
+  }
+
+  set {
+    name  = "configValidator.policyLibrary.gitSync.wait"
     value = var.git_sync_wait
   }
 
   set {
     name  = "configValidator.networkPolicy.enabled"
     value = var.network_policy
+  }
+
+  set {
+    name  = "configValidator.workloadIdentity"
+    value = module.client_iam.forseti-client-service-account
   }
 
   set {

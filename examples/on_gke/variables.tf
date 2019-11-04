@@ -104,7 +104,18 @@ variable "git_sync_private_ssh_key_file" {
 
 variable "policy_library_repository_url" {
   description = "The git repository containing the policy-library."
-  default     = "https://github.com/forseti-security/policy-library"
+  default     = ""
+}
+
+variable "policy_library_repository_branch" {
+  description = "The specific git branch containing the policies."
+  default     = "master"
+}
+
+variable "policy_library_sync_enabled" {
+  description = "Sync config validator policy library from private repository."
+  type        = bool
+  default     = false
 }
 
 variable "helm_repository_url" {
