@@ -31,6 +31,21 @@ variable "cscc_source_id" {
   default     = ""
 }
 
+variable "default_node_pool_disk_size" {
+  description = "Default Node Pool disk size"
+  default     = 100
+}
+
+variable "default_node_pool_disk_type" {
+  description = "Default Node Pool disk type"
+  default     = "pd-ssd"
+}
+
+variable "default_node_pool_machine_type" {
+  description = "Default Node Pool machine type"
+  default     = "n1-standard-8"
+}
+
 variable "domain" {
   description = "The domain associated with the GCP Organization ID"
 }

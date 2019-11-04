@@ -118,11 +118,11 @@ module "gke" {
 
   node_pools = [{
     name               = "default-node-pool"
-    machine_type       = "n1-standard-2"
+    machine_type       = var.default_node_pool_machine_type
     min_count          = 1
     max_count          = 1
-    disk_size_gb       = 100
-    disk_type          = "pd-standard"
+    disk_size_gb       = var.default_node_pool_disk_size
+    disk_type          = var.default_node_pool_disk_type
     image_type         = "COS"
     auto_repair        = true
     auto_upgrade       = false
