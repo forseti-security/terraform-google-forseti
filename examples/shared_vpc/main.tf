@@ -53,4 +53,5 @@ module "forseti" {
   server_instance_metadata = var.instance_metadata
   client_private           = "true"
   server_private           = "true"
+  forseti_version          = var.forseti_version
 }
