@@ -15,7 +15,7 @@
  */
 
 variable "domain" {
- description = "The domain associated with the GCP Organization ID"
+  description = "The domain associated with the GCP Organization ID"
 }
 
 variable "gsuite_admin_email" {
