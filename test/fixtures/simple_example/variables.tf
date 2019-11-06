@@ -14,20 +14,17 @@
  * limitations under the License.
  */
 
+variable "domain" {
+  description = "The domain associated with the GCP Organization ID"
+}
+
 variable "gsuite_admin_email" {
   description = "The email of a GSuite super admin, used for pulling user directory information *and* sending notifications."
 }
 
-variable "project_id" {
-  description = "The ID of an existing Google project where Forseti will be installed"
-}
-
-variable "org_id" {
-  description = "GCP Organization ID that Forseti will have purview over"
-}
-
-variable "domain" {
-  description = "The domain associated with the GCP Organization ID"
+variable "forseti_version" {
+  description = "The version of Forseti to install"
+  default     = "master"
 }
 
 variable "instance_metadata" {
@@ -36,13 +33,21 @@ variable "instance_metadata" {
   default     = {}
 }
 
+variable "network" {
+  description = "Name of the shared VPC"
+}
+
+variable "org_id" {
+  description = "GCP Organization ID that Forseti will have purview over"
+}
+
+variable "project_id" {
+  description = "The ID of an existing Google project where Forseti will be installed"
+}
+
 variable "region" {
   description = "Region where forseti subnetwork will be deployed"
   default     = "us-central1"
-}
-
-variable "network" {
-  description = "Name of the shared VPC"
 }
 
 variable "subnetwork" {
