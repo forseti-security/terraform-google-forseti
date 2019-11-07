@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+variable "forseti_version" {
+  description = "The version of Forseti to install"
+  default     = "v2.23.0"
+}
+
 variable "network_project" {
   description = "ID of the project that will have shared VPC"
 }
@@ -52,4 +57,3 @@ variable "instance_metadata" {
   type        = map(string)
   default     = {}
 }
-
