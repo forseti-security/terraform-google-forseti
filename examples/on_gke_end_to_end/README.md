@@ -55,6 +55,7 @@ This script will also activate necessary APIs required for Terraform to deploy F
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | auto\_create\_subnetworks | When set to true, the network is created in 'auto subnet mode' and it will create a subnet for each region automatically across the 10.128.0.0/9 address range. When set to false, the network is created in 'custom subnet mode' so the user can explicitly connect subnetwork resources. | bool | `"false"` | no |
+| bucket\_cai\_location | GCS CAI storage bucket location | string | `"us-central1"` | no |
 | config\_validator\_enabled | Config Validator scanner enabled. | bool | `"false"` | no |
 | cscc\_source\_id | Source ID for CSCC Beta API | string | `""` | no |
 | cscc\_violations\_enabled | Notify for CSCC violations | bool | `"false"` | no |
@@ -79,17 +80,20 @@ This script will also activate necessary APIs required for Terraform to deploy F
 | network\_description | An optional description of the network. The resource must be recreated to modify this field. | string | `""` | no |
 | org\_id | GCP Organization ID that Forseti will have purview over | string | n/a | yes |
 | policy\_library\_repository\_branch | The specific git branch containing the policies. | string | `"master"` | no |
-| policy\_library\_repository\_url | The git repository containing the policy-library. | string | `"https://github.com/forseti-security/policy-library"` | no |
+| policy\_library\_repository\_url | The git repository containing the policy-library. | string | `""` | no |
+| policy\_library\_sync\_enabled | Sync config validator policy library from private repository. | bool | `"false"` | no |
 | project\_id | The ID of an existing Google project where Forseti will be installed | string | n/a | yes |
 | region | Region where Forseti will be deployed | string | `"us-central1"` | no |
 | sendgrid\_api\_key | Sendgrid.com API key to enable email notifications | string | `""` | no |
 | server\_log\_level | The log level of the Forseti server container. | string | `"info"` | no |
+| storage\_bucket\_location | GCS storage bucket location | string | `"us-central1"` | no |
 | subnetwork | The name of the subnet being created | string | `"gke-sub-network"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
+| config-validator-git-public-key-openssh | The public OpenSSH key generated to allow the Forseti Server to clone the policy library repository. |
 | forseti-client-service-account | Forseti Client service account |
 | forseti-client-storage-bucket | Forseti Client storage bucket |
 | forseti-client-vm-ip | Forseti Client VM private IP address |

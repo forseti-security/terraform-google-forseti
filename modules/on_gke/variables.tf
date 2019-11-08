@@ -483,9 +483,20 @@ variable "policy_library_repository_url" {
   default     = ""
 }
 
+variable "policy_library_sync_enabled" {
+  description = "Sync config validator policy library from private repository."
+  type        = bool
+  default     = false
+}
+
 variable "policy_library_sync_git_sync_tag" {
   description = "Tag for the git-sync image."
   default     = "v3.1.2"
+}
+
+variable "policy_library_sync_gcs_directory_name" {
+  description = "The directory name of the GCS folder used for the policy library sync config."
+  default     = "policy_library_sync"
 }
 
 variable "resource_enabled" {
@@ -837,9 +848,9 @@ variable "git_sync_image" {
   default     = "gcr.io/google-containers/git-sync"
 }
 
-variable "git_sync_private_ssh_key" {
-  description = "The SSH key allowing the git-sync to clone the policy library repository."
-  default     = ""
+variable "git_sync_private_ssh_key_file" {
+  description = "The file containing the private SSH key allowing the git-sync to clone the policy library repository."
+  default     = null
 }
 
 variable "git_sync_wait" {
