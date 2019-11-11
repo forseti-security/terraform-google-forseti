@@ -327,6 +327,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 
 | Name | Description |
 |------|-------------|
+| forseti-cai-storage-bucket | Forseti CAI storage bucket |
 | forseti-client-service-account | Forseti Client service account |
 | forseti-client-storage-bucket | Forseti Client storage bucket |
 | forseti-client-vm-ip | Forseti Client VM private IP address |
