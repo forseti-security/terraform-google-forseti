@@ -63,6 +63,9 @@ module "forseti" {
   cloudsql_region = "us-central1"
   server_region   = "us-central1"
   client_region   = "us-central1"
+  
+  storage_bucket_location = "us-central1"
+  bucket_cai_location     = "us-central1"
 
   ### Add any Forseti Server Configuration Variables Below this Line ###
 
