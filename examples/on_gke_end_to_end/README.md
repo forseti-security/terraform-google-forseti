@@ -59,6 +59,9 @@ This script will also activate necessary APIs required for Terraform to deploy F
 | config\_validator\_enabled | Config Validator scanner enabled. | bool | `"false"` | no |
 | cscc\_source\_id | Source ID for CSCC Beta API | string | `""` | no |
 | cscc\_violations\_enabled | Notify for CSCC violations | bool | `"false"` | no |
+| default\_node\_pool\_disk\_size | Default Node Pool disk size | string | `"100"` | no |
+| default\_node\_pool\_disk\_type | Default Node Pool disk type | string | `"pd-ssd"` | no |
+| default\_node\_pool\_machine\_type | Default Node Pool machine type | string | `"n1-standard-8"` | no |
 | domain | The domain associated with the GCP Organization ID | string | n/a | yes |
 | forseti\_email\_recipient | Email address that receives Forseti notifications | string | `""` | no |
 | forseti\_email\_sender | Email address that sends the Forseti notifications | string | `""` | no |

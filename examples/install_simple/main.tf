@@ -28,6 +28,9 @@ module "forseti-install-simple" {
   network         = var.network
   subnetwork      = var.subnetwork
 
+  storage_bucket_location = var.region
+  bucket_cai_location     = var.region
+
   gsuite_admin_email      = var.gsuite_admin_email
   sendgrid_api_key        = var.sendgrid_api_key
   forseti_email_sender    = var.forseti_email_sender

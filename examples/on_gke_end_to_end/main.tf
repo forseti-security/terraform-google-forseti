@@ -168,6 +168,9 @@ module "forseti" {
   network         = var.network
   subnetwork      = var.subnetwork
 
+  storage_bucket_location = var.region
+  bucket_cai_location     = var.region
+
   network_policy     = module.gke.network_policy_enabled
   gke_node_pool_name = "default-node-pool"
 

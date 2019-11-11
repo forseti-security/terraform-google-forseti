@@ -83,7 +83,8 @@ If you have set the **source** path to the directory containing the module, omit
 
 ### Region
 If you have a **region**, it will need to be split into the cloudsql_region, server_region, and client_region
-variables.
+variables.  You will also need to set the location of the Forseti Client and Server storage buckets
+(**storage_bucket_location**) as well as the CAI storage bucket (**bucket_cai_location**).
 
 **NOTE:** In order to prevent data loss to your CloudSQL database, please double check the region where
 your CloudSQL instance currently exists and update the **cloudsql_region** variable, accourdingly.
@@ -97,6 +98,9 @@ After (example):
 cloudsql_region = "us-central1"
 server_region   = "us-central1"
 client_region   = "us-central1"
+
+storage_bucket_location = "us-central1"
+bucket_cai_location     = "us-central1"
 ```
 ### Credentials path
 Remove the **credentials_path** variable if present.  The `google` provider now solely relies on the _GOOGLE_APPLICATION_CREDENTIALS_ environment variable.

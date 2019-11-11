@@ -50,6 +50,8 @@ module "forseti-install-simple" {
   cloudsql_private         = var.private
   server_region            = var.region
   client_region            = var.region
+  storage_bucket_location  = var.region
+  bucket_cai_location      = var.region
   network                  = var.network
   subnetwork               = var.subnetwork
   sendgrid_api_key         = var.sendgrid_api_key
