@@ -134,6 +134,12 @@ variable "k8s_forseti_server_image_tag" {
   default     = "v2.24.0"
 }
 
+variable "kubernetes_version" {
+  type        = string
+  description = "The Kubernetes version of the masters. If set to 'latest' it will pull latest available version in the selected region."
+  default     = "1.13.12-gke.8"
+}
+
 variable "network" {
   description = "The name of the VPC being created"
   default     = "forseti-gke-network"
