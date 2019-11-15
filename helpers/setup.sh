@@ -85,13 +85,13 @@ if [[ -z "$ORG_ID" ]]; then
 fi
 
 # Ensure that we can fetch the IAM policy on the Forseti project.
-if ! gcloud projects get-iam-policy "$PROJECT_ID" 2>&- 1>&-; then
+if ! gcloud projects get-iam-policy "$PROJECT_ID" > /dev/null 2>&1; then
   echo "ERROR: Unable to fetch IAM policy on project $PROJECT_ID."
   exit 1
 fi
 
 # Ensure that we can fetch the IAM policy on the GCP organization.
-if ! gcloud organizations get-iam-policy "$ORG_ID" 2>&- 1>&-; then
+if ! gcloud organizations get-iam-policy "$ORG_ID" > /dev/null 2>&1; then
   echo "ERROR: Unable to fetch IAM policy on organization $ORG_ID."
   exit 1
 fi
@@ -100,10 +100,10 @@ fi
 SERVICE_ACCOUNT_EMAIL="${SERVICE_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
 STAGING_DIR="${PWD}"
 KEY_FILE="${STAGING_DIR}/credentials.json"
-COMMAND_CHECK="gcloud iam service-accounts --project ${PROJECT_ID} list --filter=disabled:"
+COMMAND_CHECK_TRUE=$(gcloud iam service-accounts --project "$PROJECT_ID" list --filter=disabled:True)
+COMMAND_CHECK_FALSE=$(gcloud iam service-accounts --project "$PROJECT_ID" list --filter=disabled:False)
 
-
-for email in $("${COMMAND_CHECK}""False")
+for email in $COMMAND_CHECK_FALSE
 do
     if [[ "$email" == "${SERVICE_ACCOUNT_EMAIL}" ]]; then
         echo "${SERVICE_ACCOUNT_EMAIL} already exists and is enabled"
@@ -113,7 +113,7 @@ do
 done
 if [[ "$IS_UPDATE" == "0" ]]; then
 
-    for email in $("${COMMAND_CHECK}""True")
+    for email in $COMMAND_CHECK_TRUE
     do
         if [[ "$email" == "${SERVICE_ACCOUNT_EMAIL}" ]]; then
             echo "${SERVICE_ACCOUNT_EMAIL} already exists and is disabled"
@@ -130,6 +130,7 @@ echo "Enabling services"
 gcloud services enable \
     cloudresourcemanager.googleapis.com \
     serviceusage.googleapis.com \
+    compute.googleapis.com \
     --project "${PROJECT_ID}"
 
 
