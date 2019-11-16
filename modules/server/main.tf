@@ -137,11 +137,29 @@ resource "google_compute_firewall" "forseti-server-deny-all" {
 }
 
 resource "google_compute_firewall" "forseti-server-ssh-external" {
+  count                   = var.server_private ? 0 : 1
   name                    = "forseti-server-ssh-external-${local.random_hash}"
   project                 = local.network_project
   network                 = var.network
   target_service_accounts = [var.server_iam_module.forseti-server-service-account]
   source_ranges           = var.server_ssh_allow_ranges
+  priority                = "100"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+
+  depends_on = [null_resource.services-dependency]
+}
+
+resource "google_compute_firewall" "forseti-server-ssh-iap" {
+  count                   = var.server_private ? 1 : 0
+  name                    = "forseti-server-ssh-iap-${local.random_hash}"
+  project                 = local.network_project
+  network                 = var.network
+  target_service_accounts = [var.server_iam_module.forseti-server-service-account]
+  source_ranges           = ["35.235.240.0/20"]
   priority                = "100"
 
   allow {
