@@ -510,6 +510,11 @@ variable "policy_library_home" {
   default     = "$USER_HOME/policy-library"
 }
 
+variable "policy_library_repository_branch" {
+  description = "The specific git branch containing the policies."
+  default     = "master"
+}
+
 variable "policy_library_repository_url" {
   description = "The git repository containing the policy-library."
   default     = ""
