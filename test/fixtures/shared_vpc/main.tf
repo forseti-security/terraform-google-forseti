@@ -67,9 +67,17 @@ resource "null_resource" "ssh_iap_tunnel" {
   }
   provisioner "remote-exec" {
     inline = [
-      "gcloud compute start-iap-tunnel ${module.forseti-install-simple.forseti-server-vm-name} 22 --local-host-port=localhost:22 &",
-      "gcloud compute start-iap-tunnel ${module.forseti-install-simple.forseti-server-vm-name} 22 --local-host-port=localhost:23 &",
+      "gcloud compute start-iap-tunnel ${module.forseti-shared-vpc.forseti-server-vm-name} 22 --local-host-port=localhost:22 &",
+      "gcloud compute start-iap-tunnel ${module.forseti-shared-vpc.forseti-server-vm-name} 22 --local-host-port=localhost:23 &",
     ]
+
+    connection {
+      type                = "ssh"
+      user                = module.bastion.user
+      host                = module.bastion.host
+      port                = module.bastion.port
+      private_key         = module.bastion.private_key
+    }
   }
 }
 
