@@ -533,6 +533,7 @@ module "server_rules" {
 #-----------------------#
 module "server_config" {
   source                                              = "../server_config"
+  rules_path                                          = "gs://${module.server_gcs.forseti-server-storage-bucket}/rules"
   composite_root_resources                            = var.composite_root_resources
   server_gcs_module                                   = module.server_gcs
   forseti_email_recipient                             = var.forseti_email_recipient
