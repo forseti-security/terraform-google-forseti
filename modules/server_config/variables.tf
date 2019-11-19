@@ -311,6 +311,11 @@ variable "inventory_retention_days" {
 #------------------------#
 # Forseti config scanner #
 #------------------------#
+variable "rules_path" {
+  description = "Rules path (do not include filename). If GCS location, the format of the path should be: gs://bucket-name/path/for/rules_path. If no rules_path is specified, rules are searched in /path/to/forseti_security/rules/"
+  default     = "/home/ubuntu/forseti-security/rules"
+}
+
 variable "audit_logging_enabled" {
   description = "Audit Logging scanner enabled."
   default     = "false"
