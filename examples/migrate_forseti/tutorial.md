@@ -140,6 +140,22 @@ Update the <walkthrough-editor-select-line
   endCharacterOffset=33>client_region</walkthrough-editor-select-line>
 to match the region where the Forseti Client VM is deployed.
 
+Update the <walkthrough-editor-select-line
+  filePath="terraform-google-forseti/examples/migrate_forseti/main.tf"
+  startLine=66
+  endLine=66
+  startCharacterOffset=29
+  endCharacterOffset=40>storage_bucket_location</walkthrough-editor-select-line>
+to match the region where the Forseti Server and Client GCS buckets are deployed.
+
+Update the <walkthrough-editor-select-line
+  filePath="terraform-google-forseti/examples/migrate_forseti/main.tf"
+  startLine=67
+  endLine=67
+  startCharacterOffset=29
+  endCharacterOffset=40>bucket_cai_location</walkthrough-editor-select-line>
+to match the region where the CAI GCS bucket is deployed.
+
 ## Add Input Variables for Custom Configurations
 Starting with Forseti Security 2.23, Terraform will manage your server
  configuration file for you.  Configuration options will now be input

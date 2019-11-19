@@ -28,23 +28,6 @@ provider "google-beta" {
   project = var.project_id
 }
 
-#--------#
-# Locals #
-#--------#
-
-locals {
-  git_sync_private_ssh_key = var.git_sync_private_ssh_key_file != null ? data.local_file.git_sync_private_ssh_key_file[0].content_base64 : ""
-}
-
-#------------------------------#
-# git-sync SSH Key Data Source #
-#------------------------------#
-
-data "local_file" "git_sync_private_ssh_key_file" {
-  count    = var.git_sync_private_ssh_key_file != null ? 1 : 0
-  filename = var.git_sync_private_ssh_key_file
-}
-
 //*****************************************
 //  Setup the Kubernetes Provider
 //*****************************************
@@ -135,11 +118,11 @@ module "gke" {
 
   node_pools = [{
     name               = "default-node-pool"
-    machine_type       = "n1-standard-2"
+    machine_type       = var.default_node_pool_machine_type
     min_count          = 1
     max_count          = 1
-    disk_size_gb       = 100
-    disk_type          = "pd-standard"
+    disk_size_gb       = var.default_node_pool_disk_size
+    disk_type          = var.default_node_pool_disk_type
     image_type         = "COS"
     auto_repair        = true
     auto_upgrade       = false
@@ -185,6 +168,9 @@ module "forseti" {
   network         = var.network
   subnetwork      = var.subnetwork
 
+  storage_bucket_location = var.region
+  bucket_cai_location     = var.region
+
   network_policy     = module.gke.network_policy_enabled
   gke_node_pool_name = "default-node-pool"
 
@@ -197,12 +183,13 @@ module "forseti" {
 
 
   config_validator_enabled           = var.config_validator_enabled
-  git_sync_private_ssh_key           = local.git_sync_private_ssh_key
+  git_sync_private_ssh_key_file      = var.git_sync_private_ssh_key_file
   k8s_forseti_server_ingress_cidr    = module.vpc.subnets_ips[0]
   k8s_forseti_server_image_tag       = var.k8s_forseti_server_image_tag
   k8s_forseti_orchestrator_image_tag = var.k8s_forseti_orchestrator_image_tag
   helm_repository_url                = var.helm_repository_url
   policy_library_repository_url      = var.policy_library_repository_url
   policy_library_repository_branch   = var.policy_library_repository_branch
+  policy_library_sync_enabled        = var.policy_library_sync_enabled
   server_log_level                   = var.server_log_level
 }

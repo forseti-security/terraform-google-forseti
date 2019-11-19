@@ -19,8 +19,7 @@
 #--------#
 
 locals {
-  node_pool_index          = [for index, node_pool in data.google_container_cluster.forseti_cluster.node_pool : index if node_pool.name == var.gke_node_pool_name][0]
-  git_sync_private_ssh_key = var.git_sync_private_ssh_key_file != null ? data.local_file.git_sync_private_ssh_key_file[0].content_base64 : ""
+  node_pool_index = [for index, node_pool in data.google_container_cluster.forseti_cluster.node_pool : index if node_pool.name == var.gke_node_pool_name][0]
 }
 
 #------------------#
@@ -60,15 +59,6 @@ data "google_compute_subnetwork" "forseti_subnetwork" {
   name    = var.subnetwork
   region  = var.region
   project = var.project_id
-}
-
-#------------------------------#
-# git-sync SSH Key Data Source #
-#------------------------------#
-
-data "local_file" "git_sync_private_ssh_key_file" {
-  count    = var.git_sync_private_ssh_key_file != null ? 1 : 0
-  filename = var.git_sync_private_ssh_key_file
 }
 
 #---------------------#
@@ -129,6 +119,9 @@ module "forseti" {
   client_region   = var.region
   cloudsql_region = var.region
 
+  storage_bucket_location = var.region
+  bucket_cai_location     = var.region
+
   network_policy = data.google_container_cluster.forseti_cluster.network_policy.0.enabled
 
   gsuite_admin_email      = var.gsuite_admin_email
@@ -138,10 +131,12 @@ module "forseti" {
   cscc_violations_enabled = var.cscc_violations_enabled
   cscc_source_id          = var.cscc_source_id
 
-  config_validator_enabled        = var.config_validator_enabled
-  git_sync_private_ssh_key        = local.git_sync_private_ssh_key
-  k8s_forseti_server_ingress_cidr = data.google_compute_subnetwork.forseti_subnetwork.ip_cidr_range
-  helm_repository_url             = var.helm_repository_url
-  policy_library_repository_url   = var.policy_library_repository_url
-  server_log_level                = var.server_log_level
+  config_validator_enabled         = var.config_validator_enabled
+  git_sync_private_ssh_key_file    = var.git_sync_private_ssh_key_file
+  k8s_forseti_server_ingress_cidr  = data.google_compute_subnetwork.forseti_subnetwork.ip_cidr_range
+  helm_repository_url              = var.helm_repository_url
+  policy_library_repository_url    = var.policy_library_repository_url
+  policy_library_repository_branch = var.policy_library_repository_branch
+  policy_library_sync_enabled      = var.policy_library_sync_enabled
+  server_log_level                 = var.server_log_level
 }

@@ -63,3 +63,8 @@ output "suffix" {
   description = "The random suffix appended to Forseti resources"
   value       = local.random_hash
 }
+
+output "config-validator-git-public-key-openssh" {
+  description = "The public OpenSSH key generated to allow the Forseti Server to clone the policy library repository."
+  value       = data.tls_public_key.git_sync_public_ssh_key[0].public_key_openssh
+}

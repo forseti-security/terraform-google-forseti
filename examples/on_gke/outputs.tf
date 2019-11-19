@@ -63,3 +63,8 @@ output "suffix" {
   description = "The random suffix appended to Forseti resources"
   value       = module.forseti.suffix
 }
+
+output "config-validator-git-public-key-openssh" {
+  description = "The public OpenSSH key generated to allow the Forseti Server to clone the policy library repository."
+  value       = module.forseti.config-validator-git-public-key-openssh
+}
