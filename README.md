@@ -284,6 +284,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | network\_project | The project containing the VPC and subnetwork where the Forseti client and server will be created | string | `""` | no |
 | org\_id | GCP Organization ID that Forseti will have purview over | string | `""` | no |
 | policy\_library\_home | The local policy library directory. | string | `"$USER_HOME/policy-library"` | no |
+| policy\_library\_repository\_branch | The specific git branch containing the policies. | string | `"master"` | no |
 | policy\_library\_repository\_url | The git repository containing the policy-library. | string | `""` | no |
 | policy\_library\_sync\_enabled | Sync config validator policy library from private repository. | bool | `"false"` | no |
 | policy\_library\_sync\_gcs\_directory\_name | The directory name of the GCS folder used for the policy library sync config. | string | `"policy_library_sync"` | no |
