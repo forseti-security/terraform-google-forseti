@@ -61,6 +61,18 @@ module "forseti-shared-vpc" {
   }
 }
 
+resource "null_resource" "ssh_iap_tunnel" {
+  triggers = {
+    always_run = uuid()
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "gcloud compute start-iap-tunnel ${module.forseti-install-simple.forseti-server-vm-name} 22 --local-host-port=localhost:22 &",
+      "gcloud compute start-iap-tunnel ${module.forseti-install-simple.forseti-server-vm-name} 22 --local-host-port=localhost:23 &",
+    ]
+  }
+}
+
 resource "null_resource" "wait_for_server" {
   triggers = {
     always_run = uuid()
@@ -72,7 +84,8 @@ resource "null_resource" "wait_for_server" {
     connection {
       type                = "ssh"
       user                = "ubuntu"
-      host                = module.forseti-shared-vpc.forseti-server-vm-ip
+      host                = "localhost"
+      port                = 22
       private_key         = tls_private_key.main.private_key_pem
       bastion_host        = module.bastion.host
       bastion_port        = module.bastion.port
@@ -80,6 +93,10 @@ resource "null_resource" "wait_for_server" {
       bastion_user        = module.bastion.user
     }
   }
+
+  depends_on = [
+    null_resource.ssh_iap_tunnel,
+  ]
 }
 
 resource "null_resource" "wait_for_client" {
@@ -93,7 +110,8 @@ resource "null_resource" "wait_for_client" {
     connection {
       type                = "ssh"
       user                = "ubuntu"
-      host                = module.forseti-shared-vpc.forseti-client-vm-ip
+      host                = "localhost"
+      port                = 23
       private_key         = tls_private_key.main.private_key_pem
       bastion_host        = module.bastion.host
       bastion_port        = module.bastion.port
@@ -101,4 +119,8 @@ resource "null_resource" "wait_for_client" {
       bastion_user        = module.bastion.user
     }
   }
+
+  depends_on = [
+    null_resource.ssh_iap_tunnel,
+  ]
 }
