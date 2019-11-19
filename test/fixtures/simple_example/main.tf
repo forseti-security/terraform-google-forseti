@@ -68,10 +68,8 @@ resource "null_resource" "ssh_iap_tunnel" {
 
   provisioner "remote-exec" {
     inline = [
-      "gcloud compute start-iap-tunnel ${module.forseti-install-simple.forseti-server-vm-name} 22 --local-host-port=localhost:22 &",
-      "gcloud compute start-iap-tunnel ${module.forseti-install-simple.forseti-server-vm-name} 22 --local-host-port=localhost:23 &",
-      "disown -h %1",
-      "disown -h %2"
+      "nohup gcloud compute start-iap-tunnel ${module.forseti-install-simple.forseti-server-vm-name} 22 --local-host-port=localhost:22 &",
+      "nohup gcloud compute start-iap-tunnel ${module.forseti-install-simple.forseti-server-vm-name} 22 --local-host-port=localhost:23 &",
     ]
 
     connection {
