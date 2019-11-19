@@ -126,12 +126,18 @@ variable "k8s_tiller_sa_name" {
 
 variable "k8s_forseti_orchestrator_image_tag" {
   description = "The tag for the container image for the Forseti orchestrator"
-  default     = "v2.23.0"
+  default     = "v2.24.0"
 }
 
 variable "k8s_forseti_server_image_tag" {
   description = "The tag for the container image for the Forseti server"
-  default     = "v2.23.0"
+  default     = "v2.24.0"
+}
+
+variable "kubernetes_version" {
+  type        = string
+  description = "The Kubernetes version of the masters. If set to 'latest' it will pull latest available version in the selected region."
+  default     = "1.13.12-gke.8"
 }
 
 variable "network" {

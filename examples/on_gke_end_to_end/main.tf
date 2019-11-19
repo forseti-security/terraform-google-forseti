@@ -113,7 +113,7 @@ module "gke" {
   remove_default_node_pool = true
   identity_namespace       = "${var.project_id}.svc.id.goog"
   node_metadata            = "GKE_METADATA_SERVER"
-  kubernetes_version       = "1.13.11-gke.5"
+  kubernetes_version       = var.kubernetes_version
 
 
   node_pools = [{
