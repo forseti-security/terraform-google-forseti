@@ -24,7 +24,7 @@ Options:
     -e                  Add additional IAM roles for running the real time policy enforcer.
     -k                  Add additional IAM roles for running Forseti on-GKE
     -f HOST_PROJECT_ID  ID of a project holding shared vpc.
-    -s SERVICE_ACCOUNT  Specify a service account to create (if already exists will be updated) 
+    -s SERVICE_ACCOUNT  Specify a service account to create (if already exists will be updated)
 Examples:
     ${0##*/} -p forseti-235k -o 22592784945
     ${0##*/} -p forseti-enforcer-99e4 -o 22592784945 -e
@@ -85,13 +85,13 @@ if [[ -z "$ORG_ID" ]]; then
 fi
 
 # Ensure that we can fetch the IAM policy on the Forseti project.
-if ! gcloud projects get-iam-policy "$PROJECT_ID" 2>&- 1>&-; then
+if ! gcloud projects get-iam-policy "$PROJECT_ID" > /dev/null 2>&1; then
   echo "ERROR: Unable to fetch IAM policy on project $PROJECT_ID."
   exit 1
 fi
 
 # Ensure that we can fetch the IAM policy on the GCP organization.
-if ! gcloud organizations get-iam-policy "$ORG_ID" 2>&- 1>&-; then
+if ! gcloud organizations get-iam-policy "$ORG_ID" > /dev/null 2>&1; then
   echo "ERROR: Unable to fetch IAM policy on organization $ORG_ID."
   exit 1
 fi
@@ -100,29 +100,29 @@ fi
 SERVICE_ACCOUNT_EMAIL="${SERVICE_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
 STAGING_DIR="${PWD}"
 KEY_FILE="${STAGING_DIR}/credentials.json"
-COMMAND_CHECK="gcloud iam service-accounts --project "${PROJECT_ID}" list --filter=disabled:"
+COMMAND_CHECK_TRUE=$(gcloud iam service-accounts --project "$PROJECT_ID" list --filter=disabled:True)
+COMMAND_CHECK_FALSE=$(gcloud iam service-accounts --project "$PROJECT_ID" list --filter=disabled:False)
 
-
-for email in $(${COMMAND_CHECK}"False")
+for email in $COMMAND_CHECK_FALSE
 do
     if [[ "$email" == "${SERVICE_ACCOUNT_EMAIL}" ]]; then
         echo "${SERVICE_ACCOUNT_EMAIL} already exists and is enabled"
         IS_UPDATE=1
-        break 
-    fi; 
-done 
+        break
+    fi;
+done
 if [[ "$IS_UPDATE" == "0" ]]; then
 
-    for email in $(${COMMAND_CHECK}"True")
+    for email in $COMMAND_CHECK_TRUE
     do
         if [[ "$email" == "${SERVICE_ACCOUNT_EMAIL}" ]]; then
             echo "${SERVICE_ACCOUNT_EMAIL} already exists and is disabled"
             IS_UPDATE=2
             echo "The service account must be enabled manually or deleted"
             exit 1
-            break 
+            break
         fi;
-    done 
+    done
 fi;
 
 
@@ -130,6 +130,7 @@ echo "Enabling services"
 gcloud services enable \
     cloudresourcemanager.googleapis.com \
     serviceusage.googleapis.com \
+    compute.googleapis.com \
     --project "${PROJECT_ID}"
 
 
@@ -139,7 +140,7 @@ if [[ "$IS_UPDATE" == "0" ]]; then
     # If is an update i don't create service accout and re-download credentials
     echo "Creating a new service account ${SERVICE_ACCOUNT_EMAIL} ..."
     gcloud iam service-accounts \
-        --project "${PROJECT_ID}" create ${SERVICE_ACCOUNT_NAME} \
+        --project "${PROJECT_ID}" create "${SERVICE_ACCOUNT_NAME}" \
         --display-name "${SERVICE_ACCOUNT_NAME}"
 
     echo "Downloading key to credentials.json..."
@@ -225,7 +226,7 @@ fi
 if [[ -n "$ON_GKE" ]]; then
   gke_roles=("roles/container.admin" "roles/compute.networkAdmin" "roles/resourcemanager.projectIamAdmin")
 
-  echo "Granting on-GKE related roles on project $PROJECT_ID..." 
+  echo "Granting on-GKE related roles on project $PROJECT_ID..."
   for gke_role in "${gke_roles[@]}"; do
     gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
         --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
