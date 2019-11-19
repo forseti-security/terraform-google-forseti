@@ -224,16 +224,6 @@ uppercase values with the aforementioned values:
 ./import.sh -m MODULE_LOCAL_NAME -o ORG_ID -p PROJECT_ID -s RESOURCE_NAME_SUFFIX -z GCE_ZONE [-n NETWORK_PROJECT_ID]
 ```
 
-## Obtain and Run the Import Script
-This [import script](https://github.com/forseti-security/terraform-google-forseti/blob/master/helpers/import.sh) will import the Forseti GCP resources into a local state file.
-Please look at the output of `import.sh -h` to populate the needed flags. Import scri
-
-```sh
-curl --location --remote-name https://raw.githubusercontent.com/forseti-security/terraform-google-forseti/master/helpers/import.sh
-chmod +x import.sh
-./import.sh -h
-```
-
 ## Terraform Plan
 It is strongly recommend to execute `terraform plan` before `terraform apply`.  This
 will provide you an opportunity to review changes Terraform is planning to make

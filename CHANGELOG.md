@@ -6,6 +6,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Extending the adopted spec, each change should have a link to its corresponding pull request appended.
 
+## [5.1.0] - 2019-11-15
+
+### Added
+
+- Support for Forseti v2.24.0 [#386]
+- Parameterized Kubernetes version [#385]
+- GCS bucket location to tutorials and examples [#382]
+- Improved existing resource import in v5.0.0 [#354]
+- Starting Forseti service automatically at boot (#286) [#275]
+- Ignoring the size of the CloudSQL disk on re-apply [#371]
+- Root outputs.tf to include forseti-cai-storage-bucket [#374]
+- The On GKE end-to-end example to have the same machine type and disk type as the defaults for GCE. Moved these variables out of main.tf into the variables.tf file. [#369]
+- setup.sh to reuse existing deployer service account [#357]
+- GCS as a policy-library store for on-GKE [#356]
+- Support for the case where the user is syncing from GCS and not SSH key is present [#362]
+- CIS Annotations CIS 2.1 [#348] [#349] [#350] [#351]
+- GKE module support for custom Cloud SQL database names [#314]
+
+### Fixed
+- Changing the branch names to branches without special characters [#383]
+- Test fixtures to use master branch of Forseti [#378]
+- Correct server bucket variable being passed to helm_release resource. [#320]
+
+### Removed
+- Issue templates [#365]
+
 ## [5.0.0] - 2019-10-17
 Version 5.0.0 is a backwards-incompatible release. Please see the [upgrade instructions](./docs/upgrading_to_v5.0.md) for details.
 
@@ -289,9 +315,29 @@ Version 4.0.0 is a backwards-incompatible release. Please see the [upgrade instr
 [v4.2.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.1.0...v4.2.1
 [v4.3.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.2.1...v4.3.0
 [v5.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.3.0...v5.0.0
+[v5.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v5.0.0...v5.1.0
 
+[#386]: https://github.com/forseti-security/terraform-google-forseti/pull/386
+[#385]: https://github.com/forseti-security/terraform-google-forseti/pull/385
+[#383]: https://github.com/forseti-security/terraform-google-forseti/pull/383
+[#382]: https://github.com/forseti-security/terraform-google-forseti/pull/382
+[#378]: https://github.com/forseti-security/terraform-google-forseti/pull/378
+[#371]: https://github.com/forseti-security/terraform-google-forseti/pull/371
+[#374]: https://github.com/forseti-security/terraform-google-forseti/pull/374
+[#369]: https://github.com/forseti-security/terraform-google-forseti/pull/369
+[#365]: https://github.com/forseti-security/terraform-google-forseti/pull/365
+[#362]: https://github.com/forseti-security/terraform-google-forseti/pull/362
+[#357]: https://github.com/forseti-security/terraform-google-forseti/pull/357
+[#356]: https://github.com/forseti-security/terraform-google-forseti/pull/356
+[#354]: https://github.com/forseti-security/terraform-google-forseti/pull/354
+[#351]: https://github.com/forseti-security/terraform-google-forseti/pull/351
+[#350]: https://github.com/forseti-security/terraform-google-forseti/pull/350
+[#349]: https://github.com/forseti-security/terraform-google-forseti/pull/349
+[#348]: https://github.com/forseti-security/terraform-google-forseti/pull/348
 [#330]: https://github.com/forseti-security/terraform-google-forseti/pull/330
 [#329]: https://github.com/forseti-security/terraform-google-forseti/pull/329
+[#320]: https://github.com/forseti-security/terraform-google-forseti/pull/320
+[#314]: https://github.com/forseti-security/terraform-google-forseti/pull/314
 [#309]: https://github.com/forseti-security/terraform-google-forseti/pull/309
 [#308]: https://github.com/forseti-security/terraform-google-forseti/pull/308
 [#307]: https://github.com/forseti-security/terraform-google-forseti/pull/307
@@ -308,6 +354,7 @@ Version 4.0.0 is a backwards-incompatible release. Please see the [upgrade instr
 [#282]: https://github.com/forseti-security/terraform-google-forseti/pull/282
 [#280]: https://github.com/forseti-security/terraform-google-forseti/pull/280
 [#276]: https://github.com/forseti-security/terraform-google-forseti/pull/276
+[#275]: https://github.com/forseti-security/terraform-google-forseti/pull/275
 [#270]: https://github.com/forseti-security/terraform-google-forseti/pull/270
 [#268]: https://github.com/forseti-security/terraform-google-forseti/pull/268
 [#266]: https://github.com/forseti-security/terraform-google-forseti/pull/266
