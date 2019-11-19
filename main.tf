@@ -150,6 +150,7 @@ module "server" {
 
   policy_library_home                    = var.policy_library_home
   policy_library_repository_url          = var.policy_library_repository_url
+  policy_library_repository_branch       = var.policy_library_repository_branch
   policy_library_sync_enabled            = var.policy_library_sync_enabled
   policy_library_sync_gcs_directory_name = var.policy_library_sync_gcs_directory_name
   policy_library_sync_git_sync_tag       = var.policy_library_sync_git_sync_tag
