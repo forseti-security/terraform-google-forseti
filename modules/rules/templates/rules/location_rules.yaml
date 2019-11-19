@@ -42,7 +42,7 @@
 #           - '*'
 #     locations:
 #       - 'us*'
-#  - name: All buckets in organization must not be in EU.
+#   - name: All buckets in organization must not be in EU.
 #     mode: blacklist
 #     resource:
 #       - type: organization
