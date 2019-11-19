@@ -69,14 +69,16 @@ resource "null_resource" "ssh_iap_tunnel" {
     inline = [
       "gcloud compute start-iap-tunnel ${module.forseti-shared-vpc.forseti-server-vm-name} 22 --local-host-port=localhost:22 &",
       "gcloud compute start-iap-tunnel ${module.forseti-shared-vpc.forseti-server-vm-name} 22 --local-host-port=localhost:23 &",
+      "disown -h %1",
+      "disown -h %2",
     ]
 
     connection {
-      type                = "ssh"
-      user                = module.bastion.user
-      host                = module.bastion.host
-      port                = module.bastion.port
-      private_key         = module.bastion.private_key
+      type        = "ssh"
+      user        = module.bastion.user
+      host        = module.bastion.host
+      port        = module.bastion.port
+      private_key = module.bastion.private_key
     }
   }
 }
