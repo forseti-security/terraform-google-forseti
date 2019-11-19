@@ -80,7 +80,7 @@ variable "gsuite_admin_email" {
 
 variable "forseti_version" {
   description = "The version of Forseti to install"
-  default     = "v2.23.0"
+  default     = "v2.24.0"
 }
 
 variable "forseti_repo_url" {
@@ -860,7 +860,7 @@ variable "git_sync_wait" {
 
 variable "helm_chart_version" {
   description = "The version of the Helm chart to use"
-  default     = "2.0.0"
+  default     = "2.1.0"
 }
 
 variable "helm_repository_url" {
@@ -875,7 +875,7 @@ variable "k8s_config_validator_image" {
 
 variable "k8s_config_validator_image_tag" {
   description = "The tag for the config-validator image."
-  default     = "latest"
+  default     = "572e207"
 }
 
 variable "k8s_forseti_namespace" {
@@ -890,7 +890,7 @@ variable "k8s_forseti_orchestrator_image" {
 
 variable "k8s_forseti_orchestrator_image_tag" {
   description = "The tag for the container image for the Forseti orchestrator"
-  default     = "v2.23.0"
+  default     = "v2.24.0"
 }
 
 variable "k8s_forseti_server_image" {
@@ -900,7 +900,7 @@ variable "k8s_forseti_server_image" {
 
 variable "k8s_forseti_server_image_tag" {
   description = "The tag for the container image for the Forseti server"
-  default     = "v2.23.0"
+  default     = "v2.24.0"
 }
 
 variable "k8s_forseti_server_ingress_cidr" {
