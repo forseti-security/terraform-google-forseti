@@ -61,32 +61,17 @@ module "forseti-shared-vpc" {
   }
 }
 
-resource "google_compute_firewall" "forseti-server-ssh-iap" {
+resource "google_compute_firewall" "forseti_bastion_to_vm" {
 
-  name                    = "forseti-bastion-to-server-ssh"
-  project                 = var.project_id
-  network                 = var.network
-  target_service_accounts = [module.forseti-shared-vpc.forseti-server-service-account]
-  source_ranges           = ["${module.bastion.host-private-ip}/32"]
-  direction               = "INGRESS"
-  priority                = "100"
+  name    = "forseti-bastion-to-vm-ssh-${module.forseti-shared-vpc.suffix}"
+  project = var.project_id
+  network = var.network
+  target_service_accounts = [module.forseti-shared-vpc.forseti-server-service-account,
+  module.forseti-shared-vpc.forseti-client-service-account]
 
-  allow {
-    protocol = "tcp"
-    ports    = ["22"]
-  }
-
-}
-
-resource "google_compute_firewall" "forseti-client-ssh-iap" {
-
-  name                    = "forseti-bastion-to-client-ssh"
-  project                 = var.project_id
-  network                 = var.network
-  target_service_accounts = [module.forseti-shared-vpc.forseti-client-service-account]
-  source_ranges           = ["${module.bastion.host-private-ip}/32"]
-  direction               = "INGRESS"
-  priority                = "100"
+  source_ranges = ["${module.bastion.host-private-ip}/32"]
+  direction     = "INGRESS"
+  priority      = "100"
 
   allow {
     protocol = "tcp"
@@ -114,6 +99,10 @@ resource "null_resource" "wait_for_server" {
       bastion_user        = module.bastion.user
     }
   }
+
+  depends_on = [
+    google_compute_firewall.forseti_bastion_to_vm
+  ]
 }
 
 resource "null_resource" "wait_for_client" {
@@ -135,4 +124,8 @@ resource "null_resource" "wait_for_client" {
       bastion_user        = module.bastion.user
     }
   }
+
+  depends_on = [
+    google_compute_firewall.forseti_bastion_to_vm
+  ]
 }
