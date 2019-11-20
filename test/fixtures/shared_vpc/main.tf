@@ -67,7 +67,7 @@ resource "null_resource" "ssh_server_iap_tunnel" {
   }
 
   provisioner "local-exec" {
-    command =  "nohup gcloud compute start-iap-tunnel ${module.forseti-shared-vpc.forseti-server-vm-name} 22 --local-host-port=localhost:2222 &",
+    command =  "nohup gcloud compute start-iap-tunnel ${module.forseti-shared-vpc.forseti-server-vm-name} 22 --local-host-port=localhost:2222 &"
   }
 
   depends_on = [
