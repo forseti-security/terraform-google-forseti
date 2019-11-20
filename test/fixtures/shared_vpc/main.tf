@@ -80,8 +80,8 @@ resource "null_resource" "ssh_iap_tunnel" {
     }
   }
   depends_on = [
-    module.forseti-install-simple.forseti-client-vm-ip,
-    module.forseti-install-simple.forseti-server-vm-ip
+    module.forseti-shared-vpc.forseti-client-vm-ip,
+    module.forseti-shared-vpc.forseti-server-vm-ip
   ]
 }
 
