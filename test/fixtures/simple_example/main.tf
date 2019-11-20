@@ -80,6 +80,11 @@ resource "null_resource" "ssh_iap_tunnel" {
       private_key = module.bastion.private_key
     }
   }
+
+  depends_on = [
+    module.forseti-install-simple.forseti-client-vm-ip,
+    module.forseti-install-simple.forseti-server-vm-ip
+  ]
 }
 
 resource "null_resource" "wait_for_server" {
