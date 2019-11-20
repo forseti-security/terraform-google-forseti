@@ -61,32 +61,21 @@ module "forseti-install-simple" {
   }
 }
 
-resource "null_resource" "ssh_server_iap_tunnel" {
-  triggers = {
-    always_run = uuid()
+resource "google_compute_firewall" "forseti-server-ssh-iap" {
+
+  name                    = "forseti-bastion-to-server-ssh"
+  project                 = var.project_id
+  network                 = var.network
+  target_service_accounts = [module.forseti-install-simple.forseti-server-service-account]
+  source_ranges           = ["${module.bastion.host-private-ip}/32"]
+  direction               = "INGRESS"
+  priority                = "100"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
   }
 
-  provisioner "local-exec" {
-    command =  "nohup gcloud compute start-iap-tunnel ${module.forseti-install-simple.forseti-server-vm-name} 22 --local-host-port=localhost:2222 --zone=${var.region}-c --project=${var.project_id} &"
-  }
-
-  depends_on = [
-    module.forseti-install-simple.forseti-server-vm-ip
-  ]
-}
-
-resource "null_resource" "ssh_client_iap_tunnel" {
-  triggers = {
-    always_run = uuid()
-  }
-
-  provisioner "local-exec" {
-    command = "nohup gcloud compute start-iap-tunnel ${module.forseti-install-simple.forseti-client-vm-name} 22 --local-host-port=localhost:2223 --zone=${var.region}-c --project=${var.project_id} &"
-  }
-
-  depends_on = [
-    module.forseti-install-simple.forseti-client-vm-ip
-  ]
 }
 
 resource "null_resource" "wait_for_server" {
@@ -100,15 +89,34 @@ resource "null_resource" "wait_for_server" {
     connection {
       type                = "ssh"
       user                = "ubuntu"
-      host                = "localhost"
-      port                = 2222
+      host                = module.forseti-install-simple.forseti-server-vm-ip
       private_key         = tls_private_key.main.private_key_pem
+      bastion_host        = module.bastion.host
+      bastion_port        = module.bastion.port
+      bastion_private_key = module.bastion.private_key
+      bastion_user        = module.bastion.user
     }
   }
-
   depends_on = [
-    null_resource.ssh_server_iap_tunnel,
+    google_compute_firewall.forseti-server-ssh-iap
   ]
+}
+
+resource "google_compute_firewall" "forseti-client-ssh-iap" {
+
+  name                    = "forseti-bastion-to-client-ssh"
+  project                 = var.project_id
+  network                 = var.network
+  target_service_accounts = [module.forseti-install-simple.forseti-client-service-account]
+  source_ranges           = ["${module.bastion.host-private-ip}/32"]
+  direction               = "INGRESS"
+  priority                = "100"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+
 }
 
 resource "null_resource" "wait_for_client" {
@@ -122,13 +130,16 @@ resource "null_resource" "wait_for_client" {
     connection {
       type                = "ssh"
       user                = "ubuntu"
-      host                = "localhost"
-      port                = 2223
+      host                = module.forseti-install-simple.forseti-client-vm-ip
       private_key         = tls_private_key.main.private_key_pem
+      bastion_host        = module.bastion.host
+      bastion_port        = module.bastion.port
+      bastion_private_key = module.bastion.private_key
+      bastion_user        = module.bastion.user
     }
   }
 
   depends_on = [
-    null_resource.ssh_client_iap_tunnel,
+    google_compute_firewall.forseti-client-ssh-iap
   ]
 }
