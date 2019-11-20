@@ -61,27 +61,31 @@ module "forseti-shared-vpc" {
   }
 }
 
-resource "null_resource" "ssh_iap_tunnel" {
+resource "null_resource" "ssh_server_iap_tunnel" {
   triggers = {
     always_run = uuid()
   }
-  provisioner "remote-exec" {
-    inline = [
-      "nohup gcloud compute start-iap-tunnel ${module.forseti-shared-vpc.forseti-server-vm-name} 22 --local-host-port=localhost:2222 &",
-      "nohup gcloud compute start-iap-tunnel ${module.forseti-shared-vpc.forseti-server-vm-name} 22 --local-host-port=localhost:2223 &",
-    ]
 
-    connection {
-      type        = "ssh"
-      user        = module.bastion.user
-      host        = module.bastion.host
-      port        = module.bastion.port
-      private_key = module.bastion.private_key
-    }
+  provisioner "local-exec" {
+    command =  "nohup gcloud compute start-iap-tunnel ${module.forseti-shared-vpc.forseti-server-vm-name} 22 --local-host-port=localhost:2222 &",
   }
+
   depends_on = [
-    module.forseti-shared-vpc.forseti-client-vm-ip,
     module.forseti-shared-vpc.forseti-server-vm-ip
+  ]
+}
+
+resource "null_resource" "ssh_client_iap_tunnel" {
+  triggers = {
+    always_run = uuid()
+  }
+
+  provisioner "local-exec" {
+    command = "nohup gcloud compute start-iap-tunnel ${module.forseti-shared-vpc.forseti-client-vm-name} 22 --local-host-port=localhost:2223 &",
+  }
+
+  depends_on = [
+    module.forseti-shared-vpc.forseti-client-vm-ip
   ]
 }
 
@@ -99,15 +103,11 @@ resource "null_resource" "wait_for_server" {
       host                = "localhost"
       port                = 2222
       private_key         = tls_private_key.main.private_key_pem
-      bastion_host        = module.bastion.host
-      bastion_port        = module.bastion.port
-      bastion_private_key = module.bastion.private_key
-      bastion_user        = module.bastion.user
     }
   }
 
   depends_on = [
-    null_resource.ssh_iap_tunnel,
+    null_resource.ssh_server_iap_tunnel,
   ]
 }
 
@@ -125,14 +125,10 @@ resource "null_resource" "wait_for_client" {
       host                = "localhost"
       port                = 2223
       private_key         = tls_private_key.main.private_key_pem
-      bastion_host        = module.bastion.host
-      bastion_port        = module.bastion.port
-      bastion_private_key = module.bastion.private_key
-      bastion_user        = module.bastion.user
     }
   }
 
   depends_on = [
-    null_resource.ssh_iap_tunnel,
+    null_resource.ssh_client_iap_tunnel,
   ]
 }
