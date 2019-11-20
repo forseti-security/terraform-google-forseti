@@ -68,8 +68,8 @@ resource "null_resource" "ssh_iap_tunnel" {
 
   provisioner "remote-exec" {
     inline = [
-      "nohup gcloud compute start-iap-tunnel ${module.forseti-install-simple.forseti-server-vm-name} 22 --local-host-port=localhost:22 &",
-      "nohup gcloud compute start-iap-tunnel ${module.forseti-install-simple.forseti-server-vm-name} 22 --local-host-port=localhost:23 &",
+      "nohup gcloud compute start-iap-tunnel ${module.forseti-install-simple.forseti-server-vm-name} 22 --local-host-port=localhost:2222 &",
+      "nohup gcloud compute start-iap-tunnel ${module.forseti-install-simple.forseti-server-vm-name} 22 --local-host-port=localhost:2223 &",
     ]
 
     connection {
@@ -94,7 +94,7 @@ resource "null_resource" "wait_for_server" {
       type                = "ssh"
       user                = "ubuntu"
       host                = "localhost"
-      port                = 22
+      port                = 2222
       private_key         = tls_private_key.main.private_key_pem
       bastion_host        = module.bastion.host
       bastion_port        = module.bastion.port
@@ -120,7 +120,7 @@ resource "null_resource" "wait_for_client" {
       type                = "ssh"
       user                = "ubuntu"
       host                = "localhost"
-      port                = 23
+      port                = 2223
       private_key         = tls_private_key.main.private_key_pem
       bastion_host        = module.bastion.host
       bastion_port        = module.bastion.port
