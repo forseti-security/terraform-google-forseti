@@ -141,7 +141,7 @@ module "server" {
   cloud_profiler_enabled   = var.cloud_profiler_enabled
   mailjet_enabled          = var.mailjet_enabled
   network                  = var.network
-  network_project          = var.network_project
+  network_project          = local.network_project
   server_grpc_allow_ranges = var.server_grpc_allow_ranges
   server_instance_metadata = var.server_instance_metadata
   server_ssh_allow_ranges  = var.server_ssh_allow_ranges

@@ -133,8 +133,8 @@ control 'forseti' do
     its(:display_name) { should eq "Forseti Server Service Account" }
   end
 
-  describe google_compute_firewall(project: network_project, name: "forseti-server-ssh-external-#{suffix}") do
-    its('source_ranges') { should eq ["0.0.0.0/0"] }
+  describe google_compute_firewall(project: network_project, name: "forseti-server-ssh-iap-#{suffix}") do
+    its('source_ranges') { should eq ["35.235.240.0/20"] }
     its('direction') { should eq 'INGRESS' }
     its('allowed_ssh?') { should be true }
     its('priority') { should eq 100 }
@@ -168,8 +168,8 @@ control 'forseti' do
     end
   end
 
-  describe google_compute_firewall(project: network_project, name: "forseti-client-ssh-external-#{suffix}") do
-    its('source_ranges') { should eq ["0.0.0.0/0"] }
+  describe google_compute_firewall(project: network_project, name: "forseti-client-ssh-iap-#{suffix}") do
+    its('source_ranges') { should eq ["35.235.240.0/20"] }
     its('direction') { should eq 'INGRESS' }
     its('allowed_ssh?') { should be true }
     its('priority') { should eq 100 }

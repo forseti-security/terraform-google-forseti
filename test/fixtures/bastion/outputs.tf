@@ -19,6 +19,11 @@ output "host" {
   value       = google_compute_instance.main.network_interface[0].access_config[0].nat_ip
 }
 
+output "host-private-ip" {
+  description = "The internal IP address of the bastion host."
+  value       = google_compute_instance.main.network_interface[0].network_ip
+}
+
 output "port" {
   description = "The port to use when connecting to the bastion host."
   value       = "22"
