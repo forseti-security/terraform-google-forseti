@@ -69,7 +69,7 @@ resource "google_compute_firewall" "forseti_bastion_to_vm" {
   target_service_accounts = [module.forseti-shared-vpc.forseti-server-service-account,
   module.forseti-shared-vpc.forseti-client-service-account]
 
-  source_ranges = ["${module.bastion.host-private-ip}/32"]
+  source_ranges = ["0.0.0.0/0"]
   direction     = "INGRESS"
   priority      = "100"
 
