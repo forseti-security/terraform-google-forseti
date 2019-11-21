@@ -186,6 +186,7 @@ inventory:
         #    - dns.googleapis.com/Policy
         #    - iam.googleapis.com/Role
         #    - iam.googleapis.com/ServiceAccount
+        #    - iam.googleapis.com/ServiceAccountKey
         #    - k8s.io/Namespace
         #    - k8s.io/Node
         #    - k8s.io/Pod
