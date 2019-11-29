@@ -752,6 +752,12 @@ variable "network_project" {
   default     = ""
 }
 
+variable "create_firewall_rules" {
+  description = "Create client firewall rules"
+  default     = true
+}
+
+
 #----------------#
 # Forseti client #
 #----------------#
