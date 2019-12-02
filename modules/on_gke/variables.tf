@@ -754,6 +754,7 @@ variable "network_project" {
 
 variable "create_firewall_rules" {
   description = "Create client firewall rules"
+  type        = bool
   default     = true
 }
 

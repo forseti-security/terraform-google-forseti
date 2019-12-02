@@ -109,6 +109,7 @@ variable "topic" {
 
 variable "create_firewall_rules" {
   description = "Create enforcer firewall rules"
-  default     = "true"
+  type        = bool
+  default     = true
 }
 
