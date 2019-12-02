@@ -218,7 +218,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | container\_disable\_polling | Whether to disable polling for Container API | bool | `"false"` | no |
 | container\_max\_calls | Maximum calls that can be made to Container API | string | `"9"` | no |
 | container\_period | The period of max calls for the Container API (in seconds) | string | `"1.0"` | no |
-| create\_firewall\_rules | Create client firewall rules | string | `"true"` | no |
+| manage\_firewall\_rules | Create client firewall rules | string | `"true"` | no |
 | crm\_disable\_polling | Whether to disable polling for CRM API | bool | `"false"` | no |
 | crm\_max\_calls | Maximum calls that can be made to CRN API | string | `"4"` | no |
 | crm\_period | The period of max calls for the CRM  API (in seconds) | string | `"1.2"` | no |

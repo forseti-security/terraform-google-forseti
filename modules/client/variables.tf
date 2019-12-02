@@ -107,7 +107,7 @@ variable "services" {
   default     = []
 }
 
-variable "create_firewall_rules" {
+variable "manage_firewall_rules" {
   description = "Create client firewall rules"
   default     = "true"
 }

@@ -107,7 +107,7 @@ variable "topic" {
   description = "The pubsub topic receiving exported logs."
 }
 
-variable "create_firewall_rules" {
+variable "manage_firewall_rules" {
   description = "Create enforcer firewall rules"
   type        = bool
   default     = true

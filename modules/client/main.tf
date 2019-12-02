@@ -135,7 +135,7 @@ resource "google_compute_instance" "forseti-client" {
 # Forseti firewall rules #
 #------------------------#
 resource "google_compute_firewall" "forseti-client-deny-all" {
-  count                   = var.create_firewall_rules ? 1 : 0
+  count                   = var.manage_firewall_rules ? 1 : 0
   name                    = "forseti-client-deny-all-${var.suffix}"
   project                 = local.network_project
   network                 = var.network
@@ -159,7 +159,7 @@ resource "google_compute_firewall" "forseti-client-deny-all" {
 }
 
 resource "google_compute_firewall" "forseti-client-ssh-external" {
-  count                   = var.create_firewall_rules && ! var.client_private ? 1 : 0
+  count                   = var.manage_firewall_rules && ! var.client_private ? 1 : 0
   name                    = "forseti-client-ssh-external-${var.suffix}"
   project                 = local.network_project
   network                 = var.network
@@ -176,7 +176,7 @@ resource "google_compute_firewall" "forseti-client-ssh-external" {
 }
 
 resource "google_compute_firewall" "forseti-client-ssh-iap" {
-  count                   = var.create_firewall_rules && var.client_private ? 1 : 0
+  count                   = var.manage_firewall_rules && var.client_private ? 1 : 0
   name                    = "forseti-client-ssh-iap-${var.suffix}"
   project                 = local.network_project
   network                 = var.network

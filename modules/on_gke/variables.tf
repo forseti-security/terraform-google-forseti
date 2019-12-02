@@ -752,7 +752,7 @@ variable "network_project" {
   default     = ""
 }
 
-variable "create_firewall_rules" {
+variable "manage_firewall_rules" {
   description = "Create client firewall rules"
   type        = bool
   default     = true

@@ -182,7 +182,7 @@ resource "google_compute_instance" "main" {
 # Enforcer Firewall Rules #
 #-------------------------#
 resource "google_compute_firewall" "rt-enforcer-deny-all" {
-  count                   = var.create_firewall_rules ? 1 : 0
+  count                   = var.manage_firewall_rules ? 1 : 0
   name                    = "forseti-rt-enforcer-deny-all-${local.random_hash}"
   project                 = local.network_project
   network                 = var.network
@@ -204,7 +204,7 @@ resource "google_compute_firewall" "rt-enforcer-deny-all" {
 }
 
 resource "google_compute_firewall" "rt-enforcer-ssh-external" {
-  count                   = var.create_firewall_rules ? 1 : 0
+  count                   = var.manage_firewall_rules ? 1 : 0
   name                    = "forseti-rt-enforcer-ssh-external-${local.random_hash}"
   project                 = local.network_project
   network                 = var.network

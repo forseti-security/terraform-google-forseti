@@ -115,7 +115,7 @@ data "template_file" "forseti_server_env" {
 # Forseti Firewall Rules #
 #------------------------#
 resource "google_compute_firewall" "forseti-server-deny-all" {
-  count                   = var.create_firewall_rules ? 1 : 0
+  count                   = var.manage_firewall_rules ? 1 : 0
   name                    = "forseti-server-deny-all-${local.random_hash}"
   project                 = local.network_project
   network                 = var.network
@@ -139,7 +139,7 @@ resource "google_compute_firewall" "forseti-server-deny-all" {
 }
 
 resource "google_compute_firewall" "forseti-server-ssh-external" {
-  count                   = var.create_firewall_rules && ! var.server_private ? 1 : 0
+  count                   = var.manage_firewall_rules && ! var.server_private ? 1 : 0
   name                    = "forseti-server-ssh-external-${local.random_hash}"
   project                 = local.network_project
   network                 = var.network
@@ -156,7 +156,7 @@ resource "google_compute_firewall" "forseti-server-ssh-external" {
 }
 
 resource "google_compute_firewall" "forseti-server-ssh-iap" {
-  count                   = var.create_firewall_rules && var.server_private ? 1 : 0
+  count                   = var.manage_firewall_rules && var.server_private ? 1 : 0
   name                    = "forseti-server-ssh-iap-${local.random_hash}"
   project                 = local.network_project
   network                 = var.network
@@ -173,7 +173,7 @@ resource "google_compute_firewall" "forseti-server-ssh-iap" {
 }
 
 resource "google_compute_firewall" "forseti-server-allow-grpc" {
-  count                   = var.create_firewall_rules ? 1 : 0
+  count                   = var.manage_firewall_rules ? 1 : 0
   name                    = "forseti-server-allow-grpc-${local.random_hash}"
   project                 = local.network_project
   network                 = var.network

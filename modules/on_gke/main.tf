@@ -462,7 +462,7 @@ module "client" {
   client_tags              = var.client_tags
   client_access_config     = var.client_access_config
   client_private           = var.client_private
-  create_firewall_rules    = var.create_firewall_rules
+  manage_firewall_rules    = var.manage_firewall_rules
   client_iam_module        = module.client_iam
   client_gcs_module        = module.client_gcs
   client_config_module     = module.client_config
