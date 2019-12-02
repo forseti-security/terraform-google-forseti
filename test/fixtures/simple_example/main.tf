@@ -54,10 +54,30 @@ module "forseti-install-simple" {
   region             = var.region
   network            = var.network
   subnetwork         = var.subnetwork
+  forseti_version    = var.forseti_version
 
   instance_metadata = {
     sshKeys = "ubuntu:${tls_private_key.main.public_key_openssh}"
   }
+}
+
+resource "google_compute_firewall" "forseti_bastion_to_vm" {
+
+  name    = "forseti-bastion-to-vm-ssh-${module.forseti-install-simple.suffix}"
+  project = var.project_id
+  network = var.network
+  target_service_accounts = [module.forseti-install-simple.forseti-server-service-account,
+  module.forseti-install-simple.forseti-client-service-account]
+
+  source_ranges = ["${module.bastion.host-private-ip}/32"]
+  direction     = "INGRESS"
+  priority      = "100"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+
 }
 
 resource "null_resource" "wait_for_server" {
@@ -79,6 +99,9 @@ resource "null_resource" "wait_for_server" {
       bastion_user        = module.bastion.user
     }
   }
+  depends_on = [
+    google_compute_firewall.forseti_bastion_to_vm
+  ]
 }
 
 resource "null_resource" "wait_for_client" {
@@ -100,4 +123,8 @@ resource "null_resource" "wait_for_client" {
       bastion_user        = module.bastion.user
     }
   }
+
+  depends_on = [
+    google_compute_firewall.forseti_bastion_to_vm
+  ]
 }

@@ -14,33 +14,13 @@
  * limitations under the License.
  */
 
-variable "network_project" {
-  description = "ID of the project that will have shared VPC"
-}
-
-variable "project_id" {
-  description = "ID of the project that will have forseti server"
-}
-
-variable "org_id" {
-  description = "Organization ID"
-}
-
 variable "domain" {
   description = "Organization domain"
 }
 
-variable "network" {
-  description = "Name of the shared VPC"
-}
-
-variable "subnetwork" {
-  description = "Name of the subnetwork where forseti will be deployed"
-}
-
-variable "region" {
-  description = "Region where forseti subnetwork will be deployed"
-  default     = "us-central1"
+variable "forseti_version" {
+  description = "The version of Forseti to install"
+  default     = "v2.24.0"
 }
 
 variable "gsuite_admin_email" {
@@ -53,3 +33,27 @@ variable "instance_metadata" {
   default     = {}
 }
 
+variable "network" {
+  description = "Name of the shared VPC"
+}
+
+variable "network_project" {
+  description = "ID of the project that will have shared VPC"
+}
+
+variable "org_id" {
+  description = "Organization ID"
+}
+
+variable "project_id" {
+  description = "ID of the project that will have forseti server"
+}
+
+variable "region" {
+  description = "Region where forseti subnetwork will be deployed"
+  default     = "us-central1"
+}
+
+variable "subnetwork" {
+  description = "Name of the subnetwork where forseti will be deployed"
+}

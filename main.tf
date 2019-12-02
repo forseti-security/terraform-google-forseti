@@ -141,7 +141,7 @@ module "server" {
   cloud_profiler_enabled   = var.cloud_profiler_enabled
   mailjet_enabled          = var.mailjet_enabled
   network                  = var.network
-  network_project          = var.network_project
+  network_project          = local.network_project
   server_grpc_allow_ranges = var.server_grpc_allow_ranges
   server_instance_metadata = var.server_instance_metadata
   server_ssh_allow_ranges  = var.server_ssh_allow_ranges
@@ -150,6 +150,7 @@ module "server" {
 
   policy_library_home                    = var.policy_library_home
   policy_library_repository_url          = var.policy_library_repository_url
+  policy_library_repository_branch       = var.policy_library_repository_branch
   policy_library_sync_enabled            = var.policy_library_sync_enabled
   policy_library_sync_gcs_directory_name = var.policy_library_sync_gcs_directory_name
   policy_library_sync_git_sync_tag       = var.policy_library_sync_git_sync_tag

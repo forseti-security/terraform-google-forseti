@@ -14,6 +14,27 @@
  * limitations under the License.
  */
 
+provider "google" {
+  version = "~> 2.11.0"
+  project = var.project_id
+}
+
+provider "local" {
+  version = "~> 1.3"
+}
+
+provider "null" {
+  version = "~> 2.0"
+}
+
+provider "template" {
+  version = "~> 2.0"
+}
+
+provider "random" {
+  version = "~> 2.0"
+}
+
 module "forseti-install-simple" {
   source  = "terraform-google-modules/forseti/google"
   version = "~> 5.0.0"
@@ -27,6 +48,9 @@ module "forseti-install-simple" {
   cloudsql_region = var.region
   network         = var.network
   subnetwork      = var.subnetwork
+
+  storage_bucket_location = var.region
+  bucket_cai_location     = var.region
 
   gsuite_admin_email      = var.gsuite_admin_email
   sendgrid_api_key        = var.sendgrid_api_key

@@ -7,7 +7,7 @@ A Google Cloud Shell Walkthrough has been setup to make it easy for users who ar
 
 If you are familiar with Terraform and would like to run Terraform from a different machine, you can skip this walkthrough and move onto the [How to Deploy](#how-to-deploy) section.
 
-[![Open in Google Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fforseti-security%2Fterraform-google-forseti.git&cloudshell_git_branch=module-release-5.0.0&cloudshell_working_dir=examples/install_simple&cloudshell_image=gcr.io%2Fgraphite-cloud-shell-images%2Fterraform%3Alatest&cloudshell_tutorial=.%2Ftutorial.md)
+[![Open in Google Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fforseti-security%2Fterraform-google-forseti.git&cloudshell_git_branch=modulerelease510&cloudshell_working_dir=examples/install_simple&cloudshell_image=gcr.io%2Fgraphite-cloud-shell-images%2Fterraform%3Alatest&cloudshell_tutorial=.%2Ftutorial.md)
 
 ## How to Deploy
 In order to run this module you will need to be authenticated as a user that has access to the project and can create/authorize service accounts at both the organization and project levels. To login to GCP from a shell:
@@ -240,7 +240,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | forseti\_home | Forseti installation directory | string | `"$USER_HOME/forseti-security"` | no |
 | forseti\_repo\_url | Git repo for the Forseti installation | string | `"https://github.com/forseti-security/forseti-security"` | no |
 | forseti\_run\_frequency | Schedule of running the Forseti scans | string | `"null"` | no |
-| forseti\_version | The version of Forseti to install | string | `"v2.23.0"` | no |
+| forseti\_version | The version of Forseti to install | string | `"v2.24.0"` | no |
 | forwarding\_rule\_enabled | Forwarding rule scanner enabled. | bool | `"false"` | no |
 | forwarding\_rule\_violations\_should\_notify | Notify for forwarding rule violations | bool | `"true"` | no |
 | group\_enabled | Group scanner enabled. | bool | `"true"` | no |
@@ -286,6 +286,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | network\_project | The project containing the VPC and subnetwork where the Forseti client and server will be created | string | `""` | no |
 | org\_id | GCP Organization ID that Forseti will have purview over | string | `""` | no |
 | policy\_library\_home | The local policy library directory. | string | `"$USER_HOME/policy-library"` | no |
+| policy\_library\_repository\_branch | The specific git branch containing the policies. | string | `"master"` | no |
 | policy\_library\_repository\_url | The git repository containing the policy-library. | string | `""` | no |
 | policy\_library\_sync\_enabled | Sync config validator policy library from private repository. | bool | `"false"` | no |
 | policy\_library\_sync\_gcs\_directory\_name | The directory name of the GCS folder used for the policy library sync config. | string | `"policy_library_sync"` | no |
@@ -329,6 +330,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 
 | Name | Description |
 |------|-------------|
+| forseti-cai-storage-bucket | Forseti CAI storage bucket |
 | forseti-client-service-account | Forseti Client service account |
 | forseti-client-storage-bucket | Forseti Client storage bucket |
 | forseti-client-vm-ip | Forseti Client VM private IP address |

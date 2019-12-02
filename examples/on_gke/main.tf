@@ -119,6 +119,9 @@ module "forseti" {
   client_region   = var.region
   cloudsql_region = var.region
 
+  storage_bucket_location = var.region
+  bucket_cai_location     = var.region
+
   network_policy = data.google_container_cluster.forseti_cluster.network_policy.0.enabled
 
   gsuite_admin_email      = var.gsuite_admin_email

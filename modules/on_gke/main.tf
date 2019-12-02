@@ -80,6 +80,8 @@ locals {
 
   git_sync_private_ssh_key_from_file = var.git_sync_private_ssh_key_file != null ? data.local_file.git_sync_private_ssh_key_file[0].content : ""
   git_sync_private_ssh_key           = local.create_policy_library_key ? tls_private_key.policy_library_sync_ssh[0].private_key_pem : local.git_sync_private_ssh_key_from_file
+
+  git_sync_public_ssh_key = length(tls_private_key.policy_library_sync_ssh) == 1 ? tls_private_key.policy_library_sync_ssh[0].public_key_openssh : ""
 }
 
 #-------------------#
@@ -541,6 +543,7 @@ module "server_rules" {
 #-----------------------#
 module "server_config" {
   source                                              = "../server_config"
+  rules_path                                          = "gs://${module.server_gcs.forseti-server-storage-bucket}/rules"
   composite_root_resources                            = var.composite_root_resources
   server_gcs_module                                   = module.server_gcs
   forseti_email_recipient                             = var.forseti_email_recipient

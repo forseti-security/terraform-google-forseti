@@ -28,7 +28,7 @@ variable "gsuite_admin_email" {
 
 variable "forseti_version" {
   description = "The version of Forseti to install"
-  default     = "v2.23.0"
+  default     = "v2.24.0"
 }
 
 variable "forseti_repo_url" {
@@ -508,6 +508,11 @@ variable "manage_rules_enabled" {
 variable "policy_library_home" {
   description = "The local policy library directory."
   default     = "$USER_HOME/policy-library"
+}
+
+variable "policy_library_repository_branch" {
+  description = "The specific git branch containing the policies."
+  default     = "master"
 }
 
 variable "policy_library_repository_url" {

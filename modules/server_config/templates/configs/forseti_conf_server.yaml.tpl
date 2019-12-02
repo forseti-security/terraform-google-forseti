@@ -186,6 +186,7 @@ inventory:
         #    - dns.googleapis.com/Policy
         #    - iam.googleapis.com/Role
         #    - iam.googleapis.com/ServiceAccount
+        #    - iam.googleapis.com/ServiceAccountKey
         #    - k8s.io/Namespace
         #    - k8s.io/Node
         #    - k8s.io/Pod
@@ -219,7 +220,7 @@ scanner:
     # gs://bucket-name/path/for/rules_path
     # if no rules_path is specified, rules are
     # searched in /path/to/forseti_security/rules/
-    rules_path: /home/ubuntu/forseti-security/rules
+    rules_path: ${RULES_PATH}
 
     # Enable the scanners as default to true when integrated for Forseti 2.0.
 
