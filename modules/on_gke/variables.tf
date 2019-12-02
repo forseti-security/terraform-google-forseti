@@ -758,7 +758,6 @@ variable "manage_firewall_rules" {
   default     = true
 }
 
-
 #----------------#
 # Forseti client #
 #----------------#
