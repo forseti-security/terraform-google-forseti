@@ -59,7 +59,6 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | container\_disable\_polling | Whether to disable polling for Container API | bool | `"false"` | no |
 | container\_max\_calls | Maximum calls that can be made to Container API | string | `"9"` | no |
 | container\_period | The period of max calls for the Container API (in seconds) | string | `"1.0"` | no |
-| manage\_firewall\_rules | Create client firewall rules | bool | `"true"` | no |
 | crm\_disable\_polling | Whether to disable polling for CRM API | bool | `"false"` | no |
 | crm\_max\_calls | Maximum calls that can be made to CRN API | string | `"4"` | no |
 | crm\_period | The period of max calls for the CRM  API (in seconds) | string | `"1.2"` | no |
@@ -136,6 +135,7 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | logging\_disable\_polling | Whether to disable polling for Logging API | bool | `"false"` | no |
 | logging\_max\_calls | Maximum calls that can be made to Logging API | string | `"9"` | no |
 | logging\_period | The period of max calls for the Logging API (in seconds) | string | `"1.0"` | no |
+| manage\_firewall\_rules | Create client firewall rules | bool | `"true"` | no |
 | manage\_rules\_enabled | A toggle to enable or disable the management of rules | bool | `"true"` | no |
 | network | The VPC where the Forseti client and server will be created | string | `"default"` | no |
 | network\_policy | Apply pod network policies | bool | `"false"` | no |
