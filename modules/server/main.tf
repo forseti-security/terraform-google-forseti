@@ -139,7 +139,7 @@ resource "google_compute_firewall" "forseti-server-deny-all" {
 }
 
 resource "google_compute_firewall" "forseti-server-ssh-external" {
-  count                   = var.create_firewall_rules && !var.server_private ? 1 : 0
+  count                   = var.create_firewall_rules && ! var.server_private ? 1 : 0
   name                    = "forseti-server-ssh-external-${local.random_hash}"
   project                 = local.network_project
   network                 = var.network

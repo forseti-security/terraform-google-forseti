@@ -159,7 +159,7 @@ resource "google_compute_firewall" "forseti-client-deny-all" {
 }
 
 resource "google_compute_firewall" "forseti-client-ssh-external" {
-  count                   = var.create_firewall_rules && !var.client_private ? 1 : 0
+  count                   = var.create_firewall_rules && ! var.client_private ? 1 : 0
   name                    = "forseti-client-ssh-external-${var.suffix}"
   project                 = local.network_project
   network                 = var.network
