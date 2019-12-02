@@ -143,6 +143,7 @@ module "server" {
   mailjet_enabled          = var.mailjet_enabled
   network                  = var.network
   network_project          = local.network_project
+  create_firewall_rules    = var.create_firewall_rules
   server_grpc_allow_ranges = var.server_grpc_allow_ranges
   server_instance_metadata = var.server_instance_metadata
   server_ssh_allow_ranges  = var.server_ssh_allow_ranges
