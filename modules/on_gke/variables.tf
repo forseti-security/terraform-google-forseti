@@ -752,6 +752,12 @@ variable "network_project" {
   default     = ""
 }
 
+variable "enable_service_networking" {
+  description = "Create a global service networking peering connection at the VPC level"
+  type        = bool
+  default     = true
+}
+
 variable "manage_firewall_rules" {
   description = "Create client firewall rules"
   type        = bool
