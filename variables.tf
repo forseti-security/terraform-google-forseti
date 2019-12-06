@@ -855,6 +855,16 @@ variable "cloudsql_net_write_timeout" {
   default     = "240"
 }
 
+variable "cloudsql_db_user" {
+  description = "CloudSQL database user"
+  default     = "forseti_security_user"
+}
+
+variable "cloudsql_db_password" {
+  description = "CloudSQL database password"
+  default     = ""
+}
+
 #----------------#
 # Forseti bucket #
 #----------------#
