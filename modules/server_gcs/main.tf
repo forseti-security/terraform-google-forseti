@@ -28,20 +28,22 @@ locals {
 #------------------------#
 
 resource "google_storage_bucket" "server_config" {
-  name          = local.server_bucket_name
-  location      = var.storage_bucket_location
-  project       = var.project_id
-  force_destroy = true
+  name               = local.server_bucket_name
+  location           = var.storage_bucket_location
+  project            = var.project_id
+  force_destroy      = true
+  bucket_policy_only = true
 
   depends_on = [null_resource.services-dependency]
 }
 
 resource "google_storage_bucket" "cai_export" {
-  count         = var.enable_cai_bucket ? 1 : 0
-  name          = local.storage_cai_bucket_name
-  location      = var.bucket_cai_location
-  project       = var.project_id
-  force_destroy = true
+  count              = var.enable_cai_bucket ? 1 : 0
+  name               = local.storage_cai_bucket_name
+  location           = var.bucket_cai_location
+  project            = var.project_id
+  force_destroy      = true
+  bucket_policy_only = true
 
   lifecycle_rule {
     action {
