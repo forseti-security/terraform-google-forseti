@@ -44,6 +44,17 @@ output "forseti-cloudsql-connection-name" {
   value       = module.cloudsql.forseti-cloudsql-connection-name
 }
 
+output "forseti-cloudsql-password" {
+  description = "CloudSQL password"
+  value       = module.cloudsql.forseti-cloudsql-password
+  sensitive   = true
+}
+
+output "forseti-cloudsql-user" {
+  description = "CloudSQL user"
+  value       = module.cloudsql.forseti-cloudsql-user
+}
+
 output "forseti-server-git-public-key-openssh" {
   description = "The public OpenSSH key generated to allow the Forseti Server to clone the policy library repository."
   value       = module.server.forseti-server-git-public-key-openssh

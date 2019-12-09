@@ -47,4 +47,5 @@ output "forseti-cloudsql-user" {
 output "forseti-cloudsql-password" {
   description = "CloudSQL password"
   value       = local.cloudsql_password
+  sensitive   = true
 }
