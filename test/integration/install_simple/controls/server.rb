@@ -15,6 +15,7 @@
 require "yaml"
 
 forseti_version = "2.24.0"
+suffix = attribute("suffix")
 
 control "server" do
   title "Forseti server instance resources"
@@ -486,5 +487,10 @@ control "server" do
         YAML.load(subject.content)
       end
     end
+  end
+
+  describe command("gcloud sql instances describe forseti-server-db-#{suffix}") do
+    its("exit_status") { should eq 0 }
+    its("stdout") { should match("- name: net_write_timeout\n    value: '240'") }
   end
 end
