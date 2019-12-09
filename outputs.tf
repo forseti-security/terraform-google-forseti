@@ -52,7 +52,7 @@ output "forseti-cloudsql-password" {
 
 output "forseti-cloudsql-user" {
   description = "CloudSQL user"
-  value = module.cloudsql.forseti-cloudsql-user
+  value       = module.cloudsql.forseti-cloudsql-user
 }
 
 output "forseti-server-git-public-key-openssh" {
