@@ -54,6 +54,7 @@ module "forseti-install-simple" {
   region             = var.region
   network            = var.network
   subnetwork         = var.subnetwork
+  forseti_version    = var.forseti_version
   network_project    = var.network_project
 
   instance_metadata = {

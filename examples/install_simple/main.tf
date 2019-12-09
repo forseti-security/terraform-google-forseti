@@ -56,6 +56,7 @@ module "forseti-install-simple" {
   sendgrid_api_key        = var.sendgrid_api_key
   forseti_email_sender    = var.forseti_email_sender
   forseti_email_recipient = var.forseti_email_recipient
+  forseti_version          = var.forseti_version
 
   client_instance_metadata = var.instance_metadata
   server_instance_metadata = var.instance_metadata
