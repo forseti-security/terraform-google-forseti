@@ -489,7 +489,7 @@ control "server" do
     end
   end
 
-  describe command("gcloud sql instances describe forseti-server-db-#{suffix}") do
+  describe command("sudo gcloud sql instances describe forseti-server-db-#{suffix}") do
     its("exit_status") { should eq 0 }
     its("stdout") { should match("- name: net_write_timeout\n    value: '240'") }
   end
