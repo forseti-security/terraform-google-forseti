@@ -108,6 +108,8 @@ data "template_file" "forseti_server_env" {
     cloudsql_db_port       = var.cloudsql_module.forseti-clodusql-db-port
     cloudsql_region        = var.cloudsql_module.forseti-cloudsql-region
     cloudsql_instance_name = var.cloudsql_module.forseti-cloudsql-instance-name
+    cloudsql_db_user       = var.cloudsql_module.forseti-cloudsql-user
+    cloudsql_db_password   = var.cloudsql_module.forseti-cloudsql-password
   }
 }
 
