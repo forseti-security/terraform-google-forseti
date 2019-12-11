@@ -116,7 +116,7 @@ data "local_file" "git_sync_private_ssh_key_file" {
 #------------------------------#
 
 data "tls_public_key" "git_sync_public_ssh_key" {
-  count           = var.config_validator_enabled && var.policy_library_sync_enabled ? 1 : 0
+  count           = local.create_policy_library_key ? 1 : 0
   private_key_pem = local.git_sync_private_ssh_key
 }
 
