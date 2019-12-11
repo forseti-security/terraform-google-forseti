@@ -80,7 +80,7 @@ variable "gsuite_admin_email" {
 
 variable "forseti_version" {
   description = "The version of Forseti to install"
-  default     = "v2.24.0"
+  default     = "v2.25.0"
 }
 
 variable "forseti_repo_url" {
@@ -906,7 +906,7 @@ variable "k8s_forseti_orchestrator_image" {
 
 variable "k8s_forseti_orchestrator_image_tag" {
   description = "The tag for the container image for the Forseti orchestrator"
-  default     = "v2.24.0"
+  default     = "v2.25.0"
 }
 
 variable "k8s_forseti_server_image" {
@@ -916,7 +916,7 @@ variable "k8s_forseti_server_image" {
 
 variable "k8s_forseti_server_image_tag" {
   description = "The tag for the container image for the Forseti server"
-  default     = "v2.24.0"
+  default     = "v2.25.0"
 }
 
 variable "k8s_forseti_server_ingress_cidr" {
