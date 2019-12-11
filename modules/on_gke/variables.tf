@@ -876,7 +876,7 @@ variable "git_sync_wait" {
 
 variable "helm_chart_version" {
   description = "The version of the Helm chart to use"
-  default     = "2.1.0"
+  default     = "2.2.0"
 }
 
 variable "helm_repository_url" {
