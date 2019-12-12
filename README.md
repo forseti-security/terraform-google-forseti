@@ -201,7 +201,9 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | cloudsql\_acl\_enabled | Cloud SQL scanner enabled. | bool | `"true"` | no |
 | cloudsql\_acl\_violations\_should\_notify | Notify for CloudSQL ACL violations | bool | `"true"` | no |
 | cloudsql\_db\_name | CloudSQL database name | string | `"forseti_security"` | no |
+| cloudsql\_db\_password | CloudSQL database password | string | `""` | no |
 | cloudsql\_db\_port | CloudSQL database port | string | `"3306"` | no |
+| cloudsql\_db\_user | CloudSQL database user | string | `"forseti_security_user"` | no |
 | cloudsql\_disk\_size | The size of data disk, in GB. Size of a running instance cannot be reduced but can be increased. | string | `"25"` | no |
 | cloudsql\_net\_write\_timeout | See MySQL documentation: https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_net_write_timeout | string | `"240"` | no |
 | cloudsql\_private | Whether to enable private network and not to create public IP for CloudSQL Instance | bool | `"false"` | no |
@@ -225,6 +227,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | cscc\_violations\_enabled | Notify for CSCC violations | bool | `"false"` | no |
 | domain | The domain associated with the GCP Organization ID | string | n/a | yes |
 | enable\_cai\_bucket | Create a GCS bucket for CAI exports | bool | `"true"` | no |
+| enable\_service\_networking | Create a global service networking peering connection at the VPC level | bool | `"true"` | no |
 | enable\_write | Enabling/Disabling write actions | bool | `"false"` | no |
 | enabled\_apis\_enabled | Enabled APIs scanner enabled. | bool | `"false"` | no |
 | enabled\_apis\_violations\_should\_notify | Notify for enabled APIs violations | bool | `"true"` | no |
