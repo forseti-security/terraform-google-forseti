@@ -63,6 +63,11 @@ variable "forseti_email_recipient" {
   default     = ""
 }
 
+variable "forseti_version" {
+  description = "The version of Forseti to install"
+  default     = "v2.24.0"
+}
+
 variable "region" {
   description = "The region where the Forseti GCE Instance VMs and CloudSQL Instances will be deployed"
 }
