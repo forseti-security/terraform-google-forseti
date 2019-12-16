@@ -241,12 +241,12 @@ resource "helm_release" "forseti-security" {
 
   set {
     name  = "database.username"
-    value = module.cloudsql.forseti-cloudsql-user
+    value = "${base64encode(module.cloudsql.forseti-cloudsql-user)}"
   }
 
   set_sensitive {
     name  = "database.password"
-    value = module.cloudsql.forseti-cloudsql-password
+    value = "${base64encode(module.cloudsql.forseti-cloudsql-password)}"
   }
 
   set {
