@@ -24,7 +24,7 @@ variable "gsuite_admin_email" {
 
 variable "forseti_version" {
   description = "The version of Forseti to install"
-  default     = "master"
+  default     = "v2.25.0"
 }
 
 variable "instance_metadata" {
