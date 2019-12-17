@@ -154,6 +154,10 @@ echo "Forseti Startup - Enabling and starting Forseti service."
 systemctl enable --now forseti
 echo "Forseti Startup - Success! The Forseti API server has been enabled and started."
 
+# Bump up soft and hard ulimit for ubuntu
+echo "ubuntu soft nofile 32768" | sudo tee -a /etc/security/limits.conf
+echo "ubuntu hard nofile 32768" | sudo tee -a /etc/security/limits.conf
+
 # Create a Forseti env script
 FORSETI_ENV="$(cat << EOF
 #!/bin/bash
