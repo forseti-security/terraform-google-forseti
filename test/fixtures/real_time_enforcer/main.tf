@@ -38,7 +38,7 @@ module "bastion" {
   source = "../bastion"
 
   network    = var.network
-  project_id = "${var.project_id}"
+  project_id = var.project_id
   subnetwork = var.subnetwork
   zone       = data.google_compute_zones.main.names[0]
 }

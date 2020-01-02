@@ -39,7 +39,7 @@ provider "kubernetes" {
   load_config_file       = false
   host                   = "https://${module.gke.endpoint}"
   token                  = data.google_client_config.default.access_token
-  cluster_ca_certificate = "${base64decode(module.gke.ca_certificate)}"
+  cluster_ca_certificate = base64decode(module.gke.ca_certificate)
 }
 
 //*****************************************
@@ -53,8 +53,8 @@ provider "helm" {
   kubernetes {
     load_config_file       = false
     host                   = "https://${module.gke.endpoint}"
-    token                  = "${data.google_client_config.default.access_token}"
-    cluster_ca_certificate = "${base64decode(module.gke.ca_certificate)}"
+    token                  = data.google_client_config.default.access_token
+    cluster_ca_certificate = base64decode(module.gke.ca_certificate)
   }
   debug                           = true
   automount_service_account_token = true
@@ -81,7 +81,7 @@ module "vpc" {
   }, ]
 
   secondary_ranges = {
-    "${var.subnetwork}" = [
+    var.subnetwork = [
       {
         range_name    = var.gke_pod_ip_range_name
         ip_cidr_range = var.gke_pod_ip_range
