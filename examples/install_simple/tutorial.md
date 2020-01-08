@@ -32,7 +32,7 @@ gcloud config set project {{project_id}}
 Run the setup script by providing the Organization ID:
 
 ```bash
-. ../../helpers/setup.sh -p {{project_id}} -o ORG_ID
+../../helpers/setup.sh -p {{project_id}} -o ORG_ID
 ```
 
 ## Forseti Terraform module configuration
