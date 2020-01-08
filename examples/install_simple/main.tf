@@ -36,7 +36,7 @@ provider "random" {
 }
 
 module "forseti-install-simple" {
-  source  = "../../"
+  source = "../../"
 
   project_id = var.project_id
   org_id     = var.org_id
