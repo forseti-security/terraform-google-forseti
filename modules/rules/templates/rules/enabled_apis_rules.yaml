@@ -21,7 +21,7 @@
 #         resource_ids:
 #           - '*'
 #     services:
-#       - 'bigquery-json.googleapis.com'
+#       - 'bigquery.googleapis.com'
 #       - 'clouddebugger.googleapis.com'
 #       - 'cloudtrace.googleapis.com'
 #       - 'compute.googleapis.com'
