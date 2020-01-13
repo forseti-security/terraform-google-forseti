@@ -322,7 +322,9 @@ Version 4.0.0 is a backwards-incompatible release. Please see the [upgrade instr
 [v4.3.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.2.1...v4.3.0
 [v5.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.3.0...v5.0.0
 [v5.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v5.0.0...v5.1.0
+[v5.1.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v5.1.0...v5.1.1
 
+[#445]: https://github.com/forseti-security/terraform-google-forseti/pull/445
 [#386]: https://github.com/forseti-security/terraform-google-forseti/pull/386
 [#385]: https://github.com/forseti-security/terraform-google-forseti/pull/385
 [#383]: https://github.com/forseti-security/terraform-google-forseti/pull/383
