@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Extending the adopted spec, each change should have a link to its corresponding pull request appended.
 
+## [5.1.1] - 2020-01-13
+
+### Fixed
+
+- Fix Bigquery API call. [#445]
+
 ## [5.1.0] - 2019-11-15
 
 ### Added
