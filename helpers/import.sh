@@ -150,7 +150,7 @@ printf "\nStarting import of Forseti resources to Terraform\n\n"
 
 terraform import "module.$MODULE_LOCAL_NAME.google_project_service.main[0]" "$PROJECT_ID/admin.googleapis.com"
 terraform import "module.$MODULE_LOCAL_NAME.google_project_service.main[1]" "$PROJECT_ID/appengine.googleapis.com"
-terraform import "module.$MODULE_LOCAL_NAME.google_project_service.main[2]" "$PROJECT_ID/bigquery-json.googleapis.com"
+terraform import "module.$MODULE_LOCAL_NAME.google_project_service.main[2]" "$PROJECT_ID/bigquery.googleapis.com"
 terraform import "module.$MODULE_LOCAL_NAME.google_project_service.main[3]" "$PROJECT_ID/cloudbilling.googleapis.com"
 terraform import "module.$MODULE_LOCAL_NAME.google_project_service.main[4]" "$PROJECT_ID/cloudresourcemanager.googleapis.com"
 terraform import "module.$MODULE_LOCAL_NAME.google_project_service.main[5]" "$PROJECT_ID/sql-component.googleapis.com"

@@ -20,7 +20,7 @@ gcloud auth login
 The repository has several helper scripts that can be used with the deployment process.
 
 ```bash
-git clone --branch module-release-5.0.0 --depth 1 https://github.com/forseti-security/terraform-google-forseti.git
+git clone --branch modulerelease511 --depth 1 https://github.com/forseti-security/terraform-google-forseti.git
 ```
 
 ### Install Terraform
@@ -62,7 +62,7 @@ Create a file named `main.tf` in an empty directory and copy the contents below 
 ```hcl
     module "forseti" {
       source  = "terraform-google-modules/forseti/google"
-      version = "~> 5.0.0"
+      version = "~> 5.1.1"
 
       gsuite_admin_email = "superadmin@yourdomain.com"
       domain             = "yourdomain.com"
