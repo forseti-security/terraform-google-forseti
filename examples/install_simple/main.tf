@@ -36,7 +36,8 @@ provider "random" {
 }
 
 module "forseti-install-simple" {
-  source = "../../"
+  source  = "terraform-google-modules/forseti/google"
+  version = "~> 5.1.1"
 
   project_id = var.project_id
   org_id     = var.org_id
