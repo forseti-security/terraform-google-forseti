@@ -81,7 +81,7 @@ module "vpc" {
   }, ]
 
   secondary_ranges = {
-    var.subnetwork = [
+    "${var.subnetwork}" = [
       {
         range_name    = var.gke_pod_ip_range_name
         ip_cidr_range = var.gke_pod_ip_range
