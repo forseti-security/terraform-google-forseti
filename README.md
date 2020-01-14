@@ -20,7 +20,7 @@ gcloud auth login
 The repository has several helper scripts that can be used with the deployment process.
 
 ```bash
-git clone --branch module-release-5.0.0 --depth 1 https://github.com/forseti-security/terraform-google-forseti.git
+git clone --branch modulerelease520 --depth 1 https://github.com/forseti-security/terraform-google-forseti.git
 ```
 
 ### Install Terraform
@@ -62,7 +62,7 @@ Create a file named `main.tf` in an empty directory and copy the contents below 
 ```hcl
     module "forseti" {
       source  = "terraform-google-modules/forseti/google"
-      version = "~> 5.0.0"
+      version = "~> 5.2.0"
 
       gsuite_admin_email = "superadmin@yourdomain.com"
       domain             = "yourdomain.com"
@@ -337,6 +337,8 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | forseti-client-vm-ip | Forseti Client VM private IP address |
 | forseti-client-vm-name | Forseti Client VM name |
 | forseti-cloudsql-connection-name | Forseti CloudSQL Connection String |
+| forseti-cloudsql-password | CloudSQL password |
+| forseti-cloudsql-user | CloudSQL user |
 | forseti-server-git-public-key-openssh | The public OpenSSH key generated to allow the Forseti Server to clone the policy library repository. |
 | forseti-server-service-account | Forseti Server service account |
 | forseti-server-storage-bucket | Forseti Server storage bucket |
