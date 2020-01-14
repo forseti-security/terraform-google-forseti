@@ -41,11 +41,11 @@ module "bastion" {
   project_id = var.project_id
   subnetwork = var.subnetwork
   zone       = data.google_compute_zones.main.names[0]
-  key_suffix = "_simple_example"
+  key_suffix = "_install_simple"
 }
 
 module "forseti-install-simple" {
-  source = "../../../examples/simple_example"
+  source = "../../../examples/install_simple"
 
   gsuite_admin_email = var.gsuite_admin_email
   project_id         = var.project_id
@@ -55,6 +55,7 @@ module "forseti-install-simple" {
   network            = var.network
   subnetwork         = var.subnetwork
   forseti_version    = var.forseti_version
+  network_project    = var.network_project
 
   instance_metadata = {
     sshKeys = "ubuntu:${tls_private_key.main.public_key_openssh}"

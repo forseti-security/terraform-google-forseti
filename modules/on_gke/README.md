@@ -46,9 +46,11 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | cloudsql\_db\_name | CloudSQL database name | string | `"forseti_security"` | no |
 | cloudsql\_disk\_size | The size of data disk, in GB. Size of a running instance cannot be reduced but can be increased. | string | `"25"` | no |
 | cloudsql\_net\_write\_timeout | See MySQL documentation: https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_net_write_timeout | string | `"240"` | no |
+| cloudsql\_password | CloudSQL password | string | `""` | no |
 | cloudsql\_private | Whether to enable private network and not to create public IP for CloudSQL Instance | bool | `"false"` | no |
 | cloudsql\_region | CloudSQL region | string | `"us-central1"` | no |
 | cloudsql\_type | CloudSQL Instance size | string | `"db-n1-standard-4"` | no |
+| cloudsql\_user | CloudSQL user | string | `"forseti_security_user"` | no |
 | cloudsql\_user\_host | The host the user can connect from.  Can be an IP address or IP address range. Changing this forces a new resource to be created. | string | `"%"` | no |
 | composite\_root\_resources | A list of root resources that Forseti will monitor. This supersedes the root_resource_id when set. | list(string) | `<list>` | no |
 | compute\_disable\_polling | Whether to disable polling for Compute API | bool | `"false"` | no |
@@ -66,6 +68,7 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | cscc\_violations\_enabled | Notify for CSCC violations | bool | `"false"` | no |
 | domain | The domain associated with the GCP Organization ID | string | n/a | yes |
 | enable\_cai\_bucket | Create a GCS bucket for CAI exports | bool | `"true"` | no |
+| enable\_service\_networking | Create a global service networking peering connection at the VPC level | bool | `"true"` | no |
 | enable\_write | Enabling/Disabling write actions | bool | `"false"` | no |
 | enabled\_apis\_enabled | Enabled APIs scanner enabled. | bool | `"false"` | no |
 | enabled\_apis\_violations\_should\_notify | Notify for enabled APIs violations | bool | `"true"` | no |

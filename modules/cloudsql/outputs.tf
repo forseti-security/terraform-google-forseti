@@ -38,3 +38,14 @@ output "forseti-clodusql-db-port" {
   description = "CloudSQL database port"
   value       = "3306"
 }
+
+output "forseti-cloudsql-user" {
+  description = "CloudSQL user"
+  value       = var.cloudsql_user
+}
+
+output "forseti-cloudsql-password" {
+  description = "CloudSQL password"
+  value       = local.cloudsql_password
+  sensitive   = true
+}

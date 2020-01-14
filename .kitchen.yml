@@ -24,6 +24,47 @@ verifier:
   fail_fast: false
 
 suites:
+  - name: install_simple
+    lifecycle:
+      pre_verify:
+        - chmod go-rwx test/fixtures/bastion/tls_private_key_install_simple
+    driver:
+      name: terraform
+      root_module_directory: test/fixtures/install_simple
+      command_timeout: 1800
+    verifier:
+      systems:
+        - name: gcp
+          backend: gcp
+          controls:
+            - forseti
+        - name: server
+          backend: ssh
+          controls:
+            - server
+          hosts_output: forseti-server-vm-ip
+          user: ubuntu
+          key_files:
+            - test/fixtures/install_simple/sshkey
+          proxy_command: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o LogLevel=ERROR -o ForwardAgent=no -i test/fixtures/bastion/tls_private_key_install_simple ubuntu@<%= `terraform output -state test/fixtures/install_simple/terraform.tfstate.d/kitchen-terraform-install-simple-local/terraform.tfstate bastion_host 2> /dev/null`.strip %> -p 22 -W %h:%p
+          shell: true
+          shell_options: "--login"
+        - name: forseti-client
+          backend: ssh
+          controls:
+            - client
+          hosts_output: forseti-client-vm-ip
+          user: ubuntu
+          key_files:
+            - test/fixtures/install_simple/sshkey
+          proxy_command: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o LogLevel=ERROR -o ForwardAgent=no -i test/fixtures/bastion/tls_private_key_install_simple ubuntu@<%= `terraform output -state test/fixtures/install_simple/terraform.tfstate.d/kitchen-terraform-install-simple-local/terraform.tfstate bastion_host 2> /dev/null`.strip %> -p 22 -W %h:%p
+          shell: true
+          shell_options: "--login"
+          show_progress: true
+        - name: org-iam
+          backend: local
+          controls:
+            - forseti-org-iam
   - name: simple_example
     lifecycle:
       pre_verify:

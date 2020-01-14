@@ -510,6 +510,11 @@ variable "policy_library_home" {
   default     = "$USER_HOME/policy-library"
 }
 
+variable "policy_library_repository_branch" {
+  description = "The specific git branch containing the policies."
+  default     = "master"
+}
+
 variable "policy_library_repository_url" {
   description = "The git repository containing the policy-library."
   default     = ""
@@ -546,6 +551,12 @@ variable "service_account_key_enabled" {
   description = "Service account key scanner enabled."
   type        = bool
   default     = true
+}
+
+variable "rules_path" {
+  description = "Path for Scanner Rules config files; if GCS, should be gs://bucket-name/path"
+  type        = string
+  default     = "/home/ubuntu/forseti-security/rules"
 }
 
 #--------------------------------#
@@ -850,6 +861,16 @@ variable "cloudsql_net_write_timeout" {
   default     = "240"
 }
 
+variable "cloudsql_db_user" {
+  description = "CloudSQL database user"
+  default     = "forseti_security_user"
+}
+
+variable "cloudsql_db_password" {
+  description = "CloudSQL database password"
+  default     = ""
+}
+
 #----------------#
 # Forseti bucket #
 #----------------#
@@ -884,6 +905,12 @@ variable "subnetwork" {
 variable "network_project" {
   description = "The project containing the VPC and subnetwork where the Forseti client and server will be created"
   default     = ""
+}
+
+variable "enable_service_networking" {
+  description = "Create a global service networking peering connection at the VPC level"
+  type        = bool
+  default     = true
 }
 
 #-------#

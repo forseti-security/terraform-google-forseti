@@ -752,6 +752,12 @@ variable "network_project" {
   default     = ""
 }
 
+variable "enable_service_networking" {
+  description = "Create a global service networking peering connection at the VPC level"
+  type        = bool
+  default     = true
+}
+
 #----------------#
 # Forseti client #
 #----------------#
@@ -837,6 +843,16 @@ variable "cloudsql_type" {
 variable "cloudsql_user_host" {
   description = "The host the user can connect from.  Can be an IP address or IP address range. Changing this forces a new resource to be created."
   default     = "%"
+}
+
+variable "cloudsql_user" {
+  description = "CloudSQL user"
+  default     = "forseti_security_user"
+}
+
+variable "cloudsql_password" {
+  description = "CloudSQL password"
+  default     = ""
 }
 
 #-------------#

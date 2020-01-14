@@ -18,10 +18,11 @@
 # Locals #
 #--------#
 locals {
-  cloudsql_name   = "forseti-server-db-${local.random_hash}"
-  cloudsql_zone   = "${var.cloudsql_region}-c"
-  network_project = var.network_project != "" ? var.network_project : var.project_id
-  random_hash     = var.suffix
+  cloudsql_name     = "forseti-server-db-${local.random_hash}"
+  cloudsql_zone     = "${var.cloudsql_region}-c"
+  network_project   = var.network_project != "" ? var.network_project : var.project_id
+  cloudsql_password = var.cloudsql_password == "" ? random_password.password.result : var.cloudsql_password
+  random_hash       = var.suffix
 }
 
 #------------------------------------#
@@ -46,15 +47,15 @@ resource "google_compute_global_address" "private_ip_address" {
   purpose       = "VPC_PEERING"
   address_type  = "INTERNAL"
   prefix_length = 16
-  network       = "${data.google_compute_network.cloudsql_private_network.self_link}"
-  depends_on    = ["google_project_service.service_networking"]
+  network       = data.google_compute_network.cloudsql_private_network.self_link
+  depends_on    = [google_project_service.service_networking]
 }
 
 resource "google_service_networking_connection" "private_vpc_connection" {
-  count                   = var.cloudsql_private ? 1 : 0
-  network                 = "${data.google_compute_network.cloudsql_private_network.self_link}"
+  count                   = var.enable_service_networking && var.cloudsql_private ? 1 : 0
+  network                 = data.google_compute_network.cloudsql_private_network.self_link
   service                 = "servicenetworking.googleapis.com"
-  reserved_peering_ranges = ["${google_compute_global_address.private_ip_address[count.index].name}"]
+  reserved_peering_ranges = [google_compute_global_address.private_ip_address[count.index].name]
 }
 
 #----------------------#
@@ -94,11 +95,11 @@ resource "google_sql_database_instance" "master" {
 
   lifecycle {
     ignore_changes = [
-      "settings[0].disk_size",
+      settings[0].disk_size,
     ]
   }
 
-  depends_on = [null_resource.services-dependency, "google_service_networking_connection.private_vpc_connection"]
+  depends_on = [null_resource.services-dependency, google_service_networking_connection.private_vpc_connection]
 }
 
 resource "google_sql_database" "forseti-db" {
@@ -107,11 +108,18 @@ resource "google_sql_database" "forseti-db" {
   instance = google_sql_database_instance.master.name
 }
 
-resource "google_sql_user" "root" {
-  name     = "root"
+resource "google_sql_user" "forseti_user" {
+  name     = var.cloudsql_user
   instance = google_sql_database_instance.master.name
   project  = var.project_id
   host     = var.cloudsql_user_host
+  password = local.cloudsql_password
+}
+
+resource "random_password" "password" {
+  length           = 16
+  special          = true
+  override_special = "_%@"
 }
 
 resource "null_resource" "services-dependency" {
