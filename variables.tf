@@ -553,6 +553,12 @@ variable "service_account_key_enabled" {
   default     = true
 }
 
+variable "rules_path" {
+  description = "Path for Scanner Rules config files; if GCS, should be gs://bucket-name/path"
+  type        = string
+  default     = "/home/ubuntu/forseti-security/rules"
+}
+
 #--------------------------------#
 # Forseti server config notifier #
 #--------------------------------#
