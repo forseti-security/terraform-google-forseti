@@ -36,8 +36,7 @@ provider "random" {
 }
 
 module "forseti-install-simple" {
-  source  = "terraform-google-modules/forseti/google"
-  version = "~> 5.0.0"
+  source = "../../"
 
   project_id = var.project_id
   org_id     = var.org_id
@@ -56,6 +55,7 @@ module "forseti-install-simple" {
   sendgrid_api_key        = var.sendgrid_api_key
   forseti_email_sender    = var.forseti_email_sender
   forseti_email_recipient = var.forseti_email_recipient
+  forseti_version         = var.forseti_version
 
   client_instance_metadata = var.instance_metadata
   server_instance_metadata = var.instance_metadata
