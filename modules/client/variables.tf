@@ -107,6 +107,20 @@ variable "services" {
   default     = []
 }
 
+#------------------------#
+# Forseti policy-library #
+#------------------------#
+
+variable "policy_library_home" {
+  description = "The local policy library directory."
+  default     = "$USER_HOME/policy-library"
+}
+
+variable "policy_library_sync_enabled" {
+  description = "Sync config validator policy library from private repository."
+  default     = "false"
+}
+
 #--------------------#
 # Forseti client IAM #
 #--------------------#
