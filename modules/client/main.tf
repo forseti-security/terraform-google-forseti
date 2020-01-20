@@ -24,6 +24,9 @@ locals {
   client_env_script = file(
     "${path.module}/templates/scripts/forseti-client/forseti_environment.sh.tpl",
   )
+  client_run = file(
+    "${path.module}/templates/scripts/forseti-client/run_forseti.sh.tpl",
+  )
 
   client_conf_path = "${var.forseti_home}/configs/forseti_conf_client.yaml"
 
@@ -71,6 +74,18 @@ data "template_file" "forseti_client_environment" {
   vars = {
     forseti_home             = var.forseti_home
     forseti_client_conf_path = local.client_conf_path
+  }
+}
+
+data "template_file" "run_forseti" {
+  template = local.client_run
+
+  vars = {
+    forseti_home                           = var.forseti_home
+    forseti_client_conf_path               = local.client_conf_path
+    policy_library_home                    = var.policy_library_home
+    policy_library_sync_enabled            = var.policy_library_sync_enabled
+    storage_bucket_name                    = var.server_gcs_module.forseti-client-storage-bucket
   }
 }
 

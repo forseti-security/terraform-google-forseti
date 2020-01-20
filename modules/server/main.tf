@@ -35,6 +35,9 @@ locals {
   server_env = file(
     "${path.module}/templates/scripts/forseti-server/forseti_env.sh.tpl",
   )
+  server_run = file(
+    "${path.module}/templates/scripts/forseti-server/run_forseti.sh.tpl",
+  )
 
   server_conf_path = "${var.forseti_home}/configs/forseti_conf_server.yaml"
   server_name      = "forseti-server-vm-${local.random_hash}"
@@ -110,6 +113,18 @@ data "template_file" "forseti_server_env" {
     cloudsql_instance_name = var.cloudsql_module.forseti-cloudsql-instance-name
     cloudsql_db_user       = var.cloudsql_module.forseti-cloudsql-user
     cloudsql_db_password   = var.cloudsql_module.forseti-cloudsql-password
+  }
+}
+
+data "template_file" "run_forseti" {
+  template = local.server_run
+
+  vars = {
+    forseti_home                           = var.forseti_home
+    forseti_server_conf_path               = local.server_conf_path
+    policy_library_home                    = var.policy_library_home
+    policy_library_sync_enabled            = var.policy_library_sync_enabled
+    storage_bucket_name                    = var.server_gcs_module.forseti-server-storage-bucket
   }
 }
 
