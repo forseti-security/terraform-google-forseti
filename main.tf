@@ -60,6 +60,7 @@ locals {
     "cloudasset.googleapis.com",
     "storage-api.googleapis.com",
     "groupssettings.googleapis.com",
+    "spanner.googleapis.com",
   ]
 
   cscc_violations_enabled_services_list = [
