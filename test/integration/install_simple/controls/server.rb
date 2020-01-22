@@ -45,6 +45,10 @@ control "server" do
     its("stderr") { should cmp "" }
   end
 
+  describe file("/home/ubuntu/forseti_scripts/run_forseti.sh") do
+    it { should_exist}
+  end
+
   describe file("/home/ubuntu/forseti-security/configs/forseti_conf_server.yaml") do
     it { should exist }
     it "is valid YAML" do

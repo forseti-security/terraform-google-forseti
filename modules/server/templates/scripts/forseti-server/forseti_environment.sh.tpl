@@ -6,3 +6,4 @@ export POLICY_LIBRARY_SYNC_GIT_SYNC_TAG=${policy_library_sync_git_sync_tag}
 export POLICY_LIBRARY_REPOSITORY_BRANCH=${policy_library_repository_branch}
 export POLICY_LIBRARY_REPOSITORY_URL=${policy_library_repository_url}
 export SCANNER_BUCKET=${storage_bucket_name}
+export FORSETI_SCRIPTS=${forseti_scripts}
