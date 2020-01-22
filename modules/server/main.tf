@@ -118,6 +118,22 @@ data "template_file" "forseti_server_env" {
   }
 }
 
+data "template_file" "run_foresti" {
+  template = local.server_environment
+
+  vars = {
+    forseti_home                     = var.forseti_home
+    forseti_server_conf_path         = local.server_conf_path
+    policy_library_home              = var.policy_library_home
+    policy_library_sync_enabled      = var.policy_library_sync_enabled
+    policy_library_repository_branch = var.policy_library_repository_branch
+    policy_library_repository_url    = var.policy_library_repository_url
+    policy_library_sync_git_sync_tag = var.policy_library_sync_git_sync_tag
+    storage_bucket_name              = var.server_gcs_module.forseti-server-storage-bucket
+    forseti_scripts                  = var.forseti_scripts
+  }
+}
+
 #------------------------#
 # Forseti Firewall Rules #
 #------------------------#
@@ -224,7 +240,7 @@ resource "google_storage_bucket_object" "policy_library_sync_ssh_known_hosts" {
 
 resource "google_storage_bucket_object" "run_forseti_script" {
   name    = "scripts/run_forseti.sh"
-  content = data.template_file.run_forseti_script.rendered
+  content = data.template_file.run_forseti.rendered
   bucket  = var.server_gcs_module.forseti-server-storage-bucket
 }
 

@@ -297,6 +297,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | resource\_enabled | Resource scanner enabled. | bool | `"true"` | no |
 | resource\_name\_suffix | A suffix which will be appended to resource names. | string | `"null"` | no |
 | resource\_violations\_should\_notify | Notify for resource violations | bool | `"true"` | no |
+| rules\_path | Path for Scanner Rules config files; if GCS, should be gs://bucket-name/path | string | `"/home/ubuntu/forseti-security/rules"` | no |
 | securitycenter\_max\_calls | Maximum calls that can be made to Security Center API | string | `"14"` | no |
 | securitycenter\_period | The period of max calls for the Security Center API (in seconds) | string | `"1.0"` | no |
 | sendgrid\_api\_key | Sendgrid.com API key to enable email notifications | string | `""` | no |
@@ -337,6 +338,8 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | forseti-client-vm-ip | Forseti Client VM private IP address |
 | forseti-client-vm-name | Forseti Client VM name |
 | forseti-cloudsql-connection-name | Forseti CloudSQL Connection String |
+| forseti-cloudsql-password | CloudSQL password |
+| forseti-cloudsql-user | CloudSQL user |
 | forseti-server-git-public-key-openssh | The public OpenSSH key generated to allow the Forseti Server to clone the policy library repository. |
 | forseti-server-service-account | Forseti Server service account |
 | forseti-server-storage-bucket | Forseti Server storage bucket |

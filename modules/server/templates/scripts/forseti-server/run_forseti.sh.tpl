@@ -94,3 +94,4 @@ echo "Finished running Forseti notifier."
 # Clean up the model tables
 echo "Cleaning up model tables"
 forseti model delete ${MODEL_NAME}
+
