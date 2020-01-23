@@ -74,7 +74,7 @@ data "template_file" "forseti_server_startup_script" {
     forseti_conf_server_checksum           = base64sha256(var.server_config_module.forseti-server-config)
     forseti_env                            = data.template_file.forseti_server_env.rendered
     forseti_environment                    = data.template_file.forseti_server_environment.rendered
-    run_forseti                            = data.template_file.run_forseti.rendered
+    run_forseti                            = data.template_file.forseti_server_run.rendered
     forseti_home                           = var.forseti_home
     forseti_repo_url                       = var.forseti_repo_url
     forseti_run_frequency                  = local.forseti_run_frequency
@@ -118,7 +118,7 @@ data "template_file" "forseti_server_env" {
   }
 }
 
-data "template_file" "run_foresti" {
+data "template_file" "forseti_server_run" {
   template = local.server_run_forseti
 
   vars = {
@@ -240,7 +240,7 @@ resource "google_storage_bucket_object" "policy_library_sync_ssh_known_hosts" {
 
 resource "google_storage_bucket_object" "run_forseti_script" {
   name    = "scripts/run_forseti.sh"
-  content = data.template_file.run_forseti.rendered
+  content = data.template_file.forseti_server_run.rendered
   bucket  = var.server_gcs_module.forseti-server-storage-bucket
 }
 
