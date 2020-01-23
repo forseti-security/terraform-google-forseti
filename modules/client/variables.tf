@@ -107,6 +107,11 @@ variable "services" {
   default     = []
 }
 
+variable "manage_firewall_rules" {
+  description = "Create client firewall rules"
+  default     = "true"
+}
+
 #--------------------#
 # Forseti client IAM #
 #--------------------#
