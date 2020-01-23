@@ -145,15 +145,6 @@ variable "services" {
   default     = []
 }
 
-#-----------------#
-# Forseti scripts #
-#-----------------#
-
-variable "forseti_scripts" {
-  description = "The local Forseti scripts directory."
-  default     = "$USER_HOME/forseti-scripts"
-}
-
 #------------------------#
 # Forseti policy-library #
 #------------------------#
