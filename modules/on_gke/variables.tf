@@ -758,6 +758,12 @@ variable "enable_service_networking" {
   default     = true
 }
 
+variable "manage_firewall_rules" {
+  description = "Create client firewall rules"
+  type        = bool
+  default     = true
+}
+
 #----------------#
 # Forseti client #
 #----------------#

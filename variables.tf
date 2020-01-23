@@ -913,6 +913,11 @@ variable "enable_service_networking" {
   default     = true
 }
 
+variable "manage_firewall_rules" {
+  description = "Create client firewall rules"
+  default     = true
+}
+
 #-------#
 # Flags #
 #-------#
