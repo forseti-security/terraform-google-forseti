@@ -35,7 +35,7 @@ locals {
   server_env = file(
     "${path.module}/templates/scripts/forseti-server/forseti_env.sh.tpl",
   )
-  server_run = file(
+  server_run_forseti = file(
     "${path.module}/templates/scripts/forseti-server/run_forseti.sh.tpl",
   )
 
@@ -119,7 +119,7 @@ data "template_file" "forseti_server_env" {
 }
 
 data "template_file" "run_foresti" {
-  template = local.server_environment
+  template = local.server_run_forseti
 
   vars = {
     forseti_home                     = var.forseti_home
