@@ -56,12 +56,12 @@ forseti config delete model
 forseti inventory purge
 
 # Run inventory command
-MODEL_NAME=$$(/bin/date -u +%Y%m%dT%H%M%S)
+MODEL_NAME=$(/bin/date -u +%Y%m%dT%H%M%S)
 echo "Running Forseti inventory."
-forseti inventory create --import_as ${MODEL_NAME}
+forseti inventory create --import_as $MODEL_NAME
 echo "Finished running Forseti inventory."
 
-GET_MODEL_STATUS="forseti model get ${MODEL_NAME} | python -c \"import sys, json; print json.load(sys.stdin)['status']\""
+GET_MODEL_STATUS="forseti model get $MODEL_NAME | python -c \"import sys, json; print json.load(sys.stdin)['status']\""
 MODEL_STATUS=`eval $GET_MODEL_STATUS`
 
 if ([ "$MODEL_STATUS" != "SUCCESS" ] && [ "$MODEL_STATUS" != "PARTIAL_SUCCESS" ])
@@ -72,8 +72,8 @@ if ([ "$MODEL_STATUS" != "SUCCESS" ] && [ "$MODEL_STATUS" != "PARTIAL_SUCCESS" ]
 fi
 
 # Run model command
-echo "Using model ${MODEL_NAME} to run scanner"
-forseti model use ${MODEL_NAME}
+echo "Using model $MODEL_NAME to run scanner"
+forseti model use $MODEL_NAME
 # Sometimes there's a lag between when the model
 # successfully saves to the database.
 sleep 5s
@@ -83,15 +83,15 @@ echo "Forseti config: $(forseti config show)"
 # Run scanner command
 echo "Running Forseti scanner."
 SCANNER_COMMAND=`forseti scanner run`
-SCANNER_INDEX_ID=`echo ${SCANNER_COMMAND} | grep -o -P '(?<=(ID: )).*(?=is created)'`
+SCANNER_INDEX_ID=`echo $SCANNER_COMMAND | grep -o -P '(?<=(ID: )).*(?=is created)'`
 echo "Finished running Forseti scanner."
 
 # Run notifier command
 echo "Running Forseti notifier."
-forseti notifier run --scanner_index_id ${SCANNER_INDEX_ID}
+forseti notifier run --scanner_index_id $SCANNER_INDEX_ID
 echo "Finished running Forseti notifier."
 
 # Clean up the model tables
 echo "Cleaning up model tables"
-forseti model delete ${MODEL_NAME}
+forseti model delete $MODEL_NAME
 
