@@ -45,7 +45,7 @@ control "server" do
     its("stderr") { should cmp "" }
   end
 
-  describe file("/home/ubuntu/forseti_scripts/run_forseti.sh") do
+  describe file("/home/ubuntu/forseti-scripts/run_forseti.sh") do
     it { should_exist}
   end
 

@@ -129,6 +129,7 @@ module "server" {
   forseti_repo_url         = var.forseti_repo_url
   forseti_home             = var.forseti_home
   forseti_run_frequency    = var.forseti_run_frequency
+  forseti_scripts          = var.forseti_scripts
   server_type              = var.server_type
   server_region            = var.server_region
   server_boot_image        = var.server_boot_image

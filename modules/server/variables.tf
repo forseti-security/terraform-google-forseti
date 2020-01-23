@@ -42,12 +42,9 @@ variable "forseti_run_frequency" {
   default     = null
 }
 
-#----------------#
-# Forseti server #
-#----------------#
-variable "server_type" {
-  description = "GCE Forseti Server machine type"
-  default     = "n1-standard-8"
+variable "forseti_scripts" {
+  description = "The local Forseti scripts directory."
+  default     = "$USER_HOME/forseti-scripts"
 }
 
 variable "server_region" {
@@ -154,7 +151,7 @@ variable "services" {
 
 variable "forseti_scripts" {
   description = "The local Forseti scripts directory."
-  default     = "$USER_HOME/forseti_scripts"
+  default     = "$USER_HOME/forseti-scripts"
 }
 
 #------------------------#
