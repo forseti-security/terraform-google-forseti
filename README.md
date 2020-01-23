@@ -282,6 +282,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | logging\_max\_calls | Maximum calls that can be made to Logging API | string | `"9"` | no |
 | logging\_period | The period of max calls for the Logging API (in seconds) | string | `"1.0"` | no |
 | mailjet\_enabled | Enable mailjet_rest library | bool | `"false"` | no |
+| manage\_firewall\_rules | Create client firewall rules | string | `"true"` | no |
 | manage\_rules\_enabled | A toggle to enable or disable the management of rules | bool | `"true"` | no |
 | network | The VPC where the Forseti client and server will be created | string | `"default"` | no |
 | network\_project | The project containing the VPC and subnetwork where the Forseti client and server will be created | string | `""` | no |
@@ -337,6 +338,8 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | forseti-client-vm-ip | Forseti Client VM private IP address |
 | forseti-client-vm-name | Forseti Client VM name |
 | forseti-cloudsql-connection-name | Forseti CloudSQL Connection String |
+| forseti-cloudsql-password | CloudSQL password |
+| forseti-cloudsql-user | CloudSQL user |
 | forseti-server-git-public-key-openssh | The public OpenSSH key generated to allow the Forseti Server to clone the policy library repository. |
 | forseti-server-service-account | Forseti Server service account |
 | forseti-server-storage-bucket | Forseti Server storage bucket |
