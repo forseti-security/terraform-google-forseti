@@ -123,10 +123,13 @@ else
   gsutil cp -r gs://${storage_bucket_name}/policy-library ${policy_library_home}/ || echo "No policy available, continuing with Forseti installation"
 fi
 
+# Attempt to download the Forseti scripts and gracefully handle the absence of scripts.
+gsutil -m cp -r gs://${storage_bucket_name}/scripts ${forseti_scripts}/ || echo "No scripts available, continuing with Forseti installation."
+  
 # Enable cloud-profiler in the initialize_forseti_services.sh script
 if ${cloud_profiler_enabled}; then
   pip3 install google-cloud-profiler
-  sed "/FORSETI_COMMAND+=\" --services/a FORSETI_COMMAND+=\" --enable_profiler\"" -i ./install/gcp/scripts/initialize_forseti_services.sh
+  sed "/FORSETI_COMMAND+=\" --services/a FORSETI_COMMAND+=\" --enable_profiler\"" -i ${storage_bucket_name}/scripts/initialize_forseti_services.sh
 fi
 
 # Install mailjet_rest library
@@ -137,7 +140,7 @@ fi
 
 # Start Forseti service depends on vars defined above.
 echo "Forseti Startup - Starting services."
-bash ./install/gcp/scripts/initialize_forseti_services.sh
+bash ${storage_bucket_name}/scripts/initialize_forseti_services.sh
 systemctl start cloudsqlproxy
 if [ "${policy_library_sync_enabled}" == "true" ]; then
   systemctl start policy-library-sync

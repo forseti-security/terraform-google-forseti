@@ -42,6 +42,11 @@ variable "forseti_run_frequency" {
   default     = null
 }
 
+variable "forseti_scripts" {
+  description = "The local Forseti scripts directory"
+  default     = '$USER_HOME/forseti-scripts'
+}
+
 #----------------#
 # Forseti server #
 #----------------#
