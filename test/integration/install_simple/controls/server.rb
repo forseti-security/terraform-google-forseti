@@ -504,7 +504,7 @@ control "server" do
   ]
 
   expected_policy_files.each do |file|
-    describe file("$POLICY_LIBRARY_HOME/#{file}") do
+    describe file("/home/ubuntu/policy-library/#{file}") do
       it { should exist }
       it "is valid YAML" do
         YAML.load(subject.content)
