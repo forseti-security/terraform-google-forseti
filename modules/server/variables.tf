@@ -47,6 +47,11 @@ variable "forseti_scripts" {
   default     = "$USER_HOME/forseti-scripts"
 }
 
+variable "server_type" {
+  description = "GCE Forseti Server machine type"
+  default     = "n1-standard-8"
+}
+
 variable "server_region" {
   description = "GCE Forseti Server region"
   default     = "us-central1"
