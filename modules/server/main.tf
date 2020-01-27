@@ -37,7 +37,7 @@ locals {
   )
   server_initialize_forseti_services = file(
     "${path.module}/templates/scripts/forseti-server/initialize_forseti_services.sh.tpl",
-
+  )
   server_conf_path = "${var.forseti_home}/configs/forseti_conf_server.yaml"
   server_name      = "forseti-server-vm-${local.random_hash}"
 

@@ -59,7 +59,7 @@ variable "forseti_run_frequency" {
 
 variable "forseti_scripts" {
   description = "The local Forseti scripts directory"
-  default     = '$USER_HOME/forseti-scripts'
+  default     = "$USER_HOME/forseti-scripts"
 }
 
 variable "resource_name_suffix" {
