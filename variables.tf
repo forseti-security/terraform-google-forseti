@@ -553,6 +553,12 @@ variable "service_account_key_enabled" {
   default     = true
 }
 
+variable "rules_path" {
+  description = "Path for Scanner Rules config files; if GCS, should be gs://bucket-name/path"
+  type        = string
+  default     = "/home/ubuntu/forseti-security/rules"
+}
+
 #--------------------------------#
 # Forseti server config notifier #
 #--------------------------------#
@@ -904,6 +910,11 @@ variable "network_project" {
 variable "enable_service_networking" {
   description = "Create a global service networking peering connection at the VPC level"
   type        = bool
+  default     = true
+}
+
+variable "manage_firewall_rules" {
+  description = "Create client firewall rules"
   default     = true
 }
 

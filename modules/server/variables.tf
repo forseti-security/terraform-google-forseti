@@ -135,6 +135,12 @@ variable "server_ssh_allow_ranges" {
   default     = ["0.0.0.0/0"]
 }
 
+variable "manage_firewall_rules" {
+  description = "Create server firewall rules"
+  type        = bool
+  default     = true
+}
+
 #--------#
 # Config #
 #--------#

@@ -113,14 +113,10 @@ if [ "${policy_library_sync_enabled}" == "true" ]; then
   sudo mkdir -p /etc/git-secret
   sudo gsutil cp -n gs://${storage_bucket_name}/${policy_library_sync_gcs_directory_name}/* /etc/git-secret/
 else
-  # DEPRECATED! Remove once users have migrated over to Git-Sync
   # Download the Newest Config Validator constraints from GCS
   echo "Forseti Startup - Copying Policy Library from GCS."
-
-  # Attempt to download the config-validator policy and gracefully handle the absence
-  # of policy files.  The config-validator is not required for the rest of Forseti
-  # and should not halt installation.
-  gsutil cp -r gs://${storage_bucket_name}/policy-library ${policy_library_home}/ || echo "No policy available, continuing with Forseti installation"
+  sudo mkdir -m 777 -p ${policy_library_home}/policy-library
+  gsutil -m rsync -d -r gs://${storage_bucket_name}/policy-library ${policy_library_home}/policy-library || echo "No policy available, continuing with Forseti installation"
 fi
 
 # Enable cloud-profiler in the initialize_forseti_services.sh script
