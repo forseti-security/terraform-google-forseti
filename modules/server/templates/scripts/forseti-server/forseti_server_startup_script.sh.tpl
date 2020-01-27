@@ -68,8 +68,7 @@ service google-fluentd restart
 logrotate /etc/logrotate.conf
 
 # Change the access level of configs/ rules/ and run_forseti.sh
-chmod -R ug+rwx ${forseti_home}/configs ${forseti_home}/rules  ${storage_bucket_name}/scripts/run_forseti.sh
-
+chmod -R ug+rwx ${forseti_home}/configs ${forseti_home}/rules ${forseti_scripts}/run_forseti.sh
 
 # Install Forseti
 echo "Forseti Startup - Installing Forseti python package."
@@ -120,7 +119,7 @@ else
 fi
 
 # Attempt to download the Forseti scripts and gracefully handle the absence of scripts.
-gsutil -m cp -r gs://${storage_bucket_name}/scripts ${forseti_scripts}/ || echo "No scripts available, continuing with Forseti installation."
+gsutil -m cp -r gs://${storage_bucket_name}/scripts ${forseti_scripts}/
 
 # Enable cloud-profiler in the initialize_forseti_services.sh script
 if ${cloud_profiler_enabled}; then
@@ -173,6 +172,6 @@ USER=ubuntu
 # The -n flag in flock will fail the process right away when the process is not able to acquire the lock so we won't
 # queue up the jobs.
 # If the cron job failed the acquire lock on the process, it will log a warning message to syslog.
-(echo "${forseti_run_frequency} (/usr/bin/flock -n ${forseti_home}/forseti_cron_runner.lock ${storage_bucket_name}/scripts/run_forseti.sh || echo '[forseti-security] Warning: New Forseti cron job will not be started, because previous Forseti job is still running.') 2>&1 | logger") | crontab -u $USER -
+(echo "${forseti_run_frequency} (/usr/bin/flock -n ${forseti_home}/forseti_cron_runner.lock ${forseti_scripts}/run_forseti.sh || echo '[forseti-security] Warning: New Forseti cron job will not be started, because previous Forseti job is still running.') 2>&1 | logger") | crontab -u $USER -
 echo "Forseti Startup - Added the run_forseti.sh to crontab under user $USER."
 echo "Forseti Startup - Execution of startup script finished."
