@@ -60,6 +60,7 @@ locals {
     "cloudasset.googleapis.com",
     "storage-api.googleapis.com",
     "groupssettings.googleapis.com",
+    "spanner.googleapis.com",
   ]
 
   cscc_violations_enabled_services_list = [
@@ -114,6 +115,7 @@ module "client" {
   client_tags              = var.client_tags
   client_access_config     = var.client_access_config
   client_private           = var.client_private
+  manage_firewall_rules    = var.manage_firewall_rules
   client_iam_module        = module.client_iam
   client_gcs_module        = module.client_gcs
   client_config_module     = module.client_config
@@ -143,6 +145,7 @@ module "server" {
   mailjet_enabled          = var.mailjet_enabled
   network                  = var.network
   network_project          = local.network_project
+  manage_firewall_rules    = var.manage_firewall_rules
   server_grpc_allow_ranges = var.server_grpc_allow_ranges
   server_instance_metadata = var.server_instance_metadata
   server_ssh_allow_ranges  = var.server_ssh_allow_ranges
