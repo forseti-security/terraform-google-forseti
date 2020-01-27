@@ -126,6 +126,7 @@ module "client" {
 module "server" {
   source = "./modules/server"
 
+  docker_image_tag         = var.docker_image_tag
   project_id               = var.project_id
   forseti_version          = var.forseti_version
   forseti_repo_url         = var.forseti_repo_url

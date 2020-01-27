@@ -66,6 +66,11 @@ variable "resource_name_suffix" {
 #----------------#
 # Forseti server #
 #----------------#
+variable "docker_image_tag" {
+  description = "The tag of the docker image to use"
+  default     = "latest"
+}
+
 variable "server_type" {
   description = "GCE Forseti Server machine type"
   default     = "n1-standard-8"

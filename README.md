@@ -225,6 +225,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | crm\_period | The period of max calls for the CRM  API (in seconds) | string | `"1.2"` | no |
 | cscc\_source\_id | Source ID for CSCC Beta API | string | `""` | no |
 | cscc\_violations\_enabled | Notify for CSCC violations | bool | `"false"` | no |
+| docker\_image\_tag | The tag of the docker image to use | string | `"latest"` | no |
 | domain | The domain associated with the GCP Organization ID | string | n/a | yes |
 | enable\_cai\_bucket | Create a GCS bucket for CAI exports | bool | `"true"` | no |
 | enable\_service\_networking | Create a global service networking peering connection at the VPC level | bool | `"true"` | no |
@@ -298,6 +299,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | resource\_enabled | Resource scanner enabled. | bool | `"true"` | no |
 | resource\_name\_suffix | A suffix which will be appended to resource names. | string | `"null"` | no |
 | resource\_violations\_should\_notify | Notify for resource violations | bool | `"true"` | no |
+| rules\_path | Path for Scanner Rules config files; if GCS, should be gs://bucket-name/path | string | `"/home/ubuntu/forseti-security/rules"` | no |
 | securitycenter\_max\_calls | Maximum calls that can be made to Security Center API | string | `"14"` | no |
 | securitycenter\_period | The period of max calls for the Security Center API (in seconds) | string | `"1.0"` | no |
 | sendgrid\_api\_key | Sendgrid.com API key to enable email notifications | string | `""` | no |
