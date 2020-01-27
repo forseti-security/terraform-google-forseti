@@ -115,6 +115,7 @@ module "client" {
   client_tags              = var.client_tags
   client_access_config     = var.client_access_config
   client_private           = var.client_private
+  manage_firewall_rules    = var.manage_firewall_rules
   client_iam_module        = module.client_iam
   client_gcs_module        = module.client_gcs
   client_config_module     = module.client_config
@@ -143,6 +144,7 @@ module "server" {
   mailjet_enabled          = var.mailjet_enabled
   network                  = var.network
   network_project          = local.network_project
+  manage_firewall_rules    = var.manage_firewall_rules
   server_grpc_allow_ranges = var.server_grpc_allow_ranges
   server_instance_metadata = var.server_instance_metadata
   server_ssh_allow_ranges  = var.server_ssh_allow_ranges
@@ -321,6 +323,7 @@ module "server_config" {
   violations_slack_webhook                            = var.violations_slack_webhook
   cscc_violations_enabled                             = var.cscc_violations_enabled
   cscc_source_id                                      = var.cscc_source_id
+  rules_path                                          = var.rules_path
 
   groups_settings_max_calls                = var.groups_settings_max_calls
   groups_settings_period                   = var.groups_settings_period

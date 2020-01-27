@@ -24,13 +24,13 @@ verifier:
   fail_fast: false
 
 suites:
-  - name: simple_example
+  - name: install_simple
     lifecycle:
       pre_verify:
-        - chmod go-rwx test/fixtures/bastion/tls_private_key_simple_example
+        - chmod go-rwx test/fixtures/bastion/tls_private_key_install_simple
     driver:
       name: terraform
-      root_module_directory: test/fixtures/simple_example
+      root_module_directory: test/fixtures/install_simple
       command_timeout: 1800
     verifier:
       systems:
@@ -38,7 +38,6 @@ suites:
           backend: gcp
           controls:
             - forseti
-
         - name: server
           backend: ssh
           controls:
@@ -46,11 +45,10 @@ suites:
           hosts_output: forseti-server-vm-ip
           user: ubuntu
           key_files:
-            - test/fixtures/simple_example/sshkey
-          proxy_command: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o LogLevel=ERROR -o ForwardAgent=no -i test/fixtures/bastion/tls_private_key_simple_example ubuntu@<%= `terraform output -state test/fixtures/simple_example/terraform.tfstate.d/kitchen-terraform-simple-example-local/terraform.tfstate bastion_host 2> /dev/null`.strip %> -p 22 -W %h:%p
+            - test/fixtures/install_simple/sshkey
+          proxy_command: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o LogLevel=ERROR -o ForwardAgent=no -i test/fixtures/bastion/tls_private_key_install_simple ubuntu@<%= `terraform output -state test/fixtures/install_simple/terraform.tfstate.d/kitchen-terraform-install-simple-local/terraform.tfstate bastion_host 2> /dev/null`.strip %> -p 22 -W %h:%p
           shell: true
           shell_options: "--login"
-
         - name: forseti-client
           backend: ssh
           controls:
@@ -58,16 +56,15 @@ suites:
           hosts_output: forseti-client-vm-ip
           user: ubuntu
           key_files:
-            - test/fixtures/simple_example/sshkey
-          proxy_command: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o LogLevel=ERROR -o ForwardAgent=no -i test/fixtures/bastion/tls_private_key_simple_example ubuntu@<%= `terraform output -state test/fixtures/simple_example/terraform.tfstate.d/kitchen-terraform-simple-example-local/terraform.tfstate bastion_host 2> /dev/null`.strip %> -p 22 -W %h:%p
+            - test/fixtures/install_simple/sshkey
+          proxy_command: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o LogLevel=ERROR -o ForwardAgent=no -i test/fixtures/bastion/tls_private_key_install_simple ubuntu@<%= `terraform output -state test/fixtures/install_simple/terraform.tfstate.d/kitchen-terraform-install-simple-local/terraform.tfstate bastion_host 2> /dev/null`.strip %> -p 22 -W %h:%p
           shell: true
           shell_options: "--login"
-
+          show_progress: true
         - name: org-iam
           backend: local
           controls:
             - forseti-org-iam
-
   - name: shared_vpc
     lifecycle:
       pre_verify:
