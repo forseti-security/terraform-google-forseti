@@ -35,7 +35,7 @@ locals {
   server_env = file(
     "${path.module}/templates/scripts/forseti-server/forseti_env.sh.tpl",
   )
-  server_initialize_forseti_services = file(
+  server_initialize_services = file(
     "${path.module}/templates/scripts/forseti-server/initialize_forseti_services.sh.tpl",
   )
   server_conf_path = "${var.forseti_home}/configs/forseti_conf_server.yaml"
@@ -73,7 +73,7 @@ data "template_file" "forseti_server_startup_script" {
     forseti_conf_server_checksum           = base64sha256(var.server_config_module.forseti-server-config)
     forseti_env                            = data.template_file.forseti_server_env.rendered
     forseti_environment                    = data.template_file.forseti_server_environment.rendered
-    initialize_forseti_services            = data.template_file.initialize_forseti_services.rendered
+    initialize_forseti_services            = data.template_file.forseti_server_initialize_services.rendered
     forseti_home                           = var.forseti_home
     forseti_repo_url                       = var.forseti_repo_url
     forseti_run_frequency                  = local.forseti_run_frequency
@@ -117,7 +117,7 @@ data "template_file" "forseti_server_env" {
 }
 
 data "template_file" "forseti_server_initialize_services" {
-  template = local.server_initialize_forseti_services
+  template = local.server_initialize_services
 
   vars = {
     project_id             = var.project_id
@@ -240,7 +240,7 @@ resource "google_storage_bucket_object" "policy_library_sync_ssh_known_hosts" {
 
 resource "google_storage_bucket_object" "initialize_forseti_services_script" {
   name    = "scripts/initialize_forseti_services.sh"
-  content = data.template_file.initialize_forseti_services.rendered
+  content = data.template_file.forseti_server_initialize_services.rendered
   bucket  = var.server_gcs_module.forseti-server-storage-bucket
 }
 
