@@ -1,1 +1,1 @@
-../../simple_example/controls/forseti.rb
+../../install_simple/controls/forseti.rb
