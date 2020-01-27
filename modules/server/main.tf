@@ -52,7 +52,6 @@ locals {
       subnetwork         = var.subnetwork
       access_config      = [var.server_access_config]
     }],
-
   }
   network_interface = local.network_interface_base[var.server_private ? "private" : "public"]
 
@@ -120,15 +119,11 @@ data "template_file" "forseti_server_initialize_services" {
   template = local.server_initialize_services
 
   vars = {
-    project_id             = var.project_id
-    cloudsql_db_name       = var.cloudsql_module.forseti-cloudsql-db-name
-    cloudsql_db_port       = var.cloudsql_module.forseti-clodusql-db-port
-    cloudsql_region        = var.cloudsql_module.forseti-cloudsql-region
-    cloudsql_instance_name = var.cloudsql_module.forseti-cloudsql-instance-name
-    cloudsql_db_user       = var.cloudsql_module.forseti-cloudsql-user
-    cloudsql_db_password   = var.cloudsql_module.forseti-cloudsql-password
-    forseti_home           = var.forseti_home
-    forseti_scripts        = var.forseti_scripts
+    forseti_home                     = var.forseti_home
+    forseti_server_conf_path         = local.server_conf_path
+    policy_library_home              = var.policy_library_home
+    policy_library_sync_enabled      = var.policy_library_sync_enabled
+    policy_library_sync_git_sync_tag = var.policy_library_sync_git_sync_tag
   }
 }
 
