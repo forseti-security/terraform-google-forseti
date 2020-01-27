@@ -8,7 +8,7 @@ This example illustrates how to set up a Forseti installation with shared VPC.
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | domain | Organization domain | string | n/a | yes |
-| forseti\_version | The version of Forseti to install | string | `"v2.25.0"` | no |
+| forseti\_version | The version of Forseti to install | string | `"v2.24.0"` | no |
 | gsuite\_admin\_email | G Suite admin email | string | n/a | yes |
 | instance\_metadata | Metadata key/value pairs to make available from within the client and server instances. | map(string) | `<map>` | no |
 | network | Name of the shared VPC | string | n/a | yes |

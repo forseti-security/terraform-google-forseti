@@ -20,7 +20,7 @@ variable "domain" {
 
 variable "forseti_version" {
   description = "The version of Forseti to install"
-  default     = "v2.25.0"
+  default     = "v2.24.0"
 }
 
 variable "gsuite_admin_email" {
