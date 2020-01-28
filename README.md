@@ -134,7 +134,7 @@ For this module to work, you need the following roles enabled on the Service Acc
 
 On the organization:
 - `roles/resourcemanager.organizationAdmin`
-- `roles/securityReviewer`
+- `roles/iam.securityReviewer`
 
 On the project:
 - `roles/owner`
