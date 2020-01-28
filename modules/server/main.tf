@@ -78,6 +78,7 @@ data "template_file" "forseti_server_startup_script" {
     forseti_home                           = var.forseti_home
     forseti_repo_url                       = var.forseti_repo_url
     forseti_run_frequency                  = local.forseti_run_frequency
+    forseti_scripts                        = var.forseti_scripts
     forseti_server_conf_path               = local.server_conf_path
     forseti_version                        = var.forseti_version
     mailjet_enabled                        = var.mailjet_enabled
@@ -100,7 +101,6 @@ data "template_file" "forseti_server_environment" {
     policy_library_repository_url    = var.policy_library_repository_url
     policy_library_sync_git_sync_tag = var.policy_library_sync_git_sync_tag
     storage_bucket_name              = var.server_gcs_module.forseti-server-storage-bucket
-    forseti_scripts                  = var.forseti_scripts
   }
 }
 
