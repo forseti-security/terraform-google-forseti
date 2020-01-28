@@ -45,8 +45,8 @@ variable "forseti_run_frequency" {
 #----------------#
 # Forseti server #
 #----------------#
-variable "docker_image_tag" {
-  description = "The tag of the docker image to use"
+variable "config_validator_image_tag" {
+  description = "The tag of the Config Validator image to use"
   default     = "latest"
 }
 

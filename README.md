@@ -216,6 +216,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | compute\_max\_calls | Maximum calls that can be made to Compute API | string | `"18"` | no |
 | compute\_period | The period of max calls for the Compute API (in seconds) | string | `"1.0"` | no |
 | config\_validator\_enabled | Config Validator scanner enabled. | bool | `"false"` | no |
+| config\_validator\_image\_tag | The tag of the Config Validator image to use | string | `"latest"` | no |
 | config\_validator\_violations\_should\_notify | Notify for Config Validator violations. | bool | `"true"` | no |
 | container\_disable\_polling | Whether to disable polling for Container API | bool | `"false"` | no |
 | container\_max\_calls | Maximum calls that can be made to Container API | string | `"9"` | no |
@@ -225,7 +226,6 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | crm\_period | The period of max calls for the CRM  API (in seconds) | string | `"1.2"` | no |
 | cscc\_source\_id | Source ID for CSCC Beta API | string | `""` | no |
 | cscc\_violations\_enabled | Notify for CSCC violations | bool | `"false"` | no |
-| docker\_image\_tag | The tag of the docker image to use | string | `"latest"` | no |
 | domain | The domain associated with the GCP Organization ID | string | n/a | yes |
 | enable\_cai\_bucket | Create a GCS bucket for CAI exports | bool | `"true"` | no |
 | enable\_service\_networking | Create a global service networking peering connection at the VPC level | bool | `"true"` | no |
