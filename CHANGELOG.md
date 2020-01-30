@@ -52,7 +52,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 ## [5.1.0] - 2019-11-15
 
 ### Added
-- Support for Forseti v2.24.1 [#386]
+- Support for Forseti v2.24.0 [#386]
 - Parameterized Kubernetes version [#385]
 - GCS bucket location to tutorials and examples [#382]
 - Improved existing resource import in v5.0.0 [#354]
