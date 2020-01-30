@@ -65,6 +65,7 @@ control 'forseti-command-server' do
   describe command("sudo systemctl status forseti --no-page") do
     its(:exit_status) { should eq 0 }
     its(:stderr) { should eq '' }
+    its(:stdout) { should match(/Active: active/) }
   end
 
   describe command("forseti config show") do

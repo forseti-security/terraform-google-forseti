@@ -40,7 +40,6 @@ rules:
     groups_emails:
       - '*'
     settings:
-      allowExternalMembers: True
       whoCanJoin: "INVITED_CAN_JOIN"
       whoCanInvite: "ALL_MANAGERS_CAN_INVITE"
       whoCanAdd: "ALL_MANAGERS_CAN_ADD"

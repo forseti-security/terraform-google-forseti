@@ -41,6 +41,7 @@ suites:
         - name: server
           backend: ssh
           controls:
+            - policy-library
             - server
           hosts_output: forseti-server-vm-ip
           user: ubuntu

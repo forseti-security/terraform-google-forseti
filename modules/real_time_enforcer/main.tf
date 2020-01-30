@@ -47,18 +47,18 @@ locals {
 
   network_interface_base = {
     private = [{
-      subnetwork_project = "${local.network_project}"
-      subnetwork         = "${var.subnetwork}"
+      subnetwork_project = local.network_project
+      subnetwork         = var.subnetwork
     }]
 
     public = [{
-      subnetwork_project = "${local.network_project}"
-      subnetwork         = "${var.subnetwork}"
-      access_config      = ["${var.enforcer_instance_access_config}"]
+      subnetwork_project = local.network_project
+      subnetwork         = var.subnetwork
+      access_config      = [var.enforcer_instance_access_config]
     }]
   }
 
-  network_interface = "${local.network_interface_base[var.enforcer_instance_private ? "private" : "public"]}"
+  network_interface = local.network_interface_base[var.enforcer_instance_private ? "private" : "public"]
 }
 
 resource "google_service_account" "main" {

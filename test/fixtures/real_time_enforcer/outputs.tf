@@ -15,7 +15,7 @@
  */
 
 output "bastion_host" {
-  value       = "${module.bastion.host}"
+  value       = module.bastion.host
   description = "Bastion host"
 }
 
