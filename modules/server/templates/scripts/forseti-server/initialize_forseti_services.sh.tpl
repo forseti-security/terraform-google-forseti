@@ -19,9 +19,9 @@ set -o nounset
 # Reference all required bash variables prior to running. Due to 'nounset', if
 # a caller fails to export the following expected environmental variables, this
 # script will fail immediately rather than partially succeeding.
-echo "Cloud SQL Instance Connection string: ${SQL_INSTANCE_CONN_STRING}"
-echo "SQL port: ${SQL_PORT}"
-echo "Forseti DB name: ${FORSETI_DB_NAME}"
+echo "Cloud SQL Instance Connection string: $SQL_INSTANCE_CONN_STRING"
+echo "SQL port: ${cloudsql_db_port}"
+echo "Forseti DB name: ${cloudsql_db_name}"
 
 if ! [[ -f ${forseti_server_conf_path} ]]; then
     echo "Could not find the configuration file: ${forseti_server_conf_path}." >&2
@@ -31,13 +31,13 @@ fi
 # We had issue creating DB user through deployment template, if the issue is
 # resolved in the future, we should create a forseti db user instead of using
 # root.
-SQL_SERVER_LOCAL_ADDRESS="mysql+pymysql://${SQL_DB_USER}:${SQL_DB_PASSWORD}@127.0.0.1:${SQL_PORT}"
+SQL_SERVER_LOCAL_ADDRESS="mysql+pymysql://${cloudsql_db_user}:${cloudsql_db_password}@127.0.0.1:${cloudsql_db_port}"
 FORSETI_SERVICES="explain inventory model scanner notifier"
 
 FORSETI_COMMAND="$(which forseti_server) --endpoint '[::]:50051'"
-FORSETI_COMMAND+=" --forseti_db ${SQL_SERVER_LOCAL_ADDRESS}/${FORSETI_DB_NAME}?charset=utf8"
+FORSETI_COMMAND+=" --forseti_db $SQL_SERVER_LOCAL_ADDRESS/${cloudsql_db_name}?charset=utf8"
 FORSETI_COMMAND+=" --config_file_path ${forseti_server_conf_path}"
-FORSETI_COMMAND+=" --services ${FORSETI_SERVICES}"
+FORSETI_COMMAND+=" --services $FORSETI_SERVICES"
 
 CONFIG_VALIDATOR_COMMAND="${forseti_home}/external-dependencies/config-validator/ConfigValidatorRPCServer"
 CONFIG_VALIDATOR_COMMAND+=" --policyPath='${policy_library_home}/policy-library/policies'"
@@ -51,11 +51,11 @@ if [ "${policy_library_sync_enabled}" == "true" ]; then
   POLICY_LIBRARY_SYNC_COMMAND+=" --log-opt labels=git-sync"
   POLICY_LIBRARY_SYNC_COMMAND+=" -v ${policy_library_home}:/tmp/git"
   POLICY_LIBRARY_SYNC_COMMAND+=" -v /etc/git-secret:/etc/git-secret"
-  POLICY_LIBRARY_SYNC_COMMAND+=" k8s.gcr.io/git-sync:${POLICY_LIBRARY_SYNC_GIT_SYNC_TAG}"
-  POLICY_LIBRARY_SYNC_COMMAND+=" --branch=${POLICY_LIBRARY_REPOSITORY_BRANCH:=master}"
+  POLICY_LIBRARY_SYNC_COMMAND+=" k8s.gcr.io/git-sync:${policy_library_sync_git_sync_tag}"
+  POLICY_LIBRARY_SYNC_COMMAND+=" --branch=$POLICY_LIBRARY_REPOSITORY_BRANCH:=master"
   POLICY_LIBRARY_SYNC_COMMAND+=" --dest=policy-library"
   POLICY_LIBRARY_SYNC_COMMAND+=" --max-sync-failures=-1"
-  POLICY_LIBRARY_SYNC_COMMAND+=" --repo=${POLICY_LIBRARY_REPOSITORY_URL}"
+  POLICY_LIBRARY_SYNC_COMMAND+=" --repo=${policy_library_repository_url}"
   POLICY_LIBRARY_SYNC_COMMAND+=" --wait=30"
 
   # If the SSH file is present, tell git-sync to use SSH to connect to the repo
@@ -73,7 +73,7 @@ fi
 sudo chmod ugo+x ${forseti_home}/external-dependencies/config-validator/ConfigValidatorRPCServer
 
 SQL_PROXY_COMMAND="$(which cloud_sql_proxy)"
-SQL_PROXY_COMMAND+=" -instances=${SQL_INSTANCE_CONN_STRING}=tcp:${SQL_PORT}"
+SQL_PROXY_COMMAND+=" -instances=$SQL_INSTANCE_CONN_STRING=tcp:${cloudsql_db_port}"
 
 # Cannot use "read -d" since it returns a nonzero exit status.
 API_SERVICE="$(cat << EOF
