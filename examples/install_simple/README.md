@@ -12,7 +12,7 @@ This configuration is used to simply install Forseti. It includes a full Cloud S
 | domain | The domain associated with the GCP Organization ID | string | n/a | yes |
 | forseti\_email\_recipient | Forseti email recipient. | string | `""` | no |
 | forseti\_email\_sender | Forseti email sender. | string | `""` | no |
-| forseti\_version | The version of Forseti to install | string | `"v2.24.0"` | no |
+| forseti\_version | The version of Forseti to install | string | `"v2.24.1"` | no |
 | gsuite\_admin\_email | The email of a GSuite super admin, used for pulling user directory information *and* sending notifications. | string | n/a | yes |
 | instance\_metadata | Metadata key/value pairs to make available from within the client and server instances. | map(string) | `<map>` | no |
 | instance\_tags | Tags to assign the client and server instances. | list(string) | `<list>` | no |
