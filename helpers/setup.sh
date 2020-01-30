@@ -137,8 +137,10 @@ gcloud services enable \
 
 if [[ "$IS_UPDATE" == "0" ]]; then
 
-    # If is an update i don't create service accout and re-download credentials
+    # Create new service accout and download credentials
     echo "Creating a new service account ${SERVICE_ACCOUNT_EMAIL} ..."
+    export FORSETI_SETUP_SERVICE_ACCOUNT_NAME="${SERVICE_ACCOUNT_NAME}"
+
     gcloud iam service-accounts \
         --project "${PROJECT_ID}" create "${SERVICE_ACCOUNT_NAME}" \
         --display-name "${SERVICE_ACCOUNT_NAME}"
@@ -148,6 +150,8 @@ if [[ "$IS_UPDATE" == "0" ]]; then
     gcloud iam service-accounts keys create "${KEY_FILE}" \
         --iam-account "${SERVICE_ACCOUNT_EMAIL}" \
         --user-output-enabled false
+
+    export GOOGLE_APPLICATION_CREDENTIALS="${KEY_FILE}"
 fi
 
 echo "Applying permissions for org $ORG_ID and project $PROJECT_ID..."
