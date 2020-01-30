@@ -73,3 +73,7 @@ output "suffix" {
   value       = module.forseti-install-simple.suffix
 }
 
+output "forseti-cloudsql-user" {
+  description = "CloudSQL user"
+  value       = module.forseti-install-simple.forseti-cloudsql-user
+}
