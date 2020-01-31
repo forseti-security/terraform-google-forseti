@@ -76,6 +76,7 @@ data "template_file" "forseti_server_startup_script" {
     forseti_home                           = var.forseti_home
     forseti_repo_url                       = var.forseti_repo_url
     forseti_run_frequency                  = local.forseti_run_frequency
+    forseti_scripts                        = var.forseti_scripts
     forseti_server_conf_path               = local.server_conf_path
     forseti_version                        = var.forseti_version
     mailjet_enabled                        = var.mailjet_enabled
@@ -112,6 +113,7 @@ data "template_file" "forseti_server_env" {
     cloudsql_instance_name = var.cloudsql_module.forseti-cloudsql-instance-name
     cloudsql_db_user       = var.cloudsql_module.forseti-cloudsql-user
     cloudsql_db_password   = var.cloudsql_module.forseti-cloudsql-password
+    forseti_scripts        = var.forseti_scripts
   }
 }
 
