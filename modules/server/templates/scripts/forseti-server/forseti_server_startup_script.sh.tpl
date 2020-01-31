@@ -120,7 +120,7 @@ else
 fi
 
 # Attempt to download the Forseti scripts and gracefully handle the absence of scripts.
-gsutil -m cp -r gs://${storage_bucket_name}/scripts ${forseti_scripts}/ || echo "No scripts available, continuing with Forseti installation."
+gsutil -m cp -r gs://${storage_bucket_name}/scripts ${forseti_scripts}/
 
 # Enable cloud-profiler in the initialize_forseti_services.sh script
 if ${cloud_profiler_enabled}; then
