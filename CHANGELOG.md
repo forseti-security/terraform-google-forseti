@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Extending the adopted spec, each change should have a link to its corresponding pull request appended.
 
+## [v5.0.1] - 2020-01-31
+
+### Added
+
+- Support for Forseti v2.23.1 [#476]
+
 ## [5.0.0] - 2019-10-17
 Version 5.0.0 is a backwards-incompatible release. Please see the [upgrade instructions](./docs/upgrading_to_v5.0.md) for details.
 
@@ -289,7 +295,9 @@ Version 4.0.0 is a backwards-incompatible release. Please see the [upgrade instr
 [v4.2.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.1.0...v4.2.1
 [v4.3.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.2.1...v4.3.0
 [v5.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.3.0...v5.0.0
+[v5.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v5.0.0...v5.0.1
 
+[#330]: https://github.com/forseti-security/terraform-google-forseti/pull/476
 [#330]: https://github.com/forseti-security/terraform-google-forseti/pull/330
 [#329]: https://github.com/forseti-security/terraform-google-forseti/pull/329
 [#309]: https://github.com/forseti-security/terraform-google-forseti/pull/309
