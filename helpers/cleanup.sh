@@ -104,19 +104,19 @@ SERVICE_ACCOUNT_EMAIL="$SERVICE_ACCOUNT_NAME@${PROJECT_ID}.iam.gserviceaccount.c
 KEY_FILE="${PWD}/credentials.json"
 
 # Ensure that we can fetch the IAM policy on the Forseti project.
-if ! gcloud projects get-iam-policy "$PROJECT_ID" 2>&- 1>&-; then
+if ! gcloud projects get-iam-policy "$PROJECT_ID" &> /dev/null; then
   echo "ERROR: Unable to fetch IAM policy on project $PROJECT_ID."
   exit 1
 fi
 
 # Ensure that we can fetch the IAM policy on the GCP organization.
-if ! gcloud organizations get-iam-policy "$ORG_ID" 2>&- 1>&-; then
+if ! gcloud organizations get-iam-policy "$ORG_ID" &> /dev/null; then
   echo "ERROR: Unable to fetch IAM policy on organization $ORG_ID."
   exit 1
 fi
 
 # Ensure that we can query the service account.
-if ! gcloud iam service-accounts describe "$SERVICE_ACCOUNT_EMAIL" 2>&- 1>&-; then
+if ! gcloud iam service-accounts describe "$SERVICE_ACCOUNT_EMAIL" &> /dev/null; then
   echo "ERROR: Unable to fetch service account $SERVICE_ACCOUNT_EMAIL."
   exit 1
 fi
