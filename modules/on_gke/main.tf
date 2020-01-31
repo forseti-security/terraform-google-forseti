@@ -53,7 +53,7 @@ locals {
   services_list = [
     "admin.googleapis.com",
     "appengine.googleapis.com",
-    "bigquery-json.googleapis.com",
+    "bigquery.googleapis.com",
     "cloudbilling.googleapis.com",
     "cloudresourcemanager.googleapis.com",
     "sql-component.googleapis.com",
