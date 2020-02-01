@@ -124,20 +124,20 @@ data "tls_public_key" "git_sync_public_ssh_key" {
 //  Obtain Forseti Server Configuration
 //*****************************************
 
-data "google_storage_object_signed_url" "file_url" {
-  bucket      = module.server_gcs.forseti-server-storage-bucket
-  path        = "configs/forseti_conf_server.yaml"
-  content_md5 = module.server_config.forseti-server-config-md5
+data "google_storage_bucket_object" "server_config_contents" {
+  bucket = module.server_gcs.forseti-server-storage-bucket
+  name   = "configs/forseti_conf_server.yaml"
 }
 
+data "google_client_config" "current" {}
+
 data "http" "server_config_contents" {
-  url = data.google_storage_object_signed_url.file_url.signed_url
+  url = format("%s?alt=media", data.google_storage_bucket_object.server_config_contents.self_link)
 
+  # Optional request headers
   request_headers = {
-    "Content-MD5" = module.server_config.forseti-server-config-md5
+    "Authorization" = "Bearer ${data.google_client_config.current.access_token}"
   }
-
-  depends_on = ["data.google_storage_object_signed_url.file_url"]
 }
 
 //*****************************************
