@@ -23,7 +23,6 @@ forseti_client_storage_bucket = attribute('forseti-client-storage-bucket')
 forseti_server_storage_bucket = attribute('forseti-server-storage-bucket')
 forseti_client_service_account = attribute('forseti-client-service-account')
 forseti_server_service_account = attribute('forseti-server-service-account')
-forseti_cloudsql_user = attribute('forseti-cloudsql-user')
 
 control 'forseti' do
   title "Forseti GCP resources"
@@ -48,10 +47,6 @@ control 'forseti' do
 
   describe google_sql_database_instances(project: project_id) do
     its('instance_names') { should include(/forseti-server-db-*/) }
-  end
-
-  describe google_sql_users(project: project_id) do
-    its('user_names') { should include forseti_cloudsql_user }
   end
 
   describe google_project_iam_binding(project: project_id, role: "roles/storage.objectViewer") do
