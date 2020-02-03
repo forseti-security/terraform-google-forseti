@@ -58,8 +58,3 @@ output "forseti-server-storage-bucket" {
   description = "Forseti Server storage bucket"
   value       = module.forseti-install-simple.forseti-server-storage-bucket
 }
-
-output "forseti-cloudsql-user" {
-  description = "CloudSQL user"
-  value       = module.forseti-install-simple.forseti-cloudsql-user
-}
