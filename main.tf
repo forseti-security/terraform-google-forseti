@@ -352,5 +352,5 @@ module "client_gcs" {
 module "client_config" {
   source            = "./modules/client_config"
   client_gcs_module = module.client_gcs
-  server_address    = module.server.forseti-server-vm-ip
+  server_address    = module.server.forseti-server-vm-internal-dns
 }
