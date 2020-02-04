@@ -235,7 +235,6 @@ resource "google_compute_instance" "forseti-server" {
   dynamic "network_interface" {
     for_each = local.network_interface
     content {
-      address            = lookup(network_interface.value, "address", null)
       network            = lookup(network_interface.value, "network", null)
       network_ip         = lookup(network_interface.value, "network_ip", null)
       subnetwork         = lookup(network_interface.value, "subnetwork", null)

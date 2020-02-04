@@ -15,7 +15,7 @@
  */
 
 provider "google" {
-  version = "~> 2.11.0"
+  version = "~> 3.7.0"
 }
 
 provider "null" {
