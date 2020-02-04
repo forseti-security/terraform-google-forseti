@@ -119,7 +119,7 @@ resource "google_sql_user" "forseti_user" {
 resource "random_password" "password" {
   length           = 16
   special          = true
-  override_special = "_@"
+  override_special = "_"
 }
 
 resource "null_resource" "services-dependency" {

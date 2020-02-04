@@ -72,4 +72,3 @@ output "suffix" {
   description = "The random suffix appended to Forseti resources"
   value       = module.forseti-install-simple.suffix
 }
-
