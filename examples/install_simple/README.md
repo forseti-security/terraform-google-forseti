@@ -35,6 +35,7 @@ This configuration is used to simply install Forseti. It includes a full Cloud S
 | forseti-client-vm-name | Forseti Client VM name |
 | forseti-server-service-account | Forseti Server service account |
 | forseti-server-storage-bucket | Forseti Server storage bucket |
+| forseti-server-vm-internal-dns | Forseti Server internal DNS |
 | forseti-server-vm-ip | Forseti Server VM private IP address |
 | forseti-server-vm-name | Forseti Server VM name |
 | suffix | The random suffix appended to Forseti resources |
