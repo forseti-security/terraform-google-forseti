@@ -344,6 +344,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | forseti-server-git-public-key-openssh | The public OpenSSH key generated to allow the Forseti Server to clone the policy library repository. |
 | forseti-server-service-account | Forseti Server service account |
 | forseti-server-storage-bucket | Forseti Server storage bucket |
+| forseti-server-vm-internal-dns | Forseti Server internal DNS |
 | forseti-server-vm-ip | Forseti Server VM private IP address |
 | forseti-server-vm-name | Forseti Server VM name |
 | suffix | The random suffix appended to Forseti resources |

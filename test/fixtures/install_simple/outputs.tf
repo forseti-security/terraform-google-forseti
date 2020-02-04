@@ -33,6 +33,11 @@ output "forseti-client-service-account" {
   value       = module.forseti-install-simple.forseti-client-service-account
 }
 
+output "forseti-server-vm-internal-dns" {
+  description = "Forseti Server internal DNS"
+  value       = module.forseti-install-simple.forseti-server-vm-internal-dns
+}
+
 output "forseti-server-vm-name" {
   description = "Forseti Server VM name"
   value       = module.forseti-install-simple.forseti-server-vm-name
