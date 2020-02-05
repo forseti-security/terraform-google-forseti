@@ -35,8 +35,9 @@ __Note:__ The setup script should be sourced by calling it with a preceding `.` 
 ```
 
 This will create a service account called `cloud-foundation-forseti-<suffix>`,
-assign it the proper roles, and download the service account credentials to
-`${PWD}/credentials.json`.
+assign it the proper roles, and download the service account credentials. Set and export the `GOOGLE_APPLICATION_CREDENTIALS` variable to the newly
+created credential.json as shown below.
+`export GOOGLE_APPLICATIONS_CREDENTIALS="path_of_credentials.json"`.
 
 If you are using the real time policy enforcer, you will need to generate a
 service account with a few extra roles. This can be enabled with the `-e`
