@@ -27,7 +27,7 @@ resource "null_resource" "org_id_and_folder_id_are_both_empty" {
   count = length(var.composite_root_resources) == 0 && var.org_id == "" && var.folder_id == "" ? 1 : 0
 
   provisioner "local-exec" {
-    command     = "echo 'composite_root_resources=${var.composite_root_resources} org_id=${var.org_id} folder_id=${var.org_id}' >&2; false"
+    command     = "echo 'composite_root_resources=${var.composite_root_resources} org_id=${var.org_id} folder_id=${var.folder_id}' >&2; false"
     interpreter = ["bash", "-c"]
   }
 }
@@ -127,6 +127,9 @@ data "tls_public_key" "git_sync_public_ssh_key" {
 data "google_storage_bucket_object" "server_config_contents" {
   bucket = module.server_gcs.forseti-server-storage-bucket
   name   = "configs/forseti_conf_server.yaml"
+  depends_on = [
+    module.server_config.forseti-server-config-md5
+  ]
 }
 
 data "google_client_config" "current" {}
@@ -234,10 +237,12 @@ resource "helm_release" "forseti-security" {
   version       = var.helm_chart_version
   chart         = "forseti-security"
   recreate_pods = var.recreate_pods
-  depends_on = ["kubernetes_role_binding.tiller",
+  depends_on = [
+    "kubernetes_role_binding.tiller",
     "kubernetes_namespace.forseti",
     "google_service_account_iam_binding.forseti_server_workload_identity",
-  "google_service_account_iam_binding.forseti_client_workload_identity"]
+    "google_service_account_iam_binding.forseti_client_workload_identity"
+  ]
 
   set {
     name  = "database.username"
