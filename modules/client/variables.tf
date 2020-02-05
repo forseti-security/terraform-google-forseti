@@ -49,6 +49,12 @@ variable "client_boot_image" {
   default     = "ubuntu-os-cloud/ubuntu-1804-lts"
 }
 
+variable "client_shielded_instance_config" {
+  description = "'shielded_instance_config' block if client uses shielded VM image"
+  type        = map(string)
+  default     = null
+}
+
 variable "client_region" {
   description = "GCE Forseti Client region"
   default     = "us-central1"

@@ -81,6 +81,12 @@ variable "server_boot_image" {
   default     = "ubuntu-os-cloud/ubuntu-1804-lts"
 }
 
+variable "server_shielded_instance_config" {
+  description = "'shielded_instance_config' block if server uses shielded VM image"
+  type        = map(string)
+  default     = null
+}
+
 variable "server_boot_disk_size" {
   description = "Size of the GCE instance boot disk in GBs."
   default     = "100"
@@ -775,6 +781,12 @@ variable "client_type" {
 variable "client_boot_image" {
   description = "GCE Forseti Client boot image"
   default     = "ubuntu-os-cloud/ubuntu-1804-lts"
+}
+
+variable "client_shielded_instance_config" {
+  description = "'shielded_instance_config' block if client uses shielded VM image"
+  type        = map(string)
+  default     = null
 }
 
 variable "client_region" {
