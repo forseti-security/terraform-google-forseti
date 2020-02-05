@@ -59,6 +59,7 @@ provider "helm" {
   debug                           = true
   automount_service_account_token = true
   install_tiller                  = true
+  version = "~> v0.10"
 }
 
 #--------------------#
