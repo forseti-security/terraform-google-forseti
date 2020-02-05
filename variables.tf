@@ -82,7 +82,7 @@ variable "server_boot_image" {
 }
 
 variable "server_shielded_instance_config" {
-  description = "'shielded_instance_config' block if server uses shielded VM image"
+  description = "Server instance 'shielded_instance_config' block if using shielded VM image"
   type        = map(string)
   default     = null
 }
@@ -784,7 +784,7 @@ variable "client_boot_image" {
 }
 
 variable "client_shielded_instance_config" {
-  description = "'shielded_instance_config' block if client uses shielded VM image"
+  description = "Client instance 'shielded_instance_config' block if using shielded VM image"
   type        = map(string)
   default     = null
 }

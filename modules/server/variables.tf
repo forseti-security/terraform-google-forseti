@@ -61,7 +61,7 @@ variable "server_boot_image" {
 }
 
 variable "server_shielded_instance_config" {
-  description = "'shielded_instance_config' block if server uses shielded VM image"
+  description = "Server instance 'shielded_instance_config' block if using shielded VM image"
   type        = map(string)
   default     = null
 }
