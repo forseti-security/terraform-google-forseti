@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Extending the adopted spec, each change should have a link to its corresponding pull request appended.
 
+## Unreleased
+
 ## [v5.0.1] - 2020-01-31
 
 ### Added
@@ -22,7 +24,7 @@ Version 5.0.0 is a backwards-incompatible release. Please see the [upgrade instr
 - Added additional submodules for Forseti infrastructure components [#284]
 - Update Cloud Shell tutorial [#309]
 - Add variable to enable mailjet_rest library [#302]
-- Updating helper scripts to include GKE related roles [#306]
+- Updating helper scripts to include GKE related roles [#306]gi
 - Setting the GKE version to a specific version [#307]
 - Fix serviceusage test [#308]
 - Adding cscc vars to on_gke examples [#304]
@@ -295,9 +297,9 @@ Version 4.0.0 is a backwards-incompatible release. Please see the [upgrade instr
 [v4.2.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.1.0...v4.2.1
 [v4.3.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.2.1...v4.3.0
 [v5.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.3.0...v5.0.0
-[v5.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v5.0.0...v5.0.1
+[v5.0.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v5.0.0...v5.0.1
 
-[#330]: https://github.com/forseti-security/terraform-google-forseti/pull/476
+[#476]: https://github.com/forseti-security/terraform-google-forseti/pull/476
 [#330]: https://github.com/forseti-security/terraform-google-forseti/pull/330
 [#329]: https://github.com/forseti-security/terraform-google-forseti/pull/329
 [#309]: https://github.com/forseti-security/terraform-google-forseti/pull/309
