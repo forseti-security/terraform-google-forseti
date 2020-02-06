@@ -1,6 +1,6 @@
 # Forseti Terraform Module
 
-The Forseti Terraform module is the only supported method of installing [Forseti Security](https://forsetisecurity.org/). The default infrastructure for Forseti is Google Compute Engine. This module also supports installing Forseti on Google Kubernetes Engine (GKE), and at some point in the future will become the default. For more information on installing Forseti on GKE, please see the [detailed guide on the Forseti Security website](https://forsetisecurity.org/docs/latest/setup/forseti-on-gke.html).
+The Google Terraform Forseti module is the only supported method of installing [Forseti Security](https://forsetisecurity.org/). The default infrastructure for Forseti is Google Compute Engine. This module also supports installing Forseti on Google Kubernetes Engine (GKE), and at some point in the future will become the default. For more information on installing Forseti on GKE, please see the [detailed guide on the Forseti Security website](https://forsetisecurity.org/docs/latest/setup/forseti-on-gke.html).
 
 ## Google Cloud Shell Walkthrough
 A Google Cloud Shell Walkthrough has been setup to make it easy for users who are new to Forseti and Terraform. This walkthrough provides a set of instructions to get a default installation of Forseti setup that can be used in a production environment.
