@@ -17,17 +17,21 @@
 // using default unshielded VM image for both client and server VMs
 module "unshielded-vm" {
   source     = "../../.."
-  domain     = "mydomain.com"
+  domain     = var.domain
   project_id = var.project_id
   org_id     = var.org_id
+  network    = var.network
+  subnetwork = var.subnetwork
 }
 
 // using shielded VM image for both client and server VMs
 module "shielded-vm" {
   source            = "../../.."
-  domain            = "mydomain.com"
+  domain            = var.domain
   project_id        = var.project_id
   org_id            = var.org_id
+  network           = var.network
+  subnetwork        = var.subnetwork
   server_boot_image = "gce-uefi-images/ubuntu-1804-lts"
   client_boot_image = "gce-uefi-images/ubuntu-1804-lts"
   server_shielded_instance_config = {

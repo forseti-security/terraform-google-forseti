@@ -21,3 +21,15 @@ variable "org_id" {
 variable "project_id" {
   description = "The ID of an existing Google project where Forseti will be installed"
 }
+
+variable "domain" {
+  description = "The domain associated with the GCP Organization ID"
+}
+
+variable "network" {
+  description = "Name of the shared VPC"
+}
+
+variable "subnetwork" {
+  description = "Name of the subnetwork where forseti will be deployed"
+}
