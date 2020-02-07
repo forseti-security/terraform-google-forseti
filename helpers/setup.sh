@@ -136,6 +136,7 @@ gcloud services enable \
     cloudresourcemanager.googleapis.com \
     serviceusage.googleapis.com \
     compute.googleapis.com \
+    container.googleapis.com \
     --project "${PROJECT_ID}"
 
 
@@ -241,7 +242,7 @@ if [[ -n "$WITH_ENFORCER" ]]; then
 fi
 
 if [[ -n "$ON_GKE" ]]; then
-  gke_roles=("roles/container.admin" "roles/compute.networkAdmin" "roles/resourcemanager.projectIamAdmin")
+  gke_roles=("roles/container.admin" "roles/compute.networkAdmin" "roles/resourcemanager.projectIamAdmin" "roles/container.clusterAdmin" "roles/container.developer" "roles/iam.serviceAccountKeyAdmin")
 
   echo "Granting on-GKE related roles on project $PROJECT_ID..."
   for gke_role in "${gke_roles[@]}"; do
