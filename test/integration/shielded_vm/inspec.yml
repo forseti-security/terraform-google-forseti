@@ -14,10 +14,16 @@
 
 name: shielded_vm
 attributes:
-  - name: project_id
+  - name: forseti-server-shielded-vm-name
     required: true
     type: string
-  - name: org_id
+  - name: forseti-server-unshielded-vm-name
+    required: true
+    type: string
+  - name: forseti-client-shielded-vm-name
+    required: true
+    type: string
+  - name: forseti-client-unshielded-vm-name
     required: true
     type: string
 depends:

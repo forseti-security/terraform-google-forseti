@@ -26,58 +26,54 @@ control "forseti-shielded-vm" do
   title "Forseti VM"
 
   shielded_vms.each { |vm|
-    describe "Shielded VM" do
-      describe command("gcloud compute instances describe #{vm} --zone=#{zone} --format=json") do
-        its('exit_status') { should be 0 }
-        its('stderr') { should eq '' }
+    describe command("gcloud compute instances describe #{vm} --zone=#{zone} --format=json") do
+      its('exit_status') { should be 0 }
+      its('stderr') { should eq '' }
 
-        let!(:data) do
-          if subject.exit_status == 0
-            JSON.parse(subject.stdout, symbolize_names: true)
-          else
-            {}
-          end
+      let!(:data) do
+        if subject.exit_status == 0
+          JSON.parse(subject.stdout, symbolize_names: true)
+        else
+          {}
+        end
+      end
+
+      describe "shielded instance config" do
+        it 'should exist' do
+          expect(data).to have_key(:shieldedInstanceConfig)
         end
 
-        describe "shielded instance config" do
-          it 'should exist' do
-            expect(data).to have_key(:shieldedInstanceConfig)
-          end
+        it 'should have enableIntegrityMonitoring property' do
+          expect(data[:shieldedInstanceConfig][:enableIntegrityMonitoring]).to eq true
+        end
 
-          it 'should have enableIntegrityMonitoring property' do
-            expect(data[:shieldedInstanceConfig][:enableIntegrityMonitoring]).to eq true
-          end
+        it 'should have enableSecureBoot property' do
+          expect(data[:shieldedInstanceConfig][:enableSecureBoot]).to eq true
+        end
 
-          it 'should have enableSecureBoot property' do
-            expect(data[:shieldedInstanceConfig][:enableSecureBoot]).to eq true
-          end
-
-          it 'should have enableVtpm property' do
-            expect(data[:shieldedInstanceConfig][:enableVtpm]).to eq true
-          end
+        it 'should have enableVtpm property' do
+          expect(data[:shieldedInstanceConfig][:enableVtpm]).to eq true
         end
       end
     end
   }
 
   unshielded_vms.each { |vm|
-    describe "Unshielded VM" do
-      describe command("gcloud compute instances describe #{vm} --zone=#{zone} --format=json") do
-        its('exit_status') { should be 0 }
-        its('stderr') { should eq '' }
+    describe command("gcloud compute instances describe #{vm} --zone=#{zone} --format=json") do
+      its('exit_status') { should be 0 }
+      its('stderr') { should eq '' }
 
-        let!(:data) do
-          if subject.exit_status == 0
-            JSON.parse(subject.stdout, symbolize_names: true)
-          else
-            {}
-          end
+      let!(:data) do
+        if subject.exit_status == 0
+          JSON.parse(subject.stdout, symbolize_names: true)
+        else
+          {}
         end
+      end
 
-        describe "shielded instance config" do
-          it 'should not exist' do
-            expect(data).not_to have_key(:shieldedInstanceConfig)
-          end
+      describe "shielded instance config" do
+        it 'should not exist' do
+          expect(data).not_to have_key(:shieldedInstanceConfig)
         end
       end
     end
