@@ -14,12 +14,12 @@
 
 zone = "us-central1-c"
 
-server_shielded_vm = input("forseti-server-shielded-vm-name")
-client_shielded_vm = input("forseti-client-shielded-vm-name")
+server_shielded_vm = attribute("forseti-server-shielded-vm-name")
+client_shielded_vm = attribute("forseti-client-shielded-vm-name")
 shielded_vms = [server_shielded_vm, client_shielded_vm]
 
-server_unshielded_vm = input("forseti-server-unshielded-vm-name")
-client_unshielded_vm = input("forseti-client-unshielded-vm-name")
+server_unshielded_vm = attribute("forseti-server-unshielded-vm-name")
+client_unshielded_vm = attribute("forseti-client-unshielded-vm-name")
 unshielded_vms = [server_unshielded_vm, client_unshielded_vm]
 
 control "forseti-shielded-vm" do
