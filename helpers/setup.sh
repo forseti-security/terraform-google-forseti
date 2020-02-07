@@ -136,7 +136,6 @@ gcloud services enable \
     cloudresourcemanager.googleapis.com \
     serviceusage.googleapis.com \
     compute.googleapis.com \
-    container.googleapis.com \
     --project "${PROJECT_ID}"
 
 
@@ -251,6 +250,9 @@ if [[ -n "$ON_GKE" ]]; then
         --role="$gke_role" \
         --user-output-enabled false
   done
+
+  echo "Enabling on-GKE releated services on project $PROJECT_ID..."
+  gcloud services enable container.googleapis.com --project "${PROJECT_ID}"
 fi
 
 if [[ $HOST_PROJECT_ID != "" ]];
