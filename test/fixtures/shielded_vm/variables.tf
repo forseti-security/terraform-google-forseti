@@ -33,17 +33,3 @@ variable "network" {
 variable "subnetwork" {
   description = "Name of the subnetwork where forseti will be deployed"
 }
-
-variable "region" {
-  description = "Region where forseti subnetwork will be deployed"
-  default     = "us-central1"
-}
-
-variable "gsuite_admin_email" {
-  description = "The email of a GSuite super admin, used for pulling user directory information *and* sending notifications."
-}
-
-variable "forseti_version" {
-  description = "The version of Forseti to install"
-  default     = "master"
-}

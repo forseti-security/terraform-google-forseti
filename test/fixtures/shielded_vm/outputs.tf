@@ -14,14 +14,9 @@
  * limitations under the License.
  */
 
-output "forseti-server-unshielded-vm-name" {
-  description = "Forseti Server unshielded VM name"
-  value       = module.unshielded-vm.forseti-server-vm-name
-}
-
-output "forseti-client-unshielded-vm-name" {
-  description = "Forseti Client unshielded VM name"
-  value       = module.unshielded-vm.forseti-client-vm-name
+output "project_id" {
+  description = "A forwarded copy of `project_id` for InSpec"
+  value       = var.project_id
 }
 
 output "forseti-server-shielded-vm-name" {

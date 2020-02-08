@@ -14,19 +14,17 @@
 
 zone = "us-central1-c"
 
+project_id = attribute("project_id")
+
 server_shielded_vm = attribute("forseti-server-shielded-vm-name")
 client_shielded_vm = attribute("forseti-client-shielded-vm-name")
 shielded_vms = [server_shielded_vm, client_shielded_vm]
 
-server_unshielded_vm = attribute("forseti-server-unshielded-vm-name")
-client_unshielded_vm = attribute("forseti-client-unshielded-vm-name")
-unshielded_vms = [server_unshielded_vm, client_unshielded_vm]
-
 control "forseti-shielded-vm" do
-  title "Forseti VM"
+  title "Forseti Shielded VM"
 
   shielded_vms.each { |vm|
-    describe command("gcloud compute instances describe #{vm} --zone=#{zone} --format=json") do
+    describe command("gcloud compute instances describe #{vm} --zone=#{zone} --project=#{project_id} --format=json") do
       its('exit_status') { should be 0 }
       its('stderr') { should eq '' }
 
@@ -53,27 +51,6 @@ control "forseti-shielded-vm" do
 
         it 'should have enableVtpm property' do
           expect(data[:shieldedInstanceConfig][:enableVtpm]).to eq true
-        end
-      end
-    end
-  }
-
-  unshielded_vms.each { |vm|
-    describe command("gcloud compute instances describe #{vm} --zone=#{zone} --format=json") do
-      its('exit_status') { should be 0 }
-      its('stderr') { should eq '' }
-
-      let!(:data) do
-        if subject.exit_status == 0
-          JSON.parse(subject.stdout, symbolize_names: true)
-        else
-          {}
-        end
-      end
-
-      describe "shielded instance config" do
-        it 'should not exist' do
-          expect(data).not_to have_key(:shieldedInstanceConfig)
         end
       end
     end
