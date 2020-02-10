@@ -173,16 +173,18 @@ module "server" {
 
 module "cloudsql" {
   source                     = "./modules/cloudsql"
+  cloudsql_db_name           = var.cloudsql_db_name
   cloudsql_disk_size         = var.cloudsql_disk_size
+  cloudsql_net_write_timeout = var.cloudsql_net_write_timeout
+  cloudsql_password          = var.cloudsql_db_password
   cloudsql_private           = var.cloudsql_private
   cloudsql_region            = var.cloudsql_region
   cloudsql_type              = var.cloudsql_type
-  cloudsql_db_name           = var.cloudsql_db_name
+  cloudsql_user              = var.cloudsql_db_user
   cloudsql_user_host         = var.cloudsql_user_host
-  cloudsql_net_write_timeout = var.cloudsql_net_write_timeout
   enable_service_networking  = var.enable_service_networking
-  network_project            = var.network_project
   network                    = var.network
+  network_project            = var.network_project
   project_id                 = var.project_id
   services                   = google_project_service.main.*.service
   suffix                     = local.random_hash
@@ -351,5 +353,5 @@ module "client_gcs" {
 module "client_config" {
   source            = "./modules/client_config"
   client_gcs_module = module.client_gcs
-  server_address    = module.server.forseti-server-vm-ip
+  server_address    = module.server.forseti-server-vm-internal-dns
 }

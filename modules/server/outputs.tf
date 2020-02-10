@@ -28,3 +28,8 @@ output "forseti-server-vm-name" {
   description = "Forseti Server VM name"
   value       = google_compute_instance.forseti-server.name
 }
+
+output "forseti-server-vm-internal-dns" {
+  description = "Forseti Server internal DNS"
+  value       = "${google_compute_instance.forseti-server.name}.${google_compute_instance.forseti-server.zone}.c.${var.project_id}.internal"
+}

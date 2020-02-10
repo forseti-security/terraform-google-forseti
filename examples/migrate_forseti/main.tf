@@ -40,7 +40,7 @@ provider "random" {
 
 module "forseti" {
   source  = "terraform-google-modules/forseti/google"
-  version = "~> 5.0.0"
+  version = "~> 5.1"
 
   # Replace these argument values with those obtained in the Prerequisites section
   domain               = "DOMAIN"
