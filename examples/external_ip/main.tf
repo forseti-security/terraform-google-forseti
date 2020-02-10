@@ -16,7 +16,7 @@
 
 provider "google" {
   credentials = file(var.credentials_path)
-  version     = "~> 3.7.0"
+  version     = "~> 3.7"
 }
 
 provider "null" {

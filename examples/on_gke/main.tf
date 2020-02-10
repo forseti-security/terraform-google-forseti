@@ -27,12 +27,12 @@ locals {
 #------------------#
 
 provider "google" {
-  version = "~> 3.7.0"
+  version = "~> 3.7"
   project = var.project_id
 }
 
 provider "google-beta" {
-  version = "~> 3.7.0"
+  version = "~> 3.7"
   project = var.project_id
 }
 

@@ -18,7 +18,7 @@
 terraform {
   required_version = ">= 0.12"
   required_providers {
-    google   = "~> 3.7.0"
+    google   = "~> 3.7"
     helm     = "~> 0.10"
     null     = "~> 2.0"
     template = "~> 2.0"

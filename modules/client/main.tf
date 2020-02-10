@@ -89,6 +89,8 @@ resource "google_compute_instance" "forseti-client" {
   dynamic "network_interface" {
     for_each = local.network_interface
     content {
+      # Field `address` has been deprecated. Use `network_ip` instead.
+      # https://github.com/terraform-providers/terraform-provider-google/blob/master/CHANGELOG.md#200-february-12-2019
       network            = lookup(network_interface.value, "network", null)
       network_ip         = lookup(network_interface.value, "network_ip", null)
       subnetwork         = lookup(network_interface.value, "subnetwork", null)
