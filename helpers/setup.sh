@@ -241,7 +241,7 @@ if [[ -n "$WITH_ENFORCER" ]]; then
 fi
 
 if [[ -n "$ON_GKE" ]]; then
-  gke_roles=("roles/container.admin" "roles/compute.networkAdmin" "roles/resourcemanager.projectIamAdmin")
+  gke_roles=("roles/container.admin" "roles/compute.networkAdmin" "roles/resourcemanager.projectIamAdmin" "roles/container.clusterAdmin" "roles/container.developer" "roles/iam.serviceAccountKeyAdmin")
 
   echo "Granting on-GKE related roles on project $PROJECT_ID..."
   for gke_role in "${gke_roles[@]}"; do
@@ -250,6 +250,9 @@ if [[ -n "$ON_GKE" ]]; then
         --role="$gke_role" \
         --user-output-enabled false
   done
+
+  echo "Enabling on-GKE releated services on project $PROJECT_ID..."
+  gcloud services enable container.googleapis.com --project "${PROJECT_ID}"
 fi
 
 if [[ $HOST_PROJECT_ID != "" ]];
