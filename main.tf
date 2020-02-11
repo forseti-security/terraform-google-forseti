@@ -99,6 +99,7 @@ resource "google_project_service" "cloud_profiler" {
 module "client" {
   source = "./modules/client"
 
+  client_enabled                  = var.client_enabled
   project_id                      = var.project_id
   client_boot_image               = var.client_boot_image
   client_shielded_instance_config = var.client_shielded_instance_config
@@ -337,13 +338,15 @@ module "server_config" {
 }
 
 module "client_iam" {
-  source     = "./modules/client_iam"
-  project_id = var.project_id
-  suffix     = local.random_hash
+  source         = "./modules/client_iam"
+  client_enabled = var.client_enabled
+  project_id     = var.project_id
+  suffix         = local.random_hash
 }
 
 module "client_gcs" {
   source                  = "./modules/client_gcs"
+  client_enabled          = var.client_enabled
   project_id              = var.project_id
   storage_bucket_location = var.storage_bucket_location
   suffix                  = local.random_hash
@@ -353,6 +356,7 @@ module "client_gcs" {
 
 module "client_config" {
   source            = "./modules/client_config"
+  client_enabled    = var.client_enabled
   client_gcs_module = module.client_gcs
   server_address    = module.server.forseti-server-vm-internal-dns
 }
