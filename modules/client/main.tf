@@ -125,6 +125,15 @@ resource "google_compute_instance" "forseti-client" {
     scopes = ["cloud-platform"]
   }
 
+  dynamic "shielded_instance_config" {
+    for_each = var.client_shielded_instance_config == null ? [] : [var.client_shielded_instance_config]
+    content {
+      enable_secure_boot          = lookup(var.client_shielded_instance_config, "enable_secure_boot", null)
+      enable_vtpm                 = lookup(var.client_shielded_instance_config, "enable_vtpm", null)
+      enable_integrity_monitoring = lookup(var.client_shielded_instance_config, "enable_integrity_monitoring", null)
+    }
+  }
+
   depends_on = [
     null_resource.services-dependency,
     var.client_config_module,

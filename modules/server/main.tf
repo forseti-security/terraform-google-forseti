@@ -273,6 +273,15 @@ resource "google_compute_instance" "forseti-server" {
     scopes = ["cloud-platform"]
   }
 
+  dynamic "shielded_instance_config" {
+    for_each = var.server_shielded_instance_config == null ? [] : [var.server_shielded_instance_config]
+    content {
+      enable_secure_boot          = lookup(var.server_shielded_instance_config, "enable_secure_boot", null)
+      enable_vtpm                 = lookup(var.server_shielded_instance_config, "enable_vtpm", null)
+      enable_integrity_monitoring = lookup(var.server_shielded_instance_config, "enable_integrity_monitoring", null)
+    }
+  }
+
   depends_on = [
     var.server_iam_module,
     var.server_rules_module,
