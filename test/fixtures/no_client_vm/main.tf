@@ -17,12 +17,10 @@
 module "no-client-vm" {
   source = "../../.."
 
-  project_id       = var.project_id
-  org_id           = var.org_id
-  domain           = var.domain
-  network          = var.network
-  subnetwork       = var.subnetwork
-  server_private   = true
-  cloudsql_private = true
-  client_enabled   = false
+  project_id     = var.project_id
+  org_id         = var.org_id
+  domain         = var.domain
+  network        = var.network
+  subnetwork     = var.subnetwork
+  client_enabled = false
 }
