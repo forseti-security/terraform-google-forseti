@@ -14,11 +14,22 @@
  * limitations under the License.
  */
 
+variable "org_id" {
+  description = "GCP Organization ID that Forseti will have purview over"
+}
 
-terraform {
-  required_version = ">= 0.12"
-  required_providers {
-    google = "~> 3.7"
-    helm   = "~> 0.10"
-  }
+variable "project_id" {
+  description = "The ID of an existing Google project where Forseti will be installed"
+}
+
+variable "domain" {
+  description = "The domain associated with the GCP Organization ID"
+}
+
+variable "network" {
+  description = "Name of the shared VPC"
+}
+
+variable "subnetwork" {
+  description = "Name of the subnetwork where forseti will be deployed"
 }

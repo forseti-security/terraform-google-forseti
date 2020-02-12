@@ -99,26 +99,27 @@ resource "google_project_service" "cloud_profiler" {
 module "client" {
   source = "./modules/client"
 
-  project_id               = var.project_id
-  client_boot_image        = var.client_boot_image
-  subnetwork               = var.subnetwork
-  forseti_home             = var.forseti_home
-  forseti_version          = var.forseti_version
-  forseti_repo_url         = var.forseti_repo_url
-  client_type              = var.client_type
-  network_project          = local.network_project
-  network                  = var.network
-  suffix                   = local.random_hash
-  client_region            = var.client_region
-  client_instance_metadata = var.client_instance_metadata
-  client_ssh_allow_ranges  = var.client_ssh_allow_ranges
-  client_tags              = var.client_tags
-  client_access_config     = var.client_access_config
-  client_private           = var.client_private
-  manage_firewall_rules    = var.manage_firewall_rules
-  client_iam_module        = module.client_iam
-  client_gcs_module        = module.client_gcs
-  client_config_module     = module.client_config
+  project_id                      = var.project_id
+  client_boot_image               = var.client_boot_image
+  client_shielded_instance_config = var.client_shielded_instance_config
+  subnetwork                      = var.subnetwork
+  forseti_home                    = var.forseti_home
+  forseti_version                 = var.forseti_version
+  forseti_repo_url                = var.forseti_repo_url
+  client_type                     = var.client_type
+  network_project                 = local.network_project
+  network                         = var.network
+  suffix                          = local.random_hash
+  client_region                   = var.client_region
+  client_instance_metadata        = var.client_instance_metadata
+  client_ssh_allow_ranges         = var.client_ssh_allow_ranges
+  client_tags                     = var.client_tags
+  client_access_config            = var.client_access_config
+  client_private                  = var.client_private
+  manage_firewall_rules           = var.manage_firewall_rules
+  client_iam_module               = module.client_iam
+  client_gcs_module               = module.client_gcs
+  client_config_module            = module.client_config
 
   services = google_project_service.main.*.service
 }
