@@ -153,6 +153,19 @@ echo "Forseti Startup - Enabling and starting Forseti service."
 systemctl enable --now forseti
 echo "Forseti Startup - Success! The Forseti API server has been enabled and started."
 
+# Increase Open File Limit
+if grep -q "ubuntu soft nofile" /etc/security/limits.conf ; then
+  echo "Ulimit soft nofile already set."
+else
+  echo "ubuntu soft nofile 32768" | sudo tee -a /etc/security/limits.conf
+fi
+
+if grep -q "ubuntu hard nofile" /etc/security/limits.conf ; then
+  echo "Ulimit hard nofile already set."
+else
+  echo "ubuntu hard nofile 32768" | sudo tee -a /etc/security/limits.conf
+fi
+
 # Create a Forseti env script
 FORSETI_ENV="$(cat << EOF
 #!/bin/bash

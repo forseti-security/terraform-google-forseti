@@ -262,7 +262,8 @@ resource "google_compute_instance" "forseti-server" {
   dynamic "network_interface" {
     for_each = local.network_interface
     content {
-      address            = lookup(network_interface.value, "address", null)
+      # Field `address` has been deprecated. Use `network_ip` instead.
+      # https://github.com/terraform-providers/terraform-provider-google/blob/master/CHANGELOG.md#200-february-12-2019
       network            = lookup(network_interface.value, "network", null)
       network_ip         = lookup(network_interface.value, "network_ip", null)
       subnetwork         = lookup(network_interface.value, "subnetwork", null)
@@ -298,6 +299,15 @@ resource "google_compute_instance" "forseti-server" {
   service_account {
     email  = var.server_iam_module.forseti-server-service-account
     scopes = ["cloud-platform"]
+  }
+
+  dynamic "shielded_instance_config" {
+    for_each = var.server_shielded_instance_config == null ? [] : [var.server_shielded_instance_config]
+    content {
+      enable_secure_boot          = lookup(var.server_shielded_instance_config, "enable_secure_boot", null)
+      enable_vtpm                 = lookup(var.server_shielded_instance_config, "enable_vtpm", null)
+      enable_integrity_monitoring = lookup(var.server_shielded_instance_config, "enable_integrity_monitoring", null)
+    }
   }
 
   depends_on = [

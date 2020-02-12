@@ -26,7 +26,8 @@ Options:
     -o ORG_ID               The organization ID to remove roles from the Forseti service account.
     -s SERVICE_ACCOUNT_NAME The service account to remove from the project and organization IAM roles.
     -e                      Remove additional IAM roles for running the real time policy enforcer.
-    -k                      Add additional IAM roles for running Forseti on-GKE
+    -k                      Remove additional IAM roles for running Forseti on-GKE
+    -q                      Remove additional IAM roles for using private IPs with Cloud SQL
     -f HOST_PROJECT_ID      ID of a project holding shared VPC.
 
 Examples:
@@ -43,9 +44,10 @@ SERVICE_ACCOUNT_NAME=$FORSETI_SETUP_SERVICE_ACCOUNT_NAME
 WITH_ENFORCER=""
 HOST_PROJECT_ID=""
 ON_GKE=""
+SQL_PRIVATE_IP=""
 
 OPTIND=1
-while getopts ":hekf:p:o:s:" opt; do
+while getopts ":hekqf:p:o:s:" opt; do
   case "$opt" in
     h)
       show_help
@@ -68,6 +70,9 @@ while getopts ":hekf:p:o:s:" opt; do
       ;;
     s)
       SERVICE_ACCOUNT_NAME="$OPTARG"
+      ;;
+    q)
+      SQL_PRIVATE_IP=1
       ;;
     *)
       echo "Unhandled option: -$opt" >&2
@@ -99,19 +104,19 @@ SERVICE_ACCOUNT_EMAIL="$SERVICE_ACCOUNT_NAME@${PROJECT_ID}.iam.gserviceaccount.c
 KEY_FILE="${PWD}/credentials.json"
 
 # Ensure that we can fetch the IAM policy on the Forseti project.
-if ! gcloud projects get-iam-policy "$PROJECT_ID" 2>&- 1>&-; then
+if ! gcloud projects get-iam-policy "$PROJECT_ID" &> /dev/null; then
   echo "ERROR: Unable to fetch IAM policy on project $PROJECT_ID."
   exit 1
 fi
 
 # Ensure that we can fetch the IAM policy on the GCP organization.
-if ! gcloud organizations get-iam-policy "$ORG_ID" 2>&- 1>&-; then
+if ! gcloud organizations get-iam-policy "$ORG_ID" &> /dev/null; then
   echo "ERROR: Unable to fetch IAM policy on organization $ORG_ID."
   exit 1
 fi
 
 # Ensure that we can query the service account.
-if ! gcloud iam service-accounts describe "$SERVICE_ACCOUNT_EMAIL" 2>&- 1>&-; then
+if ! gcloud iam service-accounts describe "$SERVICE_ACCOUNT_EMAIL" &> /dev/null; then
   echo "ERROR: Unable to fetch service account $SERVICE_ACCOUNT_EMAIL."
   exit 1
 fi
@@ -164,6 +169,14 @@ gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
     --role="roles/storage.admin" \
     --user-output-enabled false
+
+if [[ -n "$SQL_PRIVATE_IP" ]]; then
+  echo "Removing roles to allow Private IPs with Cloud SQL on project ${PROJECT_ID}..."
+  gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
+    --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
+    --role="roles/compute.networkAdmin" \
+    --user-output-enabled false
+fi
 
 if [[ -n "$WITH_ENFORCER" ]]; then
   org_roles=("roles/logging.configWriter" "roles/iam.organizationRoleAdmin")

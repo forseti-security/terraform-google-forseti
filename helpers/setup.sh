@@ -23,6 +23,7 @@ Options:
     -o ORG_ID           The organization ID that Forseti will be monitoring.
     -e                  Add additional IAM roles for running the real time policy enforcer.
     -k                  Add additional IAM roles for running Forseti on-GKE
+    -q                  Add additional IAM roles for using private IPs with Cloud SQL
     -f HOST_PROJECT_ID  ID of a project holding shared vpc.
     -s SERVICE_ACCOUNT  Specify a service account to create (if already exists will be updated)
 Examples:
@@ -36,11 +37,12 @@ ORG_ID=""
 WITH_ENFORCER=""
 HOST_PROJECT_ID=""
 ON_GKE=""
+SQL_PRIVATE_IP=""
 SERVICE_ACCOUNT_NAME="cloud-foundation-forseti-${RANDOM}"
 IS_UPDATE=0
 
 OPTIND=1
-while getopts ":hekf:s:p:o:" opt; do
+while getopts ":hekqf:s:p:o:" opt; do
   case "$opt" in
     h)
       show_help
@@ -63,6 +65,9 @@ while getopts ":hekf:s:p:o:" opt; do
       ;;
     s)
       SERVICE_ACCOUNT_NAME="$OPTARG"
+      ;;
+    q)
+      SQL_PRIVATE_IP=1
       ;;
     *)
       echo "Unhandled option: -$opt" >&2
@@ -137,8 +142,10 @@ gcloud services enable \
 
 if [[ "$IS_UPDATE" == "0" ]]; then
 
-    # If is an update i don't create service accout and re-download credentials
+    # Create new service accout and download credentials
     echo "Creating a new service account ${SERVICE_ACCOUNT_EMAIL} ..."
+    export FORSETI_SETUP_SERVICE_ACCOUNT_NAME="${SERVICE_ACCOUNT_NAME}"
+
     gcloud iam service-accounts \
         --project "${PROJECT_ID}" create "${SERVICE_ACCOUNT_NAME}" \
         --display-name "${SERVICE_ACCOUNT_NAME}"
@@ -148,6 +155,8 @@ if [[ "$IS_UPDATE" == "0" ]]; then
     gcloud iam service-accounts keys create "${KEY_FILE}" \
         --iam-account "${SERVICE_ACCOUNT_EMAIL}" \
         --user-output-enabled false
+
+    export GOOGLE_APPLICATION_CREDENTIALS="${KEY_FILE}"
 fi
 
 echo "Applying permissions for org $ORG_ID and project $PROJECT_ID..."
@@ -202,6 +211,14 @@ gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
     --role="roles/cloudsql.admin" \
     --user-output-enabled false
 
+if [[ -n "$SQL_PRIVATE_IP" ]]; then
+  echo "Granting roles to allow Private IPs with Cloud SQL on project ${PROJECT_ID}..."
+  gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
+    --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
+    --role="roles/compute.networkAdmin" \
+    --user-output-enabled false
+fi
+
 if [[ -n "$WITH_ENFORCER" ]]; then
   org_roles=("roles/logging.configWriter" "roles/iam.organizationRoleAdmin")
   project_roles=("roles/pubsub.admin")
@@ -224,7 +241,7 @@ if [[ -n "$WITH_ENFORCER" ]]; then
 fi
 
 if [[ -n "$ON_GKE" ]]; then
-  gke_roles=("roles/container.admin" "roles/compute.networkAdmin" "roles/resourcemanager.projectIamAdmin")
+  gke_roles=("roles/container.admin" "roles/compute.networkAdmin" "roles/resourcemanager.projectIamAdmin" "roles/container.clusterAdmin" "roles/container.developer" "roles/iam.serviceAccountKeyAdmin")
 
   echo "Granting on-GKE related roles on project $PROJECT_ID..."
   for gke_role in "${gke_roles[@]}"; do
@@ -233,6 +250,9 @@ if [[ -n "$ON_GKE" ]]; then
         --role="$gke_role" \
         --user-output-enabled false
   done
+
+  echo "Enabling on-GKE releated services on project $PROJECT_ID..."
+  gcloud services enable container.googleapis.com --project "${PROJECT_ID}"
 fi
 
 if [[ $HOST_PROJECT_ID != "" ]];

@@ -14,13 +14,13 @@
 
 title 'Forseti Terraform GCP Test Suite for Shared VPC setup using gcloud command'
 
-project_id              = attribute("project_id")
-forseti_server_vm_name  = attribute("forseti-server-vm-name")
-forseti_server_vm_ip    = attribute("forseti-server-vm-ip")
-forseti_client_vm_name  = attribute("forseti-client-vm-name")
-region                  = attribute("region")
-subnetwork              = attribute("subnetwork")
-network_project         = attribute("network_project")
+project_id                     = attribute("project_id")
+forseti_server_vm_name         = attribute("forseti-server-vm-name")
+forseti_server_vm_internal_dns = attribute("forseti-server-vm-internal-dns")
+forseti_client_vm_name         = attribute("forseti-client-vm-name")
+region                         = attribute("region")
+subnetwork                     = attribute("subnetwork")
+network_project                = attribute("network_project")
 
 control 'forseti-subnetwork' do
   impact 1.0
@@ -65,6 +65,7 @@ control 'forseti-command-server' do
   describe command("sudo systemctl status forseti --no-page") do
     its(:exit_status) { should eq 0 }
     its(:stderr) { should eq '' }
+    its(:stdout) { should match(/Active: active/) }
   end
 
   describe command("forseti config show") do
@@ -95,6 +96,6 @@ control 'forseti-command-client' do
   describe command("forseti config show") do
     its(:exit_status) { should eq 0 }
     its(:stderr) { should eq '' }
-    its(:stdout) { should match /'endpoint': '#{forseti_server_vm_ip}:50051'/ }
+    its(:stdout) { should match /'endpoint': '#{forseti_server_vm_internal_dns}:50051'/ }
   end
 end

@@ -19,12 +19,12 @@
 #------------------#
 
 provider "google" {
-  version = "~> 2.12.0"
+  version = "~> 3.7"
   project = var.project_id
 }
 
 provider "google-beta" {
-  version = "~> 2.12.0"
+  version = "~> 3.7"
   project = var.project_id
 }
 
@@ -39,7 +39,7 @@ provider "kubernetes" {
   load_config_file       = false
   host                   = "https://${module.gke.endpoint}"
   token                  = data.google_client_config.default.access_token
-  cluster_ca_certificate = "${base64decode(module.gke.ca_certificate)}"
+  cluster_ca_certificate = base64decode(module.gke.ca_certificate)
 }
 
 //*****************************************
@@ -53,8 +53,8 @@ provider "helm" {
   kubernetes {
     load_config_file       = false
     host                   = "https://${module.gke.endpoint}"
-    token                  = "${data.google_client_config.default.access_token}"
-    cluster_ca_certificate = "${base64decode(module.gke.ca_certificate)}"
+    token                  = data.google_client_config.default.access_token
+    cluster_ca_certificate = base64decode(module.gke.ca_certificate)
   }
   debug                           = true
   automount_service_account_token = true

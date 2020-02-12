@@ -241,12 +241,12 @@ resource "helm_release" "forseti-security" {
 
   set {
     name  = "database.username"
-    value = module.cloudsql.forseti-cloudsql-user
+    value = base64encode(module.cloudsql.forseti-cloudsql-user)
   }
 
   set_sensitive {
     name  = "database.password"
-    value = module.cloudsql.forseti-cloudsql-password
+    value = base64encode(module.cloudsql.forseti-cloudsql-password)
   }
 
   set {
@@ -276,7 +276,7 @@ resource "helm_release" "forseti-security" {
 
   set_string {
     name  = "server.config.contents"
-    value = "${base64encode(data.http.server_config_contents.body)}"
+    value = base64encode(data.http.server_config_contents.body)
   }
 
   set {
@@ -346,7 +346,7 @@ resource "helm_release" "forseti-security" {
 
   set_sensitive {
     name  = "configValidator.policyLibrary.gitSync.privateSSHKey"
-    value = "${base64encode(local.git_sync_private_ssh_key)}"
+    value = base64encode(local.git_sync_private_ssh_key)
   }
 
   set {

@@ -2,7 +2,7 @@
 
 This configuration is used to simply install Forseti. It includes a full Cloud Shell [tutorial](./tutorial.md).
 
-[![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fforseti-security%2Fterraform-google-forseti.git&cloudshell_git_branch=modulerelease510&cloudshell_working_dir=examples/install_simple&cloudshell_image=gcr.io%2Fgraphite-cloud-shell-images%2Fterraform%3Alatest&cloudshell_tutorial=.%2Ftutorial.md)
+[![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fforseti-security%2Fterraform-google-forseti.git&cloudshell_git_branch=modulerelease512&cloudshell_working_dir=examples/install_simple&cloudshell_image=gcr.io%2Fgraphite-cloud-shell-images%2Fterraform%3Alatest&cloudshell_tutorial=.%2Ftutorial.md)
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
@@ -35,6 +35,7 @@ This configuration is used to simply install Forseti. It includes a full Cloud S
 | forseti-client-vm-name | Forseti Client VM name |
 | forseti-server-service-account | Forseti Server service account |
 | forseti-server-storage-bucket | Forseti Server storage bucket |
+| forseti-server-vm-internal-dns | Forseti Server internal DNS |
 | forseti-server-vm-ip | Forseti Server VM private IP address |
 | forseti-server-vm-name | Forseti Server VM name |
 | suffix | The random suffix appended to Forseti resources |

@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 
-
 terraform {
   required_version = ">= 0.12"
-  required_providers {
-    google = "~> 3.7"
-    helm   = "~> 0.10"
-  }
 }

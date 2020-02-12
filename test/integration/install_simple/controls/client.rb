@@ -14,7 +14,7 @@
 
 require "yaml"
 
-forseti_server_vm_ip = attribute("forseti-server-vm-ip")
+forseti_server_vm_internal_dns = attribute("forseti-server-vm-internal-dns")
 forseti_version = "2.24.0"
 
 control "client" do
@@ -25,11 +25,12 @@ control "client" do
 
   describe command("forseti config show") do
     its("exit_status") { should eq 0 }
-    its("stdout") { should match(/#{forseti_server_vm_ip}:50051/) }
+    its("stdout") { should match(/#{forseti_server_vm_internal_dns}:50051/) }
   end
 
   describe command("forseti inventory list") do
     its("exit_status") { should eq 0 }
+    its('stdout') { should_not match(/Error communicating to the Forseti server/) }
   end
 
   describe command("python3 -m pip show forseti-security|grep Version") do
@@ -41,8 +42,8 @@ control "client" do
   describe file("/home/ubuntu/forseti-security/configs/forseti_conf_client.yaml") do
     it { should exist }
 
-    it "sets the hostname to the Forseti server IP" do
-      expect(YAML.load(subject.content)).to eq("server_ip" => forseti_server_vm_ip)
+    it "sets the hostname to the Forseti server internal DNS" do
+      expect(YAML.load(subject.content)).to eq("server_ip" => forseti_server_vm_internal_dns)
     end
   end
 end

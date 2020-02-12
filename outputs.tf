@@ -70,6 +70,11 @@ output "forseti-server-storage-bucket" {
   value       = module.server_gcs.forseti-server-storage-bucket
 }
 
+output "forseti-server-vm-internal-dns" {
+  description = "Forseti Server internal DNS"
+  value       = module.server.forseti-server-vm-internal-dns
+}
+
 output "forseti-server-vm-ip" {
   description = "Forseti Server VM private IP address"
   value       = module.server.forseti-server-vm-ip

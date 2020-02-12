@@ -41,6 +41,7 @@ suites:
         - name: server
           backend: ssh
           controls:
+            - policy-library
             - server
           hosts_output: forseti-server-vm-ip
           user: ubuntu
@@ -114,6 +115,17 @@ suites:
           proxy_command: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o LogLevel=ERROR -o ForwardAgent=no -i test/fixtures/bastion/tls_private_key_shared_vpc ubuntu@<%= `terraform output -state test/fixtures/shared_vpc/terraform.tfstate.d/kitchen-terraform-shared-vpc-local/terraform.tfstate bastion_host 2> /dev/null`.strip %> -p 22 -W %h:%p
           shell: true
           shell_options: "--login"
+  - name: shielded_vm
+    driver:
+      name: terraform
+      root_module_directory: test/fixtures/shielded_vm/
+      command_timeout: 1800
+    verifier:
+      systems:
+        - name: gcloud
+          backend: local
+          controls:
+            - forseti-shielded-vm
 # Disabled due to issue #285
 # (https://github.com/forseti-security/terraform-google-forseti/issues/285)
 #  - name: real_time_enforcer_roles

@@ -14,11 +14,17 @@
  * limitations under the License.
  */
 
+output "project_id" {
+  description = "A forwarded copy of `project_id` for InSpec"
+  value       = var.project_id
+}
 
-terraform {
-  required_version = ">= 0.12"
-  required_providers {
-    google = "~> 3.7"
-    helm   = "~> 0.10"
-  }
+output "forseti-server-shielded-vm-name" {
+  description = "Forseti Server shielded VM name"
+  value       = module.shielded-vm.forseti-server-vm-name
+}
+
+output "forseti-client-shielded-vm-name" {
+  description = "Forseti Client shielded VM name"
+  value       = module.shielded-vm.forseti-client-vm-name
 }
