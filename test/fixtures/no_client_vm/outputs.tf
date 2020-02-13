@@ -14,7 +14,12 @@
  * limitations under the License.
  */
 
-output "forseti-client-storage-bucket" {
-  description = "Forseti Client storage bucket"
-  value       = var.client_enabled ? google_storage_bucket.client_config[0].id : null
+output "project_id" {
+  description = "A forwarded copy of `project_id` for InSpec"
+  value       = var.project_id
+}
+
+output "suffix" {
+  description = "The random suffix appended to Forseti resources"
+  value       = module.no-client-vm.suffix
 }
