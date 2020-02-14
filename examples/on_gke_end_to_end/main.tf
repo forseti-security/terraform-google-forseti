@@ -14,19 +14,6 @@
  * limitations under the License.
  */
 
-#------------------#
-# Google Providers #
-#------------------#
-provider "google" {
-  version = "~> 3.7"
-  project = var.project_id
-}
-
-provider "google-beta" {
-  version = "~> 3.7"
-  project = var.project_id
-}
-
 #-------------------------------#
 # Setup the Kubernetes Provider #
 #-------------------------------#
@@ -39,7 +26,6 @@ provider "kubernetes" {
   host                   = "https://${module.gke.endpoint}"
   token                  = data.google_client_config.default.access_token
   cluster_ca_certificate = base64decode(module.gke.ca_certificate)
-  version		 = "1.10.0"
 }
 
 #---------------------#
@@ -65,7 +51,7 @@ provider "helm" {
 #--------------------#
 module "vpc" {
   source                  = "terraform-google-modules/network/google"
-  version                 = "~> 2.1"
+  version                 = "~> 2.1.0"
   project_id              = var.project_id
   network_name            = var.network
   routing_mode            = "GLOBAL"
@@ -97,7 +83,7 @@ module "vpc" {
 #----------------------------#
 module "gke" {
   source                   = "terraform-google-modules/kubernetes-engine/google//modules/beta-public-cluster"
-  version                  = "~> 6.2"
+  version                  = "~> 7.2.0"
   project_id               = var.project_id
   name                     = var.gke_cluster_name
   region                   = var.region
