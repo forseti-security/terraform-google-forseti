@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,12 +32,14 @@ provider "google-beta" {
 #-------------------------------#
 data "google_client_config" "default" {}
 
+# Version pinned to 1.10.0 due to https://github.com/terraform-providers/terraform-provider-kubernetes/issues/759
 provider "kubernetes" {
   alias                  = "forseti"
   load_config_file       = false
   host                   = "https://${module.gke.endpoint}"
   token                  = data.google_client_config.default.access_token
   cluster_ca_certificate = base64decode(module.gke.ca_certificate)
+  version		 = "1.10.0"
 }
 
 #---------------------#
@@ -63,7 +65,7 @@ provider "helm" {
 #--------------------#
 module "vpc" {
   source                  = "terraform-google-modules/network/google"
-  version                 = "~> 1.1"
+  version                 = "~> 2.1"
   project_id              = var.project_id
   network_name            = var.network
   routing_mode            = "GLOBAL"
@@ -173,7 +175,6 @@ module "forseti" {
   forseti_email_recipient = var.forseti_email_recipient
   cscc_violations_enabled = var.cscc_violations_enabled
   cscc_source_id          = var.cscc_source_id
-
 
   config_validator_enabled           = var.config_validator_enabled
   git_sync_private_ssh_key_file      = var.git_sync_private_ssh_key_file
