@@ -21,20 +21,6 @@ locals {
   node_pool_index = [for index, node_pool in data.google_container_cluster.forseti_cluster.node_pool : index if node_pool.name == var.gke_node_pool_name][0]
 }
 
-#------------------#
-# Google Providers #
-#------------------#
-
-provider "google" {
-  version = "~> 3.7"
-  project = var.project_id
-}
-
-provider "google-beta" {
-  version = "~> 3.7"
-  project = var.project_id
-}
-
 #----------------------------------#
 # Google Client Config Data Source #
 #----------------------------------#
