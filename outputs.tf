@@ -39,6 +39,11 @@ output "forseti-client-vm-name" {
   value       = module.client.forseti-client-vm-name
 }
 
+output "forseti-cloudsql-instance-ip" {
+  description = "The IP of the master CloudSQL instance"
+  value       = module.cloudsql.forseti-cloudsql-instance-ip
+}
+
 output "forseti-cloudsql-connection-name" {
   description = "Forseti CloudSQL Connection String"
   value       = module.cloudsql.forseti-cloudsql-connection-name
