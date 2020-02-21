@@ -410,9 +410,10 @@ data "kubernetes_service" "forseti_server" {
 # Forseti client IAM #
 #--------------------#
 module "client_iam" {
-  source     = "../client_iam"
-  project_id = var.project_id
-  suffix     = local.random_hash
+  source         = "../client_iam"
+  client_enabled = var.client_enabled
+  project_id     = var.project_id
+  suffix         = local.random_hash
 }
 
 #--------------------#
@@ -420,6 +421,7 @@ module "client_iam" {
 #--------------------#
 module "client_gcs" {
   source                  = "../client_gcs"
+  client_enabled          = var.client_enabled
   project_id              = var.project_id
   storage_bucket_location = var.storage_bucket_location
   suffix                  = local.random_hash
@@ -432,6 +434,7 @@ module "client_gcs" {
 #-----------------------#
 module "client_config" {
   source            = "../client_config"
+  client_enabled    = var.client_enabled
   client_gcs_module = module.client_gcs
   server_address    = length(data.kubernetes_service.forseti_server.load_balancer_ingress) == 1 ? data.kubernetes_service.forseti_server.load_balancer_ingress[0].ip : ""
 }
@@ -442,6 +445,7 @@ module "client_config" {
 module "client" {
   source = "../client"
 
+  client_enabled           = var.client_enabled
   project_id               = var.project_id
   client_boot_image        = var.client_boot_image
   subnetwork               = var.subnetwork

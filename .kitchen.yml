@@ -126,6 +126,17 @@ suites:
           backend: local
           controls:
             - forseti-shielded-vm
+  - name: no_client_vm
+    driver:
+      name: terraform
+      root_module_directory: test/fixtures/no_client_vm/
+      command_timeout: 1800
+    verifier:
+      systems:
+        - name: gcloud
+          backend: local
+          controls:
+            - forseti-no-client-vm
 # Disabled due to issue #285
 # (https://github.com/forseti-security/terraform-google-forseti/issues/285)
 #  - name: real_time_enforcer_roles

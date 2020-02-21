@@ -105,7 +105,7 @@ data "template_file" "forseti_server_env" {
   vars = {
     project_id             = var.project_id
     cloudsql_db_name       = var.cloudsql_module.forseti-cloudsql-db-name
-    cloudsql_db_port       = var.cloudsql_module.forseti-clodusql-db-port
+    cloudsql_db_port       = var.cloudsql_module.forseti-cloudsql-db-port
     cloudsql_region        = var.cloudsql_module.forseti-cloudsql-region
     cloudsql_instance_name = var.cloudsql_module.forseti-cloudsql-instance-name
     cloudsql_db_user       = var.cloudsql_module.forseti-cloudsql-user
@@ -181,7 +181,7 @@ resource "google_compute_firewall" "forseti-server-allow-grpc" {
   network                 = var.network
   target_service_accounts = [var.server_iam_module.forseti-server-service-account]
   source_ranges           = var.server_grpc_allow_ranges
-  source_service_accounts = [var.client_iam_module.forseti-client-service-account]
+  source_service_accounts = var.client_iam_module.forseti-client-service-account != null ? [var.client_iam_module.forseti-client-service-account] : null
   priority                = "100"
 
   allow {
