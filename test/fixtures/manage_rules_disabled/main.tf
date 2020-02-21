@@ -58,6 +58,7 @@ module "forseti-manage-rules-disabled" {
   domain               = var.domain
   network              = var.network
   subnetwork           = var.subnetwork
+  forseti_version      = "master"
   client_enabled       = false
   manage_rules_enabled = false
   server_instance_metadata = {
