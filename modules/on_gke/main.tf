@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -105,7 +105,6 @@ resource "tls_private_key" "policy_library_sync_ssh" {
 #------------------------------#
 # git-sync SSH Key Data Source #
 #------------------------------#
-
 data "local_file" "git_sync_private_ssh_key_file" {
   count    = var.git_sync_private_ssh_key_file != null ? 1 : 0
   filename = var.git_sync_private_ssh_key_file
@@ -114,7 +113,6 @@ data "local_file" "git_sync_private_ssh_key_file" {
 #------------------------------#
 # git-sync Public SSH Key Data Source #
 #------------------------------#
-
 data "tls_public_key" "git_sync_public_ssh_key" {
   count           = var.config_validator_enabled && var.policy_library_sync_enabled ? 1 : 0
   private_key_pem = local.git_sync_private_ssh_key
@@ -123,7 +121,6 @@ data "tls_public_key" "git_sync_public_ssh_key" {
 //*****************************************
 //  Obtain Forseti Server Configuration
 //*****************************************
-
 data "google_storage_object_signed_url" "file_url" {
   bucket      = module.server_gcs.forseti-server-storage-bucket
   path        = "configs/forseti_conf_server.yaml"
@@ -143,7 +140,6 @@ data "http" "server_config_contents" {
 //*****************************************
 //  Create Kubernetes Forseti Namespace
 //*****************************************
-
 resource "kubernetes_namespace" "forseti" {
   metadata {
     name = local.kubernetes_namespace
@@ -153,7 +149,6 @@ resource "kubernetes_namespace" "forseti" {
 //*****************************************
 // Configure Workload Identity
 //*****************************************
-
 resource "google_service_account_iam_binding" "forseti_server_workload_identity" {
   service_account_id = "projects/${var.project_id}/serviceAccounts/${module.server_iam.forseti-server-service-account}"
   role               = "roles/iam.workloadIdentityUser"
@@ -173,11 +168,9 @@ resource "google_service_account_iam_binding" "forseti_client_workload_identity"
   ]
 }
 
-
 //*****************************************
 //  Create Tiller Kubernetes Service Account
 //*****************************************
-
 resource "kubernetes_service_account" "tiller" {
   metadata {
     name      = var.k8s_tiller_sa_name
@@ -191,7 +184,6 @@ resource "kubernetes_service_account" "tiller" {
 //*****************************************
 //  Create Tiller RBAC
 //*****************************************
-
 resource "kubernetes_role" "tiller" {
   metadata {
     name      = "tiller-manager"
@@ -226,7 +218,6 @@ resource "kubernetes_role_binding" "tiller" {
 //*****************************************
 //  Deploy Forseti on GKE via Helm
 //*****************************************
-
 resource "helm_release" "forseti-security" {
   name          = "forseti"
   namespace     = local.kubernetes_namespace
@@ -407,7 +398,6 @@ resource "helm_release" "forseti-security" {
 #---------------------------------#
 # Forseti K8s Server Service Data #
 #---------------------------------#
-
 data "kubernetes_service" "forseti_server" {
   metadata {
     name      = "forseti-server"
@@ -419,7 +409,6 @@ data "kubernetes_service" "forseti_server" {
 #--------------------#
 # Forseti client IAM #
 #--------------------#
-
 module "client_iam" {
   source         = "../client_iam"
   client_enabled = var.client_enabled
@@ -430,7 +419,6 @@ module "client_iam" {
 #--------------------#
 # Forseti client GCS #
 #--------------------#
-
 module "client_gcs" {
   source                  = "../client_gcs"
   client_enabled          = var.client_enabled
@@ -444,7 +432,6 @@ module "client_gcs" {
 #-----------------------#
 # Forseti client config #
 #-----------------------#
-
 module "client_config" {
   source            = "../client_config"
   client_enabled    = var.client_enabled
@@ -455,7 +442,6 @@ module "client_config" {
 #-----------------------#
 # Forseti client config #
 #-----------------------#
-
 module "client" {
   source = "../client"
 
@@ -487,7 +473,6 @@ module "client" {
 #------------------#
 # Forseti CloudSQL #
 #------------------#
-
 module "cloudsql" {
   source                     = "../cloudsql"
   cloudsql_disk_size         = var.cloudsql_disk_size

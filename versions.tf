@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,18 @@
  * limitations under the License.
  */
 
-
 terraform {
   required_version = ">= 0.12"
   required_providers {
-    google   = "~> 3.7"
-    helm     = "~> 0.10"
-    null     = "~> 2.0"
-    template = "~> 2.0"
-    random   = "~> 2.0"
+    google      = "~> 3.7"
+    google-beta = "~> 3.7"
+    helm        = "~> 0.10"
+    http        = "~> 1.1"
+    kubernetes  = "~> 1.10"
+    local       = "~> 1.4"
+    null        = "~> 2.0"
+    random      = "~> 2.0"
+    template    = "~> 2.0"
+    tls         = "~> 2.1"
   }
 }
