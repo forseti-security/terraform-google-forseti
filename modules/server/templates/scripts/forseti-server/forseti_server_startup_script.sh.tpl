@@ -89,6 +89,7 @@ echo "${forseti_environment}" > /etc/profile.d/forseti_environment.sh | sudo sh
 echo "Forseti Startup - Downloading Forseti configuration from GCS."
 gsutil cp gs://${storage_bucket_name}/configs/forseti_conf_server.yaml ${forseti_server_conf_path}
 gsutil cp -r gs://${storage_bucket_name}/rules ${forseti_home}/
+echo "Number of rules enabled: `ls ${forseti_home}/rules/*.yaml &>/dev/null | wc -l`"
 
 # Get Config Validator constraints
 sudo mkdir -m 777 -p ${policy_library_home}
