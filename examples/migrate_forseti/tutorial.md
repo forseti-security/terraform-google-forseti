@@ -144,7 +144,7 @@ to match the region where the Forseti Client VM is deployed.
 Starting with Forseti Security 2.23, Terraform will manage your server
  configuration file for you.  Configuration options will now be input
  variables that are defined in the Terraform module. Available variables
- and their default values can be found [here](https://github.com/forseti-security/terraform-google-forseti/blob/module-release-5.0.0/variables.tf).
+ and their default values can be found [here](https://github.com/forseti-security/terraform-google-forseti/blob/modulerelease502/variables.tf).
  Default values will be used if values are not explicitly added.
  This will ensure upgrading Forseti will be as easy as possible going forward.
 
@@ -186,10 +186,10 @@ to your <walkthrough-editor-select-regex
   regex="Add any Forseti Server Configuration Variables Here">main.tf</walkthrough-editor-select-regex>.
 
 ## Obtain and Run the Import Script
-This [import script](https://github.com/forseti-security/terraform-google-forseti/blob/module-release-5.0.0/helpers/import.sh) will import the Forseti GCP resources into a local state file.
+This [import script](https://github.com/forseti-security/terraform-google-forseti/blob/modulerelease502/helpers/import.sh) will import the Forseti GCP resources into a local state file.
 
 ```sh
-curl --location --remote-name https://raw.githubusercontent.com/forseti-security/terraform-google-forseti/module-release-5.0.0/helpers/import.sh
+curl --location --remote-name https://raw.githubusercontent.com/forseti-security/terraform-google-forseti/modulerelease502/helpers/import.sh
 chmod +x import.sh
 ./import.sh -h
 ```

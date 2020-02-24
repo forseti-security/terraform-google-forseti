@@ -16,7 +16,7 @@
 
 output "forseti-server-git-public-key-openssh" {
   description = "The public OpenSSH key generated to allow the Forseti Server to clone the policy library repository."
-  value       = tls_private_key.policy_library_sync_ssh[0].public_key_openssh
+  value       = local.git_sync_public_ssh_key
 }
 
 output "forseti-server-vm-ip" {
