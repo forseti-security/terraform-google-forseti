@@ -12,7 +12,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ### Added
 
-- Support for Forseti v2.23.2 [#513]
+- Support for Forseti v2.23.2 [#518]
 
 ## [v5.0.1] - 2020-01-31
 
@@ -306,7 +306,7 @@ Version 4.0.0 is a backwards-incompatible release. Please see the [upgrade instr
 [v5.0.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v5.0.0...v5.0.1
 [v5.0.2]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v5.0.1...v5.0.2
 
-[#513]: https://github.com/forseti-security/terraform-google-forseti/pull/513
+[#518]: https://github.com/forseti-security/terraform-google-forseti/pull/518
 [#476]: https://github.com/forseti-security/terraform-google-forseti/pull/476
 [#330]: https://github.com/forseti-security/terraform-google-forseti/pull/330
 [#329]: https://github.com/forseti-security/terraform-google-forseti/pull/329
