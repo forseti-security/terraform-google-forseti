@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Extending the adopted spec, each change should have a link to its corresponding pull request appended.
 
+## [5.1.3] - 2020-02-25
+
+### Added
+
+- Support for Forseti v2.24.2 [#523]
+
 ## [5.1.2] - 2020-02-07
 
 ### Added
@@ -16,7 +22,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 
 ### Added
 
-- Support for Forseti v2.24.1 [#386]
+- Support for Forseti v2.24.0 [#386]
 - Parameterized Kubernetes version [#385]
 - GCS bucket location to tutorials and examples [#382]
 - Improved existing resource import in v5.0.0 [#354]
@@ -324,7 +330,9 @@ Version 4.0.0 is a backwards-incompatible release. Please see the [upgrade instr
 [v5.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v5.0.0...v5.1.0
 [v5.1.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v5.1.0...v5.1.1
 [v5.1.2]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v5.1.1...v5.1.2
+[v5.1.3]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v5.1.2...v5.1.3
 
+[#523]: https://github.com/forseti-security/terraform-google-forseti/pull/523
 [#499]: https://github.com/forseti-security/terraform-google-forseti/pull/499
 [#386]: https://github.com/forseti-security/terraform-google-forseti/pull/386
 [#385]: https://github.com/forseti-security/terraform-google-forseti/pull/385
