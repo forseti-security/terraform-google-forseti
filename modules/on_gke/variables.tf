@@ -505,6 +505,12 @@ variable "resource_enabled" {
   default     = true
 }
 
+variable "role_enabled" {
+  description = "Role scanner enabled."
+  type        = bool
+  default     = true
+}
+
 variable "service_account_key_enabled" {
   description = "Service account key scanner enabled."
   type        = bool
@@ -647,6 +653,17 @@ variable "resource_violations_should_notify" {
   description = "Notify for resource violations"
   type        = bool
   default     = true
+}
+
+variable "role_violations_should_notify" {
+  description = "Notify for role violations"
+  type        = bool
+  default     = true
+}
+
+variable "role_violations_slack_webhook" {
+  description = "Slack webhook for role violations"
+  default     = ""
 }
 
 variable "service_account_key_violations_should_notify" {

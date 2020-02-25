@@ -416,6 +416,11 @@ variable "resource_enabled" {
   default     = "true"
 }
 
+variable "role_enabled" {
+  description = "Role scanner enabled."
+  default     = true
+}
+
 variable "service_account_key_enabled" {
   description = "Service account key scanner enabled."
   default     = "true"
@@ -537,6 +542,16 @@ variable "log_sink_violations_should_notify" {
 variable "resource_violations_should_notify" {
   description = "Notify for resource violations"
   default     = "true"
+}
+
+variable "role_violations_should_notify" {
+  description = "Notify for role violations"
+  default     = "true"
+}
+
+variable "role_violations_slack_webhook" {
+  description = "Slack webhook for role violations"
+  default     = ""
 }
 
 variable "service_account_key_violations_should_notify" {
