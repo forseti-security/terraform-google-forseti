@@ -12,19 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# rules:
-#   # Example rules.
-#   - name: 'Require BigQuery Audit Log sinks in all projects.'
-#     mode: required
-#     resource:
-#       - type: organization
-#         applies_to: children
-#         resource_ids:
-#           - ${org_id}
-#     sink:
-#       destination: 'bigquery.googleapis.com/*'
-#       filter: 'logName:"logs/cloudaudit.googleapis.com"'
-#       include_children: '*'
+rules:
+  # Example rules.
+  - name: 'Require BigQuery Audit Log sinks in all projects.'
+    mode: required
+    resource:
+      - type: organization
+        applies_to: children
+        resource_ids:
+          - ${org_id}
+    sink:
+      destination: 'bigquery.googleapis.com/*'
+      filter: 'logName:"logs/cloudaudit.googleapis.com"'
+      include_children: '*'
 #  - name: 'Only allow BigQuery Audit Log sinks in projects.'
 #    mode: whitelist
 #    resource:
