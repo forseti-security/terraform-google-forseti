@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,26 +14,12 @@
  * limitations under the License.
  */
 
-#------------------#
-# Google Providers #
-#------------------#
-
-provider "google" {
-  version = "~> 3.7"
-  project = var.project_id
-}
-
-provider "google-beta" {
-  version = "~> 3.7"
-  project = var.project_id
-}
-
-//*****************************************
-//  Setup the Kubernetes Provider
-//*****************************************
-
+#-------------------------------#
+# Setup the Kubernetes Provider #
+#-------------------------------#
 data "google_client_config" "default" {}
 
+# Version pinned to 1.10.0 due to https://github.com/terraform-providers/terraform-provider-kubernetes/issues/759
 provider "kubernetes" {
   alias                  = "forseti"
   load_config_file       = false
@@ -42,10 +28,9 @@ provider "kubernetes" {
   cluster_ca_certificate = base64decode(module.gke.ca_certificate)
 }
 
-//*****************************************
-//  Setup Helm Provider
-//*****************************************
-
+#---------------------#
+# Setup Helm Provider #
+#---------------------#
 provider "helm" {
   alias           = "forseti"
   service_account = var.k8s_tiller_sa_name
@@ -64,10 +49,9 @@ provider "helm" {
 #--------------------#
 # Deploy Forseti VPC #
 #--------------------#
-
 module "vpc" {
   source                  = "terraform-google-modules/network/google"
-  version                 = "1.1.0"
+  version                 = "~> 2.1.0"
   project_id              = var.project_id
   network_name            = var.network
   routing_mode            = "GLOBAL"
@@ -97,10 +81,9 @@ module "vpc" {
 #----------------------------#
 # Deploy Forseti GKE Cluster #
 #----------------------------#
-
 module "gke" {
   source                   = "terraform-google-modules/kubernetes-engine/google//modules/beta-public-cluster"
-  version                  = "5.0.0"
+  version                  = "~> 7.2.0"
   project_id               = var.project_id
   name                     = var.gke_cluster_name
   region                   = var.region
@@ -114,7 +97,6 @@ module "gke" {
   identity_namespace       = "${var.project_id}.svc.id.goog"
   node_metadata            = "GKE_METADATA_SERVER"
   kubernetes_version       = var.kubernetes_version
-
 
   node_pools = [{
     name               = "default-node-pool"
@@ -142,7 +124,6 @@ module "gke" {
 #----------------------------------------#
 #  Allow GKE Service Account to read GCS #
 #----------------------------------------#
-
 resource "google_project_iam_member" "cluster_service_account-storage_reader" {
   project = var.project_id
   role    = "roles/storage.objectViewer"
@@ -152,12 +133,12 @@ resource "google_project_iam_member" "cluster_service_account-storage_reader" {
 #-----------------------#
 # Deploy Forseti on-GKE #
 #-----------------------#
-
 module "forseti" {
   providers = {
     kubernetes = "kubernetes.forseti"
     helm       = "helm.forseti"
   }
+
   source     = "../../modules/on_gke"
   domain     = var.domain
   org_id     = var.org_id
@@ -180,7 +161,6 @@ module "forseti" {
   forseti_email_recipient = var.forseti_email_recipient
   cscc_violations_enabled = var.cscc_violations_enabled
   cscc_source_id          = var.cscc_source_id
-
 
   config_validator_enabled           = var.config_validator_enabled
   git_sync_private_ssh_key_file      = var.git_sync_private_ssh_key_file

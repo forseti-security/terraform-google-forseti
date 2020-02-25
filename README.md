@@ -185,6 +185,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | cai\_api\_timeout | Timeout in seconds to wait for the exportAssets API to return success. | string | `"3600"` | no |
 | client\_access\_config | Client instance 'access_config' block | map(any) | `<map>` | no |
 | client\_boot\_image | GCE Forseti Client boot image | string | `"ubuntu-os-cloud/ubuntu-1804-lts"` | no |
+| client\_enabled | Enable Client VM | bool | `"true"` | no |
 | client\_instance\_metadata | Metadata key/value pairs to make available from within the client instance. | map(string) | `<map>` | no |
 | client\_private | Private GCE Forseti Client VM (no public IP) | bool | `"false"` | no |
 | client\_region | GCE Forseti Client region | string | `"us-central1"` | no |
@@ -342,6 +343,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | forseti-client-vm-ip | Forseti Client VM private IP address |
 | forseti-client-vm-name | Forseti Client VM name |
 | forseti-cloudsql-connection-name | Forseti CloudSQL Connection String |
+| forseti-cloudsql-instance-ip | The IP of the master CloudSQL instance |
 | forseti-cloudsql-password | CloudSQL password |
 | forseti-cloudsql-user | CloudSQL user |
 | forseti-server-git-public-key-openssh | The public OpenSSH key generated to allow the Forseti Server to clone the policy library repository. |

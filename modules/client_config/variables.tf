@@ -26,6 +26,12 @@ variable "server_address" {
 #--------------------#
 # Forseti client GCS #
 #--------------------#
+variable "client_enabled" {
+  description = "Enable Client VM"
+  default     = true
+  type        = bool
+}
+
 variable "client_gcs_module" {
   description = "The Forseti Client GCS module"
 }

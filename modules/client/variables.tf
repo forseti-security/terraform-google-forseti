@@ -39,6 +39,12 @@ variable "forseti_home" {
 #----------------#
 # Forseti client #
 #----------------#
+variable "client_enabled" {
+  description = "Enable Client VM"
+  default     = true
+  type        = bool
+}
+
 variable "client_type" {
   description = "GCE Forseti Client machine type"
   default     = "n1-standard-2"

@@ -27,6 +27,7 @@ locals {
 # Forseti templates #
 #-------------------#
 data "template_file" "forseti_client_config" {
+  count    = var.client_enabled ? 1 : 0
   template = local.client_conf
 
   vars = {
@@ -35,8 +36,9 @@ data "template_file" "forseti_client_config" {
 }
 
 resource "google_storage_bucket_object" "forseti_client_config" {
+  count   = var.client_enabled ? 1 : 0
   name    = "configs/forseti_conf_client.yaml"
   bucket  = var.client_gcs_module.forseti-client-storage-bucket
-  content = data.template_file.forseti_client_config.rendered
+  content = data.template_file.forseti_client_config[0].rendered
 }
 

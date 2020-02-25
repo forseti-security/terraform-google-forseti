@@ -28,6 +28,7 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | cai\_api\_timeout | Timeout in seconds to wait for the exportAssets API to return success. | string | `"3600"` | no |
 | client\_access\_config | Client instance 'access_config' block | map(any) | `<map>` | no |
 | client\_boot\_image | GCE Forseti Client boot image | string | `"ubuntu-os-cloud/ubuntu-1804-lts"` | no |
+| client\_enabled | Enable Client VM | bool | `"true"` | no |
 | client\_instance\_metadata | Metadata key/value pairs to make available from within the client instance. | map(string) | `<map>` | no |
 | client\_private | Private GCE Forseti Client VM (no public IP) | bool | `"false"` | no |
 | client\_region | GCE Forseti Client region | string | `"us-central1"` | no |

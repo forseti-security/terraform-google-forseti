@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -767,6 +767,12 @@ variable "manage_firewall_rules" {
 #----------------#
 # Forseti client #
 #----------------#
+variable "client_enabled" {
+  description = "Enable Client VM"
+  default     = true
+  type        = bool
+}
+
 variable "client_type" {
   description = "GCE Forseti Client machine type"
   default     = "n1-standard-2"
