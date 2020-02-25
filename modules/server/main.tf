@@ -122,7 +122,7 @@ data "template_file" "forseti_server_initialize_services" {
 
   vars = {
     cloudsql_db_name                 = var.cloudsql_module.forseti-cloudsql-db-name
-    cloudsql_db_port                 = var.cloudsql_module.forseti-clodusql-db-port
+    cloudsql_db_port                 = var.cloudsql_module.forseti-cloudsql-db-port
     cloudsql_db_user                 = var.cloudsql_module.forseti-cloudsql-user
     cloudsql_db_password             = var.cloudsql_module.forseti-cloudsql-password
     forseti_home                     = var.forseti_home
