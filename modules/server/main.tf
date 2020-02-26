@@ -241,7 +241,7 @@ resource "google_storage_bucket_object" "policy_library_sync_ssh_known_hosts" {
 }
 
 resource "google_storage_bucket_object" "initialize_forseti_services_script" {
-  name    = "scripts/initialize_forseti_services.sh"
+  name    = "install/gcp/scripts/initialize_forseti_services.sh"
   content = data.template_file.forseti_server_initialize_services.rendered
   bucket  = var.server_gcs_module.forseti-server-storage-bucket
 }
