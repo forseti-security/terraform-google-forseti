@@ -156,7 +156,7 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | resource\_enabled | Resource scanner enabled. | bool | `"true"` | no |
 | resource\_name\_suffix | A suffix which will be appended to resource names. | string | `"null"` | no |
 | resource\_violations\_should\_notify | Notify for resource violations | bool | `"true"` | no |
-| role\_enabled | Role scanner enabled. | bool | `"true"` | no |
+| role\_enabled | Role scanner enabled. | bool | `"false"` | no |
 | role\_violations\_should\_notify | Notify for role violations | bool | `"true"` | no |
 | role\_violations\_slack\_webhook | Slack webhook for role violations | string | `""` | no |
 | securitycenter\_disable\_polling | Whether to disable polling for Security Center API | bool | `"false"` | no |

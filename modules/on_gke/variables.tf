@@ -508,7 +508,7 @@ variable "resource_enabled" {
 variable "role_enabled" {
   description = "Role scanner enabled."
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "service_account_key_enabled" {

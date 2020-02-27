@@ -315,7 +315,7 @@ control "server" do
       end
 
       it "configures role_enabled" do
-        expect(config["scanner"]["scanners"]).to include("name" => "role", "enabled" => true)
+        expect(config["scanner"]["scanners"]).to include("name" => "role", "enabled" => false)
       end
 
       it "configures service_account_key_enabled" do
