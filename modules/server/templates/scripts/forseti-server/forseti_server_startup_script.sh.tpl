@@ -6,6 +6,8 @@ USER=ubuntu
 USER_HOME=/home/ubuntu
 INTERNET_CONNECTION="$(ping -q -w1 -c1 google.com &>/dev/null && echo online || echo offline)"
 
+export USER_HOME
+
 # Log status of internet connection
 if [ $INTERNET_CONNECTION == "offline" ]; then
   echo "Forseti Startup - A connection to the internet was not detected."
