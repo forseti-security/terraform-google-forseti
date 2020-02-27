@@ -176,7 +176,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | bigquery\_enabled | Big Query scanner enabled. | bool | `"true"` | no |
 | bigquery\_max\_calls | Maximum calls that can be made to Big Query API | string | `"160"` | no |
 | bigquery\_period | The period of max calls for the Big Query API (in seconds) | string | `"1.0"` | no |
-| blacklist\_enabled | Audit Logging scanner enabled. | bool | `"true"` | no |
+| blacklist\_enabled | Blacklist scanner enabled. | bool | `"true"` | no |
 | blacklist\_violations\_should\_notify | Notify for Blacklist violations | bool | `"true"` | no |
 | bucket\_acl\_enabled | Bucket ACL scanner enabled. | bool | `"true"` | no |
 | bucket\_cai\_lifecycle\_age | GCS CAI lifecycle age value | string | `"14"` | no |
