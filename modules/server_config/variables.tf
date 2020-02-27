@@ -327,7 +327,7 @@ variable "bigquery_enabled" {
 }
 
 variable "blacklist_enabled" {
-  description = "Audit Logging scanner enabled."
+  description = "Blacklist scanner enabled."
   default     = "true"
 }
 
