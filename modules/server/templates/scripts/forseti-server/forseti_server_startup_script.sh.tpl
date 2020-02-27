@@ -137,7 +137,7 @@ fi
 
 # Start Forseti service depends on vars defined above.
 echo "Forseti Startup - Starting services."
-bash ${storage_bucket_name}/install/gcp/scripts/initialize_forseti_services.sh
+bash ${forseti_scripts}/initialize_forseti_services.sh
 systemctl start cloudsqlproxy
 if [ "${policy_library_sync_enabled}" == "true" ]; then
   systemctl start policy-library-sync
