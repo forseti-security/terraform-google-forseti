@@ -14,7 +14,27 @@
  * limitations under the License.
  */
 
-output "forseti-client-storage-bucket" {
-  description = "Forseti Client storage bucket"
-  value       = var.client_enabled ? google_storage_bucket.client_config[0].id : null
+variable "domain" {
+  description = "The domain associated with the GCP Organization ID"
+}
+
+variable "network" {
+  description = "Name of the shared VPC"
+}
+
+variable "org_id" {
+  description = "GCP Organization ID that Forseti will have purview over"
+}
+
+variable "project_id" {
+  description = "The ID of an existing Google project where Forseti will be installed"
+}
+
+variable "region" {
+  description = "Region where forseti subnetwork will be deployed"
+  default     = "us-central1"
+}
+
+variable "subnetwork" {
+  description = "Name of the subnetwork where forseti will be deployed"
 }

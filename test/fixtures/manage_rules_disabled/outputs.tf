@@ -14,7 +14,11 @@
  * limitations under the License.
  */
 
-output "forseti-client-storage-bucket" {
-  description = "Forseti Client storage bucket"
-  value       = var.client_enabled ? google_storage_bucket.client_config[0].id : null
+output "bastion_host" {
+  value = module.bastion.host
+}
+
+output "forseti-server-vm-ip" {
+  description = "Forseti Server VM private IP address"
+  value       = module.forseti-manage-rules-disabled.forseti-server-vm-ip
 }

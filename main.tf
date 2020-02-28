@@ -99,6 +99,7 @@ resource "google_project_service" "cloud_profiler" {
 module "client" {
   source = "./modules/client"
 
+  client_enabled                  = var.client_enabled
   project_id                      = var.project_id
   client_boot_image               = var.client_boot_image
   client_shielded_instance_config = var.client_shielded_instance_config
@@ -277,6 +278,7 @@ module "server_config" {
   admin_max_calls                                     = var.admin_max_calls
   admin_disable_polling                               = var.admin_disable_polling
   service_account_key_enabled                         = var.service_account_key_enabled
+  role_enabled                                        = var.role_enabled
   resource_enabled                                    = var.resource_enabled
   log_sink_enabled                                    = var.log_sink_enabled
   location_enabled                                    = var.location_enabled
@@ -298,6 +300,8 @@ module "server_config" {
   bigquery_enabled                                    = var.bigquery_enabled
   audit_logging_enabled                               = var.audit_logging_enabled
   service_account_key_violations_should_notify        = var.service_account_key_violations_should_notify
+  role_violations_should_notify                       = var.role_violations_should_notify
+  role_violations_slack_webhook                       = var.role_violations_slack_webhook
   resource_violations_should_notify                   = var.resource_violations_should_notify
   log_sink_violations_should_notify                   = var.log_sink_violations_should_notify
   location_violations_should_notify                   = var.location_violations_should_notify
@@ -337,13 +341,15 @@ module "server_config" {
 }
 
 module "client_iam" {
-  source     = "./modules/client_iam"
-  project_id = var.project_id
-  suffix     = local.random_hash
+  source         = "./modules/client_iam"
+  client_enabled = var.client_enabled
+  project_id     = var.project_id
+  suffix         = local.random_hash
 }
 
 module "client_gcs" {
   source                  = "./modules/client_gcs"
+  client_enabled          = var.client_enabled
   project_id              = var.project_id
   storage_bucket_location = var.storage_bucket_location
   suffix                  = local.random_hash
@@ -353,6 +359,7 @@ module "client_gcs" {
 
 module "client_config" {
   source            = "./modules/client_config"
+  client_enabled    = var.client_enabled
   client_gcs_module = module.client_gcs
   server_address    = module.server.forseti-server-vm-internal-dns
 }

@@ -318,6 +318,10 @@ control "server" do
         expect(config["scanner"]["scanners"]).to include("name" => "resource", "enabled" => true)
       end
 
+      it "configures role_enabled" do
+        expect(config["scanner"]["scanners"]).to include("name" => "role", "enabled" => false)
+      end
+
       it "configures service_account_key_enabled" do
         expect(config["scanner"]["scanners"]).to include("name" => "service_account_key", "enabled" => true)
       end
@@ -420,6 +424,10 @@ control "server" do
 
         it "configures resource_violations_should_notify" do
           expect(config["notifier"]["resources"]).to include(including("resource" => "resource_violations", "should_notify" => true))
+        end
+
+        it "configures role_violations_should_notify" do
+          expect(config["notifier"]["resources"]).to include(including("resource" => "role_violations", "should_notify" => true))
         end
 
         it "configures service_account_key_violations_should_notify" do

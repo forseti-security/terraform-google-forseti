@@ -21,3 +21,9 @@ variable "project_id" {
 variable "suffix" {
   description = "The random suffix to append to all Forseti resources"
 }
+
+variable "client_enabled" {
+  description = "Enable Client VM"
+  default     = true
+  type        = bool
+}

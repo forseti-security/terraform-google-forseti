@@ -409,7 +409,7 @@ variable "bigquery_enabled" {
 }
 
 variable "blacklist_enabled" {
-  description = "Audit Logging scanner enabled."
+  description = "Blacklist scanner enabled."
   type        = bool
   default     = true
 }
@@ -556,6 +556,12 @@ variable "resource_enabled" {
   description = "Resource scanner enabled."
   type        = bool
   default     = true
+}
+
+variable "role_enabled" {
+  description = "Role scanner enabled."
+  type        = bool
+  default     = false
 }
 
 variable "service_account_key_enabled" {
@@ -708,6 +714,17 @@ variable "resource_violations_should_notify" {
   default     = true
 }
 
+variable "role_violations_should_notify" {
+  description = "Notify for role violations"
+  type        = bool
+  default     = true
+}
+
+variable "role_violations_slack_webhook" {
+  description = "Slack webhook for role violations"
+  default     = ""
+}
+
 variable "service_account_key_violations_should_notify" {
   description = "Notify for service account key violations"
   type        = bool
@@ -778,6 +795,12 @@ variable "groups_settings_violations_should_notify" {
 #----------------#
 # Forseti client #
 #----------------#
+variable "client_enabled" {
+  description = "Enable Client VM"
+  default     = true
+  type        = bool
+}
+
 variable "client_type" {
   description = "GCE Forseti Client machine type"
   default     = "n1-standard-2"

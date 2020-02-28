@@ -176,7 +176,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | bigquery\_enabled | Big Query scanner enabled. | bool | `"true"` | no |
 | bigquery\_max\_calls | Maximum calls that can be made to Big Query API | string | `"160"` | no |
 | bigquery\_period | The period of max calls for the Big Query API (in seconds) | string | `"1.0"` | no |
-| blacklist\_enabled | Audit Logging scanner enabled. | bool | `"true"` | no |
+| blacklist\_enabled | Blacklist scanner enabled. | bool | `"true"` | no |
 | blacklist\_violations\_should\_notify | Notify for Blacklist violations | bool | `"true"` | no |
 | bucket\_acl\_enabled | Bucket ACL scanner enabled. | bool | `"true"` | no |
 | bucket\_cai\_lifecycle\_age | GCS CAI lifecycle age value | string | `"14"` | no |
@@ -185,6 +185,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | cai\_api\_timeout | Timeout in seconds to wait for the exportAssets API to return success. | string | `"3600"` | no |
 | client\_access\_config | Client instance 'access_config' block | map(any) | `<map>` | no |
 | client\_boot\_image | GCE Forseti Client boot image | string | `"ubuntu-os-cloud/ubuntu-1804-lts"` | no |
+| client\_enabled | Enable Client VM | bool | `"true"` | no |
 | client\_instance\_metadata | Metadata key/value pairs to make available from within the client instance. | map(string) | `<map>` | no |
 | client\_private | Private GCE Forseti Client VM (no public IP) | bool | `"false"` | no |
 | client\_region | GCE Forseti Client region | string | `"us-central1"` | no |
@@ -300,6 +301,9 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | resource\_enabled | Resource scanner enabled. | bool | `"true"` | no |
 | resource\_name\_suffix | A suffix which will be appended to resource names. | string | `"null"` | no |
 | resource\_violations\_should\_notify | Notify for resource violations | bool | `"true"` | no |
+| role\_enabled | Role scanner enabled. | bool | `"false"` | no |
+| role\_violations\_should\_notify | Notify for role violations | bool | `"true"` | no |
+| role\_violations\_slack\_webhook | Slack webhook for role violations | string | `""` | no |
 | rules\_path | Path for Scanner Rules config files; if GCS, should be gs://bucket-name/path | string | `"/home/ubuntu/forseti-security/rules"` | no |
 | securitycenter\_max\_calls | Maximum calls that can be made to Security Center API | string | `"14"` | no |
 | securitycenter\_period | The period of max calls for the Security Center API (in seconds) | string | `"1.0"` | no |
@@ -342,6 +346,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | forseti-client-vm-ip | Forseti Client VM private IP address |
 | forseti-client-vm-name | Forseti Client VM name |
 | forseti-cloudsql-connection-name | Forseti CloudSQL Connection String |
+| forseti-cloudsql-instance-ip | The IP of the master CloudSQL instance |
 | forseti-cloudsql-password | CloudSQL password |
 | forseti-cloudsql-user | CloudSQL user |
 | forseti-server-git-public-key-openssh | The public OpenSSH key generated to allow the Forseti Server to clone the policy library repository. |

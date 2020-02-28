@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-output "forseti-client-storage-bucket" {
-  description = "Forseti Client storage bucket"
-  value       = var.client_enabled ? google_storage_bucket.client_config[0].id : null
+
+terraform {
+  required_version = ">= 0.12"
 }

@@ -14,7 +14,13 @@
  * limitations under the License.
  */
 
-output "forseti-client-storage-bucket" {
-  description = "Forseti Client storage bucket"
-  value       = var.client_enabled ? google_storage_bucket.client_config[0].id : null
+module "no-client-vm" {
+  source = "../../.."
+
+  project_id     = var.project_id
+  org_id         = var.org_id
+  domain         = var.domain
+  network        = var.network
+  subnetwork     = var.subnetwork
+  client_enabled = false
 }
