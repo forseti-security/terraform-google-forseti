@@ -278,6 +278,7 @@ module "server_config" {
   admin_max_calls                                     = var.admin_max_calls
   admin_disable_polling                               = var.admin_disable_polling
   service_account_key_enabled                         = var.service_account_key_enabled
+  role_enabled                                        = var.role_enabled
   resource_enabled                                    = var.resource_enabled
   log_sink_enabled                                    = var.log_sink_enabled
   location_enabled                                    = var.location_enabled
@@ -299,6 +300,8 @@ module "server_config" {
   bigquery_enabled                                    = var.bigquery_enabled
   audit_logging_enabled                               = var.audit_logging_enabled
   service_account_key_violations_should_notify        = var.service_account_key_violations_should_notify
+  role_violations_should_notify                       = var.role_violations_should_notify
+  role_violations_slack_webhook                       = var.role_violations_slack_webhook
   resource_violations_should_notify                   = var.resource_violations_should_notify
   log_sink_violations_should_notify                   = var.log_sink_violations_should_notify
   location_violations_should_notify                   = var.location_violations_should_notify
