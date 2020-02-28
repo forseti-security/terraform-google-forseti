@@ -6,6 +6,8 @@ USER=ubuntu
 USER_HOME=/home/ubuntu
 INTERNET_CONNECTION="$(ping -q -w1 -c1 google.com &>/dev/null && echo online || echo offline)"
 
+export USER_HOME
+
 # Log status of internet connection
 if [ $INTERNET_CONNECTION == "offline" ]; then
   echo "Forseti Startup - A connection to the internet was not detected."
@@ -68,7 +70,7 @@ service google-fluentd restart
 logrotate /etc/logrotate.conf
 
 # Change the access level of configs/ rules/ and run_forseti.sh
-chmod -R ug+rwx ${forseti_home}/configs ${forseti_home}/rules ${forseti_scripts}/run_forseti.sh
+chmod -R ug+rwx ${forseti_home}/configs ${forseti_home}/rules ${forseti_home}/install/gcp/scripts/run_forseti.sh
 
 # Install Forseti
 echo "Forseti Startup - Installing Forseti python package."
