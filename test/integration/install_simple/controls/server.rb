@@ -46,7 +46,7 @@ control "server" do
   end
 
   describe file("/home/ubuntu/forseti-scripts/initialize_forseti_services.sh") do
-    it { should_exist}
+    it { should exist }
   end
 
   describe file("/home/ubuntu/forseti-security/configs/forseti_conf_server.yaml") do
