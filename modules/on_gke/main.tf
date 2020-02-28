@@ -640,6 +640,7 @@ module "server_config" {
   violations_slack_webhook                            = var.violations_slack_webhook
   cscc_violations_enabled                             = var.cscc_violations_enabled
   cscc_source_id                                      = var.cscc_source_id
+  verify_policy_library                               = var.verify_policy_library
 
   groups_settings_max_calls                = var.groups_settings_max_calls
   groups_settings_period                   = var.groups_settings_period
