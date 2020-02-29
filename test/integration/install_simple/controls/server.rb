@@ -262,7 +262,7 @@ control "server" do
         expect(config["scanner"]["scanners"]).to include("name" => "config_validator", "enabled" => false)
       end
 
-      it "configures verify_policy_library_enabled" do
+      it "configures config_validator_verify_policy_library" do
         expect(config["scanner"]["scanners"]).to include("name" => "config_validator", "verify_policy_library" => true)
       end
 
