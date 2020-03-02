@@ -124,10 +124,10 @@ data "template_file" "forseti_server_run" {
   template = local.server_run_forseti
 
   vars = {
-    forseti_home                     = var.forseti_home
-    forseti_server_conf_path         = local.server_conf_path
-    policy_library_home              = var.policy_library_home
-    policy_library_sync_enabled      = var.policy_library_sync_enabled
+    forseti_home                = var.forseti_home
+    forseti_server_conf_path    = local.server_conf_path
+    policy_library_home         = var.policy_library_home
+    policy_library_sync_enabled = var.policy_library_sync_enabled
   }
 }
 
