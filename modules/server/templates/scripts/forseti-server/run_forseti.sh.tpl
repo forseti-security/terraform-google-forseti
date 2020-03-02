@@ -27,7 +27,7 @@ sudo rm -rf /tmp/forseti-cai-*
 
 # Put the config files in place.
 sudo gsutil cp gs://$SCANNER_BUCKET/configs/forseti_conf_server.yaml ${forseti_server_conf_path}
-sudo gsutil cp -r gs://$SCANNER_BUCKET/rules $FORSETI_HOME/
+sudo gsutil cp -r gs://$SCANNER_BUCKET/rules ${forseti_home}/
 
 # Download the Newest Config Validator constraints from GCS.
 if [ "${policy_library_sync_enabled}" != "true" ]; then
@@ -37,7 +37,7 @@ fi
 # Restart the config validator service to pick up the latest policy.
 sudo systemctl restart config-validator
 
-if [ ! -f "$FORSETI_SERVER_CONF" ]; then
+if [ ! -f "${forseti_server_conf_path}" ]; then
     echo "Forseti conf not found, exiting."
     exit 1
 fi
