@@ -35,6 +35,15 @@ provider "random" {
   version = "~> 2.0"
 }
 
+module "cloud-nat" {
+  source        = "terraform-google-modules/cloud-nat/google"
+  create_router = true
+  network       = var.network
+  project_id    = var.project_id
+  region        = var.region
+  router        = "forseti-router"
+}
+
 module "forseti-install-simple" {
   source = "../../"
 
@@ -42,8 +51,8 @@ module "forseti-install-simple" {
   org_id     = var.org_id
   domain     = var.domain
 
-  server_region   = var.region
-  client_region   = var.region
+  server_region   = module.cloud-nat.region
+  client_region   = module.cloud-nat.region
   cloudsql_region = var.region
   network         = var.network
   subnetwork      = var.subnetwork

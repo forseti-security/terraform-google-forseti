@@ -139,7 +139,7 @@ On the organization:
 On the project:
 - `roles/owner`
 - `roles/compute.instanceAdmin`
-- `roles/compute.networkViewer`
+- `roles/compute.networkAdmin`
 - `roles/compute.securityAdmin`
 - `roles/iam.serviceAccountAdmin`
 - `roles/serviceusage.serviceUsageAdmin`

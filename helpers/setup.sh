@@ -178,7 +178,7 @@ gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
 
 gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
-    --role="roles/compute.networkViewer" \
+    --role="roles/compute.networkAdmin" \
     --user-output-enabled false
 
 gcloud projects add-iam-policy-binding "${PROJECT_ID}" \

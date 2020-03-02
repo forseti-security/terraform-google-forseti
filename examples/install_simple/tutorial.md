@@ -65,7 +65,7 @@ you wish to deploy Forseti in.
 ### Set network (Optional)
 If you want to deploy Forseti onto a specific Network, you can configure the following settings. Otherwise you can leave the defaults.
 
-__Note:__ By default Forseti will run on GCE VMs with external IPs.**
+__Note:__ By default Forseti will run on GCE VMs with private IPs. A Cloud NAT will be deployed providing external access.**
 
 On line 6, update the <walkthrough-editor-select-regex
   filePath="terraform-google-forseti/examples/install_simple/terraform.tfvars"
