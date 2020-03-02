@@ -127,6 +127,7 @@ data "template_file" "forseti_server_initialize_services" {
     forseti_home                     = var.forseti_home
     forseti_server_conf_path         = local.server_conf_path
     policy_library_home              = var.policy_library_home
+    policy_library_repository_branch = var.policy_library_repository_branch
     policy_library_repository_url    = var.policy_library_repository_url
     policy_library_sync_enabled      = var.policy_library_sync_enabled
     policy_library_sync_git_sync_tag = var.policy_library_sync_git_sync_tag
