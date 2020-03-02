@@ -52,7 +52,7 @@ if [ "${policy_library_sync_enabled}" == "true" ]; then
   POLICY_LIBRARY_SYNC_COMMAND+=" -v ${policy_library_home}:/tmp/git"
   POLICY_LIBRARY_SYNC_COMMAND+=" -v /etc/git-secret:/etc/git-secret"
   POLICY_LIBRARY_SYNC_COMMAND+=" k8s.gcr.io/git-sync:${policy_library_sync_git_sync_tag}"
-  POLICY_LIBRARY_SYNC_COMMAND+=" --branch=$POLICY_LIBRARY_REPOSITORY_BRANCH:=master"
+  POLICY_LIBRARY_SYNC_COMMAND+=" --branch=$POLICY_LIBRARY_REPOSITORY_BRANCH"
   POLICY_LIBRARY_SYNC_COMMAND+=" --dest=policy-library"
   POLICY_LIBRARY_SYNC_COMMAND+=" --max-sync-failures=-1"
   POLICY_LIBRARY_SYNC_COMMAND+=" --repo=${policy_library_repository_url}"
