@@ -36,12 +36,13 @@ provider "random" {
 }
 
 module "cloud-nat" {
-  source        = "terraform-google-modules/cloud-nat/google"
-  create_router = true
-  network       = var.network
-  project_id    = var.project_id
-  region        = var.region
-  router        = "forseti-router-${module.forseti-install-simple.suffix}"
+  source                             = "terraform-google-modules/cloud-nat/google"
+  create_router                      = true
+  network                            = var.network
+  project_id                         = var.project_id
+  region                             = var.region
+  router                             = "forseti-router-${module.forseti-install-simple.suffix}"
+  source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_PRIMARY_IP_RANGES"
 }
 
 module "forseti-install-simple" {
