@@ -101,6 +101,7 @@ data "template_file" "forseti_server_initialize_services" {
   template = local.server_initialize_services
 
   vars = {
+    cloudsql_connection_name         = var.cloudsql_module.forseti-cloudsql-connection-name
     cloudsql_db_name                 = var.cloudsql_module.forseti-cloudsql-db-name
     cloudsql_db_port                 = var.cloudsql_module.forseti-cloudsql-db-port
     cloudsql_db_user                 = var.cloudsql_module.forseti-cloudsql-user

@@ -19,7 +19,7 @@ set -o nounset
 # Reference all required bash variables prior to running. Due to 'nounset', if
 # a caller fails to export the following expected environmental variables, this
 # script will fail immediately rather than partially succeeding.
-echo "Cloud SQL Instance Connection string: ${forseti_cloudsql_connection_name}"
+echo "Cloud SQL Instance Connection string: ${cloudsql_connection_name}"
 echo "SQL port: ${cloudsql_db_port}"
 echo "Forseti DB name: ${cloudsql_db_name}"
 
@@ -73,7 +73,7 @@ fi
 sudo chmod ugo+x ${forseti_home}/external-dependencies/config-validator/ConfigValidatorRPCServer
 
 SQL_PROXY_COMMAND="$(which cloud_sql_proxy)"
-SQL_PROXY_COMMAND+=" -instances=${forseti_cloudsql_connection_name}=tcp:${cloudsql_db_port}"
+SQL_PROXY_COMMAND+=" -instances=${cloudsql_connection_name}=tcp:${cloudsql_db_port}"
 
 # Cannot use "read -d" since it returns a nonzero exit status.
 API_SERVICE="$(cat << EOF
