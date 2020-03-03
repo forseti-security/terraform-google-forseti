@@ -35,6 +35,10 @@ provider "random" {
   version = "~> 2.0"
 }
 
+data "google_compute_network" "forseti_network" {
+  name = var.network
+}
+
 module "cloud-nat" {
   source                             = "terraform-google-modules/cloud-nat/google"
   create_router                      = true
@@ -42,7 +46,15 @@ module "cloud-nat" {
   project_id                         = var.project_id
   region                             = var.region
   router                             = "forseti-router-${module.forseti-install-simple.suffix}"
-  source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_PRIMARY_IP_RANGES"
+  source_subnetwork_ip_ranges_to_nat = "LIST_OF_SUBNETWORKS"
+
+  subnetworks = [
+    {
+      name                     = var.subnetwork
+      source_ip_ranges_to_nat  = ["ALL_IP_RANGES"]
+      secondary_ip_range_names = []
+    }
+  ]
 }
 
 module "forseti-install-simple" {
