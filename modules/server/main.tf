@@ -70,7 +70,6 @@ data "template_file" "forseti_server_startup_script" {
     cloud_profiler_enabled                 = var.cloud_profiler_enabled
     forseti_conf_server_checksum           = base64sha256(var.server_config_module.forseti-server-config)
     forseti_environment                    = data.template_file.forseti_server_environment.rendered
-    run_forseti                            = data.template_file.forseti_server_run.rendered
     forseti_home                           = var.forseti_home
     forseti_run_forseti_services_md5_hash  = google_storage_bucket_object.run_forseti_script.md5hash
     forseti_repo_url                       = var.forseti_repo_url
