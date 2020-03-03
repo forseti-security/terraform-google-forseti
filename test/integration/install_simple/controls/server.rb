@@ -47,6 +47,10 @@ control "server" do
 
   describe file("/home/ubuntu/forseti-scripts/run_forseti.sh") do
     it { should exist }
+    its('stdout') { should match (/Scan completed/) }
+    its('stdout') { should match (/SUCCESS/)}
+    its('stdout') { should match (/Notification completed/) }
+    its('stdout') { should match (/purged/) }
   end
 
   describe file("/home/ubuntu/forseti-security/configs/forseti_conf_server.yaml") do
