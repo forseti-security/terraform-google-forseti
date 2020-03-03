@@ -41,7 +41,7 @@ module "cloud-nat" {
   network       = var.network
   project_id    = var.project_id
   region        = var.region
-  router        = "forseti-router"
+  router        = "forseti-router-${module.forseti-install-simple.suffix}"
 }
 
 module "forseti-install-simple" {
@@ -72,6 +72,7 @@ module "forseti-install-simple" {
   client_tags = var.instance_tags
   server_tags = var.instance_tags
 
-  client_private = var.private
-  server_private = var.private
+  client_private   = var.private
+  server_private   = var.private
+  cloudsql_private = var.private
 }
