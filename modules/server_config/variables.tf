@@ -551,7 +551,6 @@ variable "resource_violations_should_notify" {
 
 variable "retention_violations_should_notify" {
   description = "Notify for retention violations"
-  type        = bool
   default     = true
 }
 
