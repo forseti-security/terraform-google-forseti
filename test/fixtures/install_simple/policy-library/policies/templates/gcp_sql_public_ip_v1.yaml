@@ -41,8 +41,7 @@ spec:
          # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
          # See the License for the specific language governing permissions and
          # limitations under the License.
-         package templates.gcp.GCPSQLPublicIpConstraintV1
-         import data.validator.gcp.lib as lib
+         #
 
          package templates.gcp.GCPSQLPublicIpConstraintV1
 

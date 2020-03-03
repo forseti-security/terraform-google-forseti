@@ -8,7 +8,7 @@ INTERNET_CONNECTION="$(ping -q -w1 -c1 google.com &>/dev/null && echo online || 
 
 export USER_HOME
 
-INIT_SERVICES_MD5_HASH=${forseti_run_forseti_services_md5_hash}
+RUN_FORSETI_SERVICES_MD5_HASH=${forseti_run_forseti_services_md5_hash}
 
 # Log status of internet connection
 if [ $INTERNET_CONNECTION == "offline" ]; then
