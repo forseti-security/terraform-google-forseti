@@ -32,6 +32,9 @@ locals {
   server_environment = file(
     "${path.module}/templates/scripts/forseti-server/forseti_environment.sh.tpl",
   )
+  server_env = file(	
+    "${path.module}/templates/scripts/forseti-server/forseti_env.sh.tpl",	
+  )
   server_run_forseti = file(
     "${path.module}/templates/scripts/forseti-server/run_forseti.sh.tpl",
   )
@@ -69,6 +72,7 @@ data "template_file" "forseti_server_startup_script" {
     cloudsql_proxy_arch                    = var.cloudsql_proxy_arch
     cloud_profiler_enabled                 = var.cloud_profiler_enabled
     forseti_conf_server_checksum           = base64sha256(var.server_config_module.forseti-server-config)
+    forseti_env                            = data.template_file.forseti_server_env.rendered
     forseti_environment                    = data.template_file.forseti_server_environment.rendered
     forseti_home                           = var.forseti_home
     forseti_run_forseti_services_md5_hash  = google_storage_bucket_object.run_forseti_script.md5hash
@@ -98,6 +102,21 @@ data "template_file" "forseti_server_environment" {
     policy_library_sync_git_sync_tag = var.policy_library_sync_git_sync_tag
     storage_bucket_name              = var.server_gcs_module.forseti-server-storage-bucket
   }
+}
+
+data "template_file" "forseti_server_env" {	
+  template = local.server_env	
+
+  vars = {	
+    project_id             = var.project_id	
+    cloudsql_db_name       = var.cloudsql_module.forseti-cloudsql-db-name	
+    cloudsql_db_port       = var.cloudsql_module.forseti-cloudsql-db-port	
+    cloudsql_region        = var.cloudsql_module.forseti-cloudsql-region	
+    cloudsql_instance_name = var.cloudsql_module.forseti-cloudsql-instance-name	
+    cloudsql_db_user       = var.cloudsql_module.forseti-cloudsql-user	
+    cloudsql_db_password   = var.cloudsql_module.forseti-cloudsql-password	
+    forseti_scripts        = var.forseti_scripts	
+  }	
 }
 
 data "template_file" "forseti_server_run" {
