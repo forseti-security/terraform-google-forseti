@@ -55,7 +55,7 @@ module "forseti-service-network-install-simple" {
   project_id   = var.project_id
 
   secondary_ranges = {
-    forseti-subnetwork = []
+    forseti-subnetwork-install-simple = []
   }
 
   subnets = [
