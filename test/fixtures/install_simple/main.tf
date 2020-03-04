@@ -73,7 +73,7 @@ module "forseti-service-network-install-simple" {
 module "bastion" {
   source = "../bastion"
 
-  network    = module.forseti-service-network.network_self_link
+  network    = module.forseti-service-network-install-simple.network_self_link
   project_id = var.project_id
   subnetwork = module.forseti-service-network-install-simple.subnets_self_links[0]
   zone       = data.google_compute_zones.main.names[0]
@@ -91,7 +91,7 @@ module "forseti-install-simple" {
   org_id             = var.org_id
   domain             = var.domain
   region             = var.region
-  network            = module.forseti-service-network.network_self_link
+  network            = module.forseti-service-network-install-simple.network_self_link
   subnetwork         = module.forseti-service-network-install-simple.subnets_self_links[0]
   forseti_version    = var.forseti_version
   network_project    = var.network_project
@@ -105,7 +105,7 @@ resource "google_compute_firewall" "forseti_bastion_to_vm" {
 
   name    = "forseti-bastion-to-vm-ssh-${module.forseti-install-simple.suffix}"
   project = var.project_id
-  network = var.network
+  network = module.forseti-service-network-install-simple.network_self_link
   target_service_accounts = [module.forseti-install-simple.forseti-server-service-account,
   module.forseti-install-simple.forseti-client-service-account]
 
