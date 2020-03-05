@@ -91,8 +91,8 @@ module "forseti-install-simple" {
   org_id             = var.org_id
   domain             = var.domain
   region             = var.region
-  network            = module.forseti-service-network-install-simple.network_self_link
-  subnetwork         = module.forseti-service-network-install-simple.subnets_self_links[0]
+  network            = module.forseti-service-network-install-simple.network_name
+  subnetwork         = module.forseti-service-network-install-simple.subnets_names[0]
   forseti_version    = var.forseti_version
   network_project    = var.network_project
 
