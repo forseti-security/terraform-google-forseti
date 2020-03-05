@@ -49,7 +49,7 @@ data "google_compute_zones" "main" {
 
 module "forseti-service-network-install-simple" {
   source  = "terraform-google-modules/network/google"
-  version = "1.1.0"
+  version = "~> 2.1"
 
   network_name = local.network
   project_id   = var.project_id
