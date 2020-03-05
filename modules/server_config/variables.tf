@@ -426,6 +426,12 @@ variable "service_account_key_enabled" {
   default     = "true"
 }
 
+variable "verify_policy_library" {
+  description = "Verify the Policy Library is setup correctly for the Config Validator scanner"
+  type        = bool
+  default     = true
+}
+
 #-------------------------#
 # Forseti config notifier #
 #-------------------------#
