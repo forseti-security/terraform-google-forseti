@@ -23,8 +23,8 @@ forseti_client_storage_bucket = attribute('forseti-client-storage-bucket')
 forseti_server_storage_bucket = attribute('forseti-server-storage-bucket')
 forseti_client_service_account = attribute('forseti-client-service-account')
 forseti_server_service_account = attribute('forseti-server-service-account')
-forseti_cloud_nat_name = attribute('clout-nat-') + project_id
-forseti_router_name = attribute('router-nat-') + project_id
+forseti_cloud_nat_name = 'clout-nat-' + project_id
+forseti_router_name = 'router-nat-' + project_id
 
 control 'forseti' do
   title "Forseti GCP resources"
