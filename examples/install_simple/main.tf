@@ -41,11 +41,12 @@ data "google_compute_network" "forseti_network" {
 
 module "cloud-nat" {
   source                             = "terraform-google-modules/cloud-nat/google"
+  name                               = "cloud-nat-${var.project_id}"
   create_router                      = true
   network                            = var.network
   project_id                         = var.project_id
   region                             = var.region
-  router                             = "forseti-router-${module.forseti-install-simple.suffix}"
+  router                             = "router-${var.project_id}"
   source_subnetwork_ip_ranges_to_nat = "LIST_OF_SUBNETWORKS"
 
   subnetworks = [

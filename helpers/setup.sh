@@ -40,9 +40,10 @@ ON_GKE=""
 SQL_PRIVATE_IP=""
 SERVICE_ACCOUNT_NAME="cloud-foundation-forseti-${RANDOM}"
 IS_UPDATE=0
+GCE_PRIVATE_IP=""
 
 OPTIND=1
-while getopts ":hekqf:s:p:o:" opt; do
+while getopts ":hekqfr:s:p:o:" opt; do
   case "$opt" in
     h)
       show_help
@@ -68,6 +69,9 @@ while getopts ":hekqf:s:p:o:" opt; do
       ;;
     q)
       SQL_PRIVATE_IP=1
+      ;;
+    g)
+      GCE_PRIVATE_IP=1
       ;;
     *)
       echo "Unhandled option: -$opt" >&2
@@ -178,7 +182,7 @@ gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
 
 gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
-    --role="roles/compute.networkAdmin" \
+    --role="roles/compute.networkViewer" \
     --user-output-enabled false
 
 gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
@@ -213,6 +217,14 @@ gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
 
 if [[ -n "$SQL_PRIVATE_IP" ]]; then
   echo "Granting roles to allow Private IPs with Cloud SQL on project ${PROJECT_ID}..."
+  gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
+    --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
+    --role="roles/compute.networkAdmin" \
+    --user-output-enabled false
+fi
+
+if [[ -n "$GCE_PRIVATE_IP" ]]; then
+  echo "Granting roles to allow Private IPs with GCE VM's on project ${PROJECT_ID}..."
   gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
     --role="roles/compute.networkAdmin" \
