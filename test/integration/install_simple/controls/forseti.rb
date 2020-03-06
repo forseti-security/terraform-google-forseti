@@ -57,7 +57,7 @@ control 'forseti' do
     ) do
     it { should exist }
   end
-  
+
   describe google_compute_routers(
     project: project_id,
     region: 'us-central1-c'

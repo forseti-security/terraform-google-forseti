@@ -43,7 +43,7 @@ IS_UPDATE=0
 GCE_PRIVATE_IP=""
 
 OPTIND=1
-while getopts ":hekqfr:s:p:o:" opt; do
+while getopts ":hekqfg:s:p:o:" opt; do
   case "$opt" in
     h)
       show_help
