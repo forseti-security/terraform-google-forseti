@@ -13,6 +13,7 @@
 # limitations under the License.
 # encoding: utf-8
 
+
 org_id = attribute('org_id')
 project_id = attribute('project_id')
 network_project = attribute('network_project').empty? ? project_id : attribute('network_project')
@@ -37,7 +38,6 @@ control 'forseti' do
     it { should exist }
     its('machine_size') { should eq 'n1-standard-2' }
     its('network_interfaces_count'){should eq 1}
-    its('network_interfaces[0].access_configs'){should be_nil}
   end
 
   describe google_compute_instance(
@@ -48,24 +48,23 @@ control 'forseti' do
     it { should exist }
     its('machine_size') { should eq 'n1-standard-8' }
     its('network_interfaces_count'){should eq 1}
-    its('network_interfaces[0].access_configs'){should be_nil}
   end
 
-  # describe google_compute_router_nat(
-  #   project: project_id,
-  #   region: 'us-central1',
-  #   router: forseti_router_name,
-  #   name: forseti_cloud_nat_name
-  #   ) do
-  #   it { should exist }
-  # end
+  describe google_compute_router_nat(
+    project: project_id,
+    region: 'us-central1',
+    router: forseti_router_name,
+    name: forseti_cloud_nat_name
+    ) do
+    it { should exist }
+  end
 
-  # describe google_compute_routers(
-  #   project: project_id,
-  #   region: 'us-central1'
-  # ) do
-  #   its('names') { should include forseti_router_name }
-  # end
+  describe google_compute_routers(
+    project: project_id,
+    region: 'us-central1'
+  ) do
+    its('names') { should include forseti_router_name }
+  end
 
   describe google_sql_database_instances(project: project_id) do
     its('instance_names') { should include(/forseti-server-db-*/) }
