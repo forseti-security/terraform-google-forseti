@@ -876,6 +876,11 @@ variable "cloudsql_disk_size" {
   default     = "25"
 }
 
+variable "cloudsql_availability_type" {
+  description = "Whether instance should be set up for high availability (REGIONAL) or single zone (ZONAL)."
+  default     = null
+}
+
 variable "cloudsql_private" {
   description = "Whether to enable private network and not to create public IP for CloudSQL Instance"
   default     = false
@@ -918,6 +923,11 @@ variable "cloudsql_db_password" {
 variable "storage_bucket_location" {
   description = "GCS storage bucket location"
   default     = "us-central1"
+}
+
+variable "storage_bucket_class" {
+  description = "GCS storage bucket storage class. Supported values include: STANDARD, MULTI_REGIONAL, REGIONAL, NEARLINE, COLDLINE"
+  default     = "STANDARD"
 }
 
 variable "bucket_cai_location" {

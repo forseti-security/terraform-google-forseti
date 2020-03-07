@@ -42,6 +42,11 @@ variable "storage_bucket_location" {
   default     = "us-central1"
 }
 
+variable "storage_bucket_class" {
+  description = "GCS storage bucket storage class. Supported values include: STANDARD, MULTI_REGIONAL, REGIONAL, NEARLINE, COLDLINE"
+  default     = "STANDARD"
+}
+
 variable "bucket_cai_location" {
   description = "GCS CAI storage bucket location"
   default     = "us-central1"
@@ -51,6 +56,8 @@ variable "bucket_cai_lifecycle_age" {
   description = "GCS CAI lifecycle age value"
   default     = "14"
 }
+
+
 
 #-------#
 # Flags #
