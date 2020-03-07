@@ -49,7 +49,7 @@ SQL_PRIVATE_IP=""
 GCE_PRIVATE_IP=""
 
 OPTIND=1
-while getopts ":hekqf:p:o:s:" opt; do
+while getopts ":hekqgf:p:o:s:" opt; do
   case "$opt" in
     h)
       show_help
