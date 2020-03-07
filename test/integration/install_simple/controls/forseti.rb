@@ -36,7 +36,7 @@ control 'forseti' do
   ) do
     it { should exist }
     its('machine_size') { should eq 'n1-standard-2' }
-    its('first_network_interface_nat_ip_exists'){ should be false }
+    its('network_interfaces[0].access_configs'){ should be_nil }
   end
 
   describe google_compute_instance(
@@ -46,7 +46,7 @@ control 'forseti' do
   ) do
     it { should exist }
     its('machine_size') { should eq 'n1-standard-8' }
-    its('first_network_interface_nat_ip_exists'){ should be false }
+    its('network_interfaces[0].access_configs'){ should be_nil }
   end
 
   describe google_compute_router_nat(

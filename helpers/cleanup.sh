@@ -28,6 +28,7 @@ Options:
     -e                      Remove additional IAM roles for running the real time policy enforcer.
     -k                      Remove additional IAM roles for running Forseti on-GKE
     -q                      Remove additional IAM roles for using private IPs with Cloud SQL
+    -g                      Add additional IAM roles for using private IPs with the GCE VM's
     -f HOST_PROJECT_ID      ID of a project holding shared VPC.
 
 Examples:
@@ -45,6 +46,7 @@ WITH_ENFORCER=""
 HOST_PROJECT_ID=""
 ON_GKE=""
 SQL_PRIVATE_IP=""
+GCE_PRIVATE_IP=""
 
 OPTIND=1
 while getopts ":hekqf:p:o:s:" opt; do
@@ -73,6 +75,9 @@ while getopts ":hekqf:p:o:s:" opt; do
       ;;
     q)
       SQL_PRIVATE_IP=1
+      ;;
+    g)
+      GCE_PRIVATE_IP=1
       ;;
     *)
       echo "Unhandled option: -$opt" >&2
@@ -142,7 +147,7 @@ gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
 
 gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
-    --role="roles/compute.networkAdmin" \
+    --role="roles/compute.networkViewer" \
     --user-output-enabled false
 
 gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
@@ -172,6 +177,14 @@ gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
 
 if [[ -n "$SQL_PRIVATE_IP" ]]; then
   echo "Removing roles to allow Private IPs with Cloud SQL on project ${PROJECT_ID}..."
+  gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
+    --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
+    --role="roles/compute.networkAdmin" \
+    --user-output-enabled false
+fi
+
+if [[ -n "$GCE_PRIVATE_IP" ]]; then
+  echo "Granting roles to allow Private IPs with GCE VM's on project ${PROJECT_ID}..."
   gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
     --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
     --role="roles/compute.networkAdmin" \

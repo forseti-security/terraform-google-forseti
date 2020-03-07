@@ -24,6 +24,7 @@ Options:
     -e                  Add additional IAM roles for running the real time policy enforcer.
     -k                  Add additional IAM roles for running Forseti on-GKE
     -q                  Add additional IAM roles for using private IPs with Cloud SQL
+    -g                  Add additional IAM roles for using private IPs with the GCE VM's
     -f HOST_PROJECT_ID  ID of a project holding shared vpc.
     -s SERVICE_ACCOUNT  Specify a service account to create (if already exists will be updated)
 Examples:
