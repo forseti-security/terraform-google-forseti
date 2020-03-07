@@ -51,7 +51,7 @@ control 'forseti' do
 
   describe google_compute_router_nat(
     project: project_id,
-    region: 'us-central1-c',
+    region: 'us-central1',
     router: forseti_router_name,
     name: forseti_cloud_nat_name
     ) do
@@ -60,7 +60,7 @@ control 'forseti' do
 
   describe google_compute_routers(
     project: project_id,
-    region: 'us-central1-c'
+    region: 'us-central1'
   ) do
     its('names') { should include forseti_router_name }
   end
