@@ -178,6 +178,7 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | storage\_bucket\_location | GCS storage bucket location | string | `"us-central1"` | no |
 | storage\_disable\_polling | Whether to disable polling for Storage API | bool | `"false"` | no |
 | subnetwork | The VPC subnetwork where the Forseti client and server will be created | string | `"default"` | no |
+| verify\_policy\_library | Verify the Policy Library is setup correctly for the Config Validator scanner | bool | `"false"` | no |
 | violations\_slack\_webhook | Slack webhook for any violation. Will apply to all scanner violation notifiers. | string | `""` | no |
 
 ## Outputs

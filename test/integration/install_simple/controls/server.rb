@@ -258,6 +258,10 @@ control "server" do
         expect(config["scanner"]["scanners"]).to include("name" => "cloudsql_acl", "enabled" => true)
       end
 
+      it "configures config_validator_enabled" do
+        expect(config["scanner"]["scanners"]).to include("name" => "config_validator", "enabled" => false, "verify_policy_library" => true)
+      end
+
       it "configures enabled_apis_enabled" do
         expect(config["scanner"]["scanners"]).to include("name" => "enabled_apis", "enabled" => false)
       end

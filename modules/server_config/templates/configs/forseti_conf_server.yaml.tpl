@@ -237,6 +237,7 @@ scanner:
           enabled: ${BUCKET_ACL_ENABLED}
         - name: config_validator
           enabled: ${CONFIG_VALIDATOR_ENABLED}
+          verify_policy_library: ${VERIFY_POLICY_LIBRARY}
         - name: cloudsql_acl
           enabled: ${CLOUDSQL_ACL_ENABLED}
         - name: enabled_apis
