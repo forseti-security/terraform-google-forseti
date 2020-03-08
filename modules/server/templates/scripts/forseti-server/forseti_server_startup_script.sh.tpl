@@ -200,7 +200,7 @@ echo "$FORSETI_ENV" > $USER_HOME/forseti_env.sh
 
 USER=ubuntu
 
-echo "Forseti Startup - Allow 'ubuntu' user use crontab"
+echo "Forseti Startup - Allow 'ubuntu' user to use crontab"
 echo -e "root\n$USER" > /etc/cron.allow
 
 # Use flock to prevent rerun of the same cron job when the previous job is still running.
