@@ -111,6 +111,12 @@ variable "mailjet_enabled" {
   type        = bool
 }
 
+variable "server_monitoring_enabled" {
+  description = "Enable Stackdriver monitoring"
+  default     = false
+  type        = bool
+}
+
 ##---------#
 ## Network #
 ##---------#

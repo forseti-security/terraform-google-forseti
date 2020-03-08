@@ -29,6 +29,16 @@ if ! [ -e "/usr/sbin/google-fluentd" ]; then
   bash install-logging-agent.sh
 fi
 
+if [ "${monitoring_enabled}" == "true" ] && ! [ -e "/etc/default/stackdriver-agent" ]; then
+  echo "Forseti Startup - Installing GCP Monitoring agent."
+  cd $USER_HOME
+  curl -sSO https://dl.google.com/cloudagents/add-monitoring-agent-repo.sh
+  sudo bash add-monitoring-agent-repo.sh
+  sudo apt-get update
+  sudo apt-get install -y stackdriver-agent
+  sudo service stackdriver-agent start
+fi
+
 # Check whether Cloud SQL proxy is installed.
 if [ -z "$(which cloud_sql_proxy)" ]; then
   echo "Forseti Startup - Installing GCP Cloud SQL Proxy."

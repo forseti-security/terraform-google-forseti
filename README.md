@@ -313,6 +313,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | server\_boot\_image | GCE Forseti Server boot image - Currently only Ubuntu is supported | string | `"ubuntu-os-cloud/ubuntu-1804-lts"` | no |
 | server\_grpc\_allow\_ranges | List of CIDRs that will be allowed gRPC access to forseti server | list(string) | `<list>` | no |
 | server\_instance\_metadata | Metadata key/value pairs to make available from within the server instance. | map(string) | `<map>` | no |
+| server\_monitoring\_enabled | Enable Stackdriver monitoring | bool | `"false"` | no |
 | server\_private | Private GCE Forseti Server VM (no public IP) | bool | `"false"` | no |
 | server\_region | GCE Forseti Server region | string | `"us-central1"` | no |
 | server\_shielded\_instance\_config | Server instance 'shielded_instance_config' block if using shielded VM image | map(string) | `"null"` | no |

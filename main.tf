@@ -150,6 +150,7 @@ module "server" {
   manage_firewall_rules           = var.manage_firewall_rules
   server_grpc_allow_ranges        = var.server_grpc_allow_ranges
   server_instance_metadata        = var.server_instance_metadata
+  server_monitoring_enabled       = var.server_monitoring_enabled
   server_ssh_allow_ranges         = var.server_ssh_allow_ranges
   subnetwork                      = var.subnetwork
   suffix                          = local.random_hash
@@ -198,6 +199,7 @@ module "server_iam" {
   cloud_profiler_enabled  = var.cloud_profiler_enabled
   enable_write            = var.enable_write
   folder_id               = var.folder_id
+  monitoring_enabled      = var.server_monitoring_enabled
   org_id                  = var.org_id
   project_id              = var.project_id
   suffix                  = local.random_hash

@@ -39,6 +39,12 @@ variable "cloud_profiler_enabled" {
   type        = bool
 }
 
+variable "monitoring_enabled" {
+  description = "Enable Stackdriver monitoring"
+  default     = false
+  type        = bool
+}
+
 #-------#
 # Flags #
 #-------#

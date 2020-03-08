@@ -43,9 +43,11 @@ locals {
   server_cscc_roles = [
     "roles/securitycenter.findingsEditor",
   ]
-
   server_cloud_profiler_roles = [
     "roles/cloudprofiler.agent",
+  ]
+  server_monitoring_roles = [
+    "roles/monitoring.metricWriter",
   ]
 }
 
@@ -61,6 +63,13 @@ resource "google_service_account" "forseti_server" {
 resource "google_project_iam_member" "server_roles" {
   count   = length(local.server_project_roles)
   role    = local.server_project_roles[count.index]
+  project = var.project_id
+  member  = "serviceAccount:${google_service_account.forseti_server.email}"
+}
+
+resource "google_project_iam_member" "monitoring" {
+  count   = var.monitoring_enabled ? length(local.server_monitoring_roles) : 0
+  role    = local.server_monitoring_roles[count.index]
   project = var.project_id
   member  = "serviceAccount:${google_service_account.forseti_server.email}"
 }
