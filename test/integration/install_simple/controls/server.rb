@@ -342,11 +342,11 @@ control "server" do
       describe "resources" do
         it "configures iam_policy_violations_should_notify" do
           expect(config["notifier"]["resources"]).to include(
-            including(
-              "resource" => "iam_policy_violations",
-              "should_notify" => true,
-            )
-          )
+                                                         including(
+                                                             "resource" => "iam_policy_violations",
+                                                             "should_notify" => true,
+                                                         )
+                                                     )
         end
 
         it "configures audit_logging_violations_should_notify" do
@@ -391,11 +391,11 @@ control "server" do
 
         it "configures kms_violations_should_notify" do
           expect(config["notifier"]["resources"]).to include(
-            including(
-              "resource" => "kms_violations",
-              "should_notify" => true,
-            )
-          )
+                                                         including(
+                                                             "resource" => "kms_violations",
+                                                             "should_notify" => true,
+                                                         )
+                                                     )
         end
 
         it "configures groups_violations_should_notify" do
@@ -506,26 +506,22 @@ control "server" do
     its("stdout") { should match("- name: net_write_timeout\n    value: '240'") }
   end
 
-  describe "Crontab" do
-    describe command("cat /etc/cron.allow") do
-      its(:exit_status) { should eq 0 }
-      its(:stderr) { should eq "" }
-      its(:stdout) { should match "root" }
-      its(:stdout) { should match "ubuntu" }
-    end
+  describe command("cat /etc/cron.allow") do
+    its(:exit_status) { should eq 0 }
+    its(:stderr) { should eq "" }
+    its(:stdout) { should match "root" }
+    its(:stdout) { should match "ubuntu" }
   end
 
-  describe "AppArmor" do
-    describe command("cat /etc/default/grub.d/50-cloudimg-settings.cfg | grep GRUB_CMDLINE_LINUX=") do
-      its(:exit_status) { should eq 0 }
-      its(:stderr) { should eq "" }
-      its(:stdout) { should match "GRUB_CMDLINE_LINUX=\"scsi_mod.use_blk_mq=Y apparmor=1 security=apparmor\"" }
-    end
+  describe command("cat /etc/default/grub.d/50-cloudimg-settings.cfg | grep GRUB_CMDLINE_LINUX=") do
+    its(:exit_status) { should eq 0 }
+    its(:stderr) { should eq "" }
+    its(:stdout) { should match "GRUB_CMDLINE_LINUX=\"scsi_mod.use_blk_mq=Y apparmor=1 security=apparmor\"" }
+  end
 
-    describe command("grep '^\\s*linux' /boot/grub/grub.cfg | grep -v apparmor=1") do
-      its(:exit_status) { should eq 1 }
-      its(:stderr) { should eq "" }
-      its(:stdout) { should eq "" }
-    end
+  describe command("grep '^\\s*linux' /boot/grub/grub.cfg | grep -v apparmor=1") do
+    its(:exit_status) { should eq 1 }
+    its(:stderr) { should eq "" }
+    its(:stdout) { should eq "" }
   end
 end
