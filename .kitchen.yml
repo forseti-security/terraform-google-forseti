@@ -1,4 +1,4 @@
-# Copyright 2018 Google LLC
+# Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -66,6 +66,21 @@ suites:
           backend: local
           controls:
             - forseti-org-iam
+  - name: on_gke_end_to_end
+    lifecycle:
+      pre_verify:
+        - chmod go-rwx test/fixtures/on_gke_end_to_end/sshkey
+    driver:
+      name: terraform
+      root_module_directory: test/fixtures/on_gke_end_to_end/
+      command_timeout: 1800
+    verifier:
+      systems:
+        - name: gke
+          backend: local
+          controls:
+            - gcloud
+            - kubectl
   - name: shared_vpc
     lifecycle:
       pre_verify:

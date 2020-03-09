@@ -196,6 +196,12 @@ variable "server_log_level" {
   default     = "info"
 }
 
+variable "client_instance_metadata" {
+  description = "Metadata key/value pairs to make available from within the client instance."
+  type        = map(string)
+  default     = {}
+}
+
 #----------------#
 # Forseti bucket #
 #----------------#
