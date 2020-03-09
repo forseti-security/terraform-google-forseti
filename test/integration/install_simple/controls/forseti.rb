@@ -40,24 +40,24 @@ control 'forseti' do
     its('network_interfaces_count'){should eq 1}
   end
 
-  describe google_compute_instance(
-    project: project_id,
-    zone: 'us-central1-c',
-    name: forseti_server_vm_name
-  ) do
-    it { should exist }
-    its('machine_size') { should eq 'n1-standard-8' }
-    its('network_interfaces_count'){should eq 1}
-  end
+  # describe google_compute_instance(
+  #   project: project_id,
+  #   zone: 'us-central1-c',
+  #   name: forseti_server_vm_name
+  # ) do
+  #   it { should exist }
+  #   its('machine_size') { should eq 'n1-standard-8' }
+  #   its('network_interfaces_count'){should eq 1}
+  # end
 
-  describe google_compute_router_nat(
-    project: project_id,
-    region: 'us-central1',
-    router: forseti_router_name,
-    name: forseti_cloud_nat_name
-    ) do
-    it { should exist }
-  end
+  # describe google_compute_router_nat(
+  #   project: project_id,
+  #   region: 'us-central1',
+  #   router: forseti_router_name,
+  #   name: forseti_cloud_nat_name
+  #   ) do
+  #   it { should exist }
+  # end
 
   describe google_compute_routers(
     project: project_id,
