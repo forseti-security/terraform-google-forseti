@@ -67,7 +67,7 @@ control "kubectl" do
         end
 
         it "has the expected size" do
-            expect(jobs.size).to eq 3
+            expect(jobs.size).to be <= 3
         end
       end
     end

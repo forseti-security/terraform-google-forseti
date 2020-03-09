@@ -16,9 +16,6 @@ cluster_name = attribute('gke_cluster_name')
 location = attribute('gke_cluster_location')
 project_id = attribute('gke_project_id')
 
-# TODO:
-# 3) Verify cron job was deployed: kubectl get cronjobs
-# 4) Run cronjob and SSh to client to verify inventory shows up, verify GCS violations exist
 control "gcloud" do
   title "Google Compute Engine GKE configuration"
   describe command("gcloud beta --project=#{project_id} container clusters --zone=#{location} describe #{cluster_name} --format=json") do
