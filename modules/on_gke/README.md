@@ -98,7 +98,7 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | groups\_settings\_violations\_should\_notify | Notify for groups settings violations | bool | `"true"` | no |
 | groups\_violations\_should\_notify | Notify for Groups violations | bool | `"true"` | no |
 | gsuite\_admin\_email | G-Suite administrator email address to manage your Forseti installation | string | `""` | no |
-| helm\_chart\_version | The version of the Helm chart to use | string | `"2.1.0"` | no |
+| helm\_chart\_version | The version of the Helm chart to use | string | `"2.2.0-rc1"` | no |
 | helm\_repository\_url | The Helm repository containing the 'forseti-security' Helm charts | string | `"https://forseti-security-charts.storage.googleapis.com/release/"` | no |
 | iam\_disable\_polling | Whether to disable polling for IAM API | bool | `"false"` | no |
 | iam\_max\_calls | Maximum calls that can be made to IAM API | string | `"90"` | no |

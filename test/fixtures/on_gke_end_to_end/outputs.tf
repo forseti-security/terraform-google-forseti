@@ -16,8 +16,8 @@
 
 output "client_token" {
   description = "The bearer token for auth"
-  sensitive = true
-  value     = module.forseti.client_token
+  sensitive   = true
+  value       = module.forseti.client_token
 }
 
 output "ca_certificate" {
@@ -47,6 +47,6 @@ output "gke_project_id" {
 
 output "kubernetes_endpoint" {
   description = "The cluster endpoint"
-  sensitive = true
-  value     = module.forseti.kubernetes_endpoint
+  sensitive   = true
+  value       = module.forseti.kubernetes_endpoint
 }

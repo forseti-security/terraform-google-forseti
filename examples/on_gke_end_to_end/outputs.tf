@@ -16,8 +16,8 @@
 
 output "client_token" {
   description = "The bearer token for auth"
-  sensitive = true
-  value     = base64encode(data.google_client_config.default.access_token)
+  sensitive   = true
+  value       = base64encode(data.google_client_config.default.access_token)
 }
 
 output "ca_certificate" {
@@ -67,13 +67,13 @@ output "gke_cluster_location" {
 
 output "gke_cluster_name" {
   description = "Cluster name"
-  value = var.gke_cluster_name
+  value       = var.gke_cluster_name
 }
 
 output "kubernetes_endpoint" {
   description = "The cluster endpoint"
-  sensitive = true
-  value     = module.gke.endpoint
+  sensitive   = true
+  value       = module.gke.endpoint
 }
 
 output "kubernetes-forseti-namespace" {

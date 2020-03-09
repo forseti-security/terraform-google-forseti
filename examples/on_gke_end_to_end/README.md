@@ -56,6 +56,7 @@ This script will also activate necessary APIs required for Terraform to deploy F
 |------|-------------|:----:|:-----:|:-----:|
 | auto\_create\_subnetworks | When set to true, the network is created in 'auto subnet mode' and it will create a subnet for each region automatically across the 10.128.0.0/9 address range. When set to false, the network is created in 'custom subnet mode' so the user can explicitly connect subnetwork resources. | bool | `"false"` | no |
 | bucket\_cai\_location | GCS CAI storage bucket location | string | `"us-central1"` | no |
+| client\_instance\_metadata | Metadata key/value pairs to make available from within the client instance. | map(string) | `<map>` | no |
 | config\_validator\_enabled | Config Validator scanner enabled. | bool | `"false"` | no |
 | cscc\_source\_id | Source ID for CSCC Beta API | string | `""` | no |
 | cscc\_violations\_enabled | Notify for CSCC violations | bool | `"false"` | no |
@@ -97,6 +98,8 @@ This script will also activate necessary APIs required for Terraform to deploy F
 
 | Name | Description |
 |------|-------------|
+| ca\_certificate | The cluster CA certificate |
+| client\_token | The bearer token for auth |
 | config-validator-git-public-key-openssh | The public OpenSSH key generated to allow the Forseti Server to clone the policy library repository. |
 | forseti-client-service-account | Forseti Client service account |
 | forseti-client-storage-bucket | Forseti Client storage bucket |
@@ -104,9 +107,12 @@ This script will also activate necessary APIs required for Terraform to deploy F
 | forseti-cloudsql-connection-name | Forseti CloudSQL Connection String |
 | forseti-server-service-account | Forseti Server service account |
 | forseti-server-storage-bucket | Forseti Server storage bucket |
+| gke\_cluster\_location | Cluster location |
+| gke\_cluster\_name | Cluster name |
 | kubernetes-forseti-namespace | The Kubernetes namespace in which Forseti is deployed |
 | kubernetes-forseti-server-ingress | The loadbalancer ingress address of the forseti-server service in GKE |
 | kubernetes-forseti-tiller-sa-name | The name of the service account deploying Forseti |
+| kubernetes\_endpoint | The cluster endpoint |
 | suffix | The random suffix appended to Forseti resources |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
