@@ -243,6 +243,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | forseti\_home | Forseti installation directory | string | `"$USER_HOME/forseti-security"` | no |
 | forseti\_repo\_url | Git repo for the Forseti installation | string | `"https://github.com/forseti-security/forseti-security"` | no |
 | forseti\_run\_frequency | Schedule of running the Forseti scans | string | `"null"` | no |
+| forseti\_scripts | The local Forseti scripts directory | string | `"$USER_HOME/forseti-scripts"` | no |
 | forseti\_version | The version of Forseti to install | string | `"v2.24.0"` | no |
 | forwarding\_rule\_enabled | Forwarding rule scanner enabled. | bool | `"false"` | no |
 | forwarding\_rule\_violations\_should\_notify | Notify for forwarding rule violations | bool | `"true"` | no |
