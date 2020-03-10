@@ -47,18 +47,18 @@ locals {
 
   network_interface_base = {
     private = [{
-      subnetwork_project = "${local.network_project}"
-      subnetwork         = "${var.subnetwork}"
+      subnetwork_project = local.network_project
+      subnetwork         = var.subnetwork
     }]
 
     public = [{
-      subnetwork_project = "${local.network_project}"
-      subnetwork         = "${var.subnetwork}"
-      access_config      = ["${var.enforcer_instance_access_config}"]
+      subnetwork_project = local.network_project
+      subnetwork         = var.subnetwork
+      access_config      = [var.enforcer_instance_access_config]
     }]
   }
 
-  network_interface = "${local.network_interface_base[var.enforcer_instance_private ? "private" : "public"]}"
+  network_interface = local.network_interface_base[var.enforcer_instance_private ? "private" : "public"]
 }
 
 resource "google_service_account" "main" {
@@ -141,7 +141,8 @@ resource "google_compute_instance" "main" {
   dynamic "network_interface" {
     for_each = local.network_interface
     content {
-      address            = lookup(network_interface.value, "address", null)
+      # Field `address` has been deprecated. Use `network_ip` instead.
+      # https://github.com/terraform-providers/terraform-provider-google/blob/master/CHANGELOG.md#200-february-12-2019
       network            = lookup(network_interface.value, "network", null)
       network_ip         = lookup(network_interface.value, "network_ip", null)
       subnetwork         = lookup(network_interface.value, "subnetwork", null)

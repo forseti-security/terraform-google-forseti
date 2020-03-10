@@ -99,26 +99,28 @@ resource "google_project_service" "cloud_profiler" {
 module "client" {
   source = "./modules/client"
 
-  project_id               = var.project_id
-  client_boot_image        = var.client_boot_image
-  subnetwork               = var.subnetwork
-  forseti_home             = var.forseti_home
-  forseti_version          = var.forseti_version
-  forseti_repo_url         = var.forseti_repo_url
-  client_type              = var.client_type
-  network_project          = local.network_project
-  network                  = var.network
-  suffix                   = local.random_hash
-  client_region            = var.client_region
-  client_instance_metadata = var.client_instance_metadata
-  client_ssh_allow_ranges  = var.client_ssh_allow_ranges
-  client_tags              = var.client_tags
-  client_access_config     = var.client_access_config
-  client_private           = var.client_private
-  manage_firewall_rules    = var.manage_firewall_rules
-  client_iam_module        = module.client_iam
-  client_gcs_module        = module.client_gcs
-  client_config_module     = module.client_config
+  client_enabled                  = var.client_enabled
+  project_id                      = var.project_id
+  client_boot_image               = var.client_boot_image
+  client_shielded_instance_config = var.client_shielded_instance_config
+  subnetwork                      = var.subnetwork
+  forseti_home                    = var.forseti_home
+  forseti_version                 = var.forseti_version
+  forseti_repo_url                = var.forseti_repo_url
+  client_type                     = var.client_type
+  network_project                 = local.network_project
+  network                         = var.network
+  suffix                          = local.random_hash
+  client_region                   = var.client_region
+  client_instance_metadata        = var.client_instance_metadata
+  client_ssh_allow_ranges         = var.client_ssh_allow_ranges
+  client_tags                     = var.client_tags
+  client_access_config            = var.client_access_config
+  client_private                  = var.client_private
+  manage_firewall_rules           = var.manage_firewall_rules
+  client_iam_module               = module.client_iam
+  client_gcs_module               = module.client_gcs
+  client_config_module            = module.client_config
 
   services = google_project_service.main.*.service
 }
@@ -126,31 +128,33 @@ module "client" {
 module "server" {
   source = "./modules/server"
 
-  project_id                 = var.project_id
-  forseti_version            = var.forseti_version
-  forseti_repo_url           = var.forseti_repo_url
-  forseti_home               = var.forseti_home
-  forseti_run_frequency      = var.forseti_run_frequency
-  server_type                = var.server_type
-  server_region              = var.server_region
-  server_boot_image          = var.server_boot_image
-  server_boot_disk_size      = var.server_boot_disk_size
-  server_boot_disk_type      = var.server_boot_disk_type
-  server_tags                = var.server_tags
-  server_access_config       = var.server_access_config
-  server_private             = var.server_private
-  cloudsql_proxy_arch        = var.cloudsql_proxy_arch
-  cloud_profiler_enabled     = var.cloud_profiler_enabled
-  config_validator_image_tag = var.config_validator_image_tag
-  mailjet_enabled            = var.mailjet_enabled
-  network                    = var.network
-  network_project            = local.network_project
-  manage_firewall_rules      = var.manage_firewall_rules
-  server_grpc_allow_ranges   = var.server_grpc_allow_ranges
-  server_instance_metadata   = var.server_instance_metadata
-  server_ssh_allow_ranges    = var.server_ssh_allow_ranges
-  subnetwork                 = var.subnetwork
-  suffix                     = local.random_hash
+  project_id                      = var.project_id
+  forseti_version                 = var.forseti_version
+  forseti_repo_url                = var.forseti_repo_url
+  forseti_home                    = var.forseti_home
+  forseti_run_frequency           = var.forseti_run_frequency
+  forseti_scripts                 = var.forseti_scripts
+  server_type                     = var.server_type
+  server_region                   = var.server_region
+  server_boot_image               = var.server_boot_image
+  server_boot_disk_size           = var.server_boot_disk_size
+  server_boot_disk_type           = var.server_boot_disk_type
+  server_shielded_instance_config = var.server_shielded_instance_config
+  server_tags                     = var.server_tags
+  server_access_config            = var.server_access_config
+  server_private                  = var.server_private
+  cloudsql_proxy_arch             = var.cloudsql_proxy_arch
+  cloud_profiler_enabled          = var.cloud_profiler_enabled
+  config_validator_image_tag      = var.config_validator_image_tag
+  mailjet_enabled                 = var.mailjet_enabled
+  network                         = var.network
+  network_project                 = local.network_project
+  manage_firewall_rules           = var.manage_firewall_rules
+  server_grpc_allow_ranges        = var.server_grpc_allow_ranges
+  server_instance_metadata        = var.server_instance_metadata
+  server_ssh_allow_ranges         = var.server_ssh_allow_ranges
+  subnetwork                      = var.subnetwork
+  suffix                          = local.random_hash
 
   policy_library_home                    = var.policy_library_home
   policy_library_repository_url          = var.policy_library_repository_url
@@ -173,16 +177,18 @@ module "server" {
 
 module "cloudsql" {
   source                     = "./modules/cloudsql"
+  cloudsql_db_name           = var.cloudsql_db_name
   cloudsql_disk_size         = var.cloudsql_disk_size
+  cloudsql_net_write_timeout = var.cloudsql_net_write_timeout
+  cloudsql_password          = var.cloudsql_db_password
   cloudsql_private           = var.cloudsql_private
   cloudsql_region            = var.cloudsql_region
   cloudsql_type              = var.cloudsql_type
-  cloudsql_db_name           = var.cloudsql_db_name
+  cloudsql_user              = var.cloudsql_db_user
   cloudsql_user_host         = var.cloudsql_user_host
-  cloudsql_net_write_timeout = var.cloudsql_net_write_timeout
   enable_service_networking  = var.enable_service_networking
-  network_project            = var.network_project
   network                    = var.network
+  network_project            = var.network_project
   project_id                 = var.project_id
   services                   = google_project_service.main.*.service
   suffix                     = local.random_hash
@@ -274,6 +280,7 @@ module "server_config" {
   admin_max_calls                                     = var.admin_max_calls
   admin_disable_polling                               = var.admin_disable_polling
   service_account_key_enabled                         = var.service_account_key_enabled
+  role_enabled                                        = var.role_enabled
   resource_enabled                                    = var.resource_enabled
   log_sink_enabled                                    = var.log_sink_enabled
   location_enabled                                    = var.location_enabled
@@ -295,6 +302,8 @@ module "server_config" {
   bigquery_enabled                                    = var.bigquery_enabled
   audit_logging_enabled                               = var.audit_logging_enabled
   service_account_key_violations_should_notify        = var.service_account_key_violations_should_notify
+  role_violations_should_notify                       = var.role_violations_should_notify
+  role_violations_slack_webhook                       = var.role_violations_slack_webhook
   resource_violations_should_notify                   = var.resource_violations_should_notify
   log_sink_violations_should_notify                   = var.log_sink_violations_should_notify
   location_violations_should_notify                   = var.location_violations_should_notify
@@ -325,6 +334,7 @@ module "server_config" {
   cscc_violations_enabled                             = var.cscc_violations_enabled
   cscc_source_id                                      = var.cscc_source_id
   rules_path                                          = var.rules_path
+  verify_policy_library                               = var.verify_policy_library
 
   groups_settings_max_calls                = var.groups_settings_max_calls
   groups_settings_period                   = var.groups_settings_period
@@ -334,13 +344,15 @@ module "server_config" {
 }
 
 module "client_iam" {
-  source     = "./modules/client_iam"
-  project_id = var.project_id
-  suffix     = local.random_hash
+  source         = "./modules/client_iam"
+  client_enabled = var.client_enabled
+  project_id     = var.project_id
+  suffix         = local.random_hash
 }
 
 module "client_gcs" {
   source                  = "./modules/client_gcs"
+  client_enabled          = var.client_enabled
   project_id              = var.project_id
   storage_bucket_location = var.storage_bucket_location
   suffix                  = local.random_hash
@@ -350,6 +362,7 @@ module "client_gcs" {
 
 module "client_config" {
   source            = "./modules/client_config"
+  client_enabled    = var.client_enabled
   client_gcs_module = module.client_gcs
-  server_address    = module.server.forseti-server-vm-ip
+  server_address    = module.server.forseti-server-vm-internal-dns
 }

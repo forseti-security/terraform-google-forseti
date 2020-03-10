@@ -111,6 +111,7 @@ data "template_file" "forseti_server_config" {
     ADMIN_MAX_CALLS                                     = var.admin_max_calls
     ADMIN_DISABLE_POLLING                               = var.admin_disable_polling
     SERVICE_ACCOUNT_KEY_ENABLED                         = var.service_account_key_enabled
+    ROLE_ENABLED                                        = var.role_enabled
     RESOURCE_ENABLED                                    = var.resource_enabled
     LOG_SINK_ENABLED                                    = var.log_sink_enabled
     LOCATION_ENABLED                                    = var.location_enabled
@@ -132,6 +133,8 @@ data "template_file" "forseti_server_config" {
     BIGQUERY_ENABLED                                    = var.bigquery_enabled
     AUDIT_LOGGING_ENABLED                               = var.audit_logging_enabled
     SERVICE_ACCOUNT_KEY_VIOLATIONS_SHOULD_NOTIFY        = var.service_account_key_violations_should_notify
+    ROLE_VIOLATIONS_SHOULD_NOTIFY                       = var.role_violations_should_notify
+    ROLE_VIOLATIONS_SLACK_WEBHOOK                       = var.role_violations_slack_webhook
     RESOURCE_VIOLATIONS_SHOULD_NOTIFY                   = var.resource_violations_should_notify
     LOG_SINK_VIOLATIONS_SHOULD_NOTIFY                   = var.log_sink_violations_should_notify
     LOCATION_VIOLATIONS_SHOULD_NOTIFY                   = var.location_violations_should_notify
@@ -159,6 +162,8 @@ data "template_file" "forseti_server_config" {
     AUDIT_LOGGING_VIOLATIONS_SHOULD_NOTIFY              = var.audit_logging_violations_should_notify
     VIOLATIONS_SLACK_WEBHOOK                            = var.violations_slack_webhook
     EXCLUDED_RESOURCES                                  = local.excluded_resources
+    VERIFY_POLICY_LIBRARY                               = var.verify_policy_library
+
     # CSCC notifications
     CSCC_VIOLATIONS_ENABLED = var.cscc_violations_enabled
     CSCC_SOURCE_ID          = var.cscc_source_id

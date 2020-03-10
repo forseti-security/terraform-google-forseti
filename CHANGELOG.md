@@ -6,10 +6,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Extending the adopted spec, each change should have a link to its corresponding pull request appended.
 
+## [Unreleased] - TBD
+
+### Added
+- Configure firewall rules in support of private Client and Server [#391]
+- Add Service Account Key to CAI assets in Server config [#393]
+- Add policy_library_repository_branch to GCE module [#394]
+- Add sql instance user and password [#399]
+- Conditional firewall rules [#400]
+- Conditional service networking [#401]
+- Create stale.yml for Stale Bot [#402]
+- Enable uniform bucket-level access [#405]
+- Add Cloud SQL DB User and Password as outputs [#407]
+- Added install-simple tests [#408]
+- Use network project for private IP address in CloudSQL submodule [#412]
+- Allow user to configure Scanner Rules path to GCS or local dir [#414]
+- Update version in README [#426]
+- Removed simple_example [#444]
+- Create CONTRIBUTORS file [#454]
+
+### Fixed
+- Fix space in Location Rules template [#392]
+- Fix string interpolation warnings [#395]
+- Remove the % character from the Cloud SQL password [#417]
+- Base64 encode CloudSQL username and password for the helm chart secrets [#419]
+- Style fixes [#430]
+- Add spanner.googleapis.com [#435]
+- Update the Bigquery api to the new name [#437]
+- Fix validate error [#449]
+- Increased open files limit to fix OSError: [Errno 24] Too many open files [#450]
+- Sync policy library with gsutil rsync [#463]
+
+## [v5.1.1] - 2020-01-14
+
+### Fixed
+- Update the Bigquery api to the new name
+
+
 ## [5.1.0] - 2019-11-15
 
 ### Added
-
 - Support for Forseti v2.24.0 [#386]
 - Parameterized Kubernetes version [#385]
 - GCS bucket location to tutorials and examples [#382]
@@ -36,7 +72,6 @@ Extending the adopted spec, each change should have a link to its corresponding 
 Version 5.0.0 is a backwards-incompatible release. Please see the [upgrade instructions](./docs/upgrading_to_v5.0.md) for details.
 
 ### Added
-
 - Support for Forseti v2.23.0 [#329]
 - Updated README and Cloud Shell Tutorial [#330]
 - Added additional submodules for Forseti infrastructure components [#284]
@@ -291,7 +326,7 @@ Version 4.0.0 is a backwards-incompatible release. Please see the [upgrade instr
 ### ADDED
 - This is the initial release of the Forseti module.
 
-[Unreleased]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v5.0.0...HEAD
+[Unreleased]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v5.1.1...HEAD
 [v0.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/releases/tag/v0.1.0
 [v1.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v0.1.0...v1.0.0
 [v1.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v1.0.0...v1.1.0
@@ -316,7 +351,33 @@ Version 4.0.0 is a backwards-incompatible release. Please see the [upgrade instr
 [v4.3.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.2.1...v4.3.0
 [v5.0.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v4.3.0...v5.0.0
 [v5.1.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v5.0.0...v5.1.0
+[v5.1.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v5.1.0...v5.1.1
 
+[#463]: https://github.com/forseti-security/terraform-google-forseti/pull/463
+[#454]: https://github.com/forseti-security/terraform-google-forseti/pull/454
+[#450]: https://github.com/forseti-security/terraform-google-forseti/pull/450
+[#449]: https://github.com/forseti-security/terraform-google-forseti/pull/449
+[#444]: https://github.com/forseti-security/terraform-google-forseti/pull/444
+[#437]: https://github.com/forseti-security/terraform-google-forseti/pull/437
+[#435]: https://github.com/forseti-security/terraform-google-forseti/pull/435
+[#430]: https://github.com/forseti-security/terraform-google-forseti/pull/430
+[#426]: https://github.com/forseti-security/terraform-google-forseti/pull/426
+[#419]: https://github.com/forseti-security/terraform-google-forseti/pull/419
+[#417]: https://github.com/forseti-security/terraform-google-forseti/pull/417
+[#414]: https://github.com/forseti-security/terraform-google-forseti/pull/414
+[#412]: https://github.com/forseti-security/terraform-google-forseti/pull/412
+[#408]: https://github.com/forseti-security/terraform-google-forseti/pull/408
+[#407]: https://github.com/forseti-security/terraform-google-forseti/pull/407
+[#405]: https://github.com/forseti-security/terraform-google-forseti/pull/405
+[#402]: https://github.com/forseti-security/terraform-google-forseti/pull/402
+[#401]: https://github.com/forseti-security/terraform-google-forseti/pull/401
+[#400]: https://github.com/forseti-security/terraform-google-forseti/pull/400
+[#399]: https://github.com/forseti-security/terraform-google-forseti/pull/399
+[#395]: https://github.com/forseti-security/terraform-google-forseti/pull/395
+[#394]: https://github.com/forseti-security/terraform-google-forseti/pull/394
+[#393]: https://github.com/forseti-security/terraform-google-forseti/pull/393
+[#392]: https://github.com/forseti-security/terraform-google-forseti/pull/392
+[#391]: https://github.com/forseti-security/terraform-google-forseti/pull/391
 [#386]: https://github.com/forseti-security/terraform-google-forseti/pull/386
 [#385]: https://github.com/forseti-security/terraform-google-forseti/pull/385
 [#383]: https://github.com/forseti-security/terraform-google-forseti/pull/383

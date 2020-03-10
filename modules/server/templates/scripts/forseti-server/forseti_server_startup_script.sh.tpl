@@ -6,6 +6,10 @@ USER=ubuntu
 USER_HOME=/home/ubuntu
 INTERNET_CONNECTION="$(ping -q -w1 -c1 google.com &>/dev/null && echo online || echo offline)"
 
+INIT_SERVICES_MD5_HASH=${forseti_init_services_md5_hash}
+
+export USER_HOME
+
 # Log status of internet connection
 if [ $INTERNET_CONNECTION == "offline" ]; then
   echo "Forseti Startup - A connection to the internet was not detected."
@@ -89,6 +93,7 @@ echo "${forseti_environment}" > /etc/profile.d/forseti_environment.sh | sudo sh
 echo "Forseti Startup - Downloading Forseti configuration from GCS."
 gsutil cp gs://${storage_bucket_name}/configs/forseti_conf_server.yaml ${forseti_server_conf_path}
 gsutil cp -r gs://${storage_bucket_name}/rules ${forseti_home}/
+echo "Number of rules enabled: `ls ${forseti_home}/rules/*.yaml &>/dev/null | wc -l`"
 
 # Get Config Validator constraints
 sudo mkdir -m 777 -p ${policy_library_home}
@@ -119,10 +124,13 @@ else
   gsutil -m rsync -d -r gs://${storage_bucket_name}/policy-library ${policy_library_home}/policy-library || echo "No policy available, continuing with Forseti installation"
 fi
 
+# Attempt to download the Forseti scripts and gracefully handle the absence of scripts.
+gsutil -m cp -r gs://${storage_bucket_name}/scripts ${forseti_scripts}/
+
 # Enable cloud-profiler in the initialize_forseti_services.sh script
 if ${cloud_profiler_enabled}; then
   pip3 install google-cloud-profiler
-  sed "/FORSETI_COMMAND+=\" --services/a FORSETI_COMMAND+=\" --enable_profiler\"" -i ./install/gcp/scripts/initialize_forseti_services.sh
+  sed "/FORSETI_COMMAND+=\" --services/a FORSETI_COMMAND+=\" --enable_profiler\"" -i ${forseti_scripts}/initialize_forseti_services.sh
 fi
 
 # Install mailjet_rest library
@@ -133,7 +141,7 @@ fi
 
 # Start Forseti service depends on vars defined above.
 echo "Forseti Startup - Starting services."
-bash ./install/gcp/scripts/initialize_forseti_services.sh
+bash ${forseti_scripts}/initialize_forseti_services.sh
 systemctl start cloudsqlproxy
 if [ "${policy_library_sync_enabled}" == "true" ]; then
   systemctl start policy-library-sync
@@ -149,6 +157,19 @@ python3 $USER_HOME/forseti-security/install/gcp/upgrade_tools/db_migrator.py
 echo "Forseti Startup - Enabling and starting Forseti service."
 systemctl enable --now forseti
 echo "Forseti Startup - Success! The Forseti API server has been enabled and started."
+
+# Increase Open File Limit
+if grep -q "ubuntu soft nofile" /etc/security/limits.conf ; then
+  echo "Ulimit soft nofile already set."
+else
+  echo "ubuntu soft nofile 32768" | sudo tee -a /etc/security/limits.conf
+fi
+
+if grep -q "ubuntu hard nofile" /etc/security/limits.conf ; then
+  echo "Ulimit hard nofile already set."
+else
+  echo "ubuntu hard nofile 32768" | sudo tee -a /etc/security/limits.conf
+fi
 
 # Create a Forseti env script
 FORSETI_ENV="$(cat << EOF

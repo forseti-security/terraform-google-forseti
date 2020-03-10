@@ -45,6 +45,10 @@ control "server" do
     its("stderr") { should cmp "" }
   end
 
+  describe file("/home/ubuntu/forseti-scripts/initialize_forseti_services.sh") do
+    it { should exist }
+  end
+
   describe file("/home/ubuntu/forseti-security/configs/forseti_conf_server.yaml") do
     it { should exist }
     it "is valid YAML" do
@@ -258,6 +262,10 @@ control "server" do
         expect(config["scanner"]["scanners"]).to include("name" => "cloudsql_acl", "enabled" => true)
       end
 
+      it "configures config_validator_enabled" do
+        expect(config["scanner"]["scanners"]).to include("name" => "config_validator", "enabled" => false, "verify_policy_library" => true)
+      end
+
       it "configures enabled_apis_enabled" do
         expect(config["scanner"]["scanners"]).to include("name" => "enabled_apis", "enabled" => false)
       end
@@ -312,6 +320,10 @@ control "server" do
 
       it "configures resource_enabled" do
         expect(config["scanner"]["scanners"]).to include("name" => "resource", "enabled" => true)
+      end
+
+      it "configures role_enabled" do
+        expect(config["scanner"]["scanners"]).to include("name" => "role", "enabled" => false)
       end
 
       it "configures service_account_key_enabled" do
@@ -418,6 +430,10 @@ control "server" do
           expect(config["notifier"]["resources"]).to include(including("resource" => "resource_violations", "should_notify" => true))
         end
 
+        it "configures role_violations_should_notify" do
+          expect(config["notifier"]["resources"]).to include(including("resource" => "role_violations", "should_notify" => true))
+        end
+
         it "configures service_account_key_violations_should_notify" do
           expect(config["notifier"]["resources"]).to include(including("resource" => "service_account_key_violations", "should_notify" => true))
         end
@@ -492,23 +508,5 @@ control "server" do
   describe command("sudo gcloud sql instances describe forseti-server-db-#{suffix}") do
     its("exit_status") { should eq 0 }
     its("stdout") { should match("- name: net_write_timeout\n    value: '240'") }
-  end
-
-  # Assert Policy Library is copied from GCS correctly
-  expected_policy_files = [
-    "policy-library/lib/constraints.rego",
-    "policy-library/lib/util_test.rego",
-    "policy-library/lib/util.rego",
-    "policy-library/policies/constraints/sql_public_ip.yaml",
-    "policy-library/policies/templates/gcp_sql_public_ip_v1.yaml"
-  ]
-
-  expected_policy_files.each do |file|
-    describe file("/home/ubuntu/policy-library/#{file}") do
-      it { should exist }
-      it "is valid YAML" do
-        YAML.load(subject.content)
-      end
-    end
   end
 end

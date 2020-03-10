@@ -79,7 +79,7 @@ This script will also activate necessary APIs required for Terraform to deploy F
 | k8s\_forseti\_orchestrator\_image\_tag | The tag for the container image for the Forseti orchestrator | string | `"v2.24.0"` | no |
 | k8s\_forseti\_server\_image\_tag | The tag for the container image for the Forseti server | string | `"v2.24.0"` | no |
 | k8s\_tiller\_sa\_name | The Kubernetes Service Account used by Tiller | string | `"tiller"` | no |
-| kubernetes\_version | The Kubernetes version of the masters. If set to 'latest' it will pull latest available version in the selected region. | string | `"1.13.12-gke.8"` | no |
+| kubernetes\_version | The Kubernetes version of the masters. If set to 'latest' it will pull latest available version in the selected region. | string | `"1.14.10-gke.17"` | no |
 | network | The name of the VPC being created | string | `"forseti-gke-network"` | no |
 | network\_description | An optional description of the network. The resource must be recreated to modify this field. | string | `""` | no |
 | org\_id | GCP Organization ID that Forseti will have purview over | string | n/a | yes |

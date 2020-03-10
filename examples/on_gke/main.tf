@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,35 +17,18 @@
 #--------#
 # Locals #
 #--------#
-
 locals {
   node_pool_index = [for index, node_pool in data.google_container_cluster.forseti_cluster.node_pool : index if node_pool.name == var.gke_node_pool_name][0]
-}
-
-#------------------#
-# Google Providers #
-#------------------#
-
-provider "google" {
-  version = "~> 2.12.0"
-  project = var.project_id
-}
-
-provider "google-beta" {
-  version = "~> 2.12.0"
-  project = var.project_id
 }
 
 #----------------------------------#
 # Google Client Config Data Source #
 #----------------------------------#
-
 data "google_client_config" "default" {}
 
 #-------------------------#
 # GKE Cluster Data Source #
 #-------------------------#
-
 data "google_container_cluster" "forseti_cluster" {
   name     = var.gke_cluster_name
   location = var.gke_cluster_location
@@ -64,19 +47,17 @@ data "google_compute_subnetwork" "forseti_subnetwork" {
 #---------------------#
 # Kubernetes Provider #
 #---------------------#
-
 provider "kubernetes" {
   alias                  = "forseti"
   load_config_file       = false
   host                   = "https://${data.google_container_cluster.forseti_cluster.endpoint}"
   token                  = data.google_client_config.default.access_token
-  cluster_ca_certificate = "${base64decode(data.google_container_cluster.forseti_cluster.master_auth.0.cluster_ca_certificate)}"
+  cluster_ca_certificate = base64decode(data.google_container_cluster.forseti_cluster.master_auth.0.cluster_ca_certificate)
 }
 
 #---------------#
 # Helm Provider #
 #---------------#
-
 provider "helm" {
   alias           = "forseti"
   service_account = var.k8s_tiller_sa_name
@@ -85,7 +66,7 @@ provider "helm" {
     load_config_file       = false
     host                   = "https://${data.google_container_cluster.forseti_cluster.endpoint}"
     token                  = data.google_client_config.default.access_token
-    cluster_ca_certificate = "${base64decode(data.google_container_cluster.forseti_cluster.master_auth.0.cluster_ca_certificate)}"
+    cluster_ca_certificate = base64decode(data.google_container_cluster.forseti_cluster.master_auth.0.cluster_ca_certificate)
   }
   debug                           = true
   automount_service_account_token = true
@@ -95,7 +76,6 @@ provider "helm" {
 #----------------------------------------#
 #  Allow GKE Service Account to read GCS #
 #----------------------------------------#
-
 resource "google_project_iam_member" "cluster_service_account-storage_reader" {
   project = var.project_id
   role    = "roles/storage.objectViewer"
@@ -105,7 +85,6 @@ resource "google_project_iam_member" "cluster_service_account-storage_reader" {
 #-----------------------#
 # Deploy Forseti on-GKE #
 #-----------------------#
-
 module "forseti" {
   providers = {
     kubernetes = "kubernetes.forseti"

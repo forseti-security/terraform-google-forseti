@@ -28,6 +28,11 @@ output "network_project" {
   value       = var.network_project
 }
 
+output "forseti-server-vm-internal-dns" {
+  description = "Forseti Server internal DNS"
+  value       = module.forseti-shared-vpc.forseti-server-vm-internal-dns
+}
+
 output "forseti-server-vm-ip" {
   description = "Forseti Server VM private IP address"
   value       = module.forseti-shared-vpc.forseti-server-vm-ip

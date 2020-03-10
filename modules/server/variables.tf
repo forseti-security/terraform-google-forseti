@@ -42,6 +42,11 @@ variable "forseti_run_frequency" {
   default     = null
 }
 
+variable "forseti_scripts" {
+  description = "The local Forseti scripts directory"
+  default     = "$USER_HOME/forseti-scripts"
+}
+
 #----------------#
 # Forseti server #
 #----------------#
@@ -63,6 +68,12 @@ variable "server_region" {
 variable "server_boot_image" {
   description = "GCE Forseti Server boot image - Currently only Ubuntu is supported"
   default     = "ubuntu-os-cloud/ubuntu-1804-lts"
+}
+
+variable "server_shielded_instance_config" {
+  description = "Server instance 'shielded_instance_config' block if using shielded VM image"
+  type        = map(string)
+  default     = null
 }
 
 variable "server_boot_disk_size" {

@@ -19,7 +19,7 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | bigquery\_enabled | Big Query scanner enabled. | bool | `"true"` | no |
 | bigquery\_max\_calls | Maximum calls that can be made to Big Query API | string | `"160"` | no |
 | bigquery\_period | The period of max calls for the Big Query API (in seconds) | string | `"1.0"` | no |
-| blacklist\_enabled | Audit Logging scanner enabled. | bool | `"true"` | no |
+| blacklist\_enabled | Blacklist scanner enabled. | bool | `"true"` | no |
 | blacklist\_violations\_should\_notify | Notify for Blacklist violations | bool | `"true"` | no |
 | bucket\_acl\_enabled | Bucket ACL scanner enabled. | bool | `"true"` | no |
 | bucket\_cai\_lifecycle\_age | GCS CAI lifecycle age value | string | `"14"` | no |
@@ -28,6 +28,7 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | cai\_api\_timeout | Timeout in seconds to wait for the exportAssets API to return success. | string | `"3600"` | no |
 | client\_access\_config | Client instance 'access_config' block | map(any) | `<map>` | no |
 | client\_boot\_image | GCE Forseti Client boot image | string | `"ubuntu-os-cloud/ubuntu-1804-lts"` | no |
+| client\_enabled | Enable Client VM | bool | `"true"` | no |
 | client\_instance\_metadata | Metadata key/value pairs to make available from within the client instance. | map(string) | `<map>` | no |
 | client\_private | Private GCE Forseti Client VM (no public IP) | bool | `"false"` | no |
 | client\_region | GCE Forseti Client region | string | `"us-central1"` | no |
@@ -155,6 +156,9 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | resource\_enabled | Resource scanner enabled. | bool | `"true"` | no |
 | resource\_name\_suffix | A suffix which will be appended to resource names. | string | `"null"` | no |
 | resource\_violations\_should\_notify | Notify for resource violations | bool | `"true"` | no |
+| role\_enabled | Role scanner enabled. | bool | `"false"` | no |
+| role\_violations\_should\_notify | Notify for role violations | bool | `"true"` | no |
+| role\_violations\_slack\_webhook | Slack webhook for role violations | string | `""` | no |
 | securitycenter\_disable\_polling | Whether to disable polling for Security Center API | bool | `"false"` | no |
 | securitycenter\_max\_calls | Maximum calls that can be made to Security Center API | string | `"14"` | no |
 | securitycenter\_period | The period of max calls for the Security Center API (in seconds) | string | `"1.0"` | no |
@@ -171,6 +175,7 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | storage\_bucket\_location | GCS storage bucket location | string | `"us-central1"` | no |
 | storage\_disable\_polling | Whether to disable polling for Storage API | bool | `"false"` | no |
 | subnetwork | The VPC subnetwork where the Forseti client and server will be created | string | `"default"` | no |
+| verify\_policy\_library | Verify the Policy Library is setup correctly for the Config Validator scanner | bool | `"false"` | no |
 | violations\_slack\_webhook | Slack webhook for any violation. Will apply to all scanner violation notifiers. | string | `""` | no |
 
 ## Outputs
