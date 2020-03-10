@@ -162,6 +162,8 @@ data "template_file" "forseti_server_config" {
     AUDIT_LOGGING_VIOLATIONS_SHOULD_NOTIFY              = var.audit_logging_violations_should_notify
     VIOLATIONS_SLACK_WEBHOOK                            = var.violations_slack_webhook
     EXCLUDED_RESOURCES                                  = local.excluded_resources
+    VERIFY_POLICY_LIBRARY                               = var.verify_policy_library
+
     # CSCC notifications
     CSCC_VIOLATIONS_ENABLED = var.cscc_violations_enabled
     CSCC_SOURCE_ID          = var.cscc_source_id

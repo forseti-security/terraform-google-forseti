@@ -243,7 +243,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | forseti\_home | Forseti installation directory | string | `"$USER_HOME/forseti-security"` | no |
 | forseti\_repo\_url | Git repo for the Forseti installation | string | `"https://github.com/forseti-security/forseti-security"` | no |
 | forseti\_run\_frequency | Schedule of running the Forseti scans | string | `"null"` | no |
-| forseti\_scripts | The local Forseti scripts directory. | string | `"$USER_HOME/forseti-scripts"` | no |
+| forseti\_scripts | The local Forseti scripts directory | string | `"$USER_HOME/forseti-scripts"` | no |
 | forseti\_version | The version of Forseti to install | string | `"v2.24.0"` | no |
 | forwarding\_rule\_enabled | Forwarding rule scanner enabled. | bool | `"false"` | no |
 | forwarding\_rule\_violations\_should\_notify | Notify for forwarding rule violations | bool | `"true"` | no |
@@ -334,6 +334,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | storage\_bucket\_location | GCS storage bucket location | string | `"us-central1"` | no |
 | storage\_disable\_polling | Whether to disable polling for Storage API | bool | `"false"` | no |
 | subnetwork | The VPC subnetwork where the Forseti client and server will be created | string | `"default"` | no |
+| verify\_policy\_library | Verify the Policy Library is setup correctly for the Config Validator scanner | bool | `"true"` | no |
 | violations\_slack\_webhook | Slack webhook for any violation. Will apply to all scanner violation notifiers. | string | `""` | no |
 
 ## Outputs

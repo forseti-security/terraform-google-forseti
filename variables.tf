@@ -576,6 +576,12 @@ variable "rules_path" {
   default     = "/home/ubuntu/forseti-security/rules"
 }
 
+variable "verify_policy_library" {
+  description = "Verify the Policy Library is setup correctly for the Config Validator scanner"
+  type        = bool
+  default     = true
+}
+
 #--------------------------------#
 # Forseti server config notifier #
 #--------------------------------#

@@ -53,6 +53,10 @@ control "server" do
     its('stdout') { should match (/purged/) }
   end
 
+  describe file("/home/ubuntu/forseti-scripts/initialize_forseti_services.sh") do
+    it { should exist }
+  end
+
   describe file("/home/ubuntu/forseti-security/configs/forseti_conf_server.yaml") do
     it { should exist }
     it "is valid YAML" do
@@ -264,6 +268,10 @@ control "server" do
 
       it "configures cloudsql_acl_enabled" do
         expect(config["scanner"]["scanners"]).to include("name" => "cloudsql_acl", "enabled" => true)
+      end
+
+      it "configures config_validator_enabled" do
+        expect(config["scanner"]["scanners"]).to include("name" => "config_validator", "enabled" => false, "verify_policy_library" => true)
       end
 
       it "configures enabled_apis_enabled" do
