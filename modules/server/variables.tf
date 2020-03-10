@@ -50,6 +50,11 @@ variable "forseti_scripts" {
 #----------------#
 # Forseti server #
 #----------------#
+variable "config_validator_image" {
+  description = "The image of the Config Validator to use"
+  default     = "gcr.io/forseti-containers/config-validator"
+}
+
 variable "server_type" {
   description = "GCE Forseti Server machine type"
   default     = "n1-standard-8"
