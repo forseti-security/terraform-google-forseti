@@ -68,7 +68,7 @@ variable "resource_name_suffix" {
 #----------------#
 variable "config_validator_image_tag" {
   description = "The tag of the Config Validator image to use"
-  default     = "latest"
+  default     = "572e207"
 }
 
 variable "server_type" {
