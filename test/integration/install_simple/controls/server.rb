@@ -49,6 +49,18 @@ control "server" do
     it { should exist }
   end
 
+  describe service('config-validator') do
+    it { should be_installed }
+    it { should be_enabled }
+    it { should be_running }
+  end
+
+  describe service('git-sync') do
+    it { should be_installed }
+    it { should be_enabled }
+    it { should be_running }
+  end
+
   describe file("/home/ubuntu/forseti-security/configs/forseti_conf_server.yaml") do
     it { should exist }
     it "is valid YAML" do
