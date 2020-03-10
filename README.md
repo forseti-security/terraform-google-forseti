@@ -218,6 +218,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | compute\_max\_calls | Maximum calls that can be made to Compute API | string | `"18"` | no |
 | compute\_period | The period of max calls for the Compute API (in seconds) | string | `"1.0"` | no |
 | config\_validator\_enabled | Config Validator scanner enabled. | bool | `"false"` | no |
+| config\_validator\_image | The image of the Config Validator to use | string | `"gcr.io/forseti-containers/config-validator"` | no |
 | config\_validator\_image\_tag | The tag of the Config Validator image to use | string | `"572e207"` | no |
 | config\_validator\_violations\_should\_notify | Notify for Config Validator violations. | bool | `"true"` | no |
 | container\_disable\_polling | Whether to disable polling for Container API | bool | `"false"` | no |

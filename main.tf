@@ -145,6 +145,7 @@ module "server" {
   server_private                  = var.server_private
   cloudsql_proxy_arch             = var.cloudsql_proxy_arch
   cloud_profiler_enabled          = var.cloud_profiler_enabled
+  config_validator_image          = var.config_validator_image
   config_validator_image_tag      = var.config_validator_image_tag
   mailjet_enabled                 = var.mailjet_enabled
   network                         = var.network
