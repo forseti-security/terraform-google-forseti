@@ -28,7 +28,7 @@ Options:
     -e                      Remove additional IAM roles for running the real time policy enforcer.
     -k                      Remove additional IAM roles for running Forseti on-GKE
     -q                      Remove additional IAM roles for using private IPs with Cloud SQL
-    -g                      Add additional IAM roles for using private IPs with the GCE VM's
+    -g                      Remove additional IAM roles for using private IPs with the GCE VM's
     -f HOST_PROJECT_ID      ID of a project holding shared VPC.
 
 Examples:
