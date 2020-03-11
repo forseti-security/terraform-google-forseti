@@ -23,7 +23,7 @@ This can be a dedicated Forseti project or an existing DevSecOps project.
 ## Prerequisites
 In order to execute this module a temporary Service Account will be created with the roles required. A few GCP APIs also need to be enabled. These steps have been automated with a setup script. The [IAM Roles](/README.md#iam-roles) given to the Service Account and the [APIs](/README.md#apis) that will be enabled are listed on the README.
 
-The **roles/compute.networkAdmin** will also be applied to the Service Account in order to deploy a Cloud NAT. 
+The **roles/compute.networkAdmin** will also be applied to the Service Account in order to deploy a Cloud NAT.
 
 Set the project ID for future gcloud commands:
 
