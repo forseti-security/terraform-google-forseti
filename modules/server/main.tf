@@ -77,6 +77,7 @@ data "template_file" "forseti_server_startup_script" {
     run_forseti                            = data.template_file.forseti_server_run.rendered
     forseti_home                           = var.forseti_home
     forseti_repo_url                       = var.forseti_repo_url
+    forseti_run_forseti_services_md5_hash  = google_storage_bucket_object.run_forseti_script.md5hash
     forseti_run_frequency                  = local.forseti_run_frequency
     forseti_scripts                        = var.forseti_scripts
     forseti_server_conf_path               = local.server_conf_path
@@ -121,6 +122,13 @@ data "template_file" "forseti_server_env" {
 
 data "template_file" "forseti_server_run" {
   template = local.server_run_forseti
+
+  vars = {
+    forseti_home                = var.forseti_home
+    forseti_server_conf_path    = local.server_conf_path
+    policy_library_home         = var.policy_library_home
+    policy_library_sync_enabled = var.policy_library_sync_enabled
+  }
 }
 
 #------------------------#
