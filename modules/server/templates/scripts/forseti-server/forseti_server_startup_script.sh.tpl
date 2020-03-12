@@ -167,18 +167,6 @@ else
   echo "ubuntu hard nofile 32768" | sudo tee -a /etc/security/limits.conf
 fi
 
-# Create a Forseti env script
-FORSETI_ENV="$(cat << EOF
-#!/bin/bash
-
-export PATH=$PATH:/usr/local/bin
-
-# Forseti environment variables
-${forseti_environment}
-EOF
-)"
-echo "$FORSETI_ENV" > $USER_HOME/forseti_env.sh
-
 USER=ubuntu
 # Use flock to prevent rerun of the same cron job when the previous job is still running.
 # If the lock file does not exist under the tmp directory, it will create the file and put a lock on top of the file.
