@@ -14,26 +14,17 @@
  * limitations under the License.
  */
 
-resource "google_service_account" "forseti_server" {
-  account_id   = "my-custom-server-sa"
-  project      = var.project_id
-  display_name = "Custom Forseti Server Service Account"
-}
-
-resource "google_service_account" "forseti_client" {
-  account_id   = "my-custom-client-sa"
-  project      = var.project_id
-  display_name = "Custom Forseti Client Service Account"
-}
-
 module "custom-service-accounts" {
   source = "../../.."
 
-  project_id             = var.project_id
-  org_id                 = var.org_id
-  domain                 = var.domain
-  network                = var.network
-  subnetwork             = var.subnetwork
-  server_service_account = google_service_account.forseti_server.email
-  client_service_account = google_service_account.forseti_client.email
+  project_id = var.project_id
+  org_id     = var.org_id
+  domain     = var.domain
+  network    = var.network
+  subnetwork = var.subnetwork
+  # The resources that create the service accounts are in test/setup/iam.tf.
+  # Did not create them here and directly reference them becuase `count` will complain
+  # google_service_account.forseti_{server,client}.email are unknown until apply.
+  server_service_account = "my-custom-server-sa@${var.project_id}.iam.gserviceaccount.com"
+  client_service_account = "my-custom-client-sa@${var.project_id}.iam.gserviceaccount.com"
 }

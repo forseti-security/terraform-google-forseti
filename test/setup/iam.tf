@@ -118,3 +118,15 @@ resource "google_project_iam_member" "forseti" {
 #  member  = "serviceAccount:${google_service_account.int_test.email}"
 #}
 
+# Service accounts needed for custom_service_accounts test.
+resource "google_service_account" "forseti_server" {
+  account_id   = "my-custom-server-sa"
+  project      = module.forseti-service-project.project_id
+  display_name = "Custom Forseti Server Service Account"
+}
+
+resource "google_service_account" "forseti_client" {
+  account_id   = "my-custom-client-sa"
+  project      = module.forseti-service-project.project_id
+  display_name = "Custom Forseti Client Service Account"
+}
