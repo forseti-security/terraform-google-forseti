@@ -124,7 +124,8 @@ else
   gsutil -m rsync -d -r gs://${storage_bucket_name}/policy-library ${policy_library_home}/policy-library || echo "No policy available, continuing with Forseti installation"
 fi
 
-# Attempt to download the Forseti scripts and gracefully handle the absence of scripts.
+# Attempt to download the Forseti scripts
+sudo mkdir -m 777 -p ${forseti_scripts}
 gsutil -m cp -r gs://${storage_bucket_name}/scripts ${forseti_scripts}/
 
 # Enable cloud-profiler in the initialize_forseti_services.sh script
