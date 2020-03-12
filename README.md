@@ -189,6 +189,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | client\_instance\_metadata | Metadata key/value pairs to make available from within the client instance. | map(string) | `<map>` | no |
 | client\_private | Private GCE Forseti Client VM (no public IP) | bool | `"false"` | no |
 | client\_region | GCE Forseti Client region | string | `"us-central1"` | no |
+| client\_service\_account | Service account email to assign to the Client VM. If empty, a new Service Account will be created | string | `""` | no |
 | client\_shielded\_instance\_config | Client instance 'shielded_instance_config' block if using shielded VM image | map(string) | `"null"` | no |
 | client\_ssh\_allow\_ranges | List of CIDRs that will be allowed ssh access to forseti client | list(string) | `<list>` | no |
 | client\_tags | GCE Forseti Client VM Tags | list(string) | `<list>` | no |
@@ -315,6 +316,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | server\_instance\_metadata | Metadata key/value pairs to make available from within the server instance. | map(string) | `<map>` | no |
 | server\_private | Private GCE Forseti Server VM (no public IP) | bool | `"false"` | no |
 | server\_region | GCE Forseti Server region | string | `"us-central1"` | no |
+| server\_service\_account | Service account email to assign to the Server VM. If empty, a new Service Account will be created | string | `""` | no |
 | server\_shielded\_instance\_config | Server instance 'shielded_instance_config' block if using shielded VM image | map(string) | `"null"` | no |
 | server\_ssh\_allow\_ranges | List of CIDRs that will be allowed ssh access to forseti server | list(string) | `<list>` | no |
 | server\_tags | GCE Forseti Server VM Tags | list(string) | `<list>` | no |
