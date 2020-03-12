@@ -128,6 +128,15 @@ data "template_file" "forseti_server_run" {
     forseti_server_conf_path    = local.server_conf_path
     policy_library_home         = var.policy_library_home
     policy_library_sync_enabled = var.policy_library_sync_enabled
+    storage_bucket_name         = var.server_gcs_module.forseti-server-storage-bucket
+    project_id                  = var.project_id
+    cloudsql_db_name            = var.cloudsql_module.forseti-cloudsql-db-name
+    cloudsql_db_port            = var.cloudsql_module.forseti-cloudsql-db-port
+    cloudsql_region             = var.cloudsql_module.forseti-cloudsql-region
+    cloudsql_instance_name      = var.cloudsql_module.forseti-cloudsql-instance-name
+    cloudsql_db_user            = var.cloudsql_module.forseti-cloudsql-user
+    cloudsql_db_password        = var.cloudsql_module.forseti-cloudsql-password
+    forseti_scripts             = var.forseti_scripts
   }
 }
 

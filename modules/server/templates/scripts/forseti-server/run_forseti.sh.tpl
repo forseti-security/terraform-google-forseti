@@ -26,12 +26,12 @@ set -x
 sudo rm -rf /tmp/forseti-cai-*
 
 # Put the config files in place.
-sudo gsutil cp gs://$SCANNER_BUCKET/configs/forseti_conf_server.yaml ${forseti_server_conf_path}
-sudo gsutil cp -r gs://$SCANNER_BUCKET/rules ${forseti_home}/
+sudo gsutil cp gs://${storage_bucket_name}/configs/forseti_conf_server.yaml ${forseti_server_conf_path}
+sudo gsutil cp -r gs://${storage_bucket_name}/rules ${forseti_home}/
 
 # Download the Newest Config Validator constraints from GCS.
-if [ "$POLICY_LIBRARY_SYNC_ENABLED" != "true" ]; then
-  sudo gsutil -m rsync -d -r gs://$SCANNER_BUCKET/policy-library ${policy_library_home}/policy-library
+if [ "${policy_library_sync_enabled}" != "true" ]; then
+  sudo gsutil -m rsync -d -r gs://${storage_bucket_name}/policy-library ${policy_library_home}/policy-library
 fi
 
 # Restart the config validator service to pick up the latest policy.
