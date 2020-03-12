@@ -44,6 +44,7 @@ provider "helm" {
   debug                           = true
   automount_service_account_token = true
   install_tiller                  = true
+  version = "~> v0.10"
 }
 
 #--------------------#
@@ -168,6 +169,7 @@ module "forseti" {
   k8s_forseti_server_image_tag       = var.k8s_forseti_server_image_tag
   k8s_forseti_orchestrator_image_tag = var.k8s_forseti_orchestrator_image_tag
   helm_repository_url                = var.helm_repository_url
+  helm_chart_version                 = var.helm_chart_version
   policy_library_repository_url      = var.policy_library_repository_url
   policy_library_repository_branch   = var.policy_library_repository_branch
   policy_library_sync_enabled        = var.policy_library_sync_enabled

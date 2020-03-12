@@ -114,6 +114,11 @@ variable "helm_repository_url" {
   default     = "https://forseti-security-charts.storage.googleapis.com/release/"
 }
 
+variable "helm_chart_version" {
+  description = "The version of the Helm chart to use"
+  default     = "2.2.1"
+}
+
 variable "k8s_forseti_namespace" {
   description = "The Kubernetes namespace in which to deploy Forseti."
   default     = "forseti"
