@@ -133,6 +133,7 @@ module "server" {
   forseti_repo_url                = var.forseti_repo_url
   forseti_home                    = var.forseti_home
   forseti_run_frequency           = var.forseti_run_frequency
+  forseti_scripts                 = var.forseti_scripts
   server_type                     = var.server_type
   server_region                   = var.server_region
   server_boot_image               = var.server_boot_image
@@ -144,6 +145,8 @@ module "server" {
   server_private                  = var.server_private
   cloudsql_proxy_arch             = var.cloudsql_proxy_arch
   cloud_profiler_enabled          = var.cloud_profiler_enabled
+  config_validator_image          = var.config_validator_image
+  config_validator_image_tag      = var.config_validator_image_tag
   mailjet_enabled                 = var.mailjet_enabled
   network                         = var.network
   network_project                 = local.network_project

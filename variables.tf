@@ -57,6 +57,11 @@ variable "forseti_run_frequency" {
   default     = null
 }
 
+variable "forseti_scripts" {
+  description = "The local Forseti scripts directory"
+  default     = "$USER_HOME/forseti-scripts"
+}
+
 variable "resource_name_suffix" {
   default     = null
   description = "A suffix which will be appended to resource names."
@@ -66,6 +71,16 @@ variable "resource_name_suffix" {
 #----------------#
 # Forseti server #
 #----------------#
+variable "config_validator_image" {
+  description = "The image of the Config Validator to use"
+  default     = "gcr.io/forseti-containers/config-validator"
+}
+
+variable "config_validator_image_tag" {
+  description = "The tag of the Config Validator image to use"
+  default     = "572e207"
+}
+
 variable "server_type" {
   description = "GCE Forseti Server machine type"
   default     = "n1-standard-8"
