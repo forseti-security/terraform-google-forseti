@@ -32,8 +32,8 @@ locals {
   server_environment = file(
     "${path.module}/templates/scripts/forseti-server/forseti_environment.sh.tpl",
   )
-  server_env = file(
-    "${path.module}/templates/scripts/forseti-server/forseti_env.sh.tpl",
+  server_run_forseti = file(
+    "${path.module}/templates/scripts/forseti-server/run_forseti.sh.tpl",
   )
   server_initialize_services = file(
     "${path.module}/templates/scripts/forseti-server/initialize_forseti_services.sh.tpl",
@@ -71,11 +71,11 @@ data "template_file" "forseti_server_startup_script" {
     cloudsql_proxy_arch                    = var.cloudsql_proxy_arch
     cloud_profiler_enabled                 = var.cloud_profiler_enabled
     forseti_conf_server_checksum           = base64sha256(var.server_config_module.forseti-server-config)
-    forseti_env                            = data.template_file.forseti_server_env.rendered
     forseti_environment                    = data.template_file.forseti_server_environment.rendered
     forseti_home                           = var.forseti_home
     forseti_init_services_md5_hash         = google_storage_bucket_object.initialize_forseti_services_script.md5hash
     forseti_repo_url                       = var.forseti_repo_url
+    forseti_run_forseti_services_md5_hash  = google_storage_bucket_object.run_forseti_script.md5hash
     forseti_run_frequency                  = local.forseti_run_frequency
     forseti_scripts                        = var.forseti_scripts
     forseti_server_conf_path               = local.server_conf_path
@@ -103,21 +103,6 @@ data "template_file" "forseti_server_environment" {
   }
 }
 
-data "template_file" "forseti_server_env" {
-  template = local.server_env
-
-  vars = {
-    project_id             = var.project_id
-    cloudsql_db_name       = var.cloudsql_module.forseti-cloudsql-db-name
-    cloudsql_db_port       = var.cloudsql_module.forseti-cloudsql-db-port
-    cloudsql_region        = var.cloudsql_module.forseti-cloudsql-region
-    cloudsql_instance_name = var.cloudsql_module.forseti-cloudsql-instance-name
-    cloudsql_db_user       = var.cloudsql_module.forseti-cloudsql-user
-    cloudsql_db_password   = var.cloudsql_module.forseti-cloudsql-password
-    forseti_scripts        = var.forseti_scripts
-  }
-}
-
 data "template_file" "forseti_server_initialize_services" {
   template = local.server_initialize_services
 
@@ -134,6 +119,26 @@ data "template_file" "forseti_server_initialize_services" {
     policy_library_repository_url    = var.policy_library_repository_url
     policy_library_sync_enabled      = var.policy_library_sync_enabled
     policy_library_sync_git_sync_tag = var.policy_library_sync_git_sync_tag
+  }
+}
+
+data "template_file" "forseti_server_run" {
+  template = local.server_run_forseti
+
+  vars = {
+    forseti_home                = var.forseti_home
+    forseti_server_conf_path    = local.server_conf_path
+    policy_library_home         = var.policy_library_home
+    policy_library_sync_enabled = var.policy_library_sync_enabled
+    storage_bucket_name         = var.server_gcs_module.forseti-server-storage-bucket
+    project_id                  = var.project_id
+    cloudsql_db_name            = var.cloudsql_module.forseti-cloudsql-db-name
+    cloudsql_db_port            = var.cloudsql_module.forseti-cloudsql-db-port
+    cloudsql_region             = var.cloudsql_module.forseti-cloudsql-region
+    cloudsql_instance_name      = var.cloudsql_module.forseti-cloudsql-instance-name
+    cloudsql_db_user            = var.cloudsql_module.forseti-cloudsql-user
+    cloudsql_db_password        = var.cloudsql_module.forseti-cloudsql-password
+    forseti_scripts             = var.forseti_scripts
   }
 }
 
@@ -246,6 +251,12 @@ resource "google_storage_bucket_object" "policy_library_sync_ssh_known_hosts" {
 resource "google_storage_bucket_object" "initialize_forseti_services_script" {
   name    = "scripts/initialize_forseti_services.sh"
   content = data.template_file.forseti_server_initialize_services.rendered
+  bucket  = var.server_gcs_module.forseti-server-storage-bucket
+}
+
+resource "google_storage_bucket_object" "run_forseti_script" {
+  name    = "scripts/run_forseti.sh"
+  content = data.template_file.forseti_server_run.rendered
   bucket  = var.server_gcs_module.forseti-server-storage-bucket
 }
 

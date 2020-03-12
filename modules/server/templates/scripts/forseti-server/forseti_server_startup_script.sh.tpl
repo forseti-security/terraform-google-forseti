@@ -5,8 +5,8 @@ set -eu
 USER=ubuntu
 USER_HOME=/home/ubuntu
 INTERNET_CONNECTION="$(ping -q -w1 -c1 google.com &>/dev/null && echo online || echo offline)"
-
 INIT_SERVICES_MD5_HASH=${forseti_init_services_md5_hash}
+RUN_FORSETI_SERVICES_MD5_HASH=${forseti_run_forseti_services_md5_hash}
 
 export USER_HOME
 
@@ -79,9 +79,6 @@ chmod -R ug+rwx ${forseti_home}/configs ${forseti_home}/rules ${forseti_home}/in
 echo "Forseti Startup - Installing Forseti python package."
 python3 setup.py install
 
-# Export variables required by initialize_forseti_services.sh.
-${forseti_env}
-
 # Export variables required by run_forseti.sh
 ${forseti_environment}
 
@@ -124,7 +121,7 @@ else
   gsutil -m rsync -d -r gs://${storage_bucket_name}/policy-library ${policy_library_home}/policy-library || echo "No policy available, continuing with Forseti installation"
 fi
 
-# Attempt to download the Forseti scripts and gracefully handle the absence of scripts.
+# Attempt to download the Forseti scripts
 gsutil -m cp -r gs://${storage_bucket_name}/scripts ${forseti_scripts}/
 
 # Enable cloud-profiler in the initialize_forseti_services.sh script
@@ -171,18 +168,6 @@ else
   echo "ubuntu hard nofile 32768" | sudo tee -a /etc/security/limits.conf
 fi
 
-# Create a Forseti env script
-FORSETI_ENV="$(cat << EOF
-#!/bin/bash
-
-export PATH=$PATH:/usr/local/bin
-
-# Forseti environment variables
-${forseti_environment}
-EOF
-)"
-echo "$FORSETI_ENV" > $USER_HOME/forseti_env.sh
-
 USER=ubuntu
 # Use flock to prevent rerun of the same cron job when the previous job is still running.
 # If the lock file does not exist under the tmp directory, it will create the file and put a lock on top of the file.
@@ -191,6 +176,6 @@ USER=ubuntu
 # The -n flag in flock will fail the process right away when the process is not able to acquire the lock so we won't
 # queue up the jobs.
 # If the cron job failed the acquire lock on the process, it will log a warning message to syslog.
-(echo "${forseti_run_frequency} (/usr/bin/flock -n ${forseti_home}/forseti_cron_runner.lock ${forseti_home}/install/gcp/scripts/run_forseti.sh -b ${storage_bucket_name} || echo '[forseti-security] Warning: New Forseti cron job will not be started, because previous Forseti job is still running.') 2>&1 | logger") | crontab -u $USER -
+(echo "${forseti_run_frequency} (/usr/bin/flock -n ${forseti_home}/forseti_cron_runner.lock ${forseti_scripts}/run_forseti.sh || echo '[forseti-security] Warning: New Forseti cron job will not be started, because previous Forseti job is still running.') 2>&1 | logger") | crontab -u $USER -
 echo "Forseti Startup - Added the run_forseti.sh to crontab under user $USER."
 echo "Forseti Startup - Execution of startup script finished."
