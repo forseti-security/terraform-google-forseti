@@ -7,7 +7,7 @@ A Google Cloud Shell Walkthrough has been setup to make it easy for users who ar
 
 If you are familiar with Terraform and would like to run Terraform from a different machine, you can skip this walkthrough and move onto the [How to Deploy](#how-to-deploy) section.
 
-[![Open in Google Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fforseti-security%2Fterraform-google-forseti.git&cloudshell_git_branch=modulerelease511&cloudshell_working_dir=examples/install_simple&cloudshell_image=gcr.io%2Fgraphite-cloud-shell-images%2Fterraform%3Alatest&cloudshell_tutorial=.%2Ftutorial.md)
+[![Open in Google Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fforseti-security%2Fterraform-google-forseti.git&cloudshell_git_branch=modulerelease512&cloudshell_working_dir=examples/install_simple&cloudshell_image=gcr.io%2Fgraphite-cloud-shell-images%2Fterraform%3Alatest&cloudshell_tutorial=.%2Ftutorial.md)
 
 ## How to Deploy
 In order to run this module you will need to be authenticated as a user that has access to the project and can create/authorize service accounts at both the organization and project levels. To login to GCP from a shell:
@@ -20,7 +20,7 @@ gcloud auth login
 The repository has several helper scripts that can be used with the deployment process.
 
 ```bash
-git clone --branch modulerelease511 --depth 1 https://github.com/forseti-security/terraform-google-forseti.git
+git clone --branch modulerelease512 --depth 1 https://github.com/forseti-security/terraform-google-forseti.git
 ```
 
 ### Install Terraform
@@ -176,7 +176,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | bigquery\_enabled | Big Query scanner enabled. | bool | `"true"` | no |
 | bigquery\_max\_calls | Maximum calls that can be made to Big Query API | string | `"160"` | no |
 | bigquery\_period | The period of max calls for the Big Query API (in seconds) | string | `"1.0"` | no |
-| blacklist\_enabled | Audit Logging scanner enabled. | bool | `"true"` | no |
+| blacklist\_enabled | Blacklist scanner enabled. | bool | `"true"` | no |
 | blacklist\_violations\_should\_notify | Notify for Blacklist violations | bool | `"true"` | no |
 | bucket\_acl\_enabled | Bucket ACL scanner enabled. | bool | `"true"` | no |
 | bucket\_cai\_lifecycle\_age | GCS CAI lifecycle age value | string | `"14"` | no |
@@ -185,9 +185,11 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | cai\_api\_timeout | Timeout in seconds to wait for the exportAssets API to return success. | string | `"3600"` | no |
 | client\_access\_config | Client instance 'access_config' block | map(any) | `<map>` | no |
 | client\_boot\_image | GCE Forseti Client boot image | string | `"ubuntu-os-cloud/ubuntu-1804-lts"` | no |
+| client\_enabled | Enable Client VM | bool | `"true"` | no |
 | client\_instance\_metadata | Metadata key/value pairs to make available from within the client instance. | map(string) | `<map>` | no |
 | client\_private | Private GCE Forseti Client VM (no public IP) | bool | `"false"` | no |
 | client\_region | GCE Forseti Client region | string | `"us-central1"` | no |
+| client\_shielded\_instance\_config | Client instance 'shielded_instance_config' block if using shielded VM image | map(string) | `"null"` | no |
 | client\_ssh\_allow\_ranges | List of CIDRs that will be allowed ssh access to forseti client | list(string) | `<list>` | no |
 | client\_tags | GCE Forseti Client VM Tags | list(string) | `<list>` | no |
 | client\_type | GCE Forseti Client machine type | string | `"n1-standard-2"` | no |
@@ -298,6 +300,9 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | resource\_enabled | Resource scanner enabled. | bool | `"true"` | no |
 | resource\_name\_suffix | A suffix which will be appended to resource names. | string | `"null"` | no |
 | resource\_violations\_should\_notify | Notify for resource violations | bool | `"true"` | no |
+| role\_enabled | Role scanner enabled. | bool | `"false"` | no |
+| role\_violations\_should\_notify | Notify for role violations | bool | `"true"` | no |
+| role\_violations\_slack\_webhook | Slack webhook for role violations | string | `""` | no |
 | rules\_path | Path for Scanner Rules config files; if GCS, should be gs://bucket-name/path | string | `"/home/ubuntu/forseti-security/rules"` | no |
 | securitycenter\_max\_calls | Maximum calls that can be made to Security Center API | string | `"14"` | no |
 | securitycenter\_period | The period of max calls for the Security Center API (in seconds) | string | `"1.0"` | no |
@@ -310,6 +315,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | server\_instance\_metadata | Metadata key/value pairs to make available from within the server instance. | map(string) | `<map>` | no |
 | server\_private | Private GCE Forseti Server VM (no public IP) | bool | `"false"` | no |
 | server\_region | GCE Forseti Server region | string | `"us-central1"` | no |
+| server\_shielded\_instance\_config | Server instance 'shielded_instance_config' block if using shielded VM image | map(string) | `"null"` | no |
 | server\_ssh\_allow\_ranges | List of CIDRs that will be allowed ssh access to forseti server | list(string) | `<list>` | no |
 | server\_tags | GCE Forseti Server VM Tags | list(string) | `<list>` | no |
 | server\_type | GCE Forseti Server machine type | string | `"n1-standard-8"` | no |
@@ -327,6 +333,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | storage\_bucket\_location | GCS storage bucket location | string | `"us-central1"` | no |
 | storage\_disable\_polling | Whether to disable polling for Storage API | bool | `"false"` | no |
 | subnetwork | The VPC subnetwork where the Forseti client and server will be created | string | `"default"` | no |
+| verify\_policy\_library | Verify the Policy Library is setup correctly for the Config Validator scanner | bool | `"true"` | no |
 | violations\_slack\_webhook | Slack webhook for any violation. Will apply to all scanner violation notifiers. | string | `""` | no |
 
 ## Outputs
@@ -339,11 +346,13 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | forseti-client-vm-ip | Forseti Client VM private IP address |
 | forseti-client-vm-name | Forseti Client VM name |
 | forseti-cloudsql-connection-name | Forseti CloudSQL Connection String |
+| forseti-cloudsql-instance-ip | The IP of the master CloudSQL instance |
 | forseti-cloudsql-password | CloudSQL password |
 | forseti-cloudsql-user | CloudSQL user |
 | forseti-server-git-public-key-openssh | The public OpenSSH key generated to allow the Forseti Server to clone the policy library repository. |
 | forseti-server-service-account | Forseti Server service account |
 | forseti-server-storage-bucket | Forseti Server storage bucket |
+| forseti-server-vm-internal-dns | Forseti Server internal DNS |
 | forseti-server-vm-ip | Forseti Server VM private IP address |
 | forseti-server-vm-name | Forseti Server VM name |
 | suffix | The random suffix appended to Forseti resources |

@@ -25,6 +25,7 @@ locals {
 # Forseti storage bucket #
 #------------------------#
 resource "google_storage_bucket" "client_config" {
+  count              = var.client_enabled ? 1 : 0
   name               = local.client_bucket_name
   location           = var.storage_bucket_location
   project            = var.project_id
@@ -35,6 +36,7 @@ resource "google_storage_bucket" "client_config" {
 }
 
 resource "null_resource" "services-dependency" {
+  count = var.client_enabled ? 1 : 0
   triggers = {
     services = jsonencode(var.services)
   }

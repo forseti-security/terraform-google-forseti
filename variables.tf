@@ -81,6 +81,12 @@ variable "server_boot_image" {
   default     = "ubuntu-os-cloud/ubuntu-1804-lts"
 }
 
+variable "server_shielded_instance_config" {
+  description = "Server instance 'shielded_instance_config' block if using shielded VM image"
+  type        = map(string)
+  default     = null
+}
+
 variable "server_boot_disk_size" {
   description = "Size of the GCE instance boot disk in GBs."
   default     = "100"
@@ -398,7 +404,7 @@ variable "bigquery_enabled" {
 }
 
 variable "blacklist_enabled" {
-  description = "Audit Logging scanner enabled."
+  description = "Blacklist scanner enabled."
   type        = bool
   default     = true
 }
@@ -547,6 +553,12 @@ variable "resource_enabled" {
   default     = true
 }
 
+variable "role_enabled" {
+  description = "Role scanner enabled."
+  type        = bool
+  default     = false
+}
+
 variable "service_account_key_enabled" {
   description = "Service account key scanner enabled."
   type        = bool
@@ -557,6 +569,12 @@ variable "rules_path" {
   description = "Path for Scanner Rules config files; if GCS, should be gs://bucket-name/path"
   type        = string
   default     = "/home/ubuntu/forseti-security/rules"
+}
+
+variable "verify_policy_library" {
+  description = "Verify the Policy Library is setup correctly for the Config Validator scanner"
+  type        = bool
+  default     = true
 }
 
 #--------------------------------#
@@ -697,6 +715,17 @@ variable "resource_violations_should_notify" {
   default     = true
 }
 
+variable "role_violations_should_notify" {
+  description = "Notify for role violations"
+  type        = bool
+  default     = true
+}
+
+variable "role_violations_slack_webhook" {
+  description = "Slack webhook for role violations"
+  default     = ""
+}
+
 variable "service_account_key_violations_should_notify" {
   description = "Notify for service account key violations"
   type        = bool
@@ -767,6 +796,12 @@ variable "groups_settings_violations_should_notify" {
 #----------------#
 # Forseti client #
 #----------------#
+variable "client_enabled" {
+  description = "Enable Client VM"
+  default     = true
+  type        = bool
+}
+
 variable "client_type" {
   description = "GCE Forseti Client machine type"
   default     = "n1-standard-2"
@@ -775,6 +810,12 @@ variable "client_type" {
 variable "client_boot_image" {
   description = "GCE Forseti Client boot image"
   default     = "ubuntu-os-cloud/ubuntu-1804-lts"
+}
+
+variable "client_shielded_instance_config" {
+  description = "Client instance 'shielded_instance_config' block if using shielded VM image"
+  type        = map(string)
+  default     = null
 }
 
 variable "client_region" {

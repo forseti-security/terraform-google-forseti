@@ -53,10 +53,11 @@ locals {
 # Forseti templates #
 #-------------------#
 data "template_file" "forseti_client_startup_script" {
+  count    = var.client_enabled ? 1 : 0
   template = local.client_startup_script
 
   vars = {
-    forseti_environment      = data.template_file.forseti_client_environment.rendered
+    forseti_environment      = data.template_file.forseti_client_environment[0].rendered
     forseti_repo_url         = var.forseti_repo_url
     forseti_version          = var.forseti_version
     forseti_home             = var.forseti_home
@@ -66,6 +67,7 @@ data "template_file" "forseti_client_startup_script" {
 }
 
 data "template_file" "forseti_client_environment" {
+  count    = var.client_enabled ? 1 : 0
   template = local.client_env_script
 
   vars = {
@@ -78,6 +80,7 @@ data "template_file" "forseti_client_environment" {
 # Forseti client VM #
 #-------------------#
 resource "google_compute_instance" "forseti-client" {
+  count                     = var.client_enabled ? 1 : 0
   name                      = local.client_name
   zone                      = local.client_zone
   project                   = var.project_id
@@ -85,11 +88,12 @@ resource "google_compute_instance" "forseti-client" {
   tags                      = var.client_tags
   allow_stopping_for_update = true
   metadata                  = var.client_instance_metadata
-  metadata_startup_script   = data.template_file.forseti_client_startup_script.rendered
+  metadata_startup_script   = data.template_file.forseti_client_startup_script[0].rendered
   dynamic "network_interface" {
     for_each = local.network_interface
     content {
-      address            = lookup(network_interface.value, "address", null)
+      # Field `address` has been deprecated. Use `network_ip` instead.
+      # https://github.com/terraform-providers/terraform-provider-google/blob/master/CHANGELOG.md#200-february-12-2019
       network            = lookup(network_interface.value, "network", null)
       network_ip         = lookup(network_interface.value, "network_ip", null)
       subnetwork         = lookup(network_interface.value, "subnetwork", null)
@@ -125,6 +129,15 @@ resource "google_compute_instance" "forseti-client" {
     scopes = ["cloud-platform"]
   }
 
+  dynamic "shielded_instance_config" {
+    for_each = var.client_shielded_instance_config == null ? [] : [var.client_shielded_instance_config]
+    content {
+      enable_secure_boot          = lookup(var.client_shielded_instance_config, "enable_secure_boot", null)
+      enable_vtpm                 = lookup(var.client_shielded_instance_config, "enable_vtpm", null)
+      enable_integrity_monitoring = lookup(var.client_shielded_instance_config, "enable_integrity_monitoring", null)
+    }
+  }
+
   depends_on = [
     null_resource.services-dependency,
     var.client_config_module,
@@ -135,7 +148,7 @@ resource "google_compute_instance" "forseti-client" {
 # Forseti firewall rules #
 #------------------------#
 resource "google_compute_firewall" "forseti-client-deny-all" {
-  count                   = var.manage_firewall_rules ? 1 : 0
+  count                   = var.client_enabled && var.manage_firewall_rules ? 1 : 0
   name                    = "forseti-client-deny-all-${var.suffix}"
   project                 = local.network_project
   network                 = var.network
@@ -159,7 +172,7 @@ resource "google_compute_firewall" "forseti-client-deny-all" {
 }
 
 resource "google_compute_firewall" "forseti-client-ssh-external" {
-  count                   = var.manage_firewall_rules && ! var.client_private ? 1 : 0
+  count                   = var.client_enabled && var.manage_firewall_rules && ! var.client_private ? 1 : 0
   name                    = "forseti-client-ssh-external-${var.suffix}"
   project                 = local.network_project
   network                 = var.network
@@ -176,7 +189,7 @@ resource "google_compute_firewall" "forseti-client-ssh-external" {
 }
 
 resource "google_compute_firewall" "forseti-client-ssh-iap" {
-  count                   = var.manage_firewall_rules && var.client_private ? 1 : 0
+  count                   = var.client_enabled && var.manage_firewall_rules && var.client_private ? 1 : 0
   name                    = "forseti-client-ssh-iap-${var.suffix}"
   project                 = local.network_project
   network                 = var.network
@@ -193,6 +206,7 @@ resource "google_compute_firewall" "forseti-client-ssh-iap" {
 }
 
 resource "null_resource" "services-dependency" {
+  count = var.client_enabled ? 1 : 0
   triggers = {
     services = jsonencode(var.services)
   }

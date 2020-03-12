@@ -1,4 +1,4 @@
-# Copyright 2018 Google LLC
+# Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -66,6 +66,21 @@ suites:
           backend: local
           controls:
             - forseti-org-iam
+  - name: on_gke_end_to_end
+    lifecycle:
+      pre_verify:
+        - chmod go-rwx test/fixtures/on_gke_end_to_end/sshkey
+    driver:
+      name: terraform
+      root_module_directory: test/fixtures/on_gke_end_to_end/
+      command_timeout: 1800
+    verifier:
+      systems:
+        - name: gke
+          backend: local
+          controls:
+            - gcloud
+            - kubectl
   - name: shared_vpc
     lifecycle:
       pre_verify:
@@ -113,6 +128,49 @@ suites:
           key_files:
             - test/fixtures/shared_vpc/sshkey
           proxy_command: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o LogLevel=ERROR -o ForwardAgent=no -i test/fixtures/bastion/tls_private_key_shared_vpc ubuntu@<%= `terraform output -state test/fixtures/shared_vpc/terraform.tfstate.d/kitchen-terraform-shared-vpc-local/terraform.tfstate bastion_host 2> /dev/null`.strip %> -p 22 -W %h:%p
+          shell: true
+          shell_options: "--login"
+  - name: shielded_vm
+    driver:
+      name: terraform
+      root_module_directory: test/fixtures/shielded_vm/
+      command_timeout: 1800
+    verifier:
+      systems:
+        - name: gcloud
+          backend: local
+          controls:
+            - forseti-shielded-vm
+  - name: no_client_vm
+    driver:
+      name: terraform
+      root_module_directory: test/fixtures/no_client_vm/
+      command_timeout: 1800
+    verifier:
+      systems:
+        - name: gcloud
+          backend: local
+          controls:
+            - forseti-no-client-vm
+  - name: manage_rules_disabled
+    lifecycle:
+      pre_verify:
+        - chmod go-rwx test/fixtures/bastion/tls_private_key_manage_rules_disabled
+    driver:
+      name: terraform
+      root_module_directory: test/fixtures/manage_rules_disabled
+      command_timeout: 1800
+    verifier:
+      systems:
+        - name: server
+          backend: ssh
+          controls:
+            - server
+          hosts_output: forseti-server-vm-ip
+          user: ubuntu
+          key_files:
+            - test/fixtures/manage_rules_disabled/sshkey
+          proxy_command: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o LogLevel=ERROR -o ForwardAgent=no -i test/fixtures/bastion/tls_private_key_manage_rules_disabled ubuntu@<%= `terraform output -state test/fixtures/manage_rules_disabled/terraform.tfstate.d/kitchen-terraform-manage-rules-disabled-local/terraform.tfstate bastion_host 2> /dev/null`.strip %> -p 22 -W %h:%p
           shell: true
           shell_options: "--login"
 # Disabled due to issue #285

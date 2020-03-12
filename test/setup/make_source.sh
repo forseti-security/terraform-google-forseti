@@ -44,3 +44,7 @@ folder_id=$(terraform output folder_id)
 echo "export TF_VAR_folder_id='$folder_id'" >> ../source.sh
 billing_account=$(terraform output billing_account)
 echo "export TF_VAR_billing_account='$billing_account'" >> ../source.sh
+
+# GKE
+gke_project_id=$(terraform output gke_project_id)
+echo "export TF_VAR_gke_project_id='$gke_project_id'" >> ../source.sh

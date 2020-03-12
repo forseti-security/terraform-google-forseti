@@ -190,6 +190,7 @@ inventory:
         #    - k8s.io/Namespace
         #    - k8s.io/Node
         #    - k8s.io/Pod
+        #    - k8s.io/Service
         #    - pubsub.googleapis.com/Subscription
         #    - pubsub.googleapis.com/Topic
         #    - rbac.authorization.k8s.io/ClusterRole
@@ -236,6 +237,7 @@ scanner:
           enabled: ${BUCKET_ACL_ENABLED}
         - name: config_validator
           enabled: ${CONFIG_VALIDATOR_ENABLED}
+          verify_policy_library: ${VERIFY_POLICY_LIBRARY}
         - name: cloudsql_acl
           enabled: ${CLOUDSQL_ACL_ENABLED}
         - name: enabled_apis
@@ -268,6 +270,8 @@ scanner:
           enabled: ${LOG_SINK_ENABLED}
         - name: resource
           enabled: ${RESOURCE_ENABLED}
+        - name: role
+          enabled: ${ROLE_ENABLED}
         - name: service_account_key
           enabled: ${SERVICE_ACCOUNT_KEY_ENABLED}
 
@@ -703,6 +707,26 @@ notifier:
 
         - resource: resource_violations
           should_notify: ${RESOURCE_VIOLATIONS_SHOULD_NOTIFY}
+          notifiers:
+            %{ if SENDGRID_API_KEY != "" }
+            # Email violations
+            - name: email_violations
+            %{ endif }
+            # Upload violations to GCS.
+            - name: gcs_violations
+              configuration:
+                data_format: csv
+                # gcs_path should begin with "gs://"
+                gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+            %{ if VIOLATIONS_SLACK_WEBHOOK != "" }
+            - name: slack_webhook
+              configuration:
+                data_format: json  # slack only supports json
+                webhook_url: ${VIOLATIONS_SLACK_WEBHOOK}
+            %{ endif }
+
+        - resource: role_violations
+          should_notify: ${ROLE_VIOLATIONS_SHOULD_NOTIFY}
           notifiers:
             %{ if SENDGRID_API_KEY != "" }
             # Email violations

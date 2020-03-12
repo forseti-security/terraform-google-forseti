@@ -30,7 +30,7 @@ Before you begin the migration process, you will need:
 - The suffix appended to the names of the Forseti resources; this is
   likely a string of seven characters like a1b2c3d.
 - A service account for the organization with the
-  [roles required by the Terraform module](https://registry.terraform.io/modules/terraform-google-modules/forseti/google/5.1.1#iam-roles).
+  [roles required by the Terraform module](https://registry.terraform.io/modules/terraform-google-modules/forseti/google/5.1.2#iam-roles).
 - A
   [JSON key file](https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys)
   for the service account.
@@ -160,7 +160,7 @@ to match the region where the CAI GCS bucket is deployed.
 Starting with Forseti Security 2.23, Terraform will manage your server
  configuration file for you.  Configuration options will now be input
  variables that are defined in the Terraform module. Available variables
- and their default values can be found [here](https://github.com/forseti-security/terraform-google-forseti/blob/modulerelease511/variables.tf).
+ and their default values can be found [here](https://github.com/forseti-security/terraform-google-forseti/blob/modulerelease512/variables.tf).
  Default values will be used if values are not explicitly added.
  This will ensure upgrading Forseti will be as easy as possible going forward.
 
@@ -202,10 +202,10 @@ to your <walkthrough-editor-select-regex
   regex="Add any Forseti Server Configuration Variables Here">main.tf</walkthrough-editor-select-regex>.
 
 ## Obtain and Run the Import Script
-This [import script](https://github.com/forseti-security/terraform-google-forseti/blob/modulerelease511/helpers/import.sh) will import the Forseti GCP resources into a local state file.
+This [import script](https://github.com/forseti-security/terraform-google-forseti/blob/modulerelease512/helpers/import.sh) will import the Forseti GCP resources into a local state file.
 
 ```sh
-curl --location --remote-name https://raw.githubusercontent.com/forseti-security/terraform-google-forseti/modulerelease511/helpers/import.sh
+curl --location --remote-name https://raw.githubusercontent.com/forseti-security/terraform-google-forseti/modulerelease512/helpers/import.sh
 chmod +x import.sh
 ./import.sh -h
 ```

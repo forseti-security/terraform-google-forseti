@@ -39,6 +39,11 @@ output "forseti-client-vm-name" {
   value       = module.client.forseti-client-vm-name
 }
 
+output "forseti-cloudsql-instance-ip" {
+  description = "The IP of the master CloudSQL instance"
+  value       = module.cloudsql.forseti-cloudsql-instance-ip
+}
+
 output "forseti-cloudsql-connection-name" {
   description = "Forseti CloudSQL Connection String"
   value       = module.cloudsql.forseti-cloudsql-connection-name
@@ -68,6 +73,11 @@ output "forseti-server-service-account" {
 output "forseti-server-storage-bucket" {
   description = "Forseti Server storage bucket"
   value       = module.server_gcs.forseti-server-storage-bucket
+}
+
+output "forseti-server-vm-internal-dns" {
+  description = "Forseti Server internal DNS"
+  value       = module.server.forseti-server-vm-internal-dns
 }
 
 output "forseti-server-vm-ip" {

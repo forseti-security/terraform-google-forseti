@@ -19,6 +19,11 @@ output "suffix" {
   value       = module.forseti-install-simple.suffix
 }
 
+output "forseti-client-storage-bucket" {
+  description = "Forseti Client storage bucket"
+  value       = module.forseti-install-simple.forseti-client-storage-bucket
+}
+
 output "forseti-client-vm-name" {
   description = "Forseti Client VM name"
   value       = module.forseti-install-simple.forseti-client-vm-name
@@ -39,6 +44,11 @@ output "forseti-server-vm-name" {
   value       = module.forseti-install-simple.forseti-server-vm-name
 }
 
+output "forseti-server-vm-internal-dns" {
+  description = "Forseti Server internal DNS"
+  value       = module.forseti-install-simple.forseti-server-vm-internal-dns
+}
+
 output "forseti-server-vm-ip" {
   description = "Forseti Server VM private IP address"
   value       = module.forseti-install-simple.forseti-server-vm-ip
@@ -47,11 +57,6 @@ output "forseti-server-vm-ip" {
 output "forseti-server-service-account" {
   description = "Forseti Server service account"
   value       = module.forseti-install-simple.forseti-server-service-account
-}
-
-output "forseti-client-storage-bucket" {
-  description = "Forseti Client storage bucket"
-  value       = module.forseti-install-simple.forseti-client-storage-bucket
 }
 
 output "forseti-server-storage-bucket" {

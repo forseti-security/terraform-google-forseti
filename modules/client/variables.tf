@@ -39,6 +39,12 @@ variable "forseti_home" {
 #----------------#
 # Forseti client #
 #----------------#
+variable "client_enabled" {
+  description = "Enable Client VM"
+  default     = true
+  type        = bool
+}
+
 variable "client_type" {
   description = "GCE Forseti Client machine type"
   default     = "n1-standard-2"
@@ -47,6 +53,12 @@ variable "client_type" {
 variable "client_boot_image" {
   description = "GCE Forseti Client boot image"
   default     = "ubuntu-os-cloud/ubuntu-1804-lts"
+}
+
+variable "client_shielded_instance_config" {
+  description = "Client instance 'shielded_instance_config' block if using shielded VM image"
+  type        = map(string)
+  default     = null
 }
 
 variable "client_region" {

@@ -161,6 +161,7 @@ module "forseti-service-network" {
     },
   ]
 }
+
 resource "google_compute_router" "forseti_service" {
   name    = "forseti-service"
   network = module.forseti-service-network.network_self_link
@@ -186,4 +187,32 @@ resource "google_compute_router_nat" "forseti_service" {
 
   project = module.forseti-service-project.project_id
   region  = google_compute_router.forseti_service.region
+}
+
+#----------------#
+# Forseti on GKE #
+#----------------#
+module "forseti-gke-project" {
+  source          = "terraform-google-modules/project-factory/google//modules/shared_vpc"
+  version         = "~> 3.0"
+  org_id          = var.org_id
+  folder_id       = var.folder_id
+  billing_account = var.billing_account
+  name            = "ci-forseti-gke"
+  project_id      = "ci-forseti-gke-${random_string.project_suffix.result}"
+
+  activate_apis = [
+    "cloudresourcemanager.googleapis.com",
+    "compute.googleapis.com",
+    "container.googleapis.com",
+    "iam.googleapis.com",
+    "logging.googleapis.com",
+    "monitoring.googleapis.com",
+    "serviceusage.googleapis.com",
+    "storage-api.googleapis.com",
+    "storage-component.googleapis.com",
+    "sqladmin.googleapis.com",
+    "sql-component.googleapis.com",
+  ]
+  shared_vpc = module.forseti-host-project.project_id
 }

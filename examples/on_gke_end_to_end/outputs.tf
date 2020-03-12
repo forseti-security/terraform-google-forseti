@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,22 @@
  * limitations under the License.
  */
 
+output "client_token" {
+  description = "The bearer token for auth"
+  sensitive   = true
+  value       = base64encode(data.google_client_config.default.access_token)
+}
+
+output "ca_certificate" {
+  description = "The cluster CA certificate"
+  value       = module.gke.ca_certificate
+}
+
+output "config-validator-git-public-key-openssh" {
+  description = "The public OpenSSH key generated to allow the Forseti Server to clone the policy library repository."
+  value       = module.forseti.config-validator-git-public-key-openssh
+}
+
 output "forseti-client-service-account" {
   description = "Forseti Client service account"
   value       = module.forseti.forseti-client-service-account
@@ -24,19 +40,14 @@ output "forseti-client-storage-bucket" {
   value       = module.forseti.forseti-client-storage-bucket
 }
 
-output "forseti-cloudsql-connection-name" {
-  description = "Forseti CloudSQL Connection String"
-  value       = module.forseti.forseti-cloudsql-connection-name
-}
-
 output "forseti-client-vm-ip" {
   description = "Forseti Client VM private IP address"
   value       = module.forseti.forseti-client-vm-ip
 }
 
-output "forseti-server-storage-bucket" {
-  description = "Forseti Server storage bucket"
-  value       = module.forseti.forseti-server-storage-bucket
+output "forseti-cloudsql-connection-name" {
+  description = "Forseti CloudSQL Connection String"
+  value       = module.forseti.forseti-cloudsql-connection-name
 }
 
 output "forseti-server-service-account" {
@@ -44,14 +55,30 @@ output "forseti-server-service-account" {
   value       = module.forseti.forseti-server-service-account
 }
 
+output "forseti-server-storage-bucket" {
+  description = "Forseti Server storage bucket"
+  value       = module.forseti.forseti-server-storage-bucket
+}
+
+output "gke_cluster_location" {
+  description = "Cluster location"
+  value       = module.gke.location
+}
+
+output "gke_cluster_name" {
+  description = "Cluster name"
+  value       = var.gke_cluster_name
+}
+
+output "kubernetes_endpoint" {
+  description = "The cluster endpoint"
+  sensitive   = true
+  value       = module.gke.endpoint
+}
+
 output "kubernetes-forseti-namespace" {
   description = "The Kubernetes namespace in which Forseti is deployed"
   value       = module.forseti.kubernetes-forseti-namespace
-}
-
-output "kubernetes-forseti-tiller-sa-name" {
-  description = "The name of the service account deploying Forseti"
-  value       = module.forseti.kubernetes-forseti-tiller-sa-name
 }
 
 output "kubernetes-forseti-server-ingress" {
@@ -59,12 +86,12 @@ output "kubernetes-forseti-server-ingress" {
   value       = module.forseti.kubernetes-forseti-server-ingress
 }
 
+output "kubernetes-forseti-tiller-sa-name" {
+  description = "The name of the service account deploying Forseti"
+  value       = module.forseti.kubernetes-forseti-tiller-sa-name
+}
+
 output "suffix" {
   description = "The random suffix appended to Forseti resources"
   value       = module.forseti.suffix
-}
-
-output "config-validator-git-public-key-openssh" {
-  description = "The public OpenSSH key generated to allow the Forseti Server to clone the policy library repository."
-  value       = module.forseti.config-validator-git-public-key-openssh
 }

@@ -105,7 +105,7 @@ data "template_file" "forseti_server_env" {
   vars = {
     project_id             = var.project_id
     cloudsql_db_name       = var.cloudsql_module.forseti-cloudsql-db-name
-    cloudsql_db_port       = var.cloudsql_module.forseti-clodusql-db-port
+    cloudsql_db_port       = var.cloudsql_module.forseti-cloudsql-db-port
     cloudsql_region        = var.cloudsql_module.forseti-cloudsql-region
     cloudsql_instance_name = var.cloudsql_module.forseti-cloudsql-instance-name
     cloudsql_db_user       = var.cloudsql_module.forseti-cloudsql-user
@@ -181,7 +181,7 @@ resource "google_compute_firewall" "forseti-server-allow-grpc" {
   network                 = var.network
   target_service_accounts = [var.server_iam_module.forseti-server-service-account]
   source_ranges           = var.server_grpc_allow_ranges
-  source_service_accounts = [var.client_iam_module.forseti-client-service-account]
+  source_service_accounts = var.client_iam_module.forseti-client-service-account != null ? [var.client_iam_module.forseti-client-service-account] : null
   priority                = "100"
 
   allow {
@@ -235,7 +235,8 @@ resource "google_compute_instance" "forseti-server" {
   dynamic "network_interface" {
     for_each = local.network_interface
     content {
-      address            = lookup(network_interface.value, "address", null)
+      # Field `address` has been deprecated. Use `network_ip` instead.
+      # https://github.com/terraform-providers/terraform-provider-google/blob/master/CHANGELOG.md#200-february-12-2019
       network            = lookup(network_interface.value, "network", null)
       network_ip         = lookup(network_interface.value, "network_ip", null)
       subnetwork         = lookup(network_interface.value, "subnetwork", null)
@@ -271,6 +272,15 @@ resource "google_compute_instance" "forseti-server" {
   service_account {
     email  = var.server_iam_module.forseti-server-service-account
     scopes = ["cloud-platform"]
+  }
+
+  dynamic "shielded_instance_config" {
+    for_each = var.server_shielded_instance_config == null ? [] : [var.server_shielded_instance_config]
+    content {
+      enable_secure_boot          = lookup(var.server_shielded_instance_config, "enable_secure_boot", null)
+      enable_vtpm                 = lookup(var.server_shielded_instance_config, "enable_vtpm", null)
+      enable_integrity_monitoring = lookup(var.server_shielded_instance_config, "enable_integrity_monitoring", null)
+    }
   }
 
   depends_on = [

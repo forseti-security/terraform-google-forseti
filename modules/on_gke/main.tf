@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -105,7 +105,6 @@ resource "tls_private_key" "policy_library_sync_ssh" {
 #------------------------------#
 # git-sync SSH Key Data Source #
 #------------------------------#
-
 data "local_file" "git_sync_private_ssh_key_file" {
   count    = var.git_sync_private_ssh_key_file != null ? 1 : 0
   filename = var.git_sync_private_ssh_key_file
@@ -114,7 +113,6 @@ data "local_file" "git_sync_private_ssh_key_file" {
 #------------------------------#
 # git-sync Public SSH Key Data Source #
 #------------------------------#
-
 data "tls_public_key" "git_sync_public_ssh_key" {
   count           = var.config_validator_enabled && var.policy_library_sync_enabled ? 1 : 0
   private_key_pem = local.git_sync_private_ssh_key
@@ -123,10 +121,9 @@ data "tls_public_key" "git_sync_public_ssh_key" {
 //*****************************************
 //  Obtain Forseti Server Configuration
 //*****************************************
-
 data "google_storage_bucket_object" "server_config_contents" {
-  bucket = module.server_gcs.forseti-server-storage-bucket
-  name   = "configs/forseti_conf_server.yaml"
+  bucket     = module.server_gcs.forseti-server-storage-bucket
+  name       = "configs/forseti_conf_server.yaml"
   depends_on = [
     module.server_config.forseti-server-config-md5
   ]
@@ -146,7 +143,6 @@ data "http" "server_config_contents" {
 //*****************************************
 //  Create Kubernetes Forseti Namespace
 //*****************************************
-
 resource "kubernetes_namespace" "forseti" {
   metadata {
     name = local.kubernetes_namespace
@@ -156,7 +152,6 @@ resource "kubernetes_namespace" "forseti" {
 //*****************************************
 // Configure Workload Identity
 //*****************************************
-
 resource "google_service_account_iam_binding" "forseti_server_workload_identity" {
   service_account_id = "projects/${var.project_id}/serviceAccounts/${module.server_iam.forseti-server-service-account}"
   role               = "roles/iam.workloadIdentityUser"
@@ -176,11 +171,9 @@ resource "google_service_account_iam_binding" "forseti_client_workload_identity"
   ]
 }
 
-
 //*****************************************
 //  Create Tiller Kubernetes Service Account
 //*****************************************
-
 resource "kubernetes_service_account" "tiller" {
   metadata {
     name      = var.k8s_tiller_sa_name
@@ -194,7 +187,6 @@ resource "kubernetes_service_account" "tiller" {
 //*****************************************
 //  Create Tiller RBAC
 //*****************************************
-
 resource "kubernetes_role" "tiller" {
   metadata {
     name      = "tiller-manager"
@@ -229,7 +221,6 @@ resource "kubernetes_role_binding" "tiller" {
 //*****************************************
 //  Deploy Forseti on GKE via Helm
 //*****************************************
-
 resource "helm_release" "forseti-security" {
   name          = "forseti"
   namespace     = local.kubernetes_namespace
@@ -412,7 +403,6 @@ resource "helm_release" "forseti-security" {
 #---------------------------------#
 # Forseti K8s Server Service Data #
 #---------------------------------#
-
 data "kubernetes_service" "forseti_server" {
   metadata {
     name      = "forseti-server"
@@ -424,19 +414,19 @@ data "kubernetes_service" "forseti_server" {
 #--------------------#
 # Forseti client IAM #
 #--------------------#
-
 module "client_iam" {
-  source     = "../client_iam"
-  project_id = var.project_id
-  suffix     = local.random_hash
+  source         = "../client_iam"
+  client_enabled = var.client_enabled
+  project_id     = var.project_id
+  suffix         = local.random_hash
 }
 
 #--------------------#
 # Forseti client GCS #
 #--------------------#
-
 module "client_gcs" {
   source                  = "../client_gcs"
+  client_enabled          = var.client_enabled
   project_id              = var.project_id
   storage_bucket_location = var.storage_bucket_location
   suffix                  = local.random_hash
@@ -447,9 +437,9 @@ module "client_gcs" {
 #-----------------------#
 # Forseti client config #
 #-----------------------#
-
 module "client_config" {
   source            = "../client_config"
+  client_enabled    = var.client_enabled
   client_gcs_module = module.client_gcs
   server_address    = length(data.kubernetes_service.forseti_server.load_balancer_ingress) == 1 ? data.kubernetes_service.forseti_server.load_balancer_ingress[0].ip : ""
 }
@@ -457,10 +447,10 @@ module "client_config" {
 #-----------------------#
 # Forseti client config #
 #-----------------------#
-
 module "client" {
   source = "../client"
 
+  client_enabled           = var.client_enabled
   project_id               = var.project_id
   client_boot_image        = var.client_boot_image
   subnetwork               = var.subnetwork
@@ -488,7 +478,6 @@ module "client" {
 #------------------#
 # Forseti CloudSQL #
 #------------------#
-
 module "cloudsql" {
   source                     = "../cloudsql"
   cloudsql_disk_size         = var.cloudsql_disk_size
@@ -603,6 +592,7 @@ module "server_config" {
   admin_max_calls                                     = var.admin_max_calls
   admin_disable_polling                               = var.admin_disable_polling
   service_account_key_enabled                         = var.service_account_key_enabled
+  role_enabled                                        = var.role_enabled
   resource_enabled                                    = var.resource_enabled
   log_sink_enabled                                    = var.log_sink_enabled
   location_enabled                                    = var.location_enabled
@@ -624,6 +614,8 @@ module "server_config" {
   bigquery_enabled                                    = var.bigquery_enabled
   audit_logging_enabled                               = var.audit_logging_enabled
   service_account_key_violations_should_notify        = var.service_account_key_violations_should_notify
+  role_violations_should_notify                       = var.role_violations_should_notify
+  role_violations_slack_webhook                       = var.role_violations_slack_webhook
   resource_violations_should_notify                   = var.resource_violations_should_notify
   log_sink_violations_should_notify                   = var.log_sink_violations_should_notify
   location_violations_should_notify                   = var.location_violations_should_notify
@@ -653,6 +645,7 @@ module "server_config" {
   violations_slack_webhook                            = var.violations_slack_webhook
   cscc_violations_enabled                             = var.cscc_violations_enabled
   cscc_source_id                                      = var.cscc_source_id
+  verify_policy_library                               = var.verify_policy_library
 
   groups_settings_max_calls                = var.groups_settings_max_calls
   groups_settings_period                   = var.groups_settings_period

@@ -1,1 +1,1 @@
-../../install_simple/controls/client.rb
+../../shared/controls/client.rb

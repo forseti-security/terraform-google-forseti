@@ -28,6 +28,12 @@ variable "suffix" {
 #----------------#
 # Forseti client #
 #----------------#
+variable "client_enabled" {
+  description = "Enable Client VM"
+  default     = true
+  type        = bool
+}
+
 variable "storage_bucket_location" {
   description = "GCS storage bucket location"
   default     = "us-central1"

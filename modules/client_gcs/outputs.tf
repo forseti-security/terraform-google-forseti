@@ -16,5 +16,5 @@
 
 output "forseti-client-storage-bucket" {
   description = "Forseti Client storage bucket"
-  value       = google_storage_bucket.client_config.id
+  value       = var.client_enabled ? google_storage_bucket.client_config[0].id : null
 }
