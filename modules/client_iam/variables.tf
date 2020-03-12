@@ -27,3 +27,8 @@ variable "client_enabled" {
   default     = true
   type        = bool
 }
+
+variable "client_service_account" {
+  description = "Service account email to assign to the Client VM. If empty, a new Service Account will be created"
+  default     = ""
+}
