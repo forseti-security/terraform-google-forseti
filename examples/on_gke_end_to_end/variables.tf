@@ -116,7 +116,7 @@ variable "helm_repository_url" {
 
 variable "helm_chart_version" {
   description = "The version of the Helm chart to use"
-  default     = "2.2.1"
+  default     = "2.2.0-rc1"
 }
 
 variable "k8s_forseti_namespace" {
