@@ -45,16 +45,15 @@ control "server" do
     its("stderr") { should cmp "" }
   end
 
-  describe file("/home/ubuntu/forseti-scripts/run_forseti.sh") do
-    it { should exist }
-    its('stdout') { should match (/Scan completed/) }
-    its('stdout') { should match (/SUCCESS/)}
-    its('stdout') { should match (/Notification completed/) }
-    its('stdout') { should match (/purged/) }
-  end
-
   describe file("/home/ubuntu/forseti-scripts/initialize_forseti_services.sh") do
     it { should exist }
+  end
+
+  describe file("/home/ubuntu/forseti-scripts/run_forseti.sh") do
+    it { should exist }
+    its('stdout') { should match (/Finished running Forseti inventory/)}
+    its('stdout') { should match (/Finished running Forseti scanner/) }
+    its('stdout') { should match (/Finished running Forseti notifier/) }
   end
 
   describe file("/home/ubuntu/forseti-security/configs/forseti_conf_server.yaml") do

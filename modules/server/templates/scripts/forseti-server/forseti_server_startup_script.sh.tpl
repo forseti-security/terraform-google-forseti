@@ -5,11 +5,10 @@ set -eu
 USER=ubuntu
 USER_HOME=/home/ubuntu
 INTERNET_CONNECTION="$(ping -q -w1 -c1 google.com &>/dev/null && echo online || echo offline)"
-
-export USER_HOME
-
 RUN_FORSETI_SERVICES_MD5_HASH=${forseti_run_forseti_services_md5_hash}
 INIT_SERVICES_MD5_HASH=${forseti_init_services_md5_hash}
+
+export USER_HOME
 
 # Log status of internet connection
 if [ $INTERNET_CONNECTION == "offline" ]; then
@@ -79,9 +78,6 @@ chmod -R ug+rwx ${forseti_home}/configs ${forseti_home}/rules ${forseti_home}/in
 echo "Forseti Startup - Installing Forseti python package."
 python3 setup.py install
 
-# Export variables required by initialize_forseti_services.sh.
-${forseti_env}
-
 # Export variables required by run_forseti.sh
 ${forseti_environment}
 
@@ -126,7 +122,7 @@ fi
 
 # Attempt to download the Forseti scripts
 sudo mkdir -m 777 -p ${forseti_scripts}
-gsutil -m cp -r gs://${storage_bucket_name}/scripts ${forseti_scripts}/
+gsutil -m cp -r gs://${storage_bucket_name}/scripts/* ${forseti_scripts}/
 
 # Enable cloud-profiler in the initialize_forseti_services.sh script
 if ${cloud_profiler_enabled}; then
@@ -171,18 +167,6 @@ if grep -q "ubuntu hard nofile" /etc/security/limits.conf ; then
 else
   echo "ubuntu hard nofile 32768" | sudo tee -a /etc/security/limits.conf
 fi
-
-# Create a Forseti env script
-FORSETI_ENV="$(cat << EOF
-#!/bin/bash
-
-export PATH=$PATH:/usr/local/bin
-
-# Forseti environment variables
-${forseti_environment}
-EOF
-)"
-echo "$FORSETI_ENV" > $USER_HOME/forseti_env.sh
 
 USER=ubuntu
 # Use flock to prevent rerun of the same cron job when the previous job is still running.
