@@ -5,8 +5,8 @@ set -eu
 USER=ubuntu
 USER_HOME=/home/ubuntu
 INTERNET_CONNECTION="$(ping -q -w1 -c1 google.com &>/dev/null && echo online || echo offline)"
-RUN_FORSETI_SERVICES_MD5_HASH=${forseti_run_forseti_services_md5_hash}
 INIT_SERVICES_MD5_HASH=${forseti_init_services_md5_hash}
+RUN_FORSETI_SERVICES_MD5_HASH=${forseti_run_forseti_services_md5_hash}
 
 export USER_HOME
 
