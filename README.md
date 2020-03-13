@@ -7,7 +7,7 @@ A Google Cloud Shell Walkthrough has been setup to make it easy for users who ar
 
 If you are familiar with Terraform and would like to run Terraform from a different machine, you can skip this walkthrough and move onto the [How to Deploy](#how-to-deploy) section.
 
-[![Open in Google Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fforseti-security%2Fterraform-google-forseti.git&cloudshell_git_branch=modulerelease512&cloudshell_working_dir=examples/install_simple&cloudshell_image=gcr.io%2Fgraphite-cloud-shell-images%2Fterraform%3Alatest&cloudshell_tutorial=.%2Ftutorial.md)
+[![Open in Google Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fforseti-security%2Fterraform-google-forseti.git&cloudshell_git_branch=modulerelease520&cloudshell_working_dir=examples/install_simple&cloudshell_image=gcr.io%2Fgraphite-cloud-shell-images%2Fterraform%3Alatest&cloudshell_tutorial=.%2Ftutorial.md)
 
 ## How to Deploy
 In order to run this module you will need to be authenticated as a user that has access to the project and can create/authorize service accounts at both the organization and project levels. To login to GCP from a shell:
@@ -20,7 +20,7 @@ gcloud auth login
 The repository has several helper scripts that can be used with the deployment process.
 
 ```bash
-git clone --branch modulerelease512 --depth 1 https://github.com/forseti-security/terraform-google-forseti.git
+git clone --branch modulerelease520 --depth 1 https://github.com/forseti-security/terraform-google-forseti.git
 ```
 
 ### Install Terraform
@@ -244,7 +244,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | forseti\_home | Forseti installation directory | string | `"$USER_HOME/forseti-security"` | no |
 | forseti\_repo\_url | Git repo for the Forseti installation | string | `"https://github.com/forseti-security/forseti-security"` | no |
 | forseti\_run\_frequency | Schedule of running the Forseti scans | string | `"null"` | no |
-| forseti\_version | The version of Forseti to install | string | `"v2.24.0"` | no |
+| forseti\_version | The version of Forseti to install | string | `"v2.25.0"` | no |
 | forwarding\_rule\_enabled | Forwarding rule scanner enabled. | bool | `"false"` | no |
 | forwarding\_rule\_violations\_should\_notify | Notify for forwarding rule violations | bool | `"true"` | no |
 | group\_enabled | Group scanner enabled. | bool | `"true"` | no |
