@@ -69,7 +69,7 @@ locals {
     "storage-api.googleapis.com",
     "groupssettings.googleapis.com",
   ]
-  workload_identity                = "${var.project_id}.svc.id.goog"
+  workload_identity_namespace      = var.workload_identity_namespace == null ? "${var.project_id}.svc.id.goog" : var.workload_identity_namespace
   workload_identity_server_suffix  = "[${local.kubernetes_namespace}/forseti-server]"
   workload_identity_client_suffix  = "[${local.kubernetes_namespace}/forseti-orchestrator]"
   workload_config_validator_suffix = "[${local.kubernetes_namespace}/config-validator]"
@@ -158,7 +158,7 @@ resource "google_service_account_iam_binding" "forseti_server_workload_identity"
   role               = "roles/iam.workloadIdentityUser"
 
   members = [
-    "serviceAccount:${local.workload_identity}${local.workload_identity_server_suffix}"
+    "serviceAccount:${local.workload_identity_namespace}${local.workload_identity_server_suffix}"
   ]
 }
 
@@ -167,8 +167,8 @@ resource "google_service_account_iam_binding" "forseti_client_workload_identity"
   role               = "roles/iam.workloadIdentityUser"
 
   members = [
-    "serviceAccount:${local.workload_identity}${local.workload_identity_client_suffix}",
-    "serviceAccount:${local.workload_identity}${local.workload_config_validator_suffix}"
+    "serviceAccount:${local.workload_identity_namespace}${local.workload_identity_client_suffix}",
+    "serviceAccount:${local.workload_identity_namespace}${local.workload_config_validator_suffix}"
   ]
 }
 

@@ -174,4 +174,5 @@ module "forseti" {
   policy_library_sync_enabled        = var.policy_library_sync_enabled
   server_log_level                   = var.server_log_level
   client_instance_metadata           = var.client_instance_metadata
+  workload_identity_namespace        = module.gke.identity_namespace
 }
