@@ -573,6 +573,12 @@ variable "resource_enabled" {
   default     = true
 }
 
+variable "retention_enabled" {
+  description = "Retention scanner enabled."
+  type        = bool
+  default     = false
+}
+
 variable "role_enabled" {
   description = "Role scanner enabled."
   type        = bool
@@ -733,6 +739,17 @@ variable "resource_violations_should_notify" {
   description = "Notify for resource violations"
   type        = bool
   default     = true
+}
+
+variable "retention_violations_should_notify" {
+  description = "Notify for retention violations"
+  type        = bool
+  default     = true
+}
+
+variable "retention_violations_slack_webhook" {
+  description = "Slack webhook for retention violations"
+  default     = ""
 }
 
 variable "role_violations_should_notify" {
