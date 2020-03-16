@@ -162,6 +162,17 @@ suites:
           proxy_command: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o LogLevel=ERROR -o ForwardAgent=no -i test/fixtures/bastion/tls_private_key_manage_rules_disabled ubuntu@<%= `terraform output -state test/fixtures/manage_rules_disabled/terraform.tfstate.d/kitchen-terraform-manage-rules-disabled-local/terraform.tfstate bastion_host 2> /dev/null`.strip %> -p 22 -W %h:%p
           shell: true
           shell_options: "--login"
+  - name: custom_service_accounts
+    driver:
+      name: terraform
+      root_module_directory: test/fixtures/custom_service_accounts/
+      command_timeout: 1800
+    verifier:
+      systems:
+        - name: gcloud
+          backend: local
+          controls:
+            - forseti-custom-service-account
 # Disabled due to issue #285
 # (https://github.com/forseti-security/terraform-google-forseti/issues/285)
 #  - name: real_time_enforcer_roles

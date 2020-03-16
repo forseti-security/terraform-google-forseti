@@ -204,6 +204,7 @@ module "server_iam" {
   org_id                  = var.org_id
   project_id              = var.project_id
   suffix                  = local.random_hash
+  server_service_account  = var.server_service_account
 }
 
 module "server_gcs" {
@@ -345,10 +346,11 @@ module "server_config" {
 }
 
 module "client_iam" {
-  source         = "./modules/client_iam"
-  client_enabled = var.client_enabled
-  project_id     = var.project_id
-  suffix         = local.random_hash
+  source                 = "./modules/client_iam"
+  client_enabled         = var.client_enabled
+  project_id             = var.project_id
+  suffix                 = local.random_hash
+  client_service_account = var.client_service_account
 }
 
 module "client_gcs" {

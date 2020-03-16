@@ -148,6 +148,11 @@ variable "server_private" {
   type        = bool
 }
 
+variable "server_service_account" {
+  description = "Service account email to assign to the Server VM. If empty, a new Service Account will be created"
+  default     = ""
+}
+
 variable "cloud_profiler_enabled" {
   description = "Enable the Cloud Profiler"
   default     = false
@@ -866,6 +871,11 @@ variable "client_private" {
   description = "Private GCE Forseti Client VM (no public IP)"
   default     = false
   type        = bool
+}
+
+variable "client_service_account" {
+  description = "Service account email to assign to the Client VM. If empty, a new Service Account will be created"
+  default     = ""
 }
 
 #------------#
