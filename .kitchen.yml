@@ -38,6 +38,7 @@ suites:
           backend: gcp
           controls:
             - forseti
+            - forseti-nat
         - name: server
           backend: ssh
           controls:
@@ -66,6 +67,10 @@ suites:
           backend: local
           controls:
             - forseti-org-iam
+        - name: private-ips
+          backend: local
+          controls:
+            - forseti-no-public-ips
   - name: shared_vpc
     lifecycle:
       pre_verify:

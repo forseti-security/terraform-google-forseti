@@ -34,6 +34,7 @@ control 'forseti' do
   ) do
     it { should exist }
     its('machine_size') { should eq 'n1-standard-2' }
+    its('network_interfaces_count'){should eq 1}
   end
 
   describe google_compute_instance(
@@ -43,6 +44,7 @@ control 'forseti' do
   ) do
     it { should exist }
     its('machine_size') { should eq 'n1-standard-8' }
+    its('network_interfaces_count'){should eq 1}
   end
 
   describe google_sql_database_instances(project: project_id) do
