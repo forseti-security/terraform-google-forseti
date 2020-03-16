@@ -67,7 +67,6 @@ variable "gke_node_pool_name" {
 
 variable "workload_identity_namespace" {
   description = "Workload Identity namespace"
-  default     = null
 }
 
 #----------------#
