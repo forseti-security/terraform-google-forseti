@@ -24,8 +24,6 @@ forseti_client_storage_bucket = attribute('forseti-client-storage-bucket')
 forseti_server_storage_bucket = attribute('forseti-server-storage-bucket')
 forseti_client_service_account = attribute('forseti-client-service-account')
 forseti_server_service_account = attribute('forseti-server-service-account')
-forseti_cloud_nat_name = 'clout-nat-' + project_id
-forseti_router_name = 'router-' + project_id
 
 control 'forseti' do
   title "Forseti GCP resources"
@@ -48,22 +46,6 @@ control 'forseti' do
     it { should exist }
     its('machine_size') { should eq 'n1-standard-8' }
     its('network_interfaces_count'){should eq 1}
-  end
-
-  describe google_compute_router_nat(
-    project: project_id,
-    region: 'us-central1',
-    router: forseti_router_name,
-    name: forseti_cloud_nat_name
-    ) do
-    it { should exist }
-  end
-
-  describe google_compute_routers(
-    project: project_id,
-    region: 'us-central1'
-  ) do
-    its('names') { should include forseti_router_name }
   end
 
   describe google_sql_database_instances(project: project_id) do
@@ -195,39 +177,6 @@ control 'forseti' do
         {ip_protocol: "tcp"},
         {ip_protocol: "udp"}
       )
-    end
-  end
-end
-
-control 'forseti-no-public-ips' do
-  title "Ensure no public IP addresses on Forseti Client and Server VM"
-  describe command(
-    "gcloud compute instances describe #{forseti_server_vm_name} --flatten='networkInterfaces' --format='json(networkInterfaces.accessConfigs)' --zone=us-central1-c --project=#{project_id}"
-  ) do
-    its(:exit_status) { should eq 0 }
-    its(:stderr) { should eq '' }
-
-    let(:access_configs) do
-      JSON.parse(subject.stdout)
-    end
-
-    it 'Server has no public IP address' do
-      expect(access_configs).to match_array([nil])
-    end
-  end
-
-  describe command(
-    "gcloud compute instances describe #{forseti_client_vm_name} --flatten='networkInterfaces' --format='json(networkInterfaces.accessConfigs)' --zone=us-central1-c --project=#{project_id}"
-  ) do
-    its(:exit_status) { should eq 0 }
-    its(:stderr) { should eq '' }
-
-    let(:access_configs) do
-      JSON.parse(subject.stdout)
-    end
-
-    it 'Client has no public IP address' do
-      expect(access_configs).to match_array([nil])
     end
   end
 end

@@ -38,6 +38,7 @@ suites:
           backend: gcp
           controls:
             - forseti
+            - forseti-nat
         - name: server
           backend: ssh
           controls:
