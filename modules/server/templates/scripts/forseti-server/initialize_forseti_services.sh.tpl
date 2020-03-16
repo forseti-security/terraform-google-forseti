@@ -74,9 +74,6 @@ if [ "${policy_library_sync_enabled}" == "true" ]; then
   fi
 fi
 
-# Update the permission of the config validator.
-sudo chmod ugo+x ${forseti_home}/external-dependencies/config-validator/ConfigValidatorRPCServer
-
 SQL_PROXY_COMMAND="$(which cloud_sql_proxy)"
 SQL_PROXY_COMMAND+=" -instances=${cloudsql_connection_name}=tcp:${cloudsql_db_port}"
 
