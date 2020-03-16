@@ -13,7 +13,6 @@
 # limitations under the License.
 # encoding: utf-8
 
-
 org_id = attribute('org_id')
 project_id = attribute('project_id')
 network_project = attribute('network_project').empty? ? project_id : attribute('network_project')
