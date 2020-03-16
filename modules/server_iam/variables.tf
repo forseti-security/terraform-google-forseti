@@ -60,3 +60,8 @@ variable "cscc_violations_enabled" {
   type        = bool
   default     = false
 }
+
+variable "server_service_account" {
+  description = "Service account email to assign to the Server VM. If empty, a new Service Account will be created"
+  default     = ""
+}

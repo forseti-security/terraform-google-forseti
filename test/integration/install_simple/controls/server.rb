@@ -334,6 +334,10 @@ control "server" do
         expect(config["scanner"]["scanners"]).to include("name" => "resource", "enabled" => true)
       end
 
+      it "configures retention_enabled" do
+        expect(config["scanner"]["scanners"]).to include("name" => "retention", "enabled" => false)
+      end
+
       it "configures role_enabled" do
         expect(config["scanner"]["scanners"]).to include("name" => "role", "enabled" => false)
       end
@@ -440,6 +444,10 @@ control "server" do
 
         it "configures resource_violations_should_notify" do
           expect(config["notifier"]["resources"]).to include(including("resource" => "resource_violations", "should_notify" => true))
+        end
+
+        it "configures retention_violations_should_notify" do
+          expect(config["notifier"]["resources"]).to include(including("resource" => "retention_violations", "should_notify" => true))
         end
 
         it "configures role_violations_should_notify" do
