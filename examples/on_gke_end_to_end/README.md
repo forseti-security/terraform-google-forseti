@@ -75,6 +75,7 @@ This script will also activate necessary APIs required for Terraform to deploy F
 | gke\_service\_ip\_range | The IP range of the Kubernetes services. | string | `"10.3.0.0/20"` | no |
 | gke\_service\_ip\_range\_name | The name of the IP range of the Kubernetes services. | string | `"gke-service-ip-range"` | no |
 | gsuite\_admin\_email | G-Suite administrator email address to manage your Forseti installation | string | n/a | yes |
+| helm\_chart\_version | The version of the Helm chart to use | string | `"2.2.0-rc1"` | no |
 | helm\_repository\_url | The Helm repository containing the 'forseti-security' Helm charts | string | `"https://forseti-security-charts.storage.googleapis.com/release/"` | no |
 | k8s\_forseti\_namespace | The Kubernetes namespace in which to deploy Forseti. | string | `"forseti"` | no |
 | k8s\_forseti\_orchestrator\_image\_tag | The tag for the container image for the Forseti orchestrator | string | `"v2.24.0"` | no |

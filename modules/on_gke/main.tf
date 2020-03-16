@@ -122,8 +122,9 @@ data "tls_public_key" "git_sync_public_ssh_key" {
 //  Obtain Forseti Server Configuration
 //*****************************************
 data "google_storage_bucket_object" "server_config_contents" {
-  bucket     = module.server_gcs.forseti-server-storage-bucket
-  name       = "configs/forseti_conf_server.yaml"
+  bucket = module.server_gcs.forseti-server-storage-bucket
+  name   = "configs/forseti_conf_server.yaml"
+
   depends_on = [
     module.server_config.forseti-server-config-md5
   ]
