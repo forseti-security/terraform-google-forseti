@@ -28,9 +28,6 @@ if ! [[ -f ${forseti_server_conf_path} ]]; then
     exit 1
 fi
 
-# We had issue creating DB user through deployment template, if the issue is
-# resolved in the future, we should create a forseti db user instead of using
-# root.
 SQL_SERVER_LOCAL_ADDRESS="mysql+pymysql://${cloudsql_db_user}:${cloudsql_db_password}@127.0.0.1:${cloudsql_db_port}"
 FORSETI_SERVICES="explain inventory model scanner notifier"
 
