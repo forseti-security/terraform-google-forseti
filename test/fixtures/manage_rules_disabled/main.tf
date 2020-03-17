@@ -60,6 +60,8 @@ module "forseti-manage-rules-disabled" {
   subnetwork           = var.subnetwork
   client_enabled       = false
   manage_rules_enabled = false
+  forseti_version      = var.forseti_version
+
   server_instance_metadata = {
     sshKeys = "ubuntu:${tls_private_key.main.public_key_openssh}"
   }

@@ -18,6 +18,11 @@ variable "domain" {
   description = "Organization domain"
 }
 
+variable "forseti_version" {
+  description = "The version of Forseti to install"
+  default     = "master"
+}
+
 variable "gsuite_admin_email" {
   description = "G Suite admin email"
 }

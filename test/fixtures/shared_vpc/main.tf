@@ -54,6 +54,7 @@ module "forseti-shared-vpc" {
   network_project    = var.network_project
   org_id             = var.org_id
   domain             = var.domain
+  forseti_version    = var.forseti_version
 
   instance_metadata = {
     sshKeys = "ubuntu:${tls_private_key.main.public_key_openssh}"

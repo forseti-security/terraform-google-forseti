@@ -71,6 +71,7 @@ module "forseti-install-simple" {
   network            = var.network
   subnetwork         = var.subnetwork
   network_project    = var.network_project
+  forseti_version    = var.forseti_version
 
   instance_metadata = {
     sshKeys = "ubuntu:${tls_private_key.main.public_key_openssh}"
