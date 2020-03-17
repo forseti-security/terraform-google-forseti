@@ -22,11 +22,6 @@ variable "gsuite_admin_email" {
   description = "The email of a GSuite super admin, used for pulling user directory information *and* sending notifications."
 }
 
-variable "forseti_version" {
-  description = "The version of Forseti to install"
-  default     = "master"
-}
-
 variable "instance_metadata" {
   description = "Metadata key/value pairs to make available from within the client and server instances."
   type        = map(string)

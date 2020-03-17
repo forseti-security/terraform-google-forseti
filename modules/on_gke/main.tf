@@ -225,10 +225,12 @@ resource "helm_release" "forseti-security" {
   version       = var.helm_chart_version
   chart         = "forseti-security"
   recreate_pods = var.recreate_pods
-  depends_on = ["kubernetes_role_binding.tiller",
-    "kubernetes_namespace.forseti",
+  depends_on = [
+    "google_service_account_iam_binding.forseti_client_workload_identity",
     "google_service_account_iam_binding.forseti_server_workload_identity",
-  "google_service_account_iam_binding.forseti_client_workload_identity"]
+    "kubernetes_namespace.forseti",
+    "kubernetes_role_binding.tiller"
+  ]
 
   set {
     name  = "database.username"

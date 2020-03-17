@@ -60,7 +60,6 @@ variable "sendgrid_api_key" {
 #------------#
 # GKE config #
 #------------#
-
 variable "gke_node_pool_name" {
   description = "The name of the GKE node-pool where Forseti is being deployed"
   default     = "default-pool"
@@ -710,7 +709,6 @@ variable "inventory_email_summary_enabled" {
 #---------------------------------------#
 # Groups Settings scanner configuration #
 #---------------------------------------#
-
 variable "groups_settings_max_calls" {
   description = "Maximum calls that can be made to the G Suite Groups API"
   default     = "5"
@@ -893,7 +891,6 @@ variable "cloudsql_password" {
 #-------------#
 # Helm config #
 #-------------#
-
 variable "git_sync_image" {
   description = "The container image used by the config-validator git-sync side-car"
   default     = "gcr.io/google-containers/git-sync"
@@ -911,7 +908,7 @@ variable "git_sync_wait" {
 
 variable "helm_chart_version" {
   description = "The version of the Helm chart to use"
-  default     = "2.1.0"
+  default     = "2.2.0"
 }
 
 variable "helm_repository_url" {
