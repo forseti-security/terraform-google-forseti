@@ -78,6 +78,9 @@ chmod -R ug+rwx ${forseti_home}/configs ${forseti_home}/rules ${forseti_home}/in
 echo "Forseti Startup - Installing Forseti python package."
 python3 setup.py install
 
+# Export variables required by initialize_forseti_services.sh
+${forseti_env}
+
 # Export variables required by run_forseti.sh
 ${forseti_environment}
 
@@ -168,6 +171,16 @@ if grep -q "ubuntu hard nofile" /etc/security/limits.conf ; then
 else
   echo "ubuntu hard nofile 32768" | sudo tee -a /etc/security/limits.conf
 fi
+
+# Create a Forseti env script
+FORSETI_ENV="$(cat << EOF
+#!/bin/bash
+export PATH=$PATH:/usr/local/bin
+# Forseti environment variables
+${forseti_environment}
+EOF
+)"
+echo "$FORSETI_ENV" > $USER_HOME/forseti_env.sh
 
 USER=ubuntu
 # Use flock to prevent rerun of the same cron job when the previous job is still running.
