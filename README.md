@@ -189,6 +189,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | client\_instance\_metadata | Metadata key/value pairs to make available from within the client instance. | map(string) | `<map>` | no |
 | client\_private | Private GCE Forseti Client VM (no public IP) | bool | `"false"` | no |
 | client\_region | GCE Forseti Client region | string | `"us-central1"` | no |
+| client\_service\_account | Service account email to assign to the Client VM. If empty, a new Service Account will be created | string | `""` | no |
 | client\_shielded\_instance\_config | Client instance 'shielded_instance_config' block if using shielded VM image | map(string) | `"null"` | no |
 | client\_ssh\_allow\_ranges | List of CIDRs that will be allowed ssh access to forseti client | list(string) | `<list>` | no |
 | client\_tags | GCE Forseti Client VM Tags | list(string) | `<list>` | no |
@@ -202,6 +203,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | cloudbilling\_period | The period of max calls for the Cloud Billing API (in seconds) | string | `"1.2"` | no |
 | cloudsql\_acl\_enabled | Cloud SQL scanner enabled. | bool | `"true"` | no |
 | cloudsql\_acl\_violations\_should\_notify | Notify for CloudSQL ACL violations | bool | `"true"` | no |
+| cloudsql\_availability\_type | Whether instance should be set up for high availability (REGIONAL) or single zone (ZONAL). | string | `"null"` | no |
 | cloudsql\_db\_name | CloudSQL database name | string | `"forseti_security"` | no |
 | cloudsql\_db\_password | CloudSQL database password | string | `""` | no |
 | cloudsql\_db\_port | CloudSQL database port | string | `"3306"` | no |
@@ -218,6 +220,8 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | compute\_max\_calls | Maximum calls that can be made to Compute API | string | `"18"` | no |
 | compute\_period | The period of max calls for the Compute API (in seconds) | string | `"1.0"` | no |
 | config\_validator\_enabled | Config Validator scanner enabled. | bool | `"false"` | no |
+| config\_validator\_image | The image of the Config Validator to use | string | `"gcr.io/forseti-containers/config-validator"` | no |
+| config\_validator\_image\_tag | The tag of the Config Validator image to use | string | `"572e207"` | no |
 | config\_validator\_violations\_should\_notify | Notify for Config Validator violations. | bool | `"true"` | no |
 | container\_disable\_polling | Whether to disable polling for Container API | bool | `"false"` | no |
 | container\_max\_calls | Maximum calls that can be made to Container API | string | `"9"` | no |
@@ -243,6 +247,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | forseti\_home | Forseti installation directory | string | `"$USER_HOME/forseti-security"` | no |
 | forseti\_repo\_url | Git repo for the Forseti installation | string | `"https://github.com/forseti-security/forseti-security"` | no |
 | forseti\_run\_frequency | Schedule of running the Forseti scans | string | `"null"` | no |
+| forseti\_scripts | The local Forseti scripts directory | string | `"$USER_HOME/forseti-scripts"` | no |
 | forseti\_version | The version of Forseti to install | string | `"v2.24.0"` | no |
 | forwarding\_rule\_enabled | Forwarding rule scanner enabled. | bool | `"false"` | no |
 | forwarding\_rule\_violations\_should\_notify | Notify for forwarding rule violations | bool | `"true"` | no |
@@ -300,6 +305,9 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | resource\_enabled | Resource scanner enabled. | bool | `"true"` | no |
 | resource\_name\_suffix | A suffix which will be appended to resource names. | string | `"null"` | no |
 | resource\_violations\_should\_notify | Notify for resource violations | bool | `"true"` | no |
+| retention\_enabled | Retention scanner enabled. | bool | `"false"` | no |
+| retention\_violations\_should\_notify | Notify for retention violations | bool | `"true"` | no |
+| retention\_violations\_slack\_webhook | Slack webhook for retention violations | string | `""` | no |
 | role\_enabled | Role scanner enabled. | bool | `"false"` | no |
 | role\_violations\_should\_notify | Notify for role violations | bool | `"true"` | no |
 | role\_violations\_slack\_webhook | Slack webhook for role violations | string | `""` | no |
@@ -315,6 +323,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | server\_instance\_metadata | Metadata key/value pairs to make available from within the server instance. | map(string) | `<map>` | no |
 | server\_private | Private GCE Forseti Server VM (no public IP) | bool | `"false"` | no |
 | server\_region | GCE Forseti Server region | string | `"us-central1"` | no |
+| server\_service\_account | Service account email to assign to the Server VM. If empty, a new Service Account will be created | string | `""` | no |
 | server\_shielded\_instance\_config | Server instance 'shielded_instance_config' block if using shielded VM image | map(string) | `"null"` | no |
 | server\_ssh\_allow\_ranges | List of CIDRs that will be allowed ssh access to forseti server | list(string) | `<list>` | no |
 | server\_tags | GCE Forseti Server VM Tags | list(string) | `<list>` | no |
@@ -330,6 +339,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | sqladmin\_disable\_polling | Whether to disable polling for SQL Admin API | bool | `"false"` | no |
 | sqladmin\_max\_calls | Maximum calls that can be made to SQL Admin API | string | `"1"` | no |
 | sqladmin\_period | The period of max calls for the SQL Admin API (in seconds) | string | `"1.1"` | no |
+| storage\_bucket\_class | GCS storage bucket storage class. Supported values include: STANDARD, MULTI_REGIONAL, REGIONAL, NEARLINE, COLDLINE | string | `"STANDARD"` | no |
 | storage\_bucket\_location | GCS storage bucket location | string | `"us-central1"` | no |
 | storage\_disable\_polling | Whether to disable polling for Storage API | bool | `"false"` | no |
 | subnetwork | The VPC subnetwork where the Forseti client and server will be created | string | `"default"` | no |

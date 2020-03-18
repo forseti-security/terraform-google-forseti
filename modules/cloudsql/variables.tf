@@ -94,3 +94,8 @@ variable "cloudsql_password" {
   description = "CloudSQL password"
   default     = ""
 }
+
+variable "cloudsql_availability_type" {
+  description = "Whether instance should be set up for high availability (REGIONAL) or single zone (ZONAL)."
+  default     = null
+}

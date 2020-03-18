@@ -23,6 +23,8 @@ This can be a dedicated Forseti project or an existing DevSecOps project.
 ## Prerequisites
 In order to execute this module a temporary Service Account will be created with the roles required. A few GCP APIs also need to be enabled. These steps have been automated with a setup script. The [IAM Roles](/README.md#iam-roles) given to the Service Account and the [APIs](/README.md#apis) that will be enabled are listed on the README.
 
+The **roles/compute.networkAdmin** will also be applied to the Service Account in order to deploy a Cloud NAT.
+
 Set the project ID for future gcloud commands:
 
 ```bash
@@ -32,7 +34,7 @@ gcloud config set project {{project_id}}
 Run the setup script by providing the Organization ID:
 
 ```bash
-. ../../helpers/setup.sh -p {{project_id}} -o ORG_ID
+. ../../helpers/setup.sh -g -p {{project_id}} -o ORG_ID
 ```
 
 ## Forseti Terraform module configuration
@@ -65,7 +67,7 @@ you wish to deploy Forseti in.
 ### Set network (Optional)
 If you want to deploy Forseti onto a specific Network, you can configure the following settings. Otherwise you can leave the defaults.
 
-__Note:__ By default Forseti will run on GCE VMs with external IPs.**
+__Note:__ By default Forseti will run on GCE VMs with private IPs.  A Cloud NAT will be deployed providing external access.
 
 On line 6, update the <walkthrough-editor-select-regex
   filePath="terraform-google-forseti/examples/install_simple/terraform.tfvars"
