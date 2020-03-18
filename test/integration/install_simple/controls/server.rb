@@ -51,7 +51,12 @@ control "server" do
 
   describe file("/home/ubuntu/forseti-scripts/run_forseti.sh") do
     it { should exist }
-    its('stdout') { should match (/Finished running Forseti inventory/)}
+  end
+
+  describe command("bash /home/ubuntu/forseti-scripts/run-forseti.sh") do
+    its('exit_status') { should eq 0 }
+    its('stdout') { should match (/Finished running Forseti inventory/) }
+    its('stdout') { should match (/Using model/) }
     its('stdout') { should match (/Finished running Forseti scanner/) }
     its('stdout') { should match (/Finished running Forseti notifier/) }
   end
