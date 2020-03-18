@@ -14,7 +14,22 @@
  * limitations under the License.
  */
 
-output "forseti-client-service-account" {
-  description = "Forseti Client service account"
-  value       = var.client_enabled ? (var.client_service_account == "" ? google_service_account.forseti_client[0].email : var.client_service_account) : null
+variable "org_id" {
+  description = "GCP Organization ID that Forseti will have purview over"
+}
+
+variable "project_id" {
+  description = "The ID of an existing Google project where Forseti will be installed"
+}
+
+variable "domain" {
+  description = "The domain associated with the GCP Organization ID"
+}
+
+variable "network" {
+  description = "Name of the shared VPC"
+}
+
+variable "subnetwork" {
+  description = "Name of the subnetwork where forseti will be deployed"
 }

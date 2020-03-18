@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-output "forseti-client-service-account" {
-  description = "Forseti Client service account"
-  value       = var.client_enabled ? (var.client_service_account == "" ? google_service_account.forseti_client[0].email : var.client_service_account) : null
+terraform {
+  required_version = ">= 0.12"
 }

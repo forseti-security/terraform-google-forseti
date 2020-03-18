@@ -14,7 +14,12 @@
  * limitations under the License.
  */
 
-output "forseti-client-service-account" {
-  description = "Forseti Client service account"
-  value       = var.client_enabled ? (var.client_service_account == "" ? google_service_account.forseti_client[0].email : var.client_service_account) : null
+output "project_id" {
+  description = "A forwarded copy of `project_id` for InSpec"
+  value       = var.project_id
+}
+
+output "suffix" {
+  description = "The random suffix appended to Forseti resources"
+  value       = module.custom-service-accounts.suffix
 }

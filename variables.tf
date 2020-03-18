@@ -148,6 +148,11 @@ variable "server_private" {
   type        = bool
 }
 
+variable "server_service_account" {
+  description = "Service account email to assign to the Server VM. If empty, a new Service Account will be created"
+  default     = ""
+}
+
 variable "cloud_profiler_enabled" {
   description = "Enable the Cloud Profiler"
   default     = false
@@ -568,6 +573,12 @@ variable "resource_enabled" {
   default     = true
 }
 
+variable "retention_enabled" {
+  description = "Retention scanner enabled."
+  type        = bool
+  default     = false
+}
+
 variable "role_enabled" {
   description = "Role scanner enabled."
   type        = bool
@@ -730,6 +741,17 @@ variable "resource_violations_should_notify" {
   default     = true
 }
 
+variable "retention_violations_should_notify" {
+  description = "Notify for retention violations"
+  type        = bool
+  default     = true
+}
+
+variable "retention_violations_slack_webhook" {
+  description = "Slack webhook for retention violations"
+  default     = ""
+}
+
 variable "role_violations_should_notify" {
   description = "Notify for role violations"
   type        = bool
@@ -866,6 +888,11 @@ variable "client_private" {
   description = "Private GCE Forseti Client VM (no public IP)"
   default     = false
   type        = bool
+}
+
+variable "client_service_account" {
+  description = "Service account email to assign to the Client VM. If empty, a new Service Account will be created"
+  default     = ""
 }
 
 #------------#
