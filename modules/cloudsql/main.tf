@@ -43,7 +43,7 @@ resource "google_project_service" "service_networking" {
 resource "google_compute_global_address" "private_ip_address" {
   count         = var.cloudsql_private ? 1 : 0
   project       = local.network_project
-  name          = "private-ip-address"
+  name          = "private-ip-address-${local.random_hash}"
   purpose       = "VPC_PEERING"
   address_type  = "INTERNAL"
   prefix_length = 16
