@@ -30,7 +30,7 @@ locals {
 # Forseti service Account #
 #-------------------------#
 resource "google_service_account" "forseti_client" {
-  count        = var.client_enabled ? 1 : 0
+  count        = (var.client_enabled && var.client_service_account == "") ? 1 : 0
   account_id   = local.client_sa_name
   project      = var.project_id
   display_name = "Forseti Client Service Account"
@@ -43,5 +43,5 @@ resource "google_project_iam_member" "client_roles" {
   count   = var.client_enabled ? length(local.client_project_roles) : 0
   role    = local.client_project_roles[count.index]
   project = var.project_id
-  member  = "serviceAccount:${google_service_account.forseti_client[0].email}"
+  member  = var.client_service_account == "" ? "serviceAccount:${google_service_account.forseti_client[0].email}" : "serviceAccount:${var.client_service_account}"
 }

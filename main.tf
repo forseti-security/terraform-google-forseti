@@ -133,6 +133,7 @@ module "server" {
   forseti_repo_url                = var.forseti_repo_url
   forseti_home                    = var.forseti_home
   forseti_run_frequency           = var.forseti_run_frequency
+  forseti_scripts                 = var.forseti_scripts
   server_type                     = var.server_type
   server_region                   = var.server_region
   server_boot_image               = var.server_boot_image
@@ -144,6 +145,8 @@ module "server" {
   server_private                  = var.server_private
   cloudsql_proxy_arch             = var.cloudsql_proxy_arch
   cloud_profiler_enabled          = var.cloud_profiler_enabled
+  config_validator_image          = var.config_validator_image
+  config_validator_image_tag      = var.config_validator_image_tag
   mailjet_enabled                 = var.mailjet_enabled
   network                         = var.network
   network_project                 = local.network_project
@@ -202,6 +205,7 @@ module "server_iam" {
   org_id                  = var.org_id
   project_id              = var.project_id
   suffix                  = local.random_hash
+  server_service_account  = var.server_service_account
 }
 
 module "server_gcs" {
@@ -281,6 +285,7 @@ module "server_config" {
   admin_disable_polling                               = var.admin_disable_polling
   service_account_key_enabled                         = var.service_account_key_enabled
   role_enabled                                        = var.role_enabled
+  retention_enabled                                   = var.retention_enabled
   resource_enabled                                    = var.resource_enabled
   log_sink_enabled                                    = var.log_sink_enabled
   location_enabled                                    = var.location_enabled
@@ -304,6 +309,8 @@ module "server_config" {
   service_account_key_violations_should_notify        = var.service_account_key_violations_should_notify
   role_violations_should_notify                       = var.role_violations_should_notify
   role_violations_slack_webhook                       = var.role_violations_slack_webhook
+  retention_violations_should_notify                  = var.retention_violations_should_notify
+  retention_violations_slack_webhook                  = var.retention_violations_slack_webhook
   resource_violations_should_notify                   = var.resource_violations_should_notify
   log_sink_violations_should_notify                   = var.log_sink_violations_should_notify
   location_violations_should_notify                   = var.location_violations_should_notify
@@ -344,10 +351,11 @@ module "server_config" {
 }
 
 module "client_iam" {
-  source         = "./modules/client_iam"
-  client_enabled = var.client_enabled
-  project_id     = var.project_id
-  suffix         = local.random_hash
+  source                 = "./modules/client_iam"
+  client_enabled         = var.client_enabled
+  project_id             = var.project_id
+  suffix                 = local.random_hash
+  client_service_account = var.client_service_account
 }
 
 module "client_gcs" {

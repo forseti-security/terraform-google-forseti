@@ -45,6 +45,10 @@ control "server" do
     its("stderr") { should cmp "" }
   end
 
+  describe file("/home/ubuntu/forseti-scripts/initialize_forseti_services.sh") do
+    it { should exist }
+  end
+
   describe file("/home/ubuntu/forseti-security/configs/forseti_conf_server.yaml") do
     it { should exist }
     it "is valid YAML" do
@@ -318,6 +322,10 @@ control "server" do
         expect(config["scanner"]["scanners"]).to include("name" => "resource", "enabled" => true)
       end
 
+      it "configures retention_enabled" do
+        expect(config["scanner"]["scanners"]).to include("name" => "retention", "enabled" => false)
+      end
+
       it "configures role_enabled" do
         expect(config["scanner"]["scanners"]).to include("name" => "role", "enabled" => false)
       end
@@ -424,6 +432,10 @@ control "server" do
 
         it "configures resource_violations_should_notify" do
           expect(config["notifier"]["resources"]).to include(including("resource" => "resource_violations", "should_notify" => true))
+        end
+
+        it "configures retention_violations_should_notify" do
+          expect(config["notifier"]["resources"]).to include(including("resource" => "retention_violations", "should_notify" => true))
         end
 
         it "configures role_violations_should_notify" do
