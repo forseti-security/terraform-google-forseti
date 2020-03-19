@@ -35,6 +35,29 @@ provider "random" {
   version = "~> 2.0"
 }
 
+data "google_compute_network" "forseti_network" {
+  name = var.network
+}
+
+module "cloud-nat" {
+  source                             = "terraform-google-modules/cloud-nat/google"
+  name                               = "cloud-nat-${var.project_id}"
+  create_router                      = true
+  network                            = var.network
+  project_id                         = var.project_id
+  region                             = var.region
+  router                             = "router-${var.project_id}"
+  source_subnetwork_ip_ranges_to_nat = "LIST_OF_SUBNETWORKS"
+
+  subnetworks = [
+    {
+      name                     = var.subnetwork
+      source_ip_ranges_to_nat  = ["ALL_IP_RANGES"]
+      secondary_ip_range_names = []
+    }
+  ]
+}
+
 module "forseti-install-simple" {
   source = "../../"
 
@@ -42,8 +65,8 @@ module "forseti-install-simple" {
   org_id     = var.org_id
   domain     = var.domain
 
-  server_region   = var.region
-  client_region   = var.region
+  server_region   = module.cloud-nat.region
+  client_region   = module.cloud-nat.region
   cloudsql_region = var.region
   network         = var.network
   subnetwork      = var.subnetwork
@@ -63,6 +86,7 @@ module "forseti-install-simple" {
   client_tags = var.instance_tags
   server_tags = var.instance_tags
 
-  client_private = var.private
-  server_private = var.private
+  client_private   = var.private
+  server_private   = var.private
+  cloudsql_private = var.private
 }

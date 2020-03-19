@@ -57,6 +57,11 @@ variable "forseti_run_frequency" {
   default     = null
 }
 
+variable "forseti_scripts" {
+  description = "The local Forseti scripts directory"
+  default     = "$USER_HOME/forseti-scripts"
+}
+
 variable "resource_name_suffix" {
   default     = null
   description = "A suffix which will be appended to resource names."
@@ -66,6 +71,16 @@ variable "resource_name_suffix" {
 #----------------#
 # Forseti server #
 #----------------#
+variable "config_validator_image" {
+  description = "The image of the Config Validator to use"
+  default     = "gcr.io/forseti-containers/config-validator"
+}
+
+variable "config_validator_image_tag" {
+  description = "The tag of the Config Validator image to use"
+  default     = "572e207"
+}
+
 variable "server_type" {
   description = "GCE Forseti Server machine type"
   default     = "n1-standard-8"
@@ -558,6 +573,12 @@ variable "resource_enabled" {
   default     = true
 }
 
+variable "retention_enabled" {
+  description = "Retention scanner enabled."
+  type        = bool
+  default     = false
+}
+
 variable "role_enabled" {
   description = "Role scanner enabled."
   type        = bool
@@ -718,6 +739,17 @@ variable "resource_violations_should_notify" {
   description = "Notify for resource violations"
   type        = bool
   default     = true
+}
+
+variable "retention_violations_should_notify" {
+  description = "Notify for retention violations"
+  type        = bool
+  default     = true
+}
+
+variable "retention_violations_slack_webhook" {
+  description = "Slack webhook for retention violations"
+  default     = ""
 }
 
 variable "role_violations_should_notify" {
@@ -886,6 +918,11 @@ variable "cloudsql_disk_size" {
   default     = "25"
 }
 
+variable "cloudsql_availability_type" {
+  description = "Whether instance should be set up for high availability (REGIONAL) or single zone (ZONAL)."
+  default     = null
+}
+
 variable "cloudsql_private" {
   description = "Whether to enable private network and not to create public IP for CloudSQL Instance"
   default     = false
@@ -928,6 +965,11 @@ variable "cloudsql_db_password" {
 variable "storage_bucket_location" {
   description = "GCS storage bucket location"
   default     = "us-central1"
+}
+
+variable "storage_bucket_class" {
+  description = "GCS storage bucket storage class. Supported values include: STANDARD, MULTI_REGIONAL, REGIONAL, NEARLINE, COLDLINE"
+  default     = "STANDARD"
 }
 
 variable "bucket_cai_location" {

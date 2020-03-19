@@ -26,6 +26,9 @@ locals {
     "policy-library/policies/constraints/sql_public_ip.yaml",
     "policy-library/policies/templates/gcp_sql_public_ip_v1.yaml"
   ]
+
+  network    = "${var.network}-install-simple"
+  subnetwork = "${var.subnetwork}-install-simple"
 }
 
 resource "tls_private_key" "main" {
@@ -44,15 +47,35 @@ data "google_compute_zones" "main" {
   status  = "UP"
 }
 
+module "forseti-service-network-install-simple" {
+  source  = "terraform-google-modules/network/google"
+  version = "~> 2.1"
+
+  network_name = local.network
+  project_id   = var.project_id
+
+  secondary_ranges = {
+    forseti-subnetwork-install-simple = []
+  }
+
+  subnets = [
+    {
+      subnet_name   = local.subnetwork
+      subnet_ip     = "10.130.0.0/20"
+      subnet_region = var.region
+    },
+  ]
+}
+
 #-------------------------#
 # Bastion Host
 #-------------------------#
 module "bastion" {
   source = "../bastion"
 
-  network    = var.network
+  network    = module.forseti-service-network-install-simple.network_self_link
   project_id = var.project_id
-  subnetwork = var.subnetwork
+  subnetwork = module.forseti-service-network-install-simple.subnets_self_links[0]
   zone       = data.google_compute_zones.main.names[0]
   key_suffix = "_install_simple"
 }
@@ -68,8 +91,8 @@ module "forseti-install-simple" {
   org_id             = var.org_id
   domain             = var.domain
   region             = var.region
-  network            = var.network
-  subnetwork         = var.subnetwork
+  network            = module.forseti-service-network-install-simple.network_name
+  subnetwork         = module.forseti-service-network-install-simple.subnets_names[0]
   network_project    = var.network_project
   forseti_version    = var.forseti_version
 
@@ -82,7 +105,7 @@ resource "google_compute_firewall" "forseti_bastion_to_vm" {
 
   name    = "forseti-bastion-to-vm-ssh-${module.forseti-install-simple.suffix}"
   project = var.project_id
-  network = var.network
+  network = module.forseti-service-network-install-simple.network_self_link
   target_service_accounts = [module.forseti-install-simple.forseti-server-service-account,
   module.forseti-install-simple.forseti-client-service-account]
 
