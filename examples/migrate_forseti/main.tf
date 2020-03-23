@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,33 +14,10 @@
  * limitations under the License.
  */
 
-terraform {
-  required_version = ">= 0.12.0"
-}
-
-provider "google" {
-  version = "~> 2.11.0"
-}
-
-provider "local" {
-  version = "~> 1.3"
-}
-
-provider "null" {
-  version = "~> 2.0"
-}
-
-provider "template" {
-  version = "~> 2.0"
-}
-
-provider "random" {
-  version = "~> 2.0"
-}
 
 module "forseti" {
   source  = "terraform-google-modules/forseti/google"
-  version = "~> 5.1"
+  version = "~> 5.2.0"
 
   # Replace these argument values with those obtained in the Prerequisites section
   domain               = "DOMAIN"

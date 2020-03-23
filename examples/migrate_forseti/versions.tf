@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-module "no-client-vm" {
-  source = "../../.."
-
-  project_id      = var.project_id
-  org_id          = var.org_id
-  domain          = var.domain
-  network         = var.network
-  subnetwork      = var.subnetwork
-  client_enabled  = false
-  forseti_version = var.forseti_version
+terraform {
+  required_version = ">= 0.12"
+  required_providers {
+    google   = "~> 3.7"
+    local    = "~> 1.4"
+    null     = "~> 2.0"
+    random   = "~> 2.0"
+    template = "~> 2.0"
+  }
 }

@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+variable "forseti_version" {
+  description = "The version of Forseti to install"
+  default     = "master"
+}
+
 variable "domain" {
   description = "The domain associated with the GCP Organization ID"
 }
