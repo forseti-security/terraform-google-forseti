@@ -100,7 +100,7 @@ CONFIG_VALIDATOR_SERVICE="$(cat << EOF
 [Unit]
 Description=Config Validator API Server
 [Service]
-TimeoutStartSec=10s
+TimeoutStartSec=15s
 Environment="GOGC=1000"
 ExecStart=$CONFIG_VALIDATOR_COMMAND
 ExecStop=$(which docker) kill config-validator
