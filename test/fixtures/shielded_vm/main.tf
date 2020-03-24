@@ -25,6 +25,7 @@ module "shielded-vm" {
   server_private   = true
   client_private   = true
   cloudsql_private = true
+  forseti_version  = var.forseti_version
 
   // using shielded VM image for both client and server VMs
   server_boot_image = "gce-uefi-images/ubuntu-1804-lts"

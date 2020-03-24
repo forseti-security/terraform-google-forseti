@@ -17,11 +17,13 @@
 module "custom-service-accounts" {
   source = "../../.."
 
-  project_id = var.project_id
-  org_id     = var.org_id
-  domain     = var.domain
-  network    = var.network
-  subnetwork = var.subnetwork
+  project_id      = var.project_id
+  org_id          = var.org_id
+  domain          = var.domain
+  network         = var.network
+  subnetwork      = var.subnetwork
+  forseti_version = var.forseti_version
+
   # The resources that create the service accounts are in test/setup/iam.tf.
   # Did not create them here and directly reference them becuase `count` will complain
   # google_service_account.forseti_{server,client}.email are unknown until apply.
