@@ -39,7 +39,7 @@ FORSETI_COMMAND+=" --forseti_db $SQL_SERVER_LOCAL_ADDRESS/${cloudsql_db_name}?ch
 FORSETI_COMMAND+=" --config_file_path ${forseti_server_conf_path}"
 FORSETI_COMMAND+=" --services $FORSETI_SERVICES"
 
-CONFIG_VALIDATOR_COMMAND="$(which docker) run -p 50052:50052 --name config-validator"
+CONFIG_VALIDATOR_COMMAND="$(which docker) run --rm -p 50052:50052 --name config-validator"
 CONFIG_VALIDATOR_COMMAND+=" --log-driver=gcplogs"
 CONFIG_VALIDATOR_COMMAND+=" --log-opt gcp-log-cmd=true"
 CONFIG_VALIDATOR_COMMAND+=" --log-opt labels=config-validator"
@@ -103,6 +103,7 @@ Description=Config Validator API Server
 TimeoutStartSec=10s
 Environment="GOGC=1000"
 ExecStart=$CONFIG_VALIDATOR_COMMAND
+ExecStop=$(which docker) kill config-validator
 [Install]
 WantedBy=multi-user.target
 EOF
