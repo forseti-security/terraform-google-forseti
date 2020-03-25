@@ -184,6 +184,7 @@ module "cloudsql" {
   cloudsql_password          = var.cloudsql_db_password
   cloudsql_private           = var.cloudsql_private
   cloudsql_region            = var.cloudsql_region
+  cloudsql_availability_type = var.cloudsql_availability_type
   cloudsql_type              = var.cloudsql_type
   cloudsql_user              = var.cloudsql_db_user
   cloudsql_user_host         = var.cloudsql_user_host
@@ -214,6 +215,7 @@ module "server_gcs" {
   bucket_cai_lifecycle_age = var.bucket_cai_lifecycle_age
   enable_cai_bucket        = var.enable_cai_bucket
   storage_bucket_location  = var.storage_bucket_location
+  storage_bucket_class     = var.storage_bucket_class
   services                 = google_project_service.main.*.service
   suffix                   = local.random_hash
 }
@@ -361,6 +363,7 @@ module "client_gcs" {
   client_enabled          = var.client_enabled
   project_id              = var.project_id
   storage_bucket_location = var.storage_bucket_location
+  storage_bucket_class    = var.storage_bucket_class
   suffix                  = local.random_hash
 
   services = google_project_service.main.*.service

@@ -18,13 +18,13 @@ variable "domain" {
   description = "The domain associated with the GCP Organization ID"
 }
 
-variable "gsuite_admin_email" {
-  description = "The email of a GSuite super admin, used for pulling user directory information *and* sending notifications."
-}
-
 variable "forseti_version" {
   description = "The version of Forseti to install"
   default     = "master"
+}
+
+variable "gsuite_admin_email" {
+  description = "The email of a GSuite super admin, used for pulling user directory information *and* sending notifications."
 }
 
 variable "instance_metadata" {
