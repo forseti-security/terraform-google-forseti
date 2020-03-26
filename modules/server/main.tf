@@ -151,6 +151,8 @@ data "template_file" "forseti_server_initialize_services" {
     cloudsql_db_port                 = var.cloudsql_module.forseti-cloudsql-db-port
     cloudsql_db_user                 = var.cloudsql_module.forseti-cloudsql-user
     cloudsql_db_password             = var.cloudsql_module.forseti-cloudsql-password
+    config_validator_image           = var.config_validator_image
+    config_validator_image_tag       = var.config_validator_image_tag
     forseti_home                     = var.forseti_home
     forseti_server_conf_path         = local.server_conf_path
     policy_library_home              = var.policy_library_home

@@ -62,6 +62,18 @@ echo "Forseti Startup - Installing Forseti python dependencies."
 python3 -m pip install -q --upgrade setuptools wheel
 python3 -m pip install -q --upgrade -r requirements.txt
 
+# Install Docker
+if [ -z "$(which docker)" ]; then
+  echo "Forseti Startup - Installing Docker for the Policy Library sync and Config Validator."
+  sudo apt-get update
+  sudo apt -y install apt-transport-https ca-certificates curl software-properties-common
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+  sudo apt update
+  apt-cache policy docker-ce
+  sudo apt install -y docker-ce
+fi
+
 # Setup Forseti logging
 touch /var/log/forseti.log
 chown ubuntu:root /var/log/forseti.log
@@ -99,18 +111,6 @@ sudo mkdir -m 777 -p ${policy_library_home}
 if [ "${policy_library_sync_enabled}" == "true" ]; then
   # Policy Library Sync
   echo "Forseti Startup - Policy Library sync is enabled."
-
-  # Install Docker
-  if [ -z "$(which docker)" ]; then
-    echo "Forseti Startup - Installing Docker for the Policy Library sync."
-    sudo apt-get update
-    sudo apt -y install apt-transport-https ca-certificates curl software-properties-common
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
-    sudo apt update
-    apt-cache policy docker-ce
-    sudo apt install -y docker-ce
-  fi
 
   # Setup local FS
   # Note: gsutil is using the -n flag so that once the SSH key is copied locally, it is not overwritten for any subsequent runs of terraform
