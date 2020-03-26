@@ -49,6 +49,18 @@ control "server" do
     it { should exist }
   end
 
+  describe file("/home/ubuntu/forseti-scripts/run_forseti.sh") do
+    it { should exist }
+  end
+
+  describe command("bash /home/ubuntu/forseti-scripts/run_forseti.sh") do
+    its('exit_status') { should eq 0 }
+    its('stdout') { should match (/Finished running Forseti inventory/) }
+    its('stdout') { should match (/Using model/) }
+    its('stdout') { should match (/Finished running Forseti scanner/) }
+    its('stdout') { should match (/Finished running Forseti notifier/) }
+  end
+
   describe file("/home/ubuntu/forseti-security/configs/forseti_conf_server.yaml") do
     it { should exist }
     it "is valid YAML" do
