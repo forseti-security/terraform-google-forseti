@@ -55,6 +55,8 @@ suites:
           controls:
             - policy-library
             - server
+            - server-config
+            - server-rules
           hosts_output: forseti-server-vm-ip
           user: ubuntu
           key_files:
@@ -95,7 +97,7 @@ suites:
         - name: server
           backend: ssh
           controls:
-            - server
+            - rules-disabled
           hosts_output: forseti-server-vm-ip
           user: ubuntu
           key_files:
@@ -114,7 +116,7 @@ suites:
         - name: gcloud
           backend: local
           controls:
-            - forseti-no-client-vm
+            - no-client-vm
   - name: shared_vpc
     lifecycle:
       pre_verify:
@@ -129,12 +131,12 @@ suites:
           backend: gcp
           shell: true
           controls:
-            - forseti-service-project
-            - forseti-shared-project
-            - forseti-server
-            - forseti-client
-            - forseti-shared-firewall
             - forseti
+            - forseti-client
+            - forseti-server
+            - forseti-service-project
+            - forseti-shared-firewall
+            - forseti-shared-project
         - name: gcloud
           backend: local
           controls:
@@ -145,6 +147,8 @@ suites:
           controls:
             - forseti-command-server
             - server
+            - server-config
+            - server-rules
           hosts_output: forseti-server-vm-ip
           user: ubuntu
           key_files:
@@ -176,17 +180,7 @@ suites:
         - name: gcloud
           backend: local
           controls:
-            - forseti-shielded-vm
-        - name: forseti-client
-          backend: ssh
-          controls:
-            - client
-          hosts_output: forseti-client-vm-ip
-          user: ubuntu
-          proxy_command: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o LogLevel=ERROR -o ForwardAgent=no ubuntu@<%= `terraform output -state test/fixtures/shielded_vm/terraform.tfstate.d/kitchen-terraform-shielded-vm-local/terraform.tfstate forseti-client-vm-ip 2> /dev/null`.strip %> -p 22 -W %h:%p
-          shell: true
-          shell_options: "--login"
-          show_progress: true
+            - shielded-vm
 # Disabled due to issue #285
 # (https://github.com/forseti-security/terraform-google-forseti/issues/285)
 #  - name: real_time_enforcer_roles

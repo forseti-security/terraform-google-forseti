@@ -14,7 +14,7 @@
 
 require "yaml"
 
-control "rules" do
+control "rules-disabled" do
   title "Forseti Server VM with `manage_rules_enabled=false`"
 
   describe command("forseti") do

@@ -20,7 +20,7 @@ server_shielded_vm = attribute("forseti-server-shielded-vm-name")
 client_shielded_vm = attribute("forseti-client-shielded-vm-name")
 shielded_vms = [server_shielded_vm, client_shielded_vm]
 
-control "forseti-shielded-vm" do
+control "shielded-vm" do
   title "Forseti Shielded VM"
 
   shielded_vms.each { |vm|
