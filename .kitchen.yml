@@ -181,6 +181,16 @@ suites:
           backend: local
           controls:
             - shielded-vm
+        - name: forseti-client
+          backend: ssh
+          controls:
+            - client
+          hosts_output: forseti-client-vm-ip
+          user: ubuntu
+          proxy_command: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o LogLevel=ERROR -o ForwardAgent=no ubuntu@<%= `terraform output -state test/fixtures/shielded_vm/terraform.tfstate.d/kitchen-terraform-shielded-vm-local/terraform.tfstate forseti-client-vm-ip 2> /dev/null`.strip %> -p 22 -W %h:%p
+          shell: true
+          shell_options: "--login"
+          show_progress: true
 # Disabled due to issue #285
 # (https://github.com/forseti-security/terraform-google-forseti/issues/285)
 #  - name: real_time_enforcer_roles
