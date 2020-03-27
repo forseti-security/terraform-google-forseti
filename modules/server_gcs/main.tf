@@ -31,6 +31,7 @@ resource "google_storage_bucket" "server_config" {
   name               = local.server_bucket_name
   location           = var.storage_bucket_location
   project            = var.project_id
+  storage_class      = var.storage_bucket_class
   force_destroy      = true
   bucket_policy_only = true
 
@@ -42,6 +43,7 @@ resource "google_storage_bucket" "cai_export" {
   name               = local.storage_cai_bucket_name
   location           = var.bucket_cai_location
   project            = var.project_id
+  storage_class      = var.storage_bucket_class
   force_destroy      = true
   bucket_policy_only = true
 

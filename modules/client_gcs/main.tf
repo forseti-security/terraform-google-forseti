@@ -28,6 +28,7 @@ resource "google_storage_bucket" "client_config" {
   count              = var.client_enabled ? 1 : 0
   name               = local.client_bucket_name
   location           = var.storage_bucket_location
+  storage_class      = var.storage_bucket_class
   project            = var.project_id
   force_destroy      = true
   bucket_policy_only = true

@@ -7,7 +7,7 @@ A Google Cloud Shell Walkthrough has been setup to make it easy for users who ar
 
 If you are familiar with Terraform and would like to run Terraform from a different machine, you can skip this walkthrough and move onto the [How to Deploy](#how-to-deploy) section.
 
-[![Open in Google Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fforseti-security%2Fterraform-google-forseti.git&cloudshell_git_branch=modulerelease512&cloudshell_working_dir=examples/install_simple&cloudshell_image=gcr.io%2Fgraphite-cloud-shell-images%2Fterraform%3Alatest&cloudshell_tutorial=.%2Ftutorial.md)
+[![Open in Google Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fforseti-security%2Fterraform-google-forseti.git&cloudshell_git_branch=modulerelease520&cloudshell_working_dir=examples/install_simple&cloudshell_image=gcr.io%2Fgraphite-cloud-shell-images%2Fterraform%3Alatest&cloudshell_tutorial=.%2Ftutorial.md)
 
 ## How to Deploy
 In order to run this module you will need to be authenticated as a user that has access to the project and can create/authorize service accounts at both the organization and project levels. To login to GCP from a shell:
@@ -20,7 +20,7 @@ gcloud auth login
 The repository has several helper scripts that can be used with the deployment process.
 
 ```bash
-git clone --branch modulerelease512 --depth 1 https://github.com/forseti-security/terraform-google-forseti.git
+git clone --branch modulerelease520 --depth 1 https://github.com/forseti-security/terraform-google-forseti.git
 ```
 
 ### Install Terraform
@@ -62,7 +62,7 @@ Create a file named `main.tf` in an empty directory and copy the contents below 
 ```hcl
     module "forseti" {
       source  = "terraform-google-modules/forseti/google"
-      version = "~> 5.1"
+      version = "~> 5.2.0"
 
       gsuite_admin_email = "superadmin@yourdomain.com"
       domain             = "yourdomain.com"
@@ -203,6 +203,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | cloudbilling\_period | The period of max calls for the Cloud Billing API (in seconds) | string | `"1.2"` | no |
 | cloudsql\_acl\_enabled | Cloud SQL scanner enabled. | bool | `"true"` | no |
 | cloudsql\_acl\_violations\_should\_notify | Notify for CloudSQL ACL violations | bool | `"true"` | no |
+| cloudsql\_availability\_type | Whether instance should be set up for high availability (REGIONAL) or single zone (ZONAL). | string | `"null"` | no |
 | cloudsql\_db\_name | CloudSQL database name | string | `"forseti_security"` | no |
 | cloudsql\_db\_password | CloudSQL database password | string | `""` | no |
 | cloudsql\_db\_port | CloudSQL database port | string | `"3306"` | no |
@@ -247,7 +248,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | forseti\_repo\_url | Git repo for the Forseti installation | string | `"https://github.com/forseti-security/forseti-security"` | no |
 | forseti\_run\_frequency | Schedule of running the Forseti scans | string | `"null"` | no |
 | forseti\_scripts | The local Forseti scripts directory | string | `"$USER_HOME/forseti-scripts"` | no |
-| forseti\_version | The version of Forseti to install | string | `"v2.24.0"` | no |
+| forseti\_version | The version of Forseti to install | string | `"v2.25.0"` | no |
 | forwarding\_rule\_enabled | Forwarding rule scanner enabled. | bool | `"false"` | no |
 | forwarding\_rule\_violations\_should\_notify | Notify for forwarding rule violations | bool | `"true"` | no |
 | group\_enabled | Group scanner enabled. | bool | `"true"` | no |
@@ -338,6 +339,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | sqladmin\_disable\_polling | Whether to disable polling for SQL Admin API | bool | `"false"` | no |
 | sqladmin\_max\_calls | Maximum calls that can be made to SQL Admin API | string | `"1"` | no |
 | sqladmin\_period | The period of max calls for the SQL Admin API (in seconds) | string | `"1.1"` | no |
+| storage\_bucket\_class | GCS storage bucket storage class. Supported values include: STANDARD, MULTI_REGIONAL, REGIONAL, NEARLINE, COLDLINE | string | `"STANDARD"` | no |
 | storage\_bucket\_location | GCS storage bucket location | string | `"us-central1"` | no |
 | storage\_disable\_polling | Whether to disable polling for Storage API | bool | `"false"` | no |
 | subnetwork | The VPC subnetwork where the Forseti client and server will be created | string | `"default"` | no |
