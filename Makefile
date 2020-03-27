@@ -54,7 +54,7 @@ docker_test_create:
 		-v $(CURDIR):/workspace \
 		--entrypoint /bin/bash \
 		$(REGISTRY_URL)/${DOCKER_IMAGE_DEVELOPER_TOOLS}:${DOCKER_TAG_VERSION_DEVELOPER_TOOLS} \
-		-c source /usr/local/bin/task_helper_functions.sh && kitchen_do create
+		-c 'source /usr/local/bin/task_helper_functions.sh && kitchen_do create'
 
 # Run kitchen converge tests within the docker container
 .PHONY: docker_test_converge
@@ -68,7 +68,7 @@ docker_test_converge:
 		-v $(CURDIR):/workspace \
 		--entrypoint /bin/bash \
 		$(REGISTRY_URL)/${DOCKER_IMAGE_DEVELOPER_TOOLS}:${DOCKER_TAG_VERSION_DEVELOPER_TOOLS} \
-		-c source /usr/local/bin/task_helper_functions.sh && kitchen_do converge
+		-c 'source /usr/local/bin/task_helper_functions.sh && kitchen_do converge'
 
 # Run kitchen verify tests within the docker container
 .PHONY: docker_test_verify
@@ -81,7 +81,7 @@ docker_test_verify:
 		-v $(CURDIR):/workspace \
 		--entrypoint /bin/bash \
 		$(REGISTRY_URL)/${DOCKER_IMAGE_DEVELOPER_TOOLS}:${DOCKER_TAG_VERSION_DEVELOPER_TOOLS} \
-		-c source /usr/local/bin/task_helper_functions.sh && kitchen_do verify
+		-c 'source /usr/local/bin/task_helper_functions.sh && kitchen_do verify'
 
 # Run kitchen destroy tests within the docker container
 .PHONY: docker_test_destroy
@@ -94,7 +94,7 @@ docker_test_destroy:
 		-v $(CURDIR):/workspace \
 		--entrypoint /bin/bash \
 		$(REGISTRY_URL)/${DOCKER_IMAGE_DEVELOPER_TOOLS}:${DOCKER_TAG_VERSION_DEVELOPER_TOOLS} \
-		-c source /usr/local/bin/task_helper_functions.sh && kitchen_do destroy
+		-c 'source /usr/local/bin/task_helper_functions.sh && kitchen_do destroy'
 
 # Clean up test environment within the docker container
 .PHONY: docker_test_cleanup
