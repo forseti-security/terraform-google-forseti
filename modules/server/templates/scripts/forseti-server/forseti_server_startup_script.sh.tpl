@@ -83,8 +83,8 @@ chmod 644 /etc/logrotate.d/forseti
 service google-fluentd restart
 logrotate /etc/logrotate.conf
 
-# Change the access level of configs/ rules/ and run_forseti.sh
-chmod -R ug+rwx ${forseti_home}/configs ${forseti_home}/rules ${forseti_home}/install/gcp/scripts/run_forseti.sh
+# Change the access level of configs/ and rules/
+chmod -R ug+rwx ${forseti_home}/configs ${forseti_home}/rules
 
 # Install Forseti
 echo "Forseti Startup - Installing Forseti python package."
