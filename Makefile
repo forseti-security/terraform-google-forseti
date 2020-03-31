@@ -43,6 +43,59 @@ docker_test_prepare:
 		$(REGISTRY_URL)/${DOCKER_IMAGE_DEVELOPER_TOOLS}:${DOCKER_TAG_VERSION_DEVELOPER_TOOLS} \
 		/usr/local/bin/execute_with_credentials.sh prepare_environment
 
+# Run kitchen create tests within the docker container
+.PHONY: docker_test_create
+docker_test_create:
+	docker run --rm -it \
+		-e SERVICE_ACCOUNT_JSON \
+		-e TF_VAR_org_id \
+		-e TF_VAR_folder_id \
+		-e TF_VAR_billing_account \
+		-v $(CURDIR):/workspace \
+		--entrypoint /bin/bash \
+		$(REGISTRY_URL)/${DOCKER_IMAGE_DEVELOPER_TOOLS}:${DOCKER_TAG_VERSION_DEVELOPER_TOOLS} \
+		-c 'source /usr/local/bin/task_helper_functions.sh && kitchen_do create'
+
+# Run kitchen converge tests within the docker container
+.PHONY: docker_test_converge
+docker_test_converge:
+	docker run --rm -it \
+		-e SERVICE_ACCOUNT_JSON \
+		-e TF_VAR_org_id \
+		-e TF_VAR_folder_id \
+		-e TF_VAR_forseti_version \
+		-e TF_VAR_billing_account \
+		-v $(CURDIR):/workspace \
+		--entrypoint /bin/bash \
+		$(REGISTRY_URL)/${DOCKER_IMAGE_DEVELOPER_TOOLS}:${DOCKER_TAG_VERSION_DEVELOPER_TOOLS} \
+		-c 'source /usr/local/bin/task_helper_functions.sh && kitchen_do converge'
+
+# Run kitchen verify tests within the docker container
+.PHONY: docker_test_verify
+docker_test_verify:
+	docker run --rm -it \
+		-e SERVICE_ACCOUNT_JSON \
+		-e TF_VAR_org_id \
+		-e TF_VAR_folder_id \
+		-e TF_VAR_billing_account \
+		-v $(CURDIR):/workspace \
+		--entrypoint /bin/bash \
+		$(REGISTRY_URL)/${DOCKER_IMAGE_DEVELOPER_TOOLS}:${DOCKER_TAG_VERSION_DEVELOPER_TOOLS} \
+		-c 'source /usr/local/bin/task_helper_functions.sh && kitchen_do verify'
+
+# Run kitchen destroy tests within the docker container
+.PHONY: docker_test_destroy
+docker_test_destroy:
+	docker run --rm -it \
+		-e SERVICE_ACCOUNT_JSON \
+		-e TF_VAR_org_id \
+		-e TF_VAR_folder_id \
+		-e TF_VAR_billing_account \
+		-v $(CURDIR):/workspace \
+		--entrypoint /bin/bash \
+		$(REGISTRY_URL)/${DOCKER_IMAGE_DEVELOPER_TOOLS}:${DOCKER_TAG_VERSION_DEVELOPER_TOOLS} \
+		-c 'source /usr/local/bin/task_helper_functions.sh && kitchen_do destroy'
+
 # Clean up test environment within the docker container
 .PHONY: docker_test_cleanup
 docker_test_cleanup:
