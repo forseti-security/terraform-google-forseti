@@ -17,7 +17,7 @@
 
 module "forseti" {
   source  = "terraform-google-modules/forseti/google"
-  version = "~> 5.2.1"
+  version = "~> 5.2.0"
 
   # Replace these argument values with those obtained in the Prerequisites section
   domain               = "DOMAIN"
