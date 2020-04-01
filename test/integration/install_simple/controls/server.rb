@@ -1,1 +1,0 @@
-../../shared/controls/server.rb
