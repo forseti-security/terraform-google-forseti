@@ -41,4 +41,4 @@ tags:
 substitutions:
   _DOCKER_IMAGE_DEVELOPER_TOOLS: 'cft/developer-tools'
   _DOCKER_TAG_VERSION_DEVELOPER_TOOLS: '0.4.6'
-  _FORSETI_VERSION: 'v2.25.0'
+  _FORSETI_VERSION: 'v2.25.1'
