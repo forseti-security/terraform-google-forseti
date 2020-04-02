@@ -53,6 +53,7 @@ suites:
         - name: server
           backend: ssh
           controls:
+            - config-validator
             - policy-library
             - server
             - server-config

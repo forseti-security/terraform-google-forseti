@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 
+variable "config_validator_enabled" {
+  description = "Config Validator scanner enabled."
+  type        = bool
+  default     = true
+}
+
 variable "domain" {
   description = "The domain associated with the GCP Organization ID"
 }

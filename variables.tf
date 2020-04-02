@@ -78,7 +78,7 @@ variable "config_validator_image" {
 
 variable "config_validator_image_tag" {
   description = "The tag of the Config Validator image to use"
-  default     = "572e207"
+  default     = "b53b7e3"
 }
 
 variable "server_type" {
