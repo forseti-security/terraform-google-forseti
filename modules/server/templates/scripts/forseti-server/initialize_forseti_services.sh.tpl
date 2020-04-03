@@ -28,9 +28,6 @@ if ! [[ -f ${forseti_server_conf_path} ]]; then
     exit 1
 fi
 
-# We had issue creating DB user through deployment template, if the issue is
-# resolved in the future, we should create a forseti db user instead of using
-# root.
 SQL_SERVER_LOCAL_ADDRESS="mysql+pymysql://${cloudsql_db_user}:${cloudsql_db_password}@127.0.0.1:${cloudsql_db_port}"
 FORSETI_SERVICES="explain inventory model scanner notifier"
 
@@ -39,10 +36,15 @@ FORSETI_COMMAND+=" --forseti_db $SQL_SERVER_LOCAL_ADDRESS/${cloudsql_db_name}?ch
 FORSETI_COMMAND+=" --config_file_path ${forseti_server_conf_path}"
 FORSETI_COMMAND+=" --services $FORSETI_SERVICES"
 
-CONFIG_VALIDATOR_COMMAND="${forseti_home}/external-dependencies/config-validator/ConfigValidatorRPCServer"
+CONFIG_VALIDATOR_COMMAND="$(which docker) run --rm -p 50052:50052 --name config-validator"
+CONFIG_VALIDATOR_COMMAND+=" --log-driver=gcplogs"
+CONFIG_VALIDATOR_COMMAND+=" --log-opt gcp-log-cmd=true"
+CONFIG_VALIDATOR_COMMAND+=" --log-opt labels=config-validator"
+CONFIG_VALIDATOR_COMMAND+=" -v ${policy_library_home}:${policy_library_home}"
+CONFIG_VALIDATOR_COMMAND+=" ${config_validator_image}:${config_validator_image_tag}"
 CONFIG_VALIDATOR_COMMAND+=" --policyPath='${policy_library_home}/policy-library/policies'"
 CONFIG_VALIDATOR_COMMAND+=" --policyLibraryPath='${policy_library_home}/policy-library/lib'"
-CONFIG_VALIDATOR_COMMAND+=" -port=50052"
+CONFIG_VALIDATOR_COMMAND+=" -port=50052 -v 7 -alsologtostderr"
 
 if [ "${policy_library_sync_enabled}" == "true" ]; then
   POLICY_LIBRARY_SYNC_COMMAND="$(which docker) run -d"
@@ -68,9 +70,6 @@ if [ "${policy_library_sync_enabled}" == "true" ]; then
     POLICY_LIBRARY_SYNC_COMMAND+=" --ssh-known-hosts=false"
   fi
 fi
-
-# Update the permission of the config validator.
-sudo chmod ugo+x ${forseti_home}/external-dependencies/config-validator/ConfigValidatorRPCServer
 
 SQL_PROXY_COMMAND="$(which cloud_sql_proxy)"
 SQL_PROXY_COMMAND+=" -instances=${cloudsql_connection_name}=tcp:${cloudsql_db_port}"
@@ -98,9 +97,10 @@ CONFIG_VALIDATOR_SERVICE="$(cat << EOF
 [Unit]
 Description=Config Validator API Server
 [Service]
-User=ubuntu
+TimeoutStartSec=15s
 Environment="GOGC=1000"
 ExecStart=$CONFIG_VALIDATOR_COMMAND
+ExecStop=$(which docker) kill config-validator
 [Install]
 WantedBy=multi-user.target
 EOF
