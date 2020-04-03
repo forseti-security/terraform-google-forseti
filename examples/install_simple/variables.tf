@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,33 @@
  * limitations under the License.
  */
 
-variable "gsuite_admin_email" {
-  description = "The email of a GSuite super admin, used for pulling user directory information *and* sending notifications."
-}
-
-variable "project_id" {
-  description = "The ID of an existing Google project where Forseti will be installed"
-}
-
-variable "org_id" {
-  description = "GCP Organization ID that Forseti will have purview over"
+variable "config_validator_enabled" {
+  description = "Config Validator scanner enabled."
+  type        = bool
+  default     = false
 }
 
 variable "domain" {
   description = "The domain associated with the GCP Organization ID"
+}
+
+variable "forseti_email_recipient" {
+  description = "Forseti email recipient."
+  default     = ""
+}
+
+variable "forseti_email_sender" {
+  description = "Forseti email sender."
+  default     = ""
+}
+
+variable "forseti_version" {
+  description = "The version of Forseti to install"
+  default     = "v2.25.1"
+}
+
+variable "gsuite_admin_email" {
+  description = "The email of a GSuite super admin, used for pulling user directory information *and* sending notifications."
 }
 
 variable "instance_metadata" {
@@ -42,10 +55,30 @@ variable "instance_tags" {
   default     = []
 }
 
+variable "network" {
+  description = "The VPC where the Forseti client and server will be created"
+}
+
+variable "network_project" {
+  description = "The project containing the VPC and subnetwork where the Forseti client and server will be created"
+}
+
+variable "org_id" {
+  description = "GCP Organization ID that Forseti will have purview over"
+}
+
 variable "private" {
   description = "Private client and server instances (no public IPs)"
   type        = bool
   default     = true
+}
+
+variable "project_id" {
+  description = "The ID of an existing Google project where Forseti will be installed"
+}
+
+variable "region" {
+  description = "The region where the Forseti GCE Instance VMs and CloudSQL Instances will be deployed"
 }
 
 variable "sendgrid_api_key" {
@@ -53,33 +86,6 @@ variable "sendgrid_api_key" {
   default     = ""
 }
 
-variable "forseti_email_sender" {
-  description = "Forseti email sender."
-  default     = ""
-}
-
-variable "forseti_email_recipient" {
-  description = "Forseti email recipient."
-  default     = ""
-}
-
-variable "forseti_version" {
-  description = "The version of Forseti to install"
-  default     = "v2.25.1"
-}
-
-variable "region" {
-  description = "The region where the Forseti GCE Instance VMs and CloudSQL Instances will be deployed"
-}
-
-variable "network" {
-  description = "The VPC where the Forseti client and server will be created"
-}
-
 variable "subnetwork" {
   description = "The VPC subnetwork where the Forseti client and server will be created"
-}
-
-variable "network_project" {
-  description = "The project containing the VPC and subnetwork where the Forseti client and server will be created"
 }

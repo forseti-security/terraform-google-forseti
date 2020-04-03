@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -96,13 +96,14 @@ module "forseti-install-simple" {
   network_project    = var.network_project
   forseti_version    = var.forseti_version
 
+  config_validator_enabled = var.config_validator_enabled
+
   instance_metadata = {
     sshKeys = "ubuntu:${tls_private_key.main.public_key_openssh}"
   }
 }
 
 resource "google_compute_firewall" "forseti_bastion_to_vm" {
-
   name    = "forseti-bastion-to-vm-ssh-${module.forseti-install-simple.suffix}"
   project = var.project_id
   network = module.forseti-service-network-install-simple.network_self_link
