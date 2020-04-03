@@ -940,7 +940,7 @@ variable "k8s_config_validator_image" {
 
 variable "k8s_config_validator_image_tag" {
   description = "The tag for the config-validator image."
-  default     = "b53b7e3"
+  default     = "8f579ca"
 }
 
 variable "k8s_forseti_namespace" {
