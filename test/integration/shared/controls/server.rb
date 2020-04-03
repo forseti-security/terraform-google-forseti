@@ -55,4 +55,24 @@ control "server" do
     its("exit_status") { should eq 0 }
     its("stdout") { should match("- name: net_write_timeout\n    value: '240'") }
   end
+
+
+  describe command("cat /etc/cron.allow") do
+    its(:exit_status) { should eq 0 }
+    its(:stderr) { should eq "" }
+    its(:stdout) { should match "root" }
+    its(:stdout) { should match "ubuntu" }
+  end
+
+  describe command("cat /etc/default/grub.d/50-cloudimg-settings.cfg | grep GRUB_CMDLINE_LINUX=") do
+    its(:exit_status) { should eq 0 }
+    its(:stderr) { should eq "" }
+    its(:stdout) { should match "GRUB_CMDLINE_LINUX=\"scsi_mod.use_blk_mq=Y apparmor=1 security=apparmor\"" }
+  end
+
+  describe command("grep '^\\s*linux' /boot/grub/grub.cfg | grep -v apparmor=1") do
+    its(:exit_status) { should eq 1 }
+    its(:stderr) { should eq "" }
+    its(:stdout) { should eq "" }
+    end
 end
