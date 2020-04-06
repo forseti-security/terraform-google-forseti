@@ -57,6 +57,7 @@ module "forseti-host-project" {
     "serviceusage.googleapis.com",
     "cloudresourcemanager.googleapis.com",
     "iam.googleapis.com",
+    "servicenetworking.googleapis.com",
     "storage-api.googleapis.com",
     "storage-component.googleapis.com",
     "pubsub.googleapis.com",
