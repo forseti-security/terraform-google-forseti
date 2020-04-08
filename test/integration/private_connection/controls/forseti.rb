@@ -142,6 +142,7 @@ control 'forseti' do
       )
     end
   end
+end
 
 control 'forseti-org-iam' do
   title "Validate organization roles of SA"

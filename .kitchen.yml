@@ -192,7 +192,7 @@ suites:
         - chmod go-rwx test/fixtures/bastion/tls_private_key_private_conn
     verifier:
       systems:
-        - name: gcp
+        - name: private_connection
           backend: gcp
           controls:
             - forseti
