@@ -208,9 +208,7 @@ suites:
           user: ubuntu
           key_files:
             - test/fixtures/private_connection/sshkey
-          proxy_command: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o LogLevel=ERROR -o ForwardAgent=n
-o -i test/fixtures/bastion/tls_private_key_private_conn ubuntu@<%= `terraform output -state test/fixtures/private_connection/terraform.tfstate.d/k
-itchen-terraform-private_connection-local/terraform.tfstate bastion_host 2> /dev/null`.strip %> -p 22 -W %h:%p
+          proxy_command: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o LogLevel=ERROR -o ForwardAgent=no -i test/fixtures/bastion/tls_private_key_private_conn ubuntu@<%= `terraform output -state test/fixtures/private_connection/terraform.tfstate.d/kitchen-terraform-private_connection-local/terraform.tfstate bastion_host 2> /dev/null`.strip %> -p 22 -W %h:%p
           shell: true
           shell_options: "--login"
 
