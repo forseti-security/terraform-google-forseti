@@ -182,6 +182,38 @@ suites:
           backend: local
           controls:
             - shielded-vm
+  - name: private_connection
+    driver:
+      name: terraform
+      root_module_directory: test/fixtures/private_connection/
+      command_timeout: 1800
+    lifecycle:
+      pre_verify:
+        - chmod go-rwx test/fixtures/bastion/tls_private_key_private_conn
+    verifier:
+      systems:
+        - name: gcp
+          backend: gcp
+          controls:
+            - forseti
+        - name: gcloud
+          backend: local
+          controls:
+            - forseti-org-iam
+        - name: server
+          backend: ssh
+          controls:
+            - server
+          hosts_output: forseti-server-vm-ip
+          user: ubuntu
+          key_files:
+            - test/fixtures/private_connection/sshkey
+          proxy_command: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o LogLevel=ERROR -o ForwardAgent=n
+o -i test/fixtures/bastion/tls_private_key_private_conn ubuntu@<%= `terraform output -state test/fixtures/private_connection/terraform.tfstate.d/k
+itchen-terraform-private_connection-local/terraform.tfstate bastion_host 2> /dev/null`.strip %> -p 22 -W %h:%p
+          shell: true
+          shell_options: "--login"
+
 # Disabled due to issue #285
 # (https://github.com/forseti-security/terraform-google-forseti/issues/285)
 #  - name: real_time_enforcer_roles
