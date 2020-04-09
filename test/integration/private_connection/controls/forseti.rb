@@ -174,5 +174,3 @@ control 'forseti-org-iam' do
     end
   end
 end
-
-/';.
