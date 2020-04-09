@@ -110,7 +110,7 @@ control 'forseti' do
     its('object_names') { should include(*files) }
   end
 
-  describe google_service_account(name: "projects/#{project_id}/serviceAccounts/#{forseti_server_service_account}") do
+  describe google_service_account(project: project_id, name: "projects/#{project_id}/serviceAccounts/#{forseti_server_service_account}") do
     its(:email) { should eq forseti_server_service_account }
     its(:display_name) { should eq "Forseti Server Service Account" }
   end
@@ -174,3 +174,5 @@ control 'forseti-org-iam' do
     end
   end
 end
+
+/';.
