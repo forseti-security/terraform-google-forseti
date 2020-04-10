@@ -122,7 +122,7 @@ control 'forseti' do
     its('priority') { should eq 100 }
 
     # replace commented lines with documented way to validate port/protocol
-    it { should allow_port_protocol("50051", "tcp") }    
+    it { should allow_port_protocol("50051", "tcp") }
     it { should allow_port_protocol("50052", "tcp") }
 
     # it "allows gRPC traffic" do
