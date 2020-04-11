@@ -153,7 +153,7 @@ control 'forseti' do
         end
       end
     end
-  
+
     # it "denies TCP, UDP, and ICMP" do
     #   expect(denied).to contain_exactly(
     #     {ip_protocol: "icmp"},
