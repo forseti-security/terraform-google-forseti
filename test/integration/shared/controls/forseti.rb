@@ -125,13 +125,11 @@ control 'forseti' do
     its('object_names') { should include(*files) }
   end
 
-  describe google_service_account(name: "projects/#{project_id}/serviceAccounts/#{forseti_client_service_account}") do
-    its(:email) { should eq forseti_client_service_account }
+  describe google_service_account(project: project_id, name: forseti_client_service_account) do
     its(:display_name) { should eq "Forseti Client Service Account" }
   end
 
-  describe google_service_account(name: "projects/#{project_id}/serviceAccounts/#{forseti_server_service_account}") do
-    its(:email) { should eq forseti_server_service_account }
+  describe google_service_account(project: project_id, name: forseti_server_service_account) do
     its(:display_name) { should eq "Forseti Server Service Account" }
   end
 
