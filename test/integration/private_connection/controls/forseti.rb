@@ -137,7 +137,23 @@ control 'forseti' do
     its('direction') { should eq 'INGRESS' }
     its('priority') { should eq 200 }
 
-    # TODO: uncomment/fix once the resource will have a method to verify the protocol is allowed/denied for all ports
+    # replace commented lines with guidelined way to verify that only these protocols are set
+    its('denied').each do |deny_rule|
+      describe.one do
+        describe deny_rule do
+          its('ip_protocol') { should cmp 'icmp' }
+        end
+        describe deny_rule do
+          its('ip_protocol') { should cmp 'tcp' }
+          its('ports') { should cmp [] }
+        end
+        describe deny_rule do
+          its('ip_protocol') { should cmp 'udp' }
+          its('ports') { should cmp [] }
+        end
+      end
+    end
+  
     # it "denies TCP, UDP, and ICMP" do
     #   expect(denied).to contain_exactly(
     #     {ip_protocol: "icmp"},
