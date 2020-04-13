@@ -55,6 +55,7 @@ locals {
 # Forseti Service Account #
 #-------------------------#
 resource "google_service_account" "forseti_server" {
+  count        = var.server_service_account == "" ? 1 : 0
   account_id   = local.server_sa_name
   project      = var.project_id
   display_name = "Forseti Server Service Account"
@@ -64,7 +65,7 @@ resource "google_project_iam_member" "server_roles" {
   count   = length(local.server_project_roles)
   role    = local.server_project_roles[count.index]
   project = var.project_id
-  member  = "serviceAccount:${google_service_account.forseti_server.email}"
+  member  = var.server_service_account == "" ? "serviceAccount:${google_service_account.forseti_server[0].email}" : "serviceAccount:${var.server_service_account}"
 }
 
 resource "google_project_iam_member" "monitoring" {
@@ -78,40 +79,40 @@ resource "google_organization_iam_member" "org_read" {
   count  = var.org_id != "" ? length(local.server_read_roles) : 0
   role   = local.server_read_roles[count.index]
   org_id = var.org_id
-  member = "serviceAccount:${google_service_account.forseti_server.email}"
+  member = var.server_service_account == "" ? "serviceAccount:${google_service_account.forseti_server[0].email}" : "serviceAccount:${var.server_service_account}"
 }
 
 resource "google_folder_iam_member" "folder_read" {
   count  = var.folder_id != "" ? length(local.server_read_roles) : 0
   role   = local.server_read_roles[count.index]
   folder = var.folder_id
-  member = "serviceAccount:${google_service_account.forseti_server.email}"
+  member = var.server_service_account == "" ? "serviceAccount:${google_service_account.forseti_server[0].email}" : "serviceAccount:${var.server_service_account}"
 }
 
 resource "google_organization_iam_member" "org_write" {
   count  = var.org_id != "" && var.enable_write ? length(local.server_write_roles) : 0
   role   = local.server_write_roles[count.index]
   org_id = var.org_id
-  member = "serviceAccount:${google_service_account.forseti_server.email}"
+  member = var.server_service_account == "" ? "serviceAccount:${google_service_account.forseti_server[0].email}" : "serviceAccount:${var.server_service_account}"
 }
 
 resource "google_folder_iam_member" "folder_write" {
   count  = var.folder_id != "" && var.enable_write ? length(local.server_write_roles) : 0
   role   = local.server_write_roles[count.index]
   folder = var.folder_id
-  member = "serviceAccount:${google_service_account.forseti_server.email}"
+  member = var.server_service_account == "" ? "serviceAccount:${google_service_account.forseti_server[0].email}" : "serviceAccount:${var.server_service_account}"
 }
 
 resource "google_organization_iam_member" "org_cscc" {
   count  = var.org_id != "" && var.cscc_violations_enabled ? length(local.server_cscc_roles) : 0
   role   = local.server_cscc_roles[count.index]
   org_id = var.org_id
-  member = "serviceAccount:${google_service_account.forseti_server.email}"
+  member = var.server_service_account == "" ? "serviceAccount:${google_service_account.forseti_server[0].email}" : "serviceAccount:${var.server_service_account}"
 }
 
 resource "google_organization_iam_member" "cloud_profiler" {
   count  = var.cloud_profiler_enabled ? length(local.server_cloud_profiler_roles) : 0
   role   = local.server_cloud_profiler_roles[count.index]
   org_id = var.org_id
-  member = "serviceAccount:${google_service_account.forseti_server.email}"
+  member = var.server_service_account == "" ? "serviceAccount:${google_service_account.forseti_server[0].email}" : "serviceAccount:${var.server_service_account}"
 }

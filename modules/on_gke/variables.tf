@@ -60,7 +60,6 @@ variable "sendgrid_api_key" {
 #------------#
 # GKE config #
 #------------#
-
 variable "gke_node_pool_name" {
   description = "The name of the GKE node-pool where Forseti is being deployed"
   default     = "default-pool"
@@ -80,7 +79,7 @@ variable "gsuite_admin_email" {
 
 variable "forseti_version" {
   description = "The version of Forseti to install"
-  default     = "v2.24.0"
+  default     = "v2.25.1"
 }
 
 variable "forseti_repo_url" {
@@ -505,6 +504,12 @@ variable "resource_enabled" {
   default     = true
 }
 
+variable "retention_enabled" {
+  description = "Retention scanner enabled."
+  type        = bool
+  default     = false
+}
+
 variable "role_enabled" {
   description = "Role scanner enabled."
   type        = bool
@@ -661,6 +666,17 @@ variable "resource_violations_should_notify" {
   default     = true
 }
 
+variable "retention_violations_should_notify" {
+  description = "Notify for retention violations"
+  type        = bool
+  default     = true
+}
+
+variable "retention_violations_slack_webhook" {
+  description = "Slack webhook for retention violations"
+  default     = ""
+}
+
 variable "role_violations_should_notify" {
   description = "Notify for role violations"
   type        = bool
@@ -710,7 +726,6 @@ variable "inventory_email_summary_enabled" {
 #---------------------------------------#
 # Groups Settings scanner configuration #
 #---------------------------------------#
-
 variable "groups_settings_max_calls" {
   description = "Maximum calls that can be made to the G Suite Groups API"
   default     = "5"
@@ -893,7 +908,6 @@ variable "cloudsql_password" {
 #-------------#
 # Helm config #
 #-------------#
-
 variable "git_sync_image" {
   description = "The container image used by the config-validator git-sync side-car"
   default     = "gcr.io/google-containers/git-sync"
@@ -911,7 +925,7 @@ variable "git_sync_wait" {
 
 variable "helm_chart_version" {
   description = "The version of the Helm chart to use"
-  default     = "2.1.0"
+  default     = "2.2.0"
 }
 
 variable "helm_repository_url" {
@@ -941,7 +955,7 @@ variable "k8s_forseti_orchestrator_image" {
 
 variable "k8s_forseti_orchestrator_image_tag" {
   description = "The tag for the container image for the Forseti orchestrator"
-  default     = "v2.24.0"
+  default     = "v2.25.1"
 }
 
 variable "k8s_forseti_server_image" {
@@ -951,7 +965,7 @@ variable "k8s_forseti_server_image" {
 
 variable "k8s_forseti_server_image_tag" {
   description = "The tag for the container image for the Forseti server"
-  default     = "v2.24.0"
+  default     = "v2.25.1"
 }
 
 variable "k8s_forseti_server_ingress_cidr" {

@@ -45,7 +45,7 @@ variable "instance_tags" {
 variable "private" {
   description = "Private client and server instances (no public IPs)"
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "sendgrid_api_key" {
@@ -65,7 +65,7 @@ variable "forseti_email_recipient" {
 
 variable "forseti_version" {
   description = "The version of Forseti to install"
-  default     = "v2.24.0"
+  default     = "v2.25.1"
 }
 
 variable "region" {

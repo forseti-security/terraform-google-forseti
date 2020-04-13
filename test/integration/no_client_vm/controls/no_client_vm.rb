@@ -16,7 +16,7 @@ zone = "us-central1-c"
 project_id = attribute("project_id")
 suffix = attribute("suffix")
 
-control "forseti-no-client-vm" do
+control "no-client-vm" do
   title "Forseti No Client VM"
 
   describe command("gcloud compute instances list --filter='zone:#{zone}' --project=#{project_id} --format='json(name)'") do

@@ -225,10 +225,12 @@ resource "helm_release" "forseti-security" {
   version       = var.helm_chart_version
   chart         = "forseti-security"
   recreate_pods = var.recreate_pods
-  depends_on = ["kubernetes_role_binding.tiller",
-    "kubernetes_namespace.forseti",
+  depends_on = [
+    "google_service_account_iam_binding.forseti_client_workload_identity",
     "google_service_account_iam_binding.forseti_server_workload_identity",
-  "google_service_account_iam_binding.forseti_client_workload_identity"]
+    "kubernetes_namespace.forseti",
+    "kubernetes_role_binding.tiller"
+  ]
 
   set {
     name  = "database.username"
@@ -588,6 +590,7 @@ module "server_config" {
   admin_disable_polling                               = var.admin_disable_polling
   service_account_key_enabled                         = var.service_account_key_enabled
   role_enabled                                        = var.role_enabled
+  retention_enabled                                   = var.retention_enabled
   resource_enabled                                    = var.resource_enabled
   log_sink_enabled                                    = var.log_sink_enabled
   location_enabled                                    = var.location_enabled
@@ -611,6 +614,8 @@ module "server_config" {
   service_account_key_violations_should_notify        = var.service_account_key_violations_should_notify
   role_violations_should_notify                       = var.role_violations_should_notify
   role_violations_slack_webhook                       = var.role_violations_slack_webhook
+  retention_violations_should_notify                  = var.retention_violations_should_notify
+  retention_violations_slack_webhook                  = var.retention_violations_slack_webhook
   resource_violations_should_notify                   = var.resource_violations_should_notify
   log_sink_violations_should_notify                   = var.log_sink_violations_should_notify
   location_violations_should_notify                   = var.location_violations_should_notify

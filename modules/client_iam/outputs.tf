@@ -16,5 +16,5 @@
 
 output "forseti-client-service-account" {
   description = "Forseti Client service account"
-  value       = var.client_enabled ? google_service_account.forseti_client[0].email : null
+  value       = var.client_enabled ? (var.client_service_account == "" ? google_service_account.forseti_client[0].email : var.client_service_account) : null
 }

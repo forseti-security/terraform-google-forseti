@@ -5,6 +5,10 @@ set -eu
 USER=ubuntu
 USER_HOME=/home/ubuntu
 INTERNET_CONNECTION="$(ping -q -w1 -c1 google.com &>/dev/null && echo online || echo offline)"
+INIT_SERVICES_MD5_HASH=${forseti_init_services_md5_hash}
+RUN_FORSETI_SERVICES_MD5_HASH=${forseti_run_forseti_services_md5_hash}
+
+export USER_HOME
 
 # Log status of internet connection
 if [ $INTERNET_CONNECTION == "offline" ]; then
@@ -68,6 +72,18 @@ echo "Forseti Startup - Installing Forseti python dependencies."
 python3 -m pip install -q --upgrade setuptools wheel
 python3 -m pip install -q --upgrade -r requirements.txt
 
+# Install Docker
+if [ -z "$(which docker)" ]; then
+  echo "Forseti Startup - Installing Docker for the Policy Library sync and Config Validator."
+  sudo apt-get update
+  sudo apt -y install apt-transport-https ca-certificates curl software-properties-common
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+  sudo apt update
+  apt-cache policy docker-ce
+  sudo apt install -y docker-ce
+fi
+
 # Setup Forseti logging
 touch /var/log/forseti.log
 chown ubuntu:root /var/log/forseti.log
@@ -77,15 +93,14 @@ chmod 644 /etc/logrotate.d/forseti
 service google-fluentd restart
 logrotate /etc/logrotate.conf
 
-# Change the access level of configs/ rules/ and run_forseti.sh
-chmod -R ug+rwx ${forseti_home}/configs ${forseti_home}/rules ${forseti_home}/install/gcp/scripts/run_forseti.sh
-
+# Change the access level of configs/ and rules/
+chmod -R ug+rw ${forseti_home}/configs ${forseti_home}/rules
 
 # Install Forseti
 echo "Forseti Startup - Installing Forseti python package."
 python3 setup.py install
 
-# Export variables required by initialize_forseti_services.sh.
+# Export variables required by initialize_forseti_services.sh
 ${forseti_env}
 
 # Export variables required by run_forseti.sh
@@ -107,18 +122,6 @@ if [ "${policy_library_sync_enabled}" == "true" ]; then
   # Policy Library Sync
   echo "Forseti Startup - Policy Library sync is enabled."
 
-  # Install Docker
-  if [ -z "$(which docker)" ]; then
-    echo "Forseti Startup - Installing Docker for the Policy Library sync."
-    sudo apt-get update
-    sudo apt -y install apt-transport-https ca-certificates curl software-properties-common
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
-    sudo apt update
-    apt-cache policy docker-ce
-    sudo apt install -y docker-ce
-  fi
-
   # Setup local FS
   # Note: gsutil is using the -n flag so that once the SSH key is copied locally, it is not overwritten for any subsequent runs of terraform
   sudo mkdir -p /etc/git-secret
@@ -130,10 +133,15 @@ else
   gsutil -m rsync -d -r gs://${storage_bucket_name}/policy-library ${policy_library_home}/policy-library || echo "No policy available, continuing with Forseti installation"
 fi
 
+# Attempt to download the initialize_forseti_services.sh script and run_forseti.sh script
+sudo mkdir -m 777 -p ${forseti_scripts}
+gsutil -m cp -r gs://${storage_bucket_name}/scripts/initialize_forseti_services.sh ${forseti_scripts}
+gsutil -m cp -r gs://${storage_bucket_name}/scripts/run_forseti.sh ${forseti_scripts}
+
 # Enable cloud-profiler in the initialize_forseti_services.sh script
 if ${cloud_profiler_enabled}; then
   pip3 install google-cloud-profiler
-  sed "/FORSETI_COMMAND+=\" --services/a FORSETI_COMMAND+=\" --enable_profiler\"" -i ./install/gcp/scripts/initialize_forseti_services.sh
+  sed "/FORSETI_COMMAND+=\" --services/a FORSETI_COMMAND+=\" --enable_profiler\"" -i ${forseti_scripts}/initialize_forseti_services.sh
 fi
 
 # Install mailjet_rest library
@@ -144,7 +152,7 @@ fi
 
 # Start Forseti service depends on vars defined above.
 echo "Forseti Startup - Starting services."
-bash ./install/gcp/scripts/initialize_forseti_services.sh
+bash ${forseti_scripts}/initialize_forseti_services.sh
 systemctl start cloudsqlproxy
 if [ "${policy_library_sync_enabled}" == "true" ]; then
   systemctl start policy-library-sync
@@ -177,9 +185,7 @@ fi
 # Create a Forseti env script
 FORSETI_ENV="$(cat << EOF
 #!/bin/bash
-
 export PATH=$PATH:/usr/local/bin
-
 # Forseti environment variables
 ${forseti_environment}
 EOF
@@ -194,6 +200,7 @@ USER=ubuntu
 # The -n flag in flock will fail the process right away when the process is not able to acquire the lock so we won't
 # queue up the jobs.
 # If the cron job failed the acquire lock on the process, it will log a warning message to syslog.
-(echo "${forseti_run_frequency} (/usr/bin/flock -n ${forseti_home}/forseti_cron_runner.lock ${forseti_home}/install/gcp/scripts/run_forseti.sh -b ${storage_bucket_name} || echo '[forseti-security] Warning: New Forseti cron job will not be started, because previous Forseti job is still running.') 2>&1 | logger") | crontab -u $USER -
+chmod +x ${forseti_scripts}/run_forseti.sh
+(echo "${forseti_run_frequency} (/usr/bin/flock -n ${forseti_home}/forseti_cron_runner.lock ${forseti_scripts}/run_forseti.sh || echo '[forseti-security] Warning: New Forseti cron job will not be started, because previous Forseti job is still running.') 2>&1 | logger") | crontab -u $USER -
 echo "Forseti Startup - Added the run_forseti.sh to crontab under user $USER."
 echo "Forseti Startup - Execution of startup script finished."

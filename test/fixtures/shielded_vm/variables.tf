@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+variable "forseti_version" {
+  description = "The version of Forseti to install"
+  default     = "master"
+}
+
 variable "org_id" {
   description = "GCP Organization ID that Forseti will have purview over"
 }

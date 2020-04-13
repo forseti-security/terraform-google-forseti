@@ -83,7 +83,7 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | forseti\_home | Forseti installation directory | string | `"$USER_HOME/forseti-security"` | no |
 | forseti\_repo\_url | Git repo for the Forseti installation | string | `"https://github.com/forseti-security/forseti-security"` | no |
 | forseti\_run\_frequency | Schedule of running the Forseti scans | string | `"null"` | no |
-| forseti\_version | The version of Forseti to install | string | `"v2.24.0"` | no |
+| forseti\_version | The version of Forseti to install | string | `"v2.25.1"` | no |
 | forwarding\_rule\_enabled | Forwarding rule scanner enabled. | bool | `"false"` | no |
 | forwarding\_rule\_violations\_should\_notify | Notify for forwarding rule violations | bool | `"true"` | no |
 | git\_sync\_image | The container image used by the config-validator git-sync side-car | string | `"gcr.io/google-containers/git-sync"` | no |
@@ -98,7 +98,7 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | groups\_settings\_violations\_should\_notify | Notify for groups settings violations | bool | `"true"` | no |
 | groups\_violations\_should\_notify | Notify for Groups violations | bool | `"true"` | no |
 | gsuite\_admin\_email | G-Suite administrator email address to manage your Forseti installation | string | `""` | no |
-| helm\_chart\_version | The version of the Helm chart to use | string | `"2.1.0"` | no |
+| helm\_chart\_version | The version of the Helm chart to use | string | `"2.2.0"` | no |
 | helm\_repository\_url | The Helm repository containing the 'forseti-security' Helm charts | string | `"https://forseti-security-charts.storage.googleapis.com/release/"` | no |
 | iam\_disable\_polling | Whether to disable polling for IAM API | bool | `"false"` | no |
 | iam\_max\_calls | Maximum calls that can be made to IAM API | string | `"90"` | no |
@@ -117,9 +117,9 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | k8s\_config\_validator\_image\_tag | The tag for the config-validator image. | string | `"572e207"` | no |
 | k8s\_forseti\_namespace | The Kubernetes namespace in which to deploy Forseti. | string | `"forseti"` | no |
 | k8s\_forseti\_orchestrator\_image | The container image for the Forseti orchestrator | string | `"gcr.io/forseti-containers/forseti"` | no |
-| k8s\_forseti\_orchestrator\_image\_tag | The tag for the container image for the Forseti orchestrator | string | `"v2.24.0"` | no |
+| k8s\_forseti\_orchestrator\_image\_tag | The tag for the container image for the Forseti orchestrator | string | `"v2.25.1"` | no |
 | k8s\_forseti\_server\_image | The container image for the Forseti server | string | `"gcr.io/forseti-containers/forseti"` | no |
-| k8s\_forseti\_server\_image\_tag | The tag for the container image for the Forseti server | string | `"v2.24.0"` | no |
+| k8s\_forseti\_server\_image\_tag | The tag for the container image for the Forseti server | string | `"v2.25.1"` | no |
 | k8s\_forseti\_server\_ingress\_cidr | If network_policy is true, k8s_forseti_server_ingress_cidr will restrict connections to the Forseti Server service from the CIDR's specified | string | `""` | no |
 | k8s\_tiller\_sa\_name | The Kubernetes Service Account used by Tiller | string | `"tiller"` | no |
 | ke\_scanner\_enabled | KE scanner enabled. | bool | `"false"` | no |
@@ -156,6 +156,9 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | resource\_enabled | Resource scanner enabled. | bool | `"true"` | no |
 | resource\_name\_suffix | A suffix which will be appended to resource names. | string | `"null"` | no |
 | resource\_violations\_should\_notify | Notify for resource violations | bool | `"true"` | no |
+| retention\_enabled | Retention scanner enabled. | bool | `"false"` | no |
+| retention\_violations\_should\_notify | Notify for retention violations | bool | `"true"` | no |
+| retention\_violations\_slack\_webhook | Slack webhook for retention violations | string | `""` | no |
 | role\_enabled | Role scanner enabled. | bool | `"false"` | no |
 | role\_violations\_should\_notify | Notify for role violations | bool | `"true"` | no |
 | role\_violations\_slack\_webhook | Slack webhook for role violations | string | `""` | no |

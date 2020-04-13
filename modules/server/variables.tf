@@ -23,7 +23,7 @@ variable "project_id" {
 
 variable "forseti_version" {
   description = "The version of Forseti to install"
-  default     = "v2.24.0"
+  default     = "v2.25.1"
 }
 
 variable "forseti_repo_url" {
@@ -42,9 +42,24 @@ variable "forseti_run_frequency" {
   default     = null
 }
 
+variable "forseti_scripts" {
+  description = "The local Forseti scripts directory"
+  default     = "$USER_HOME/forseti-scripts"
+}
+
 #----------------#
 # Forseti server #
 #----------------#
+variable "config_validator_image" {
+  description = "The image of the Config Validator to use"
+  default     = "gcr.io/forseti-containers/config-validator"
+}
+
+variable "config_validator_image_tag" {
+  description = "The tag of the Config Validator image to use"
+  default     = "572e207"
+}
+
 variable "server_type" {
   description = "GCE Forseti Server machine type"
   default     = "n1-standard-8"
