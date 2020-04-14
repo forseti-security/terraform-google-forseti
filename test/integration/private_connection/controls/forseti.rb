@@ -138,23 +138,9 @@ control 'forseti' do
     its('priority') { should eq 200 }
 
     # replace commented lines with guidelined way to verify that only these protocols are set
-    it "denies TCP, UDP, and ICMP" do
-      subject.denied.each do |deny_rule|
-        describe.one do
-          describe deny_rule do
-            its('ip_protocol') { should cmp 'icmp' }
-          end
-          describe deny_rule do
-            its('ip_protocol') { should cmp 'tcp' }
-            its('ports') { should cmp [] }
-          end
-          describe deny_rule do
-            its('ip_protocol') { should cmp 'udp' }
-            its('ports') { should cmp [] }
-          end
-        end
-      end
-    end
+    its('denied') { should include 'ip_protocol' => 'icmp' }
+    its('denied') { should include 'ip_protocol' => 'tcp' }
+    its('denied') { should include 'ip_protocol' => 'udp' }
     # it "denies TCP, UDP, and ICMP" do
     #   expect(denied).to contain_exactly(
     #     {ip_protocol: "icmp"},
