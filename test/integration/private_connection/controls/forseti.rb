@@ -138,7 +138,7 @@ control 'forseti' do
     its('priority') { should eq 200 }
 
     # replace commented lines with guidelined way to verify that only these protocols are set
-    its('denied').each do |deny_rule|
+    subject.denied.each do |deny_rule|
       describe.one do
         describe deny_rule do
           its('ip_protocol') { should cmp 'icmp' }
