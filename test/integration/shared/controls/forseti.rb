@@ -154,9 +154,9 @@ control 'forseti' do
 
     it "denies TCP, UDP, and ICMP" do
         expect(subject.denied).to contain_exactly(
-          an_object_having_attributes(ip_protocol: 'icmp'),
-          an_object_having_attributes(ip_protocol: 'tcp'),
-          an_object_having_attributes(ip_protocol: 'udp')
+          an_object_having_attributes(ip_protocol: 'icmp', ports: nil),
+          an_object_having_attributes(ip_protocol: 'tcp', ports: nil),
+          an_object_having_attributes(ip_protocol: 'udp', ports: nil)
         )
     end
   end
@@ -168,9 +168,9 @@ control 'forseti' do
 
     it "denies TCP, UDP, and ICMP" do
         expect(subject.denied).to contain_exactly(
-          an_object_having_attributes(ip_protocol: 'icmp'),
-          an_object_having_attributes(ip_protocol: 'tcp'),
-          an_object_having_attributes(ip_protocol: 'udp')
+          an_object_having_attributes(ip_protocol: 'icmp', ports: nil),
+          an_object_having_attributes(ip_protocol: 'tcp', ports: nil),
+          an_object_having_attributes(ip_protocol: 'udp', ports: nil)
         )
     end
   end
