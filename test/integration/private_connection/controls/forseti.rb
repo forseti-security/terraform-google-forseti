@@ -115,39 +115,27 @@ control 'forseti' do
   end
 
   describe google_compute_firewall(project: project_id, name: "forseti-server-allow-grpc-#{suffix}") do
-    # let(:allowed) { subject.allowed.map(&:item) }
-
     its('source_ranges') { should eq ["10.128.0.0/9"] }
     its('direction') { should eq 'INGRESS' }
     its('priority') { should eq 100 }
 
-    # replace commented lines with documented way to validate port/protocol
+    its('allowed.size') { should eq 1}
     it { should allow_port_protocol("50051", "tcp") }
     it { should allow_port_protocol("50052", "tcp") }
-
-    # it "allows gRPC traffic" do
-    #   expect(allowed).to contain_exactly({ip_protocol: "tcp", ports: ["50051", "50052"]})
-    # end
   end
 
   describe google_compute_firewall(project: project_id, name: "forseti-server-deny-all-#{suffix}") do
-    # let(:denied) { subject.denied.map(&:item) }
-
     its('source_ranges') { should eq ["0.0.0.0/0"] }
     its('direction') { should eq 'INGRESS' }
     its('priority') { should eq 200 }
 
-    # replace commented lines with guidelined way to verify that only these protocols are set
-    its('denied') { should include 'ip_protocol' => 'icmp' }
-    its('denied') { should include 'ip_protocol' => 'tcp' }
-    its('denied') { should include 'ip_protocol' => 'udp' }
-    # it "denies TCP, UDP, and ICMP" do
-    #   expect(denied).to contain_exactly(
-    #     {ip_protocol: "icmp"},
-    #     {ip_protocol: "tcp"},
-    #     {ip_protocol: "udp"}
-    #   )
-    # end
+    it "denies TCP, UDP, and ICMP" do
+      expect(subject.denied).to contain_exactly(
+        an_object_having_attributes(ip_protocol: 'icmp'),
+        an_object_having_attributes(ip_protocol: 'tcp', ports: nil),
+        an_object_having_attributes(ip_protocol: 'udp', ports: nil)
+      )
+  end
   end
 end
 
