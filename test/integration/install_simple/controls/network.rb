@@ -16,7 +16,7 @@
 project_id = attribute('project_id')
 forseti_server_vm_name = attribute('forseti-server-vm-name')
 forseti_client_vm_name = attribute('forseti-client-vm-name')
-forseti_cloud_nat_name = 'clout-nat-' + project_id
+forseti_cloud_nat_name = 'cloud-nat-' + project_id
 forseti_router_name = 'router-' + project_id
 
 control 'forseti-nat' do
