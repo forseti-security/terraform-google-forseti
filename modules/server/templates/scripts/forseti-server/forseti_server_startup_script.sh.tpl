@@ -19,9 +19,33 @@ fi
 # This digest is included in the startup script to rebuild the Forseti server VM
 # whenever the server configuration changes.
 
+function wait_on_lock_files() {
+  lock_files=(
+    "/var/lib/dpkg/lock"
+    "/var/lib/apt/lists/lock"
+    "/var/lib/dpkg/lock-frontend"
+    "/var/cache/apt/archives/lock"
+  )
+
+  for lock_file in "$${lock_files[@]}"; do
+    while sudo fuser $lock_file >/dev/null 2>&1; do
+      echo "Forseti Startup - $lock_file - lock found, retry in 10 seconds."
+      sleep 10
+    done
+  done
+}
+
+if [ ! "$(grep "apparmor=1" /etc/default/grub.d/50-cloudimg-settings.cfg)" ]; then
+  echo "Forseti Startup - Ensure AppArmor is always enabled"
+  sed -i.bak 's/\GRUB_CMDLINE_LINUX=.*\>/& apparmor=1 security=apparmor/' /etc/default/grub.d/50-cloudimg-settings.cfg
+  sed -i.bak 's/\GRUB_CMDLINE_LINUX_DEFAULT=.*\>/& apparmor=1 security=apparmor/' /etc/default/grub.d/50-cloudimg-settings.cfg
+  sudo update-grub
+fi
+
 # Ubuntu update.
 echo "Forseti Startup - Updating Ubuntu."
 sudo apt-get update -y
+wait_on_lock_files
 sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade
 sudo apt-get update -y
 sudo apt-get --assume-yes install google-cloud-sdk git unzip
@@ -183,6 +207,10 @@ EOF
 echo "$FORSETI_ENV" > $USER_HOME/forseti_env.sh
 
 USER=ubuntu
+
+echo "Forseti Startup - Allow 'ubuntu' user to use crontab"
+echo -e "root\n$USER" > /etc/cron.allow
+
 # Use flock to prevent rerun of the same cron job when the previous job is still running.
 # If the lock file does not exist under the tmp directory, it will create the file and put a lock on top of the file.
 # When the previous cron job is not finished and the new one is trying to run, it will attempt to acquire the lock
