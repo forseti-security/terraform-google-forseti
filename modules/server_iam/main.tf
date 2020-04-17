@@ -72,7 +72,7 @@ resource "google_project_iam_member" "monitoring" {
   count   = var.monitoring_enabled ? length(local.server_monitoring_roles) : 0
   role    = local.server_monitoring_roles[count.index]
   project = var.project_id
-  member  = "serviceAccount:${google_service_account.forseti_server.email}"
+  member  = var.server_service_account == "" ? "serviceAccount:${google_service_account.forseti_server[0].email}" : "serviceAccount:${var.server_service_account}"
 }
 
 resource "google_organization_iam_member" "org_read" {
