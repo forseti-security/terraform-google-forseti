@@ -14,22 +14,30 @@
  * limitations under the License.
  */
 
-terraform {
-  required_version = ">= 0.12"
+variable "org_id" {
+  description = "Organization ID"
 }
 
-provider "google" {
-  version = "~> 2.12.0"
+variable "domain" {
+  description = "Organization domain"
 }
 
-provider "google-beta" {
-  version = "~> 2.12.0"
+variable "project_id" {
+  description = "ID of the project that will have forseti server"
 }
 
-provider "null" {
-  version = "~> 2.1"
+variable "region" {
+  description = "Region where forseti subnetwork will be deployed"
+  default     = "us-central1"
 }
 
-provider "random" {
-  version = "~> 2.2"
+variable "block_egress" {
+  description = "Controls whether the forseti infrastructure components can communicate to internet"
+  type        = bool
+  default     = false
+}
+
+variable "forseti_version" {
+  description = "The version of Forseti to install"
+  default     = "master"
 }

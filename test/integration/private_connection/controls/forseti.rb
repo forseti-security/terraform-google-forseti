@@ -15,27 +15,13 @@
 
 org_id = attribute('org_id')
 project_id = attribute('project_id')
-network_project = attribute('network_project').empty? ? project_id : attribute('network_project')
 suffix = attribute('suffix')
-forseti_client_vm_name = attribute('forseti-client-vm-name')
 forseti_server_vm_name = attribute('forseti-server-vm-name')
-forseti_client_storage_bucket = attribute('forseti-client-storage-bucket')
 forseti_server_storage_bucket = attribute('forseti-server-storage-bucket')
-forseti_client_service_account = attribute('forseti-client-service-account')
 forseti_server_service_account = attribute('forseti-server-service-account')
 
 control 'forseti' do
   title "Forseti GCP resources"
-
-  describe google_compute_instance(
-    project: project_id,
-    zone: 'us-central1-c',
-    name: forseti_client_vm_name
-  ) do
-    it { should exist }
-    its('machine_size') { should eq 'n1-standard-2' }
-    its('network_interfaces_count'){should eq 1}
-  end
 
   describe google_compute_instance(
     project: project_id,
@@ -74,7 +60,6 @@ control 'forseti' do
 
   describe google_storage_buckets(project: project_id) do
     its('bucket_names') { should include forseti_server_storage_bucket }
-    its('bucket_names') { should include forseti_client_storage_bucket }
     its('bucket_names') { should include(/forseti-cai-export/) }
   end
 
@@ -125,15 +110,11 @@ control 'forseti' do
     its('object_names') { should include(*files) }
   end
 
-  describe google_service_account(project: project_id, name: forseti_client_service_account) do
-    its(:display_name) { should eq "Forseti Client Service Account" }
-  end
-
   describe google_service_account(project: project_id, name: forseti_server_service_account) do
     its(:display_name) { should eq "Forseti Server Service Account" }
   end
 
-  describe google_compute_firewall(project: network_project, name: "forseti-server-allow-grpc-#{suffix}") do
+  describe google_compute_firewall(project: project_id, name: "forseti-server-allow-grpc-#{suffix}") do
     its('source_ranges') { should eq ["10.128.0.0/9"] }
     its('direction') { should eq 'INGRESS' }
     its('priority') { should eq 100 }
@@ -143,7 +124,7 @@ control 'forseti' do
     it { should allow_port_protocol("50052", "tcp") }
   end
 
-  describe google_compute_firewall(project: network_project, name: "forseti-server-deny-all-#{suffix}") do
+  describe google_compute_firewall(project: project_id, name: "forseti-server-deny-all-#{suffix}") do
     its('source_ranges') { should eq ["0.0.0.0/0"] }
     its('direction') { should eq 'INGRESS' }
     its('priority') { should eq 200 }
@@ -154,21 +135,7 @@ control 'forseti' do
         an_object_having_attributes(ip_protocol: 'tcp', ports: nil),
         an_object_having_attributes(ip_protocol: 'udp', ports: nil)
       )
-    end
   end
-
-  describe google_compute_firewall(project: network_project, name: "forseti-client-deny-all-#{suffix}") do
-    its('source_ranges') { should eq ["0.0.0.0/0"] }
-    its('direction') { should eq 'INGRESS' }
-    its('priority') { should eq 200 }
-
-    it "denies TCP, UDP, and ICMP" do
-      expect(subject.denied).to contain_exactly(
-        an_object_having_attributes(ip_protocol: 'icmp'),
-        an_object_having_attributes(ip_protocol: 'tcp', ports: nil),
-        an_object_having_attributes(ip_protocol: 'udp', ports: nil)
-      )
-    end
   end
 end
 

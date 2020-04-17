@@ -37,37 +37,48 @@ data "google_compute_zones" "main" {
 module "bastion" {
   source = "../bastion"
 
-  network    = var.network
-  project_id = var.network_project
-  subnetwork = var.subnetwork
+  network    = module.forseti-private-connection.network
+  project_id = var.project_id
+  subnetwork = module.forseti-private-connection.subnetwork
   zone       = data.google_compute_zones.main.names[0]
-  key_suffix = "_shared_vpc"
+  key_suffix = "_private_conn"
 }
 
-module "forseti-shared-vpc" {
-  source             = "../../../examples/shared_vpc"
-  project_id         = var.project_id
-  region             = var.region
-  gsuite_admin_email = var.gsuite_admin_email
-  network            = var.network
-  subnetwork         = var.subnetwork
-  network_project    = var.network_project
-  org_id             = var.org_id
-  domain             = var.domain
-  forseti_version    = var.forseti_version
+module "forseti-private-connection" {
+  source          = "../../../examples/private_connection"
+  project_id      = var.project_id
+  region          = var.region
+  org_id          = var.org_id
+  domain          = var.domain
+  block_egress    = var.block_egress
+  forseti_version = var.forseti_version
 
   instance_metadata = {
     sshKeys = "ubuntu:${tls_private_key.main.public_key_openssh}"
   }
 }
 
-resource "google_compute_firewall" "forseti_bastion_to_vm" {
+# override fw rule that blocks *ALL* egress in the exampe to allow egress from bastion
+resource "google_compute_firewall" "unblock-bastion-egress" {
+  name               = "unblock-bastion-egress"
+  project            = var.project_id
+  network            = module.forseti-private-connection.network
+  direction          = "EGRESS"
+  destination_ranges = [module.forseti-private-connection.forseti-server-vm-ip]
+  priority           = "1999"
 
-  name    = "forseti-bastion-to-vm-ssh-${module.forseti-shared-vpc.suffix}"
-  project = var.network_project
-  network = var.network
-  target_service_accounts = [module.forseti-shared-vpc.forseti-server-service-account,
-  module.forseti-shared-vpc.forseti-client-service-account]
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+}
+
+resource "google_compute_firewall" "forseti_bastion_to_server" {
+
+  name                    = "forseti-bastion-to-server-ssh-${module.forseti-private-connection.suffix}"
+  project                 = var.project_id
+  network                 = module.forseti-private-connection.network
+  target_service_accounts = [module.forseti-private-connection.forseti-server-service-account]
 
   source_ranges = ["${module.bastion.host-private-ip}/32"]
   direction     = "INGRESS"
@@ -91,7 +102,7 @@ resource "null_resource" "wait_for_server" {
     connection {
       type                = "ssh"
       user                = "ubuntu"
-      host                = module.forseti-shared-vpc.forseti-server-vm-ip
+      host                = module.forseti-private-connection.forseti-server-vm-ip
       private_key         = tls_private_key.main.private_key_pem
       bastion_host        = module.bastion.host
       bastion_port        = module.bastion.port
@@ -101,31 +112,7 @@ resource "null_resource" "wait_for_server" {
   }
 
   depends_on = [
-    google_compute_firewall.forseti_bastion_to_vm
-  ]
-}
-
-resource "null_resource" "wait_for_client" {
-  triggers = {
-    always_run = uuid()
-  }
-
-  provisioner "remote-exec" {
-    script = "${path.module}/scripts/wait-for-forseti.sh"
-
-    connection {
-      type                = "ssh"
-      user                = "ubuntu"
-      host                = module.forseti-shared-vpc.forseti-client-vm-ip
-      private_key         = tls_private_key.main.private_key_pem
-      bastion_host        = module.bastion.host
-      bastion_port        = module.bastion.port
-      bastion_private_key = module.bastion.private_key
-      bastion_user        = module.bastion.user
-    }
-  }
-
-  depends_on = [
-    google_compute_firewall.forseti_bastion_to_vm
+    google_compute_firewall.forseti_bastion_to_server,
+    google_compute_firewall.unblock-bastion-egress
   ]
 }

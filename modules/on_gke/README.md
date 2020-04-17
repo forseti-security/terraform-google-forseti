@@ -114,7 +114,7 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | inventory\_gcs\_summary\_enabled | GCS summary for inventory enabled | bool | `"true"` | no |
 | inventory\_retention\_days | Number of days to retain inventory data. | string | `"-1"` | no |
 | k8s\_config\_validator\_image | The container image used by the config-validator | string | `"gcr.io/forseti-containers/config-validator"` | no |
-| k8s\_config\_validator\_image\_tag | The tag for the config-validator image. | string | `"572e207"` | no |
+| k8s\_config\_validator\_image\_tag | The tag for the config-validator image. | string | `"8f579ca"` | no |
 | k8s\_forseti\_namespace | The Kubernetes namespace in which to deploy Forseti. | string | `"forseti"` | no |
 | k8s\_forseti\_orchestrator\_image | The container image for the Forseti orchestrator | string | `"gcr.io/forseti-containers/forseti"` | no |
 | k8s\_forseti\_orchestrator\_image\_tag | The tag for the container image for the Forseti orchestrator | string | `"v2.25.1"` | no |

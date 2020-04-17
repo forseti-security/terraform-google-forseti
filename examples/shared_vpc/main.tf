@@ -23,19 +23,19 @@ provider "google-beta" {
 }
 
 provider "local" {
-  version = "~> 1.3"
+  version = "~> 1.4"
 }
 
 provider "null" {
-  version = "~> 2.0"
+  version = "~> 2.1"
 }
 
 provider "template" {
-  version = "~> 2.0"
+  version = "~> 2.1"
 }
 
 provider "random" {
-  version = "~> 2.0"
+  version = "~> 2.2"
 }
 
 module "forseti" {

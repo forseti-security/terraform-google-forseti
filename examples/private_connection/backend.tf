@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,22 +14,9 @@
  * limitations under the License.
  */
 
-terraform {
-  required_version = ">= 0.12"
-}
-
-provider "google" {
-  version = "~> 2.12.0"
-}
-
-provider "google-beta" {
-  version = "~> 2.12.0"
-}
-
-provider "null" {
-  version = "~> 2.1"
-}
-
-provider "random" {
-  version = "~> 2.2"
-}
+# terraform {
+#   backend "gcs" {
+#     bucket  = "my-project-tfstate"
+#     prefix  = "terraform/forseti"
+#   }
+# }
