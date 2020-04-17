@@ -38,6 +38,8 @@ function wait_on_lock_files() {
 if [ ! "$(grep "apparmor=1" /etc/default/grub.d/50-cloudimg-settings.cfg)" ]; then
   echo "Forseti Startup - Ensure AppArmor is always enabled"
   sed -i.bak 's/\GRUB_CMDLINE_LINUX=.*\>/& apparmor=1 security=apparmor/' /etc/default/grub.d/50-cloudimg-settings.cfg
+  sed -i.bak 's/\GRUB_CMDLINE_LINUX_DEFAULT=.*\>/& apparmor=1 security=apparmor/' /etc/default/grub.d/50-cloudimg-settings.cfg
+  sudo update-grub
 fi
 
 # Ubuntu update.

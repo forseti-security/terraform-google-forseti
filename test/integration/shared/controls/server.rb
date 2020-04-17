@@ -64,13 +64,13 @@ control "server" do
     its(:stdout) { should match "ubuntu" }
   end
 
-  describe command("cat /etc/default/grub.d/50-cloudimg-settings.cfg | grep GRUB_CMDLINE_LINUX=") do
+  describe command("cat /etc/default/grub.d/50-cloudimg-settings.cfg | grep GRUB_CMDLINE_LINUX_DEFAULT=") do
     its(:exit_status) { should eq 0 }
     its(:stderr) { should eq "" }
-    its(:stdout) { should match "GRUB_CMDLINE_LINUX=\"scsi_mod.use_blk_mq=Y apparmor=1 security=apparmor\"" }
+    its(:stdout) { should match "GRUB_CMDLINE_LINUX_DEFAULT=\"console=ttyS0 apparmor=1 security=apparmor\"" }
   end
 
-  describe command("grep '^\\s*linux' /boot/grub/grub.cfg | grep -v apparmor=1") do
+  describe command("grep '^\\s*linux' /boot/grub/grub.cfg | grep -v recovery | grep -v apparmor=1") do
     its(:exit_status) { should eq 1 }
     its(:stderr) { should eq "" }
     its(:stdout) { should eq "" }
