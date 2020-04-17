@@ -19,8 +19,8 @@ terraform {
   required_providers {
     google   = "~> 3.7"
     local    = "~> 1.4"
-    null     = "~> 2.0"
-    random   = "~> 2.0"
-    template = "~> 2.0"
+    null     = "~> 2.1"
+    random   = "~> 2.2"
+    template = "~> 2.1"
   }
 }

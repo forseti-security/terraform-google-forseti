@@ -19,15 +19,15 @@ provider "google" {
 }
 
 provider "null" {
-  version = "~> 2.0"
+  version = "~> 2.1"
 }
 
 provider "template" {
-  version = "~> 2.0"
+  version = "~> 2.1"
 }
 
 provider "random" {
-  version = "~> 2.0"
+  version = "~> 2.2"
 }
 
 resource "random_string" "suffix" {
