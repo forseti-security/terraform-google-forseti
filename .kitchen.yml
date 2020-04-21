@@ -54,6 +54,7 @@ suites:
           backend: ssh
           controls:
             - config-validator
+            - install-simple
             - policy-library
             - server
             - server-config

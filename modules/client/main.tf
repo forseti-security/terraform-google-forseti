@@ -62,6 +62,7 @@ data "template_file" "forseti_client_startup_script" {
     forseti_version          = var.forseti_version
     forseti_home             = var.forseti_home
     forseti_client_conf_path = local.client_conf_path
+    google_cloud_sdk_version = var.google_cloud_sdk_version
     storage_bucket_name      = var.client_gcs_module.forseti-client-storage-bucket
   }
 }

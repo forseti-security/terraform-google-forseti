@@ -43,12 +43,21 @@ if [ ! "$(grep "apparmor=1" /etc/default/grub.d/50-cloudimg-settings.cfg)" ]; th
 fi
 
 # Ubuntu update.
-echo "Forseti Startup - Updating Ubuntu."
+echo "Forseti Startup - Upgrading Ubuntu packages."
 sudo apt-get update -y
 wait_on_lock_files
 sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade
+
+# Install Ubuntu packages
+echo "Forseti Startup - Installing Ubuntu packages."
 sudo apt-get update -y
-sudo apt-get --assume-yes install google-cloud-sdk git unzip
+sudo apt-get install -y apt-transport-https ca-certificates git gnupg unzip
+
+# Install Google Cloud SDK
+echo "Forseti Startup - Installing Google Cloud SDK."
+echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
+sudo apt-get update -y && sudo apt-get install -y google-cloud-sdk=${google_cloud_sdk_version}
 
 if ! [ -e "/usr/sbin/google-fluentd" ]; then
   echo "Forseti Startup - Installing GCP Logging agent."

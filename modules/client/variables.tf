@@ -124,6 +124,12 @@ variable "manage_firewall_rules" {
   default     = "true"
 }
 
+variable "google_cloud_sdk_version" {
+  description = "Version of the Google Cloud SDK to install"
+  default     = "289.0.0-0"
+  type        = string
+}
+
 #--------------------#
 # Forseti client IAM #
 #--------------------#
