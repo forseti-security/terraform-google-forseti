@@ -1,4 +1,4 @@
-# Copyright 2019 Google LLC
+# Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,13 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-steps:
-- name: 'gcr.io/cloud-foundation-cicd/cft/developer-tools:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-  id: 'lint'
-  args: ['/usr/local/bin/test_lint.sh']
-tags:
-- 'ci'
-- 'lint'
-substitutions:
-  _DOCKER_IMAGE_DEVELOPER_TOOLS: 'cft/developer-tools'
-  _DOCKER_TAG_VERSION_DEVELOPER_TOOLS: '0.4.6'
+forseti_server_google_cloud_sdk_version = attribute('forseti-server-google-cloud-sdk-version')
+
+control 'install-simple' do
+  title "Tests specific to the install-simple example"
+
+  describe command("apt list google-cloud-sdk") do
+    its(:exit_status) { should eq 0 }
+    its(:stdout) { should match("#{forseti_server_google_cloud_sdk_version}") }
+  end
+end

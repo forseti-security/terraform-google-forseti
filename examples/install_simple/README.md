@@ -34,6 +34,7 @@ This configuration is used to simply install Forseti. It includes a full Cloud S
 | forseti-client-storage-bucket | Forseti Client storage bucket |
 | forseti-client-vm-ip | Forseti Client VM private IP address |
 | forseti-client-vm-name | Forseti Client VM name |
+| forseti-server-google-cloud-sdk-version | Version of the Google Cloud SDK installed on the Forseti server |
 | forseti-server-service-account | Forseti Server service account |
 | forseti-server-storage-bucket | Forseti Server storage bucket |
 | forseti-server-vm-internal-dns | Forseti Server internal DNS |

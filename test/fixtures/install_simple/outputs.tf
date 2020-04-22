@@ -33,6 +33,11 @@ output "forseti-client-service-account" {
   value       = module.forseti-install-simple.forseti-client-service-account
 }
 
+output "forseti-server-google-cloud-sdk-version" {
+  description = "Version of the Google Cloud SDK installed on the Forseti server"
+  value       = module.forseti-install-simple.forseti-server-google-cloud-sdk-version
+}
+
 output "forseti-server-vm-internal-dns" {
   description = "Forseti Server internal DNS"
   value       = module.forseti-install-simple.forseti-server-vm-internal-dns

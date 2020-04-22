@@ -121,6 +121,7 @@ module "client" {
   client_iam_module               = module.client_iam
   client_gcs_module               = module.client_gcs
   client_config_module            = module.client_config
+  google_cloud_sdk_version        = var.google_cloud_sdk_version
 
   services = google_project_service.main.*.service
 }
@@ -156,6 +157,7 @@ module "server" {
   server_ssh_allow_ranges         = var.server_ssh_allow_ranges
   subnetwork                      = var.subnetwork
   suffix                          = local.random_hash
+  google_cloud_sdk_version        = var.google_cloud_sdk_version
 
   policy_library_home                    = var.policy_library_home
   policy_library_repository_url          = var.policy_library_repository_url

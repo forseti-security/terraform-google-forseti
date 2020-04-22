@@ -84,6 +84,7 @@ data "template_file" "forseti_server_startup_script" {
     forseti_scripts                        = var.forseti_scripts
     forseti_server_conf_path               = local.server_conf_path
     forseti_version                        = var.forseti_version
+    google_cloud_sdk_version               = var.google_cloud_sdk_version
     mailjet_enabled                        = var.mailjet_enabled
     policy_library_home                    = var.policy_library_home
     policy_library_sync_enabled            = var.policy_library_sync_enabled

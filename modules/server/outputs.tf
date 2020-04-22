@@ -33,3 +33,8 @@ output "forseti-server-vm-internal-dns" {
   description = "Forseti Server internal DNS"
   value       = "${google_compute_instance.forseti-server.name}.${google_compute_instance.forseti-server.zone}.c.${var.project_id}.internal"
 }
+
+output "google-cloud-sdk-version" {
+  description = "Version of the Google Cloud SDK installed"
+  value       = var.google_cloud_sdk_version
+}

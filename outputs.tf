@@ -65,6 +65,11 @@ output "forseti-server-git-public-key-openssh" {
   value       = module.server.forseti-server-git-public-key-openssh
 }
 
+output "forseti-server-google-cloud-sdk-version" {
+  description = "Version of the Google Cloud SDK installed on the Forseti server"
+  value       = module.server.google-cloud-sdk-version
+}
+
 output "forseti-server-service-account" {
   description = "Forseti Server service account"
   value       = module.server_iam.forseti-server-service-account
