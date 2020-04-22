@@ -251,6 +251,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | forseti\_version | The version of Forseti to install | string | `"v2.25.1"` | no |
 | forwarding\_rule\_enabled | Forwarding rule scanner enabled. | bool | `"false"` | no |
 | forwarding\_rule\_violations\_should\_notify | Notify for forwarding rule violations | bool | `"true"` | no |
+| google\_cloud\_sdk\_version | Version of the Google Cloud SDK to install | string | `"289.0.0-0"` | no |
 | group\_enabled | Group scanner enabled. | bool | `"true"` | no |
 | groups\_settings\_disable\_polling | Whether to disable polling for the G Suite Groups API | bool | `"false"` | no |
 | groups\_settings\_enabled | Groups settings scanner enabled. | bool | `"true"` | no |
@@ -360,6 +361,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | forseti-cloudsql-password | CloudSQL password |
 | forseti-cloudsql-user | CloudSQL user |
 | forseti-server-git-public-key-openssh | The public OpenSSH key generated to allow the Forseti Server to clone the policy library repository. |
+| forseti-server-google-cloud-sdk-version | Version of the Google Cloud SDK installed on the Forseti server |
 | forseti-server-service-account | Forseti Server service account |
 | forseti-server-storage-bucket | Forseti Server storage bucket |
 | forseti-server-vm-internal-dns | Forseti Server internal DNS |
