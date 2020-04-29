@@ -64,6 +64,7 @@ module "forseti-host-project" {
     "sqladmin.googleapis.com",
     "logging.googleapis.com",
     "monitoring.googleapis.com",
+    "servicenetworking.googleapis.com",
   ]
 }
 
