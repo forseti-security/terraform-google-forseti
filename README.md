@@ -1,16 +1,16 @@
 # Forseti Terraform Module
 
-The Forseti Terraform module is the only supported method of deploying [Forseti Security](https://forsetisecurity.org/). 
-The default infrastructure for Forseti is Google Compute Engine. For more information on installing Forseti on Google 
-Kubernetes Engine (GKE), please see the 
+The Forseti Terraform module is the only supported method of deploying [Forseti Security](https://forsetisecurity.org/).
+The default infrastructure for Forseti is Google Compute Engine. For more information on installing Forseti on Google
+Kubernetes Engine (GKE), please see the
 [detailed guide on the Forseti Security website](https://forsetisecurity.org/docs/latest/setup/forseti-on-gke.html).
 
 ## Google Cloud Shell Walkthrough
-A Google Cloud Shell Walkthrough has been setup to make it easy for users who are new to Forseti and Terraform. This 
-walkthrough provides a set of instructions to get a default installation of Forseti setup that can be used in a 
+A Google Cloud Shell Walkthrough has been setup to make it easy for users who are new to Forseti and Terraform. This
+walkthrough provides a set of instructions to get a default installation of Forseti setup that can be used in a
 production environment.
 
-If you are familiar with Terraform and would like to run Terraform from a different machine, you can skip this 
+If you are familiar with Terraform and would like to run Terraform from a different machine, you can skip this
 walkthrough and move onto the [How to Deploy](#how-to-deploy) section.
 
 [![Open in Google Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fforseti-security%2Fterraform-google-forseti.git&cloudshell_git_branch=modulerelease521&cloudshell_working_dir=examples/install_simple&cloudshell_image=gcr.io%2Fgraphite-cloud-shell-images%2Fterraform%3Alatest&cloudshell_tutorial=.%2Ftutorial.md)
@@ -18,11 +18,11 @@ walkthrough and move onto the [How to Deploy](#how-to-deploy) section.
 ## How to Deploy
 
 ### Install Terraform
-Terraform version 0.12 is required for this module, which can be downloaded from the 
+Terraform version 0.12 is required for this module, which can be downloaded from the
 [Terraform website](https://www.terraform.io/downloads.html). Terraform version 0.12.20 or greater is recommended.
 
 ### Google Credentials
-In order to run this module you will need to be authenticated as a user that has access to the project and can 
+In order to run this module you will need to be authenticated as a user that has access to the project and can
 create/authorize service accounts at both the organization and project levels. To login to GCP from a shell, run:
 
 ```bash
@@ -30,16 +30,16 @@ gcloud auth login
 ```
 
 ### Create a new Project
-Create a new GCP project to deploy Forseti into. The 
-[Google Project Factory Terraform](https://github.com/terraform-google-modules/terraform-google-project-factory) module 
+Create a new GCP project to deploy Forseti into. The
+[Google Project Factory Terraform](https://github.com/terraform-google-modules/terraform-google-project-factory) module
 can be used to provision the project with the required APIs enabled, along with a Shared VPC connection.
 
 ### Create the Service Account and Enable Required APIs
-The Service Account and required APIs can be setup automatically with a provided script. To perform these steps 
+The Service Account and required APIs can be setup automatically with a provided script. To perform these steps
 manually, review the [Requirements](#requirements) section.
 
-These commands will download and run the helper script. The script will create a service account called 
-`cloud-foundation-forseti-<suffix>`, and assign it the proper roles. The service account credentials will be downloaded 
+These commands will download and run the helper script. The script will create a service account called
+`cloud-foundation-forseti-<suffix>`, and assign it the proper roles. The service account credentials will be downloaded
 to `${PWD}/credentials.json`.
 
 ```bash
@@ -61,21 +61,20 @@ source <(curl -sSL https://raw.githubusercontent.com/forseti-security/terraform-
 ```
 
 #### Usage for Real-time Enforcer
-If you are using the real time policy enforcer, you will need to generate a
-service account with a few extra roles. This can be enabled with the `-e`
-flag:
+If you are using the real time policy enforcer, you will need to generate a service account with a few extra roles.
+This can be enabled with the `-e` flag:
 
 ```bash
 source <(curl -sSL https://raw.githubusercontent.com/forseti-security/terraform-google-forseti/modulerelease521/helpers/setup.sh) -e -p PROJECT_ID -o ORG_ID
 ```
 
 ### Terraform Configuration
-Example configurations are included in the [examples](./examples/) directory. You can copy these examples or use the 
+Example configurations are included in the [examples](./examples/) directory. You can copy these examples or use the
 snippet below as a starting point to your own custom configuration.
 
-The default Forseti Server VM [machine type](https://cloud.google.com/compute/docs/machine-types) and Cloud SQL 
-[machine type](https://cloud.google.com/sql/pricing#2nd-gen-pricing) have been set to `n1-standard-8` and 
-`db-n1-standard-4` to account for larger GCP environments. These can be changed by providing the `server_type` and 
+The default Forseti Server VM [machine type](https://cloud.google.com/compute/docs/machine-types) and Cloud SQL
+[machine type](https://cloud.google.com/sql/pricing#2nd-gen-pricing) have been set to `n1-standard-8` and
+`db-n1-standard-4` to account for larger GCP environments. These can be changed by providing the `server_type` and
 `cloudsql_type` variables.
 
 Create a file named `main.tf` in an empty directory and copy the contents below into the file.
@@ -92,7 +91,7 @@ Create a file named `main.tf` in an empty directory and copy the contents below 
     }
 ```
 
-Forseti provides many optional settings for users to customize for their environment and security requirements. View 
+Forseti provides many optional settings for users to customize for their environment and security requirements. View
 the list of [inputs](#inputs) to see all of the available options.
 
 ### Run Terraform
@@ -111,35 +110,35 @@ terraform apply
 Review the Terraform plan and enter `yes` to perform these actions.
 
 ### Cleanup
-Remember to cleanup the service account used to deploy Forseti. A provided helper script will delete the service 
+Remember to cleanup the service account used to deploy Forseti. A provided helper script will delete the service
 account, and delete the credentials files.
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/forseti-security/terraform-google-forseti/modulerelease521/helpers/cleanup.sh | 
+curl -sSL https://raw.githubusercontent.com/forseti-security/terraform-google-forseti/modulerelease521/helpers/cleanup.sh |
 bash -s -- -p PROJECT_ID -o ORG_ID -s cloud-foundation-forseti-<suffix>
 ```
 
 #### Usage for Real-Time Enforcer
-If the service account was provisioned with the roles needed for the real time
-policy enforcer, you can set the `-e` flag to clean up those roles as well:
+If the service account was provisioned with the roles needed for the real time policy enforcer, you can set the `-e`
+flag to clean up those roles as well:
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/forseti-security/terraform-google-forseti/modulerelease521/helpers/cleanup.sh | 
+curl -sSL https://raw.githubusercontent.com/forseti-security/terraform-google-forseti/modulerelease521/helpers/cleanup.sh |
 bash -s -- -e -p PROJECT_ID -o ORG_ID -s cloud-foundation-forseti-<suffix>
 ```
 
 ## Forseti Configuration
-Now that Forseti has been deployed, there are additional steps that you can follow to further 
-[configure Forseti](https://forsetisecurity.org/docs/latest/configure/). Some of the commonly used features are listed 
+Now that Forseti has been deployed, there are additional steps that you can follow to further
+[configure Forseti](https://forsetisecurity.org/docs/latest/configure/). Some of the commonly used features are listed
 below:
 
 - [Enable G Suite Scanning](https://forsetisecurity.org/docs/latest/configure/inventory/gsuite.html)
 - [Enable Cloud Security Command Center Notifications](https://forsetisecurity.org/docs/latest/configure/notifier/index.html#cloud-scc-notification)
-  - After activating this integration, add the Source ID into the Terraform configuration using the `cscc_source_id` 
+  - After activating this integration, add the Source ID into the Terraform configuration using the `cscc_source_id`
   input and re-run the Terraform apply command.
 
 ## Requirements
-This section describes in detail the requirements necessary to deploy Forseti. The setup helper script automates the 
+This section describes in detail the requirements necessary to deploy Forseti. The setup helper script automates the
 service account creation and enabling the APIs for you. Read through this section if you are not using the setup script.
 
 ### Service Account

@@ -87,8 +87,8 @@ resource "google_project_iam_member" "cluster_service_account-storage_reader" {
 #-----------------------#
 module "forseti" {
   providers = {
-    kubernetes = "kubernetes.forseti"
-    helm       = "helm.forseti"
+    kubernetes = kubernetes.forseti
+    helm       = helm.forseti
   }
   source     = "../../modules/on_gke"
   domain     = var.domain
