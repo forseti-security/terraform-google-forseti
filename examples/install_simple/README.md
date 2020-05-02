@@ -18,7 +18,6 @@ This configuration is used to simply install Forseti. It includes a full Cloud S
 | instance\_metadata | Metadata key/value pairs to make available from within the client and server instances. | map(string) | `<map>` | no |
 | instance\_tags | Tags to assign the client and server instances. | list(string) | `<list>` | no |
 | network | The VPC where the Forseti client and server will be created | string | n/a | yes |
-| network\_project | The project containing the VPC and subnetwork where the Forseti client and server will be created | string | n/a | yes |
 | org\_id | GCP Organization ID that Forseti will have purview over | string | n/a | yes |
 | private | Private client and server instances (no public IPs) | bool | `"true"` | no |
 | project\_id | The ID of an existing Google project where Forseti will be installed | string | n/a | yes |
