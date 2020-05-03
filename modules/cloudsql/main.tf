@@ -63,7 +63,10 @@ resource "google_service_networking_connection" "private_vpc_connection" {
   network                 = data.google_compute_network.cloudsql_private_network.self_link
   service                 = "servicenetworking.googleapis.com"
   reserved_peering_ranges = [google_compute_global_address.private_ip_address[count.index].name]
-  depends_on              = [google_project_service.service_networking_network_project]
+  depends_on = [
+    google_compute_global_address.private_ip_address,
+    google_project_service.service_networking_network_project,
+  ]
 }
 
 #----------------------#
