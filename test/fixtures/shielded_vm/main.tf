@@ -22,6 +22,7 @@ module "shielded-vm" {
   domain           = var.domain
   network          = var.network
   subnetwork       = var.subnetwork
+  network_project  = var.network_project
   server_private   = true
   client_private   = true
   cloudsql_private = true

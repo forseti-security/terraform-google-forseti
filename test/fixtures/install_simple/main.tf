@@ -93,7 +93,6 @@ module "forseti-install-simple" {
   region             = var.region
   network            = module.forseti-service-network-install-simple.network_name
   subnetwork         = module.forseti-service-network-install-simple.subnets_names[0]
-  network_project    = var.network_project
   forseti_version    = var.forseti_version
 
   config_validator_enabled = var.config_validator_enabled

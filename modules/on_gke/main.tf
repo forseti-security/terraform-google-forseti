@@ -134,7 +134,7 @@ data "http" "server_config_contents" {
     "Content-MD5" = module.server_config.forseti-server-config-md5
   }
 
-  depends_on = ["data.google_storage_object_signed_url.file_url"]
+  depends_on = [data.google_storage_object_signed_url.file_url]
 }
 
 //*****************************************
@@ -177,7 +177,7 @@ resource "kubernetes_service_account" "tiller" {
     namespace = local.kubernetes_namespace
   }
   depends_on = [
-    "kubernetes_namespace.forseti"
+    kubernetes_namespace.forseti
   ]
 }
 
@@ -195,7 +195,7 @@ resource "kubernetes_role" "tiller" {
     resources  = ["*"]
     verbs      = ["*"]
   }
-  depends_on = ["kubernetes_namespace.forseti"]
+  depends_on = [kubernetes_namespace.forseti]
 }
 
 resource "kubernetes_role_binding" "tiller" {
@@ -226,10 +226,10 @@ resource "helm_release" "forseti-security" {
   chart         = "forseti-security"
   recreate_pods = var.recreate_pods
   depends_on = [
-    "google_service_account_iam_binding.forseti_client_workload_identity",
-    "google_service_account_iam_binding.forseti_server_workload_identity",
-    "kubernetes_namespace.forseti",
-    "kubernetes_role_binding.tiller"
+    google_service_account_iam_binding.forseti_client_workload_identity,
+    google_service_account_iam_binding.forseti_server_workload_identity,
+    kubernetes_namespace.forseti,
+    kubernetes_role_binding.tiller
   ]
 
   set {
@@ -405,7 +405,7 @@ data "kubernetes_service" "forseti_server" {
     name      = "forseti-server"
     namespace = local.kubernetes_namespace
   }
-  depends_on = ["helm_release.forseti-security"]
+  depends_on = [helm_release.forseti-security]
 }
 
 #--------------------#

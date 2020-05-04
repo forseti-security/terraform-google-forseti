@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,21 @@
  * limitations under the License.
  */
 
+variable "domain" {
+  description = "The domain associated with the GCP Organization ID"
+}
+
 variable "forseti_version" {
   description = "The version of Forseti to install"
   default     = "master"
+}
+
+variable "network" {
+  description = "Name of the shared VPC"
+}
+
+variable "network_project" {
+  description = "Name of the shared VPC"
 }
 
 variable "org_id" {
@@ -25,14 +37,6 @@ variable "org_id" {
 
 variable "project_id" {
   description = "The ID of an existing Google project where Forseti will be installed"
-}
-
-variable "domain" {
-  description = "The domain associated with the GCP Organization ID"
-}
-
-variable "network" {
-  description = "Name of the shared VPC"
 }
 
 variable "subnetwork" {

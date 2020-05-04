@@ -43,10 +43,6 @@ variable "network" {
   description = "Name of the shared VPC"
 }
 
-variable "network_project" {
-  description = "Name of the shared VPC"
-}
-
 variable "org_id" {
   description = "GCP Organization ID that Forseti will have purview over"
 }

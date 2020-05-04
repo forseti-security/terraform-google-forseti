@@ -59,10 +59,6 @@ variable "network" {
   description = "The VPC where the Forseti client and server will be created"
 }
 
-variable "network_project" {
-  description = "The project containing the VPC and subnetwork where the Forseti client and server will be created"
-}
-
 variable "org_id" {
   description = "GCP Organization ID that Forseti will have purview over"
 }
