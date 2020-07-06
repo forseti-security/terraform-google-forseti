@@ -24,6 +24,7 @@ locals {
     "roles/cloudsql.client",
     "roles/logging.logWriter",
     "roles/iam.serviceAccountTokenCreator",
+    "roles/monitoring.metricWriter",
   ]
   server_write_roles = [
     "roles/compute.securityAdmin",
