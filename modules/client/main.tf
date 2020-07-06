@@ -156,6 +156,7 @@ resource "google_compute_firewall" "forseti-client-deny-all" {
   target_service_accounts = [var.client_iam_module.forseti-client-service-account]
   source_ranges           = ["0.0.0.0/0"]
   priority                = "200"
+  enable_logging          = var.firewall_logging
 
   deny {
     protocol = "icmp"
@@ -180,6 +181,7 @@ resource "google_compute_firewall" "forseti-client-ssh-external" {
   target_service_accounts = [var.client_iam_module.forseti-client-service-account]
   source_ranges           = var.client_ssh_allow_ranges
   priority                = "100"
+  enable_logging          = var.firewall_logging
 
   allow {
     protocol = "tcp"
@@ -197,6 +199,7 @@ resource "google_compute_firewall" "forseti-client-ssh-iap" {
   target_service_accounts = [var.client_iam_module.forseti-client-service-account]
   source_ranges           = ["35.235.240.0/20"]
   priority                = "100"
+  enable_logging          = var.firewall_logging
 
   allow {
     protocol = "tcp"

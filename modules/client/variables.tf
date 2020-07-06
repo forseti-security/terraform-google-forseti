@@ -130,6 +130,12 @@ variable "google_cloud_sdk_version" {
   type        = string
 }
 
+variable "firewall_logging" {
+  description = "Enable firewall logging"
+  type        = bool
+  default     = false
+}
+
 #--------------------#
 # Forseti client IAM #
 #--------------------#

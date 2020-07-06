@@ -110,6 +110,7 @@ module "client" {
   client_type                     = var.client_type
   network_project                 = local.network_project
   network                         = var.network
+  firewall_logging                = var.firewall_logging
   suffix                          = local.random_hash
   client_region                   = var.client_region
   client_instance_metadata        = var.client_instance_metadata
@@ -152,6 +153,7 @@ module "server" {
   network                         = var.network
   network_project                 = local.network_project
   manage_firewall_rules           = var.manage_firewall_rules
+  firewall_logging                = var.firewall_logging
   server_grpc_allow_ranges        = var.server_grpc_allow_ranges
   server_instance_metadata        = var.server_instance_metadata
   server_ssh_allow_ranges         = var.server_ssh_allow_ranges
