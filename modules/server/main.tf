@@ -294,6 +294,7 @@ resource "google_compute_instance" "forseti-server" {
   project                   = var.project_id
   machine_type              = var.server_type
   tags                      = var.server_tags
+  labels                    = var.server_labels
   allow_stopping_for_update = true
   metadata                  = var.server_instance_metadata
   metadata_startup_script   = data.template_file.forseti_server_startup_script.rendered

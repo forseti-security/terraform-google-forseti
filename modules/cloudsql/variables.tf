@@ -99,3 +99,9 @@ variable "cloudsql_availability_type" {
   description = "Whether instance should be set up for high availability (REGIONAL) or single zone (ZONAL)."
   default     = null
 }
+
+variable "cloudsql_labels" {
+  description = "CloudSQL instance labels"
+  type        = map(string)
+  default     = {}
+}

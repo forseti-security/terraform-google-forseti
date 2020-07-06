@@ -173,6 +173,13 @@ variable "firewall_logging" {
   type        = bool
   default     = false
 }
+
+variable "server_labels" {
+  description = "Server instance labels"
+  type        = map(string)
+  default     = {}
+}
+
 #--------#
 # Config #
 #--------#

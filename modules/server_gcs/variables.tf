@@ -57,6 +57,12 @@ variable "bucket_cai_lifecycle_age" {
   default     = "14"
 }
 
+variable "gcs_labels" {
+  description = "GCS bucket labels"
+  type        = map(string)
+  default     = {}
+}
+
 #-------#
 # Flags #
 #-------#
@@ -65,3 +71,4 @@ variable "enable_cai_bucket" {
   type        = bool
   default     = true
 }
+

@@ -136,6 +136,12 @@ variable "firewall_logging" {
   default     = false
 }
 
+variable "client_labels" {
+  description = "Client instance labels"
+  type        = map(string)
+  default     = {}
+}
+
 #--------------------#
 # Forseti client IAM #
 #--------------------#

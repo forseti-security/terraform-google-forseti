@@ -32,6 +32,7 @@ resource "google_storage_bucket" "client_config" {
   project            = var.project_id
   force_destroy      = true
   bucket_policy_only = true
+  labels             = var.gcs_labels
 
   depends_on = [null_resource.services-dependency]
 }

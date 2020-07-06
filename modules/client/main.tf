@@ -87,6 +87,7 @@ resource "google_compute_instance" "forseti-client" {
   project                   = var.project_id
   machine_type              = var.client_type
   tags                      = var.client_tags
+  labels                    = var.client_labels
   allow_stopping_for_update = true
   metadata                  = var.client_instance_metadata
   metadata_startup_script   = data.template_file.forseti_client_startup_script[0].rendered
