@@ -34,6 +34,7 @@ resource "google_storage_bucket" "server_config" {
   storage_class      = var.storage_bucket_class
   force_destroy      = true
   bucket_policy_only = true
+  labels             = var.gcs_labels
 
   depends_on = [null_resource.services-dependency]
 }
@@ -46,6 +47,7 @@ resource "google_storage_bucket" "cai_export" {
   storage_class      = var.storage_bucket_class
   force_destroy      = true
   bucket_policy_only = true
+  labels             = var.gcs_labels
 
   lifecycle_rule {
     action {

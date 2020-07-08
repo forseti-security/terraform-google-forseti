@@ -24,3 +24,7 @@ output "topic" {
   value       = google_pubsub_topic.main.name
 }
 
+output "writer_identity" {
+  description = "The identity of the sink writer"
+  value       = google_logging_organization_sink.main.writer_identity
+}

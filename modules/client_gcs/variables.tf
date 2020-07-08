@@ -49,3 +49,9 @@ variable "services" {
   type        = list(string)
   default     = []
 }
+
+variable "gcs_labels" {
+  description = "GCS bucket labels"
+  type        = map(string)
+  default     = {}
+}

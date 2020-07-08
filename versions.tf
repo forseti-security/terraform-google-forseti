@@ -17,15 +17,45 @@
 terraform {
   required_version = ">= 0.12"
   required_providers {
-    google      = "~> 3.7"
-    google-beta = "~> 3.7"
-    helm        = "~> 0.10"
-    http        = "~> 1.2"
-    kubernetes  = "~> 1.10"
-    local       = "~> 1.4"
-    null        = "~> 2.1"
-    random      = "~> 2.2"
-    template    = "~> 2.1"
-    tls         = "~> 2.1"
+    google = {
+      source  = "hashicorp/google"
+      version = "~> 3.7"
+    }
+    google-beta = {
+      source  = "terraform-providers/google-beta"
+      version = "~> 3.7"
+    }
+    helm = {
+      source  = "hashicorp/helm"
+      version = "~> 0.10"
+    }
+    http = {
+      source  = "hashicorp/http"
+      version = "~> 1.2"
+    }
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "~> 1.10"
+    }
+    local = {
+      source  = "hashicorp/local"
+      version = "~> 1.4"
+    }
+    null = {
+      source  = "hashicorp/null"
+      version = "~> 2.1"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 2.2"
+    }
+    template = {
+      source  = "hashicorp/template"
+      version = "~> 2.1"
+    }
+    tls = {
+      source  = "hashicorp/tls"
+      version = "~> 2.1"
+    }
   }
 }

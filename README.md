@@ -199,6 +199,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | client\_boot\_image | GCE Forseti Client boot image | string | `"ubuntu-os-cloud/ubuntu-1804-lts"` | no |
 | client\_enabled | Enable Client VM | bool | `"true"` | no |
 | client\_instance\_metadata | Metadata key/value pairs to make available from within the client instance. | map(string) | `<map>` | no |
+| client\_labels | Client instance labels | map(string) | `<map>` | no |
 | client\_private | Private GCE Forseti Client VM (no public IP) | bool | `"false"` | no |
 | client\_region | GCE Forseti Client region | string | `"us-central1"` | no |
 | client\_service\_account | Service account email to assign to the Client VM. If empty, a new Service Account will be created | string | `""` | no |
@@ -221,6 +222,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | cloudsql\_db\_port | CloudSQL database port | string | `"3306"` | no |
 | cloudsql\_db\_user | CloudSQL database user | string | `"forseti_security_user"` | no |
 | cloudsql\_disk\_size | The size of data disk, in GB. Size of a running instance cannot be reduced but can be increased. | string | `"25"` | no |
+| cloudsql\_labels | CloudSQL instance labels | map(string) | `<map>` | no |
 | cloudsql\_net\_write\_timeout | See MySQL documentation: https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_net_write_timeout | string | `"240"` | no |
 | cloudsql\_private | Whether to enable private network and not to create public IP for CloudSQL Instance | bool | `"false"` | no |
 | cloudsql\_proxy\_arch | CloudSQL Proxy architecture | string | `"linux.amd64"` | no |
@@ -251,6 +253,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | enabled\_apis\_violations\_should\_notify | Notify for enabled APIs violations | bool | `"true"` | no |
 | excluded\_resources | A list of resources to exclude during the inventory phase. | list(string) | `<list>` | no |
 | external\_project\_access\_violations\_should\_notify | Notify for External Project Access violations | bool | `"true"` | no |
+| firewall\_logging | Enable firewall logging | bool | `"false"` | no |
 | firewall\_rule\_enabled | Firewall rule scanner enabled. | bool | `"true"` | no |
 | firewall\_rule\_violations\_should\_notify | Notify for Firewall rule violations | bool | `"true"` | no |
 | folder\_id | GCP Folder that the Forseti project will be deployed into | string | `""` | no |
@@ -263,6 +266,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | forseti\_version | The version of Forseti to install | string | `"v2.25.1"` | no |
 | forwarding\_rule\_enabled | Forwarding rule scanner enabled. | bool | `"false"` | no |
 | forwarding\_rule\_violations\_should\_notify | Notify for forwarding rule violations | bool | `"true"` | no |
+| gcs\_labels | GCS bucket labels | map(string) | `<map>` | no |
 | google\_cloud\_sdk\_version | Version of the Google Cloud SDK to install | string | `"289.0.0-0"` | no |
 | group\_enabled | Group scanner enabled. | bool | `"true"` | no |
 | groups\_settings\_disable\_polling | Whether to disable polling for the G Suite Groups API | bool | `"false"` | no |
@@ -334,6 +338,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | server\_boot\_image | GCE Forseti Server boot image - Currently only Ubuntu is supported | string | `"ubuntu-os-cloud/ubuntu-1804-lts"` | no |
 | server\_grpc\_allow\_ranges | List of CIDRs that will be allowed gRPC access to forseti server | list(string) | `<list>` | no |
 | server\_instance\_metadata | Metadata key/value pairs to make available from within the server instance. | map(string) | `<map>` | no |
+| server\_labels | Server instance labels | map(string) | `<map>` | no |
 | server\_private | Private GCE Forseti Server VM (no public IP) | bool | `"false"` | no |
 | server\_region | GCE Forseti Server region | string | `"us-central1"` | no |
 | server\_service\_account | Service account email to assign to the Server VM. If empty, a new Service Account will be created | string | `""` | no |

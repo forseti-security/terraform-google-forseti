@@ -83,6 +83,7 @@ resource "google_sql_database_instance" "master" {
     activation_policy = "ALWAYS"
     disk_size         = var.cloudsql_disk_size
     availability_type = var.cloudsql_availability_type
+    user_labels       = var.cloudsql_labels
 
     database_flags {
       name  = "net_write_timeout"

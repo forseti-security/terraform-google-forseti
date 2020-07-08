@@ -90,6 +90,8 @@ resource "google_dns_managed_zone" "forseti-private-zone" {
       network_url = google_compute_network.network.self_link
     }
   }
+
+  depends_on = [google_project_service.main]
 }
 
 resource "google_dns_record_set" "forseti-private-zone-cname" {

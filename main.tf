@@ -108,8 +108,10 @@ module "client" {
   forseti_version                 = var.forseti_version
   forseti_repo_url                = var.forseti_repo_url
   client_type                     = var.client_type
+  client_labels                   = var.client_labels
   network_project                 = local.network_project
   network                         = var.network
+  firewall_logging                = var.firewall_logging
   suffix                          = local.random_hash
   client_region                   = var.client_region
   client_instance_metadata        = var.client_instance_metadata
@@ -142,6 +144,7 @@ module "server" {
   server_boot_disk_type           = var.server_boot_disk_type
   server_shielded_instance_config = var.server_shielded_instance_config
   server_tags                     = var.server_tags
+  server_labels                   = var.server_labels
   server_access_config            = var.server_access_config
   server_private                  = var.server_private
   cloudsql_proxy_arch             = var.cloudsql_proxy_arch
@@ -152,6 +155,7 @@ module "server" {
   network                         = var.network
   network_project                 = local.network_project
   manage_firewall_rules           = var.manage_firewall_rules
+  firewall_logging                = var.firewall_logging
   server_grpc_allow_ranges        = var.server_grpc_allow_ranges
   server_instance_metadata        = var.server_instance_metadata
   server_ssh_allow_ranges         = var.server_ssh_allow_ranges
@@ -190,6 +194,7 @@ module "cloudsql" {
   cloudsql_type              = var.cloudsql_type
   cloudsql_user              = var.cloudsql_db_user
   cloudsql_user_host         = var.cloudsql_user_host
+  cloudsql_labels            = var.cloudsql_labels
   enable_service_networking  = var.enable_service_networking
   network                    = var.network
   network_project            = var.network_project
@@ -220,6 +225,7 @@ module "server_gcs" {
   storage_bucket_class     = var.storage_bucket_class
   services                 = google_project_service.main.*.service
   suffix                   = local.random_hash
+  gcs_labels               = var.gcs_labels
 }
 
 module "server_rules" {
@@ -367,6 +373,7 @@ module "client_gcs" {
   storage_bucket_location = var.storage_bucket_location
   storage_bucket_class    = var.storage_bucket_class
   suffix                  = local.random_hash
+  gcs_labels              = var.gcs_labels
 
   services = google_project_service.main.*.service
 }

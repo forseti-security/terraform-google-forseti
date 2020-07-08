@@ -171,6 +171,12 @@ variable "google_cloud_sdk_version" {
   type        = string
 }
 
+variable "server_labels" {
+  description = "Server instance labels"
+  type        = map(string)
+  default     = {}
+}
+
 #---------------------------------#
 # Forseti server config inventory #
 #---------------------------------#
@@ -901,6 +907,12 @@ variable "client_service_account" {
   default     = ""
 }
 
+variable "client_labels" {
+  description = "Client instance labels"
+  type        = map(string)
+  default     = {}
+}
+
 #------------#
 # Forseti db #
 #------------#
@@ -965,6 +977,12 @@ variable "cloudsql_db_password" {
   default     = ""
 }
 
+variable "cloudsql_labels" {
+  description = "CloudSQL instance labels"
+  type        = map(string)
+  default     = {}
+}
+
 #----------------#
 # Forseti bucket #
 #----------------#
@@ -988,6 +1006,11 @@ variable "bucket_cai_lifecycle_age" {
   default     = "14"
 }
 
+variable "gcs_labels" {
+  description = "GCS bucket labels"
+  type        = map(string)
+  default     = {}
+}
 #---------#
 # Network #
 #---------#
@@ -1017,6 +1040,11 @@ variable "manage_firewall_rules" {
   default     = true
 }
 
+variable "firewall_logging" {
+  description = "Enable firewall logging"
+  type        = bool
+  default     = false
+}
 #-------#
 # Flags #
 #-------#

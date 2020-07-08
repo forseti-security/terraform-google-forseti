@@ -168,6 +168,18 @@ variable "manage_firewall_rules" {
   default     = true
 }
 
+variable "firewall_logging" {
+  description = "Enable firewall logging"
+  type        = bool
+  default     = false
+}
+
+variable "server_labels" {
+  description = "Server instance labels"
+  type        = map(string)
+  default     = {}
+}
+
 #--------#
 # Config #
 #--------#
