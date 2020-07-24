@@ -22,7 +22,7 @@ terraform {
       version = "~> 3.7"
     }
     google-beta = {
-      source  = "terraform-providers/google-beta"
+      source  = "hashicorp/google-beta"
       version = "~> 3.7"
     }
     helm = {
