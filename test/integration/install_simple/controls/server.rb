@@ -14,7 +14,7 @@
 
 require "yaml"
 
-forseti_version = "2.25.0"
+forseti_version = "2.25.2"
 suffix = attribute("suffix")
 
 control "server" do

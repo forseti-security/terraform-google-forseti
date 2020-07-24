@@ -65,7 +65,7 @@ variable "forseti_email_recipient" {
 
 variable "forseti_version" {
   description = "The version of Forseti to install"
-  default     = "v2.25.0"
+  default     = "v2.25.2"
 }
 
 variable "region" {
