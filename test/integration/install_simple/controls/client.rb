@@ -15,7 +15,7 @@
 require "yaml"
 
 forseti_server_vm_internal_dns = attribute("forseti-server-vm-internal-dns")
-forseti_version = "2.25.1"
+forseti_version = "2.25.2"
 
 control "client" do
   title "Forseti client instance resources"
