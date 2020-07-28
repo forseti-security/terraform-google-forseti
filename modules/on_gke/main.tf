@@ -137,7 +137,7 @@ data "http" "server_config_contents" {
     "Content-MD5" = module.server_config.forseti-server-config-md5
   }
 
-  depends_on = ["data.google_storage_object_signed_url.file_url"]
+  depends_on = [data.google_storage_object_signed_url.file_url]
 }
 
 //*****************************************
@@ -184,7 +184,7 @@ resource "kubernetes_service_account" "tiller" {
     namespace = local.kubernetes_namespace
   }
   depends_on = [
-    "kubernetes_namespace.forseti"
+    kubernetes_namespace.forseti
   ]
 }
 
@@ -203,7 +203,7 @@ resource "kubernetes_role" "tiller" {
     resources  = ["*"]
     verbs      = ["*"]
   }
-  depends_on = ["kubernetes_namespace.forseti"]
+  depends_on = [kubernetes_namespace.forseti]
 }
 
 resource "kubernetes_role_binding" "tiller" {
