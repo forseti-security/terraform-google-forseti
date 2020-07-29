@@ -1,4 +1,4 @@
-# Copyright 2018 Google LLC
+# Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -123,12 +123,12 @@ control 'forseti' do
     its('object_names') { should include(*files) }
   end
 
-  describe google_service_account(name: "projects/#{project_id}/serviceAccounts/#{forseti_client_service_account}") do
+  describe google_service_account(project: project_id, name: forseti_client_service_account) do
     its(:email) { should eq forseti_client_service_account }
     its(:display_name) { should eq "Forseti Client Service Account" }
   end
 
-  describe google_service_account(name: "projects/#{project_id}/serviceAccounts/#{forseti_server_service_account}") do
+  describe google_service_account(project: project_id, name: forseti_server_service_account) do
     its(:email) { should eq forseti_server_service_account }
     its(:display_name) { should eq "Forseti Server Service Account" }
   end
@@ -141,29 +141,25 @@ control 'forseti' do
   end
 
   describe google_compute_firewall(project: network_project, name: "forseti-server-allow-grpc-#{suffix}") do
-    let(:allowed) { subject.allowed.map(&:item) }
-
     its('source_ranges') { should eq ["10.128.0.0/9"] }
     its('direction') { should eq 'INGRESS' }
     its('priority') { should eq 100 }
 
-    it "allows gRPC traffic" do
-      expect(allowed).to contain_exactly({ip_protocol: "tcp", ports: ["50051", "50052"]})
-    end
+    its('allowed.size') { should eq 1 }
+    it { should allow_port_protocol("50051", "tcp") }
+    it { should allow_port_protocol("50052", "tcp") }
   end
 
   describe google_compute_firewall(project: network_project, name: "forseti-server-deny-all-#{suffix}") do
-    let(:denied) { subject.denied.map(&:item) }
-
     its('source_ranges') { should eq ["0.0.0.0/0"] }
     its('direction') { should eq 'INGRESS' }
     its('priority') { should eq 200 }
 
     it "denies TCP, UDP, and ICMP" do
-      expect(denied).to contain_exactly(
-        {ip_protocol: "icmp"},
-        {ip_protocol: "tcp"},
-        {ip_protocol: "udp"}
+      expect(subject.denied).to contain_exactly(
+        an_object_having_attributes(ip_protocol: 'icmp'),
+        an_object_having_attributes(ip_protocol: 'tcp', ports: nil),
+        an_object_having_attributes(ip_protocol: 'udp', ports: nil)
       )
     end
   end
@@ -176,17 +172,15 @@ control 'forseti' do
   end
 
   describe google_compute_firewall(project: network_project, name: "forseti-client-deny-all-#{suffix}") do
-    let(:denied) { subject.denied.map(&:item) }
-
     its('source_ranges') { should eq ["0.0.0.0/0"] }
     its('direction') { should eq 'INGRESS' }
     its('priority') { should eq 200 }
 
     it "denies TCP, UDP, and ICMP" do
-      expect(denied).to contain_exactly(
-        {ip_protocol: "icmp"},
-        {ip_protocol: "tcp"},
-        {ip_protocol: "udp"}
+      expect(subject.denied).to contain_exactly(
+        an_object_having_attributes(ip_protocol: 'icmp'),
+        an_object_having_attributes(ip_protocol: 'tcp', ports: nil),
+        an_object_having_attributes(ip_protocol: 'udp', ports: nil)
       )
     end
   end

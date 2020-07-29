@@ -47,7 +47,7 @@ resource "google_compute_global_address" "private_ip_address" {
   address_type  = "INTERNAL"
   prefix_length = 16
   network       = data.google_compute_network.cloudsql_private_network.self_link
-  depends_on    = ["google_project_service.service_networking"]
+  depends_on    = [google_project_service.service_networking]
 }
 
 resource "google_service_networking_connection" "private_vpc_connection" {
@@ -92,7 +92,7 @@ resource "google_sql_database_instance" "master" {
     }
   }
 
-  depends_on = [null_resource.services-dependency, "google_service_networking_connection.private_vpc_connection"]
+  depends_on = [null_resource.services-dependency, google_service_networking_connection.private_vpc_connection]
 }
 
 resource "google_sql_database" "forseti-db" {
