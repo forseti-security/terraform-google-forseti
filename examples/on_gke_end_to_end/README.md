@@ -72,8 +72,8 @@ This script will also activate necessary APIs required for Terraform to deploy F
 | gsuite\_admin\_email | G-Suite administrator email address to manage your Forseti installation | string | n/a | yes |
 | helm\_repository\_url | The Helm repository containing the 'forseti-security' Helm charts | string | `"https://forseti-security-charts.storage.googleapis.com/release/"` | no |
 | k8s\_forseti\_namespace | The Kubernetes namespace in which to deploy Forseti. | string | `"forseti"` | no |
-| k8s\_forseti\_orchestrator\_image\_tag | The tag for the container image for the Forseti orchestrator | string | `"v2.23.2"` | no |
-| k8s\_forseti\_server\_image\_tag | The tag for the container image for the Forseti server | string | `"v2.23.2"` | no |
+| k8s\_forseti\_orchestrator\_image\_tag | The tag for the container image for the Forseti orchestrator | string | `"v2.23.3"` | no |
+| k8s\_forseti\_server\_image\_tag | The tag for the container image for the Forseti server | string | `"v2.23.3"` | no |
 | k8s\_tiller\_sa\_name | The Kubernetes Service Account used by Tiller | string | `"tiller"` | no |
 | network | The name of the VPC being created | string | `"forseti-gke-network"` | no |
 | network\_description | An optional description of the network. The resource must be recreated to modify this field. | string | `""` | no |
