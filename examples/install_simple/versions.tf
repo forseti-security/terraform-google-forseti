@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,4 +16,34 @@
 
 terraform {
   required_version = ">= 0.12"
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+      version = "~> 3.7.0"
+    }
+    http = {
+      source = "hashicorp/http"
+      version = "~> 1.2.0"
+    }
+    local = {
+      source = "hashicorp/local"
+      version = "~> 1.4.0"
+    }
+    null = {
+      source = "hashicorp/null"
+      version = "~> 2.1.0"
+    }
+    random = {
+      source = "hashicorp/random"
+      version = "~> 2.2.0"
+    }
+    template = {
+      source = "hashicorp/template"
+      version = "~> 2.1.0"
+    }
+    tls = {
+      source = "hashicorp/tls"
+      version = "~> 2.1.0"
+    }
+  }
 }
