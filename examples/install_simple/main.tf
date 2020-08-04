@@ -15,7 +15,8 @@
  */
 
 data "google_compute_network" "forseti_network" {
-  name = var.network
+  name    = var.network
+  project = var.project_id
 }
 
 module "cloud-nat" {
