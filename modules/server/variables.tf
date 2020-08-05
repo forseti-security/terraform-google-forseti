@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,15 @@
 #----------------#
 # Forseti config #
 #----------------#
+variable "domain" {
+  description = "The domain associated with the GCP Organization ID"
+}
+
+variable "folder_id" {
+  description = "GCP Folder that the Forseti project will be deployed into"
+  default     = ""
+}
+
 variable "project_id" {
   description = "Google Project ID that you want Forseti deployed into"
 }
@@ -50,6 +59,12 @@ variable "forseti_scripts" {
 #----------------#
 # Forseti server #
 #----------------#
+variable "config_validator_enabled" {
+  description = "Config Validator scanner enabled."
+  type        = bool
+  default     = false
+}
+
 variable "config_validator_image" {
   description = "The image of the Config Validator to use"
   default     = "gcr.io/forseti-containers/config-validator"
@@ -128,7 +143,7 @@ variable "mailjet_enabled" {
 
 variable "google_cloud_sdk_version" {
   description = "Version of the Google Cloud SDK to install"
-  default     = "289.0.0-0"
+  default     = "303.0.0-0"
   type        = string
 }
 
@@ -196,6 +211,11 @@ variable "services" {
 #------------------------#
 # Forseti policy-library #
 #------------------------#
+variable "policy_library_bundle" {
+  description = "Policy Library bundle to use with Config Validator. For more info, visit: https://github.com/forseti-security/policy-library/blob/master/docs/index.md#policy-bundles"
+  type        = string
+  default     = ""
+}
 
 variable "policy_library_home" {
   description = "The local policy library directory."
@@ -210,6 +230,12 @@ variable "policy_library_repository_branch" {
 variable "policy_library_repository_url" {
   description = "The git repository containing the policy-library."
   default     = ""
+}
+
+variable "policy_library_sync_gcs_enabled" {
+  description = "Sync Config Validator policy library from GCS."
+  type        = bool
+  default     = true
 }
 
 variable "policy_library_sync_enabled" {
@@ -235,7 +261,6 @@ variable "policy_library_sync_ssh_known_hosts" {
 #------------#
 # Forseti db #
 #------------#
-
 variable "cloudsql_module" {
   description = "The CloudSQL module"
 }

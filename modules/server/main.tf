@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,9 +23,13 @@ resource "random_integer" "random_minute" {
 # Locals #
 #--------#
 locals {
-  random_hash     = var.suffix
-  network_project = var.network_project != "" ? var.network_project : var.project_id
-  server_zone     = "${var.server_region}-c"
+  constraint_target       = var.folder_id != "" ? "folder/*" : "organization/*"
+  forseti_run_frequency   = var.forseti_run_frequency == null ? "${random_integer.random_minute.result} */2 * * *" : var.forseti_run_frequency
+  git_sync_public_ssh_key = length(tls_private_key.policy_library_sync_ssh) == 1 ? tls_private_key.policy_library_sync_ssh[0].public_key_openssh : ""
+  network_project         = var.network_project != "" ? var.network_project : var.project_id
+  random_hash             = var.suffix
+  server_zone             = "${var.server_region}-c"
+
   server_startup_script = file(
     "${path.module}/templates/scripts/forseti-server/forseti_server_startup_script.sh.tpl",
   )
@@ -41,6 +45,10 @@ locals {
   server_initialize_services = file(
     "${path.module}/templates/scripts/forseti-server/initialize_forseti_services.sh.tpl",
   )
+  server_setup_config_validator = file(
+    "${path.module}/templates/scripts/forseti-server/setup_config_validator.sh.tpl",
+  )
+
   server_conf_path = "${var.forseti_home}/configs/forseti_conf_server.yaml"
   server_name      = "forseti-server-vm-${local.random_hash}"
 
@@ -58,10 +66,6 @@ locals {
 
   }
   network_interface = local.network_interface_base[var.server_private ? "private" : "public"]
-
-  forseti_run_frequency = var.forseti_run_frequency == null ? "${random_integer.random_minute.result} */2 * * *" : var.forseti_run_frequency
-
-  git_sync_public_ssh_key = length(tls_private_key.policy_library_sync_ssh) == 1 ? tls_private_key.policy_library_sync_ssh[0].public_key_openssh : ""
 }
 
 #-------------------#
@@ -73,6 +77,9 @@ data "template_file" "forseti_server_startup_script" {
   vars = {
     cloudsql_proxy_arch                    = var.cloudsql_proxy_arch
     cloud_profiler_enabled                 = var.cloud_profiler_enabled
+    constraint_target                      = local.constraint_target
+    domain                                 = var.domain
+    config_validator_enabled               = var.config_validator_enabled
     forseti_conf_server_checksum           = base64sha256(var.server_config_module.forseti-server-config)
     forseti_env                            = data.template_file.forseti_server_env.rendered
     forseti_environment                    = data.template_file.forseti_server_environment.rendered
@@ -86,9 +93,13 @@ data "template_file" "forseti_server_startup_script" {
     forseti_version                        = var.forseti_version
     google_cloud_sdk_version               = var.google_cloud_sdk_version
     mailjet_enabled                        = var.mailjet_enabled
+    policy_library_bundle                  = var.policy_library_bundle
     policy_library_home                    = var.policy_library_home
+    policy_library_repository_url          = var.policy_library_repository_url
     policy_library_sync_enabled            = var.policy_library_sync_enabled
+    policy_library_sync_gcs_enabled        = var.policy_library_sync_gcs_enabled
     policy_library_sync_gcs_directory_name = var.policy_library_sync_gcs_directory_name
+    setup_config_validator_md5_hash        = google_storage_bucket_object.forseti_setup_config_validator.md5hash
     storage_bucket_name                    = var.server_gcs_module.forseti-server-storage-bucket
   }
 }
@@ -127,19 +138,19 @@ data "template_file" "forseti_server_run" {
   template = local.server_run_forseti
 
   vars = {
-    forseti_home                = var.forseti_home
-    forseti_server_conf_path    = local.server_conf_path
-    forseti_scripts             = var.forseti_scripts
-    policy_library_home         = var.policy_library_home
-    policy_library_sync_enabled = var.policy_library_sync_enabled
-    project_id                  = var.project_id
-    storage_bucket_name         = var.server_gcs_module.forseti-server-storage-bucket
-    cloudsql_db_name            = var.cloudsql_module.forseti-cloudsql-db-name
-    cloudsql_db_password        = var.cloudsql_module.forseti-cloudsql-password
-    cloudsql_db_port            = var.cloudsql_module.forseti-cloudsql-db-port
-    cloudsql_region             = var.cloudsql_module.forseti-cloudsql-region
-    cloudsql_db_user            = var.cloudsql_module.forseti-cloudsql-user
-    cloudsql_instance_name      = var.cloudsql_module.forseti-cloudsql-instance-name
+    forseti_home                    = var.forseti_home
+    forseti_server_conf_path        = local.server_conf_path
+    forseti_scripts                 = var.forseti_scripts
+    policy_library_home             = var.policy_library_home
+    policy_library_sync_gcs_enabled = var.policy_library_sync_gcs_enabled
+    project_id                      = var.project_id
+    storage_bucket_name             = var.server_gcs_module.forseti-server-storage-bucket
+    cloudsql_db_name                = var.cloudsql_module.forseti-cloudsql-db-name
+    cloudsql_db_password            = var.cloudsql_module.forseti-cloudsql-password
+    cloudsql_db_port                = var.cloudsql_module.forseti-cloudsql-db-port
+    cloudsql_region                 = var.cloudsql_module.forseti-cloudsql-region
+    cloudsql_db_user                = var.cloudsql_module.forseti-cloudsql-user
+    cloudsql_instance_name          = var.cloudsql_module.forseti-cloudsql-instance-name
   }
 }
 
@@ -161,6 +172,23 @@ data "template_file" "forseti_server_initialize_services" {
     policy_library_repository_url    = var.policy_library_repository_url
     policy_library_sync_enabled      = var.policy_library_sync_enabled
     policy_library_sync_git_sync_tag = var.policy_library_sync_git_sync_tag
+  }
+}
+
+data "template_file" "forseti_setup_config_validator" {
+  template = local.server_setup_config_validator
+
+  vars = {
+    constraint_target                      = local.constraint_target
+    domain                                 = var.domain
+    google_cloud_sdk_version               = var.google_cloud_sdk_version
+    policy_library_bundle                  = var.policy_library_bundle
+    policy_library_home                    = var.policy_library_home
+    policy_library_repository_url          = var.policy_library_repository_url
+    policy_library_sync_enabled            = var.policy_library_sync_enabled
+    policy_library_sync_gcs_directory_name = var.policy_library_sync_gcs_directory_name
+    policy_library_sync_gcs_enabled        = var.policy_library_sync_gcs_enabled
+    storage_bucket_name                    = var.server_gcs_module.forseti-server-storage-bucket
   }
 }
 
@@ -249,7 +277,6 @@ resource "google_compute_firewall" "forseti-server-allow-grpc" {
 #------------------------#
 # Forseti Storage bucket #
 #------------------------#
-
 resource "tls_private_key" "policy_library_sync_ssh" {
   count     = var.policy_library_sync_enabled ? 1 : 0
   algorithm = "RSA"
@@ -282,6 +309,12 @@ resource "google_storage_bucket_object" "run_forseti_script" {
 resource "google_storage_bucket_object" "initialize_forseti_services_script" {
   name    = "scripts/initialize_forseti_services.sh"
   content = data.template_file.forseti_server_initialize_services.rendered
+  bucket  = var.server_gcs_module.forseti-server-storage-bucket
+}
+
+resource "google_storage_bucket_object" "forseti_setup_config_validator" {
+  name    = "scripts/setup_config_validator.sh"
+  content = data.template_file.forseti_setup_config_validator.rendered
   bucket  = var.server_gcs_module.forseti-server-storage-bucket
 }
 

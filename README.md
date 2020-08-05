@@ -267,7 +267,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | forwarding\_rule\_enabled | Forwarding rule scanner enabled. | bool | `"false"` | no |
 | forwarding\_rule\_violations\_should\_notify | Notify for forwarding rule violations | bool | `"true"` | no |
 | gcs\_labels | GCS bucket labels | map(string) | `<map>` | no |
-| google\_cloud\_sdk\_version | Version of the Google Cloud SDK to install | string | `"289.0.0-0"` | no |
+| google\_cloud\_sdk\_version | Version of the Google Cloud SDK to install | string | `"303.0.0-0"` | no |
 | group\_enabled | Group scanner enabled. | bool | `"true"` | no |
 | groups\_settings\_disable\_polling | Whether to disable polling for the G Suite Groups API | bool | `"false"` | no |
 | groups\_settings\_enabled | Groups settings scanner enabled. | bool | `"true"` | no |
@@ -311,11 +311,13 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | network | The VPC where the Forseti client and server will be created | string | `"default"` | no |
 | network\_project | The project containing the VPC and subnetwork where the Forseti client and server will be created | string | `""` | no |
 | org\_id | GCP Organization ID that Forseti will have purview over | string | `""` | no |
+| policy\_library\_bundle | Policy Library bundle to use with Config Validator. For more info, visit: https://github.com/forseti-security/policy-library/blob/master/docs/index.md#policy-bundles | string | `""` | no |
 | policy\_library\_home | The local policy library directory. | string | `"$USER_HOME/policy-library"` | no |
 | policy\_library\_repository\_branch | The specific git branch containing the policies. | string | `"master"` | no |
 | policy\_library\_repository\_url | The git repository containing the policy-library. | string | `""` | no |
 | policy\_library\_sync\_enabled | Sync config validator policy library from private repository. | bool | `"false"` | no |
 | policy\_library\_sync\_gcs\_directory\_name | The directory name of the GCS folder used for the policy library sync config. | string | `"policy_library_sync"` | no |
+| policy\_library\_sync\_gcs\_enabled | Sync Config Validator policy library from GCS. | bool | `"true"` | no |
 | policy\_library\_sync\_git\_sync\_tag | Tag for the git-sync image. | string | `"v3.1.2"` | no |
 | policy\_library\_sync\_ssh\_known\_hosts | List of authorized public keys for SSH host of the policy library repository. | string | `""` | no |
 | project\_id | Google Project ID that you want Forseti deployed into | string | n/a | yes |

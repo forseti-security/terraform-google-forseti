@@ -15,21 +15,13 @@
 require "yaml"
 
 control "policy-library" do
-  # Assert Policy Library is copied from GCS by startup script
-  expected_policy_files = [
-    "policy-library/lib/constraints.rego",
-    "policy-library/lib/util_test.rego",
-    "policy-library/lib/util.rego",
-    "policy-library/policies/constraints/sql_public_ip.yaml",
-    "policy-library/policies/templates/gcp_sql_public_ip_v1.yaml"
-  ]
+  # Assert Policy Library contains Constraints from Policy Bundle
+  describe file('/home/ubuntu/policy-library/policy-library/policies/constraints') do
+    it { should be_a_directory }
+  end
 
-  expected_policy_files.each do |file|
-    describe file("/home/ubuntu/policy-library/#{file}") do
-      it { should exist }
-      it "is valid YAML" do
-        YAML.load(subject.content)
-      end
-    end
+  describe command("ls -l /home/ubuntu/policy-library/policy-library/policies/constraints/*.yaml | egrep -c '^-'") do
+    its(:exit_status) { should eq 0 }
+    its(:stdout) { should match(/^[1-9]/) }
   end
 end

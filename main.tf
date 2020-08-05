@@ -131,6 +131,7 @@ module "client" {
 module "server" {
   source = "./modules/server"
 
+  domain                          = var.domain
   project_id                      = var.project_id
   forseti_version                 = var.forseti_version
   forseti_repo_url                = var.forseti_repo_url
@@ -149,6 +150,7 @@ module "server" {
   server_private                  = var.server_private
   cloudsql_proxy_arch             = var.cloudsql_proxy_arch
   cloud_profiler_enabled          = var.cloud_profiler_enabled
+  config_validator_enabled        = var.config_validator_enabled
   config_validator_image          = var.config_validator_image
   config_validator_image_tag      = var.config_validator_image_tag
   mailjet_enabled                 = var.mailjet_enabled
@@ -163,9 +165,11 @@ module "server" {
   suffix                          = local.random_hash
   google_cloud_sdk_version        = var.google_cloud_sdk_version
 
+  policy_library_bundle                  = var.policy_library_bundle
   policy_library_home                    = var.policy_library_home
   policy_library_repository_url          = var.policy_library_repository_url
   policy_library_repository_branch       = var.policy_library_repository_branch
+  policy_library_sync_gcs_enabled        = var.policy_library_sync_gcs_enabled
   policy_library_sync_enabled            = var.policy_library_sync_enabled
   policy_library_sync_gcs_directory_name = var.policy_library_sync_gcs_directory_name
   policy_library_sync_git_sync_tag       = var.policy_library_sync_git_sync_tag
@@ -179,7 +183,6 @@ module "server" {
   server_rules_module  = module.server_rules
 
   services = google_project_service.main.*.service
-
 }
 
 module "cloudsql" {

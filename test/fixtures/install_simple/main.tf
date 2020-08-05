@@ -14,19 +14,7 @@
  * limitations under the License.
  */
 
-provider "tls" {
-  version = "~> 2.1"
-}
-
 locals {
-  policy_library_files = [
-    "policy-library/lib/constraints.rego",
-    "policy-library/lib/util_test.rego",
-    "policy-library/lib/util.rego",
-    "policy-library/policies/constraints/sql_public_ip.yaml",
-    "policy-library/policies/templates/gcp_sql_public_ip_v1.yaml"
-  ]
-
   network    = "${var.network}-install-simple"
   subnetwork = "${var.subnetwork}-install-simple"
 }
@@ -94,8 +82,6 @@ module "forseti-install-simple" {
   network            = module.forseti-service-network-install-simple.network_name
   subnetwork         = module.forseti-service-network-install-simple.subnets_names[0]
   forseti_version    = var.forseti_version
-
-  config_validator_enabled = var.config_validator_enabled
 
   instance_metadata = {
     sshKeys = "ubuntu:${tls_private_key.main.public_key_openssh}"
@@ -170,28 +156,4 @@ resource "null_resource" "wait_for_client" {
   depends_on = [
     google_compute_firewall.forseti_bastion_to_vm
   ]
-}
-
-#-------------------------#
-# Policy Library
-#-------------------------#
-data "template_file" "policy_library_files" {
-  count = length(local.policy_library_files)
-  template = file(
-    "${path.module}/${element(local.policy_library_files, count.index)}",
-  )
-}
-
-resource "google_storage_bucket_object" "main" {
-  count   = length(local.policy_library_files)
-  name    = element(local.policy_library_files, count.index)
-  content = element(data.template_file.policy_library_files.*.rendered, count.index)
-  bucket  = module.forseti-install-simple.forseti-server-storage-bucket
-
-  lifecycle {
-    ignore_changes = [
-      content,
-      detect_md5hash,
-    ]
-  }
 }

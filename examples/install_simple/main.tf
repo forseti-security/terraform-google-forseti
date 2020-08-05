@@ -65,6 +65,20 @@ module "forseti-install-simple" {
   gsuite_admin_email      = var.gsuite_admin_email
   sendgrid_api_key        = var.sendgrid_api_key
 
+  # Forseti Config Validator
+  config_validator_enabled        = var.config_validator_enabled
+  policy_library_bundle           = var.policy_library_bundle
+  policy_library_repository_url   = var.policy_library_repository_url
+  policy_library_sync_gcs_enabled = var.policy_library_sync_gcs_enabled
+
+  # Forseti Scanners - Disabled and replaced by Policy Library Bundle
+  bigquery_enabled            = var.bigquery_enabled
+  cloudsql_acl_enabled        = var.cloudsql_acl_enabled
+  firewall_rule_enabled       = var.firewall_rule_enabled
+  iam_policy_enabled          = var.iam_policy_enabled
+  kms_scanner_enabled         = var.kms_scanner_enabled
+  service_account_key_enabled = var.service_account_key_enabled
+
   # GCS
   storage_bucket_location = var.region
   bucket_cai_location     = var.region

@@ -3,22 +3,21 @@ set -eu
 
 # Env variables
 USER=ubuntu
-USER_HOME=/home/ubuntu
+export USER_HOME=/home/ubuntu
 INTERNET_CONNECTION="$(ping -q -w1 -c1 google.com &>/dev/null && echo online || echo offline)"
-INIT_SERVICES_MD5_HASH=${forseti_init_services_md5_hash}
-RUN_FORSETI_SERVICES_MD5_HASH=${forseti_run_forseti_services_md5_hash}
-
-export USER_HOME
 
 # Log status of internet connection
 if [ $INTERNET_CONNECTION == "offline" ]; then
   echo "Forseti Startup - A connection to the internet was not detected."
 fi
 
+# Include digests in the startup script to rebuild the Forseti server VM when these files change
 # forseti_conf_server digest: ${forseti_conf_server_checksum}
-# This digest is included in the startup script to rebuild the Forseti server VM
-# whenever the server configuration changes.
+# init_services digest: ${forseti_init_services_md5_hash}
+# run_forseti digest: ${forseti_run_forseti_services_md5_hash}
+# setup_config_validator digest: ${setup_config_validator_md5_hash}
 
+# Wait for Ubuntu lock files to be released
 function wait_on_lock_files() {
   lock_files=(
     "/var/lib/dpkg/lock"
@@ -46,7 +45,9 @@ fi
 echo "Forseti Startup - Upgrading Ubuntu packages."
 sudo apt-get update -y
 wait_on_lock_files
+sudo apt-mark hold google-cloud-sdk
 sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade
+sudo apt-mark unhold google-cloud-sdk
 
 # Install Ubuntu packages
 echo "Forseti Startup - Installing Ubuntu packages."
@@ -57,7 +58,7 @@ sudo apt-get install -y apt-transport-https ca-certificates git gnupg unzip
 echo "Forseti Startup - Installing Google Cloud SDK."
 echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
 curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
-sudo apt-get update -y && sudo apt-get install -y google-cloud-sdk=${google_cloud_sdk_version}
+sudo apt-get update -y && sudo apt-get install --allow-downgrades -y google-cloud-sdk="${google_cloud_sdk_version}"
 
 if ! [ -e "/usr/sbin/google-fluentd" ]; then
   echo "Forseti Startup - Installing GCP Logging agent."
@@ -123,74 +124,17 @@ chmod -R ug+rw ${forseti_home}/configs ${forseti_home}/rules
 echo "Forseti Startup - Installing Forseti python package."
 python3 setup.py install
 
-# Export variables required by initialize_forseti_services.sh
-${forseti_env}
-
-# Export variables required by run_forseti.sh
-${forseti_environment}
-
-# Store the variables in /etc/profile.d/forseti_environment.sh
-# so all the users will have access to them
-echo "${forseti_environment}" > /etc/profile.d/forseti_environment.sh | sudo sh
-
 # Download server configuration from GCS
 echo "Forseti Startup - Downloading Forseti configuration from GCS."
 gsutil cp gs://${storage_bucket_name}/configs/forseti_conf_server.yaml ${forseti_server_conf_path}
 gsutil cp -r gs://${storage_bucket_name}/rules ${forseti_home}/
 echo "Number of rules enabled: `ls ${forseti_home}/rules/*.yaml &>/dev/null | wc -l`"
 
-# Get Config Validator constraints
-sudo mkdir -m 777 -p ${policy_library_home}
-if [ "${policy_library_sync_enabled}" == "true" ]; then
-  # Policy Library Sync
-  echo "Forseti Startup - Policy Library sync is enabled."
-
-  # Setup local FS
-  # Note: gsutil is using the -n flag so that once the SSH key is copied locally, it is not overwritten for any subsequent runs of terraform
-  sudo mkdir -p /etc/git-secret
-  sudo gsutil cp -n gs://${storage_bucket_name}/${policy_library_sync_gcs_directory_name}/* /etc/git-secret/
-else
-  # Download the Newest Config Validator constraints from GCS
-  echo "Forseti Startup - Copying Policy Library from GCS."
-  sudo mkdir -m 777 -p ${policy_library_home}/policy-library
-  gsutil -m rsync -d -r gs://${storage_bucket_name}/policy-library ${policy_library_home}/policy-library || echo "No policy available, continuing with Forseti installation"
-fi
-
-# Attempt to download the initialize_forseti_services.sh script and run_forseti.sh script
-sudo mkdir -m 777 -p ${forseti_scripts}
-gsutil -m cp -r gs://${storage_bucket_name}/scripts/initialize_forseti_services.sh ${forseti_scripts}
-gsutil -m cp -r gs://${storage_bucket_name}/scripts/run_forseti.sh ${forseti_scripts}
-
-# Enable cloud-profiler in the initialize_forseti_services.sh script
-if ${cloud_profiler_enabled}; then
-  pip3 install google-cloud-profiler
-  sed "/FORSETI_COMMAND+=\" --services/a FORSETI_COMMAND+=\" --enable_profiler\"" -i ${forseti_scripts}/initialize_forseti_services.sh
-fi
-
 # Install mailjet_rest library
 if ${mailjet_enabled}; then
   echo "Forseti Startup - mailjet_rest library is enabled."
   pip3 install mailjet_rest
 fi
-
-# Start Forseti service depends on vars defined above.
-echo "Forseti Startup - Starting services."
-bash ${forseti_scripts}/initialize_forseti_services.sh
-systemctl start cloudsqlproxy
-if [ "${policy_library_sync_enabled}" == "true" ]; then
-  systemctl start policy-library-sync
-  sleep 5
-fi
-systemctl start config-validator
-sleep 5
-
-echo "Forseti Startup - Attempting to update database schema, if necessary."
-python3 $USER_HOME/forseti-security/install/gcp/upgrade_tools/db_migrator.py
-
-# Enable and start main Forseti service immediately
-echo "Forseti Startup - Enabling and starting Forseti service."
-systemctl enable --now forseti
-echo "Forseti Startup - Success! The Forseti API server has been enabled and started."
 
 # Increase Open File Limit
 if grep -q "ubuntu soft nofile" /etc/security/limits.conf ; then
@@ -204,6 +148,43 @@ if grep -q "ubuntu hard nofile" /etc/security/limits.conf ; then
 else
   echo "ubuntu hard nofile 32768" | sudo tee -a /etc/security/limits.conf
 fi
+
+# Download the initialize_forseti_services.sh script and run_forseti.sh script
+sudo mkdir -m 777 -p "${forseti_scripts}"
+gsutil -m cp -r gs://${storage_bucket_name}/scripts/initialize_forseti_services.sh ${forseti_scripts}
+gsutil -m cp -r gs://${storage_bucket_name}/scripts/run_forseti.sh ${forseti_scripts}
+gsutil -m cp -r gs://${storage_bucket_name}/scripts/setup_config_validator.sh ${forseti_scripts}
+
+# Enable cloud-profiler in the initialize_forseti_services.sh script
+if ${cloud_profiler_enabled}; then
+  pip3 install google-cloud-profiler
+  sed "/FORSETI_COMMAND+=\" --services/a FORSETI_COMMAND+=\" --enable_profiler\"" -i ${forseti_scripts}/initialize_forseti_services.sh
+fi
+
+# Export variables required by initialize_forseti_services.sh and run_forseti.sh
+# Store forseti env vars for all users to access
+${forseti_env}
+${forseti_environment}
+echo "${forseti_environment}" > /etc/profile.d/forseti_environment.sh | sudo sh
+
+# Initialize Forseti services
+echo "Forseti Startup - Starting services."
+bash "${forseti_scripts}"/initialize_forseti_services.sh
+systemctl start cloudsqlproxy
+
+# Config Validator setup
+if [ "${config_validator_enabled}" == "true" ]; then
+  bash "${forseti_scripts}/setup_config_validator.sh"
+fi
+
+# Forseti CloudSQL migrations
+echo "Forseti Startup - Attempting to update database schema, if necessary."
+python3 $USER_HOME/forseti-security/install/gcp/upgrade_tools/db_migrator.py
+
+# Enable and start main Forseti service immediately
+echo "Forseti Startup - Enabling and starting Forseti service."
+systemctl enable --now forseti
+echo "Forseti Startup - Success! The Forseti API server has been enabled and started."
 
 # Create a Forseti env script
 FORSETI_ENV="$(cat << EOF
@@ -227,7 +208,7 @@ echo -e "root\n$USER" > /etc/cron.allow
 # The -n flag in flock will fail the process right away when the process is not able to acquire the lock so we won't
 # queue up the jobs.
 # If the cron job failed the acquire lock on the process, it will log a warning message to syslog.
-chmod +x ${forseti_scripts}/run_forseti.sh
+chmod +x "${forseti_scripts}/run_forseti.sh"
 (echo "${forseti_run_frequency} (/usr/bin/flock -n ${forseti_home}/forseti_cron_runner.lock ${forseti_scripts}/run_forseti.sh || echo '[forseti-security] Warning: New Forseti cron job will not be started, because previous Forseti job is still running.') 2>&1 | logger") | crontab -u $USER -
 echo "Forseti Startup - Added the run_forseti.sh to crontab under user $USER."
 echo "Forseti Startup - Execution of startup script finished."
