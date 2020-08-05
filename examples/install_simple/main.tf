@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,29 +14,9 @@
  * limitations under the License.
  */
 
-provider "google" {
-  version = "~> 3.7"
-  project = var.project_id
-}
-
-provider "local" {
-  version = "~> 1.4"
-}
-
-provider "null" {
-  version = "~> 2.1"
-}
-
-provider "template" {
-  version = "~> 2.1"
-}
-
-provider "random" {
-  version = "~> 2.2"
-}
-
 data "google_compute_network" "forseti_network" {
-  name = var.network
+  name    = var.network
+  project = var.project_id
 }
 
 module "cloud-nat" {
@@ -61,32 +41,37 @@ module "cloud-nat" {
 module "forseti-install-simple" {
   source = "../../"
 
+  # General
   project_id = var.project_id
   org_id     = var.org_id
   domain     = var.domain
+  network    = var.network
+  subnetwork = var.subnetwork
 
-  server_region   = module.cloud-nat.region
-  client_region   = module.cloud-nat.region
-  cloudsql_region = var.region
-  network         = var.network
-  subnetwork      = var.subnetwork
+  # Client VM
+  client_instance_metadata = var.instance_metadata
+  client_private           = var.private
+  client_region            = module.cloud-nat.region
+  client_tags              = var.instance_tags
 
+  # CloudSQL
+  cloudsql_private = var.private
+  cloudsql_region  = var.region
+
+  # Forseti
+  forseti_email_recipient = var.forseti_email_recipient
+  forseti_email_sender    = var.forseti_email_sender
+  forseti_version         = var.forseti_version
+  gsuite_admin_email      = var.gsuite_admin_email
+  sendgrid_api_key        = var.sendgrid_api_key
+
+  # GCS
   storage_bucket_location = var.region
   bucket_cai_location     = var.region
 
-  gsuite_admin_email      = var.gsuite_admin_email
-  sendgrid_api_key        = var.sendgrid_api_key
-  forseti_email_sender    = var.forseti_email_sender
-  forseti_email_recipient = var.forseti_email_recipient
-  forseti_version         = var.forseti_version
-
-  client_instance_metadata = var.instance_metadata
+  # Server VM
   server_instance_metadata = var.instance_metadata
-
-  client_tags = var.instance_tags
-  server_tags = var.instance_tags
-
-  client_private   = var.private
-  server_private   = var.private
-  cloudsql_private = var.private
+  server_private           = var.private
+  server_region            = module.cloud-nat.region
+  server_tags              = var.instance_tags
 }
