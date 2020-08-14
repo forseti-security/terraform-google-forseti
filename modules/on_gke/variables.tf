@@ -65,6 +65,11 @@ variable "gke_node_pool_name" {
   default     = "default-pool"
 }
 
+variable "workload_identity_namespace" {
+  description = "Workload Identity namespace"
+  default     = null
+}
+
 #----------------#
 # Forseti config #
 #----------------#

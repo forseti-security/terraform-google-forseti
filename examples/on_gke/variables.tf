@@ -80,6 +80,11 @@ variable "k8s_tiller_sa_name" {
   default     = "tiller"
 }
 
+variable "workload_identity_namespace" {
+  description = "Workload Identity namespace"
+  default     = null
+}
+
 #---------#
 # Network #
 #---------#
@@ -96,7 +101,6 @@ variable "subnetwork" {
 #-------------#
 # Helm config #
 #-------------#
-
 variable "git_sync_private_ssh_key_file" {
   description = "The file containing the SSH key allowing the git-sync to clone the policy library repository."
   default     = null
