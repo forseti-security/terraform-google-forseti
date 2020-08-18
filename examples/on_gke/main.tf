@@ -18,7 +18,8 @@
 # Locals #
 #--------#
 locals {
-  node_pool_index = [for index, node_pool in data.google_container_cluster.forseti_cluster.node_pool : index if node_pool.name == var.gke_node_pool_name][0]
+  node_pool_index             = [for index, node_pool in data.google_container_cluster.forseti_cluster.node_pool : index if node_pool.name == var.gke_node_pool_name][0]
+  workload_identity_namespace = var.workload_identity_namespace == null ? "${var.project_id}.svc.id.goog" : var.workload_identity_namespace
 }
 
 #----------------------------------#
@@ -101,7 +102,8 @@ module "forseti" {
   storage_bucket_location = var.region
   bucket_cai_location     = var.region
 
-  network_policy = data.google_container_cluster.forseti_cluster.network_policy.0.enabled
+  network_policy              = data.google_container_cluster.forseti_cluster.network_policy.0.enabled
+  workload_identity_namespace = local.workload_identity_namespace
 
   gsuite_admin_email      = var.gsuite_admin_email
   sendgrid_api_key        = var.sendgrid_api_key

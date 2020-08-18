@@ -45,9 +45,10 @@ control "shielded-vm" do
           expect(data[:shieldedInstanceConfig][:enableIntegrityMonitoring]).to eq true
         end
 
-        it 'should have enableSecureBoot property' do
-          expect(data[:shieldedInstanceConfig][:enableSecureBoot]).to eq true
-        end
+#         Disabled due to GitHub issue: https://github.com/forseti-security/terraform-google-forseti/issues/607
+#         it 'should have enableSecureBoot property' do
+#           expect(data[:shieldedInstanceConfig][:enableSecureBoot]).to eq true
+#         end
 
         it 'should have enableVtpm property' do
           expect(data[:shieldedInstanceConfig][:enableVtpm]).to eq true

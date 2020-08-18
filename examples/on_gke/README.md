@@ -77,6 +77,7 @@ In order to operate with the Service Account you must activate the following API
 | sendgrid\_api\_key | Sendgrid.com API key to enable email notifications | string | `""` | no |
 | server\_log\_level | The log level of the Forseti server container. | string | `"info"` | no |
 | subnetwork | The VPC subnetwork where the Forseti client and server will be created | string | `"default"` | no |
+| workload\_identity\_namespace | Workload Identity namespace | string | `"null"` | no |
 
 ## Outputs
 

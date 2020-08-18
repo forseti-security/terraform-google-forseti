@@ -152,8 +152,9 @@ module "forseti" {
   storage_bucket_location = var.region
   bucket_cai_location     = var.region
 
-  network_policy     = module.gke.network_policy_enabled
-  gke_node_pool_name = "default-node-pool"
+  network_policy              = module.gke.network_policy_enabled
+  gke_node_pool_name          = "default-node-pool"
+  workload_identity_namespace = module.gke.identity_namespace
 
   gsuite_admin_email      = var.gsuite_admin_email
   sendgrid_api_key        = var.sendgrid_api_key
