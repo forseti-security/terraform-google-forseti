@@ -293,7 +293,7 @@ variable "container_disable_polling" {
 }
 
 variable "crm_max_calls" {
-  description = "Maximum calls that can be made to CRN API"
+  description = "Maximum calls that can be made to CRM API"
   default     = "4"
 }
 
