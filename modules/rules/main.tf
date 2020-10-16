@@ -66,6 +66,7 @@ resource "google_storage_bucket_object" "main" {
   lifecycle {
     ignore_changes = [
       content,
+      content_language,
       detect_md5hash,
     ]
   }
