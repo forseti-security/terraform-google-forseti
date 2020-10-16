@@ -54,3 +54,14 @@ output "forseti-cloudsql-password" {
   value       = local.cloudsql_password
   sensitive   = true
 }
+
+output "forseti-cloudsql-zone" {
+  description = "CloudSQL instance zone"
+  value       = local.cloudsql_zone
+  sensitive   = true
+}
+
+output "forseti-cloudsql-self_link" {
+  description = "Forseti master CloudSQL instance self_link"
+  value       = google_sql_database_instance.master.self_link
+}
