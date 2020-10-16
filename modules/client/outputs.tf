@@ -23,3 +23,13 @@ output "forseti-client-vm-ip" {
   description = "Forseti Client VM private IP address"
   value       = var.client_enabled ? google_compute_instance.forseti-client[0].network_interface[0].network_ip : null
 }
+
+output "forseti-client-vm-zone" {
+  description = "Forseti Client VM zone"
+  value       = var.client_enabled ? google_compute_instance.forseti-client[0].zone : null
+}
+
+output "forseti-client-vm-self_link" {
+  description = "Forseti Client VM self_link"
+  value       = var.client_enabled ? google_compute_instance.forseti-client[0].self_link : null
+}

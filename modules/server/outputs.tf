@@ -38,3 +38,13 @@ output "google-cloud-sdk-version" {
   description = "Version of the Google Cloud SDK installed"
   value       = var.google_cloud_sdk_version
 }
+
+output "forseti-server-vm-zone" {
+  description = "Forseti server VM zone"
+  value       = google_compute_instance.forseti-server.zone
+}
+
+output "forseti-server-vm-self_link" {
+  description = "Forseti server VM self_link"
+  value       = google_compute_instance.forseti-server.self_link
+}
