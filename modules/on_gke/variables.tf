@@ -910,6 +910,12 @@ variable "cloudsql_password" {
   default     = ""
 }
 
+variable "cloudsql_deletion_protection" {
+  description = "CloudSQL deletion protection"
+  default     = true
+  type        = bool
+}
+
 #-------------#
 # Helm config #
 #-------------#

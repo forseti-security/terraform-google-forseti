@@ -221,6 +221,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | cloudsql\_db\_password | CloudSQL database password | string | `""` | no |
 | cloudsql\_db\_port | CloudSQL database port | string | `"3306"` | no |
 | cloudsql\_db\_user | CloudSQL database user | string | `"forseti_security_user"` | no |
+| cloudsql\_deletion\_protection | CloudSQL deletion protection | bool | `"true"` | no |
 | cloudsql\_disk\_size | The size of data disk, in GB. Size of a running instance cannot be reduced but can be increased. | string | `"25"` | no |
 | cloudsql\_labels | CloudSQL instance labels | map(string) | `<map>` | no |
 | cloudsql\_net\_write\_timeout | See MySQL documentation: https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_net_write_timeout | string | `"240"` | no |

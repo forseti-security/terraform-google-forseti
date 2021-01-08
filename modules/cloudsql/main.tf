@@ -73,10 +73,11 @@ resource "google_service_networking_connection" "private_vpc_connection" {
 # Forseti SQL database #
 #----------------------#
 resource "google_sql_database_instance" "master" {
-  name             = local.cloudsql_name
-  project          = var.project_id
-  region           = var.cloudsql_region
-  database_version = "MYSQL_5_7"
+  name                = local.cloudsql_name
+  project             = var.project_id
+  region              = var.cloudsql_region
+  database_version    = "MYSQL_5_7"
+  deletion_protection = var.cloudsql_deletion_protection
 
   settings {
     tier              = var.cloudsql_type

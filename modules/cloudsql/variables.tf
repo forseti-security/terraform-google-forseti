@@ -105,3 +105,8 @@ variable "cloudsql_labels" {
   type        = map(string)
   default     = {}
 }
+
+variable "cloudsql_deletion_protection" {
+  description = "CloudSQL deletion protection"
+  default     = true
+}

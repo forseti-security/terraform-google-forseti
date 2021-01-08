@@ -983,6 +983,12 @@ variable "cloudsql_labels" {
   default     = {}
 }
 
+variable "cloudsql_deletion_protection" {
+  description = "CloudSQL deletion protection"
+  default     = true
+  type        = bool
+}
+
 #----------------#
 # Forseti bucket #
 #----------------#
