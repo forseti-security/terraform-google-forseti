@@ -63,7 +63,7 @@ Extending the adopted spec, each change should have a link to its corresponding 
 - Pin helm provider version to 0.10.* for Helm 2 [#495]
 - Fix GKE example [#508]
 - manage_rules_enabled=false should not prevent Forseti service from starting [#512]
-- Corrected description for blacklist scanner [#525]
+- Corrected description for denylist scanner [#525]
 
 ## [v5.1.3] - 2020-02-25
 
