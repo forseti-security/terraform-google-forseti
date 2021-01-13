@@ -31,7 +31,7 @@
 
 # rules:
 #   - name: All buckets in organization must be in the US.
-#     mode: whitelist
+#     mode: allowlist
 #     resource:
 #       - type: organization
 #         resource_ids:

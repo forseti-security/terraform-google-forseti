@@ -26,7 +26,7 @@
 #       filter: 'logName:"logs/cloudaudit.googleapis.com"'
 #       include_children: '*'
 #  - name: 'Only allow BigQuery Audit Log sinks in projects.'
-#    mode: whitelist
+#    mode: allowlist
 #    resource:
 #      - type: organization
 #        applies_to: children

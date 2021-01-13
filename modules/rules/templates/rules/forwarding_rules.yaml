@@ -15,14 +15,14 @@
 #rules:
 #  - name: Rule Name Example
 #    target: Forwarding Rule Target Example
-#    mode: whitelist
+#    mode: allowlist
 #    load_balancing_scheme: EXTERNAL
 #    ip_protocol: ESP
 #    ip_address: "198.51.100.46"
 #
 #  - name: TCP LB For Internal App
 #    target: https://www.googleapis.com/compute/v1/projects/THEPROJECT/regions/us-central1/THELB/FWD_RULE_NAME
-#    mode: whitelist
+#    mode: allowlist
 #    load_balancing_scheme: INTERNAL
 #    port: 8080
 #    ip_protocol: TCP
@@ -30,7 +30,7 @@
 #
 #  - name: UDP LB for External VPN
 #    target: https://www.googleapis.com/compute/v1/projects/THEPROJECT/regions/us-central1/THELB/FWD_RULE_NAME
-#    mode: whitelist
+#    mode: allowlist
 #    load_balancing_scheme: EXTERNAL
 #    port_range: 4500-4500
 #    ip_protocol: UDP
@@ -38,7 +38,7 @@
 #
 #  - name: TCP LB for External VPN
 #    target: https://www.googleapis.com/compute/v1/projects/THEPROJECT/regions/us-central1/THELB/FWD_RULE_NAME
-#    mode: whitelist
+#    mode: allowlist
 #    load_balancing_scheme: EXTERNAL
 #    port_range: 4500-4500
 #    ip_protocol: TCP

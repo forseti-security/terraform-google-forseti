@@ -14,7 +14,7 @@
 
 - name: Allow only my company users to be in my company groups.
   group_email: my_customer
-  mode: whitelist
+  mode: allowlist
   conditions:
       # Must use quotes if the condition starts with @ symbol.
     - member_email: "@${domain}"
@@ -26,13 +26,13 @@
 
 #- name: Allow mypartner users to be in a group.
 #  group_email: <FOO_GROUP>@<MY_COMPANY DOMAIN>
-#  mode: whitelist
+#  mode: allowlist
 #  conditions:
 #    - member_email: '@<MY_PARTNER_DOMAIN>'
 
 #- name: Allow mypartner users to be in another group.
 #  group_email: <BAR_GROUP>@<MY_COMPANY DOMAIN>
-#  mode: whitelist
+#  mode: allowlist
 #  conditions:
 #    - member_email: '@<MY_PARTNER_DOMAIN>'
 

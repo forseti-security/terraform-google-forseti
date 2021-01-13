@@ -17,9 +17,9 @@
 # resource: A mapping of resources that this rule applies to.
 #  * type: The type of resource, can be organization, folder, or project.
 #  * resource_ids: A list of one or more numeric ids to match, or '*' for all.
-# mode: denylist or whitelist, must be specified
+# mode: denylist or allowlist, must be specified
 # key: jmespath to the values you'd like to check
-# values: a list of values to denylist/whitelist according to mode
+# values: a list of values to denylist/allowlist according to mode
 
 rules:
   # Note: please use the id of the resource (such as organization id,
@@ -30,7 +30,7 @@ rules:
         resource_ids:
           - '*'
     key: loggingService
-    mode: whitelist
+    mode: allowlist
     values:
       - logging.googleapis.com
 
@@ -43,7 +43,7 @@ rules:
 #         resource_ids:
 #           - '*'
 #     key: length(nodePools)
-#     mode: whitelist
+#     mode: allowlist
 #     values:
 #       - 2
 
@@ -53,7 +53,7 @@ rules:
 #         resource_ids:
 #           - '*'
 #     key: nodePools[*].config.imageType
-#     mode: whitelist
+#     mode: allowlist
 #     values:
 #       - ["COS", "COS"]
 
@@ -65,7 +65,7 @@ rules:
 #        resource_ids:
 #          - '*'
 #    key: loggingService
-#    mode: whitelist
+#    mode: allowlist
 #    values:
 #      - logging.googleapis.com
 
@@ -75,7 +75,7 @@ rules:
 #        resource_ids:
 #          - '*'
 #    key: monitoringService
-#    mode: whitelist
+#    mode: allowlist
 #    values:
 #      - monitoring.googleapis.com
 
@@ -85,7 +85,7 @@ rules:
 #        resource_ids:
 #          - '*'
 #    key: legacyAbac.enabled
-#    mode: whitelist
+#    mode: allowlist
 #    values:
 #      - null
 
@@ -95,7 +95,7 @@ rules:
 #        resource_ids:
 #          - '*'
 #    key: masterAuthorizedNetworksConfig.enabled
-#    mode: whitelist
+#    mode: allowlist
 #    values:
 #      - true
 
@@ -115,7 +115,7 @@ rules:
 #        resource_ids:
 #          - '*'
 #    key: addonsConfig.kubernetesDashboard.disabled
-#    mode: whitelist
+#    mode: allowlist
 #    values:
 #      - true
 
@@ -125,7 +125,7 @@ rules:
 #        resource_ids:
 #          - '*'
 #    key: 'length(nodePools) == length(nodePools[?management.autoRepair ==`true`])'
-#    mode: whitelist
+#    mode: allowlist
 #    values:
 #      - true
 
@@ -135,7 +135,7 @@ rules:
 #        resource_ids:
 #          - '*'
 #    key: 'length(nodePools) == length(nodePools[?management.autoUpgrade ==`true`])'
-#    mode: whitelist
+#    mode: allowlist
 #    values:
 #      - true
 
@@ -145,7 +145,7 @@ rules:
 #        resource_ids:
 #          - '*'
 #    key: 'length(nodePools) == length(nodePools[?config.imageType ==`COS`])'
-#    mode: whitelist
+#    mode: allowlist
 #    values:
 #      - true
 
@@ -155,7 +155,7 @@ rules:
 #        resource_ids:
 #          - '*'
 #    key: masterAuth.password
-#    mode: whitelist
+#    mode: allowlist
 #    values:
 #      - null
 
@@ -165,7 +165,7 @@ rules:
 #        resource_ids:
 #          - '*'
 #    key: networkPolicy.enabled
-#    mode: whitelist
+#    mode: allowlist
 #    values:
 #      - true
 
@@ -185,7 +185,7 @@ rules:
 #        resource_ids:
 #          - '*'
 #    key: ipAllocationPolicy.useIpAliases
-#    mode: whitelist
+#    mode: allowlist
 #    values:
 #      - true
 
@@ -195,7 +195,7 @@ rules:
 #        resource_ids:
 #          - '*'
 #    key: podSecurityPolicyConfig.enabled
-#    mode: whitelist
+#    mode: allowlist
 #    values:
 #      - true
 
@@ -205,7 +205,7 @@ rules:
 #        resource_ids:
 #          - '*'
 #    key: privateClusterConfig.enablePrivateNodes
-#    mode: whitelist
+#    mode: allowlist
 #    values:
 #      - true
 
@@ -231,6 +231,6 @@ rules:
 #        resource_ids:
 #          - '*'
 #    key: 'length(nodePools) == length(nodePools[?config.oauthScopes == [`https://www.googleapis.com/auth/devstorage.read_only`, `https://www.googleapis.com/auth/logging.write`,`https://www.googleapis.com/auth/monitoring`,`https://www.googleapis.com/auth/servicecontrol`,`https://www.googleapis.com/auth/service.management.readonly`,`https://www.googleapis.com/auth/trace.append`]])'
-#    mode: whitelist
+#    mode: allowlist
 #    values:
 #       - true

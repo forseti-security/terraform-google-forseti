@@ -14,8 +14,8 @@
 
 # rules:
 #   # example rules
-#   - name: Example Enabled APIs whitelist
-#     mode: whitelist
+#   - name: Example Enabled APIs allowlist
+#     mode: allowlist
 #     resource:
 #       - type: project
 #         resource_ids:

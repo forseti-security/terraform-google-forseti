@@ -15,7 +15,7 @@
 rules:
   # default rules
   - name: Allow only IAM members in my domain to be an OrgAdmin
-    mode: whitelist
+    mode: allowlist
     resource:
       - type: organization
         applies_to: self
@@ -56,7 +56,7 @@ rules:
 
   # Below are the example rules that you can reference to create your own custom rule.
   #- name: Allow only service accounts to have access
-  #  mode: whitelist
+  #  mode: allowlist
   #  resource:
   #    - type: organization
   #      applies_to: self_and_children
@@ -84,7 +84,7 @@ rules:
 # Example CIS benchmarks as a Proof of Concept
 # These scanners have not been validated by the formal CIS certification process.
 #  - name: 'CIS_GCP_1.1 Ensure Corporate Login Credentials Used'
-#    mode: whitelist
+#    mode: allowlist
 #    resource:
 #      - type: organization
 #        applies_to: self_and_children

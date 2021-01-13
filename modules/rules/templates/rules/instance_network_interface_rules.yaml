@@ -16,15 +16,15 @@
 # rules:
 #   # This rule helps with:
 #   # #1 Ensure instances with external IPs are only running
-#   # on whitelisted networks
+#   # on allowlisted networks
 #   # #2 Ensure instances are only running on networks created in allowed
 #   # projects (using XPN)
-#   - name: all networks covered in whitelist
+#   - name: all networks covered in allowlist
 #     project: '*'
 #     network: '*'
 #     is_external_network: True
 #     # This would be a custom list of your projects/networks.
-#     whitelist:
+#     allowlist:
 #       project-1:
 #        - network-1
 #       project-2:
