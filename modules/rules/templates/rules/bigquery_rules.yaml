@@ -19,7 +19,7 @@
 
 rules:
   - name: BigQuery rule to search for public datasets
-    mode: blacklist
+    mode: denylist
     resource:
       - type: organization
         resource_ids:
@@ -30,7 +30,7 @@ rules:
         members:
         - special_group: 'allAuthenticatedUsers'
   - name: BigQuery rule to search for datasets accessible by users with gmail.com addresses
-    mode: blacklist
+    mode: denylist
     resource:
       - type: organization
         resource_ids:
@@ -41,7 +41,7 @@ rules:
         members:
         - user_email: '*@gmail.com'
   - name: BigQuery rule to search for datasets accessible by groups with googlegroups.com addresses
-    mode: blacklist
+    mode: denylist
     resource:
       - type: organization
         resource_ids:

@@ -15,7 +15,7 @@
 # Rule Keys:
 # name: The unique name describing the rule
 # mode: Depending on whether you want to allow or block in a given situation,
-# mode can be whitelist or blacklist
+# mode can be whitelist or denylist
 # resource: A mapping of resources that this rule applies to.
 #  * type: The type of resource, can be organization, folder, or project.
 #  * resource_ids: A list of one or more numeric ids to match, or '*' for all.

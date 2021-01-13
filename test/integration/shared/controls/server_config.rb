@@ -218,10 +218,6 @@ control "server-config" do
         expect(config["scanner"]["scanners"]).to include("name" => "bigquery", "enabled" => true)
       end
 
-      it "configures blacklist_enabled" do
-        expect(config["scanner"]["scanners"]).to include("name" => "blacklist", "enabled" => true)
-      end
-
       it "configures bucket_acl_enabled" do
         expect(config["scanner"]["scanners"]).to include("name" => "bucket_acl", "enabled" => true)
       end
@@ -232,6 +228,10 @@ control "server-config" do
 
       it "configures config_validator_enabled" do
         expect(config["scanner"]["scanners"]).to include("name" => "config_validator", "enabled" => false, "verify_policy_library" => true)
+      end
+
+      it "configures denylist_enabled" do
+        expect(config["scanner"]["scanners"]).to include("name" => "denylist", "enabled" => true)
       end
 
       it "configures enabled_apis_enabled" do
@@ -329,10 +329,6 @@ control "server-config" do
           expect(config["notifier"]["resources"]).to include(including("resource" => "audit_logging_violations", "should_notify" => true))
         end
 
-        it "configures blacklist_violations_should_notify" do
-          expect(config["notifier"]["resources"]).to include(including("resource" => "blacklist_violations", "should_notify" => true))
-        end
-
         it "configures bigquery_acl_violations_should_notify" do
           expect(config["notifier"]["resources"]).to include(including("resource" => "bigquery_acl_violations", "should_notify" => true))
         end
@@ -343,6 +339,10 @@ control "server-config" do
 
         it "configures cloudsql_acl_violations_should_notify" do
           expect(config["notifier"]["resources"]).to include(including("resource" => "cloudsql_acl_violations", "should_notify" => true))
+        end
+
+        it "configures denylist_violations_should_notify" do
+          expect(config["notifier"]["resources"]).to include(including("resource" => "denylist_violations", "should_notify" => true))
         end
 
         it "configures enabled_apis_violations_should_notify" do

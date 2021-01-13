@@ -29,7 +29,7 @@ rules:
           - group:*@${domain}
 
   - name: Prevent public users from having access to buckets via IAM
-    mode: blacklist
+    mode: denylist
     resource:
       - type: bucket
         applies_to: self
@@ -42,7 +42,7 @@ rules:
           - allUsers
 
   - name: Prevent public authenticated users from having access to buckets via IAM
-    mode: blacklist
+    mode: denylist
     resource:
       - type: bucket
         applies_to: self
@@ -100,7 +100,7 @@ rules:
 #          - domain:{DOMAIN}
 
 #  - name: 'CIS_GCP_1.4 Ensure Service Accounts Have No Admin Roles'
-#    mode: blacklist
+#    mode: denylist
 #    resource:
 #      - type: organization
 #        applies_to: self_and_children
@@ -113,7 +113,7 @@ rules:
 #          - serviceAccount:*@*.iam.gserviceaccount.com
 
 #  - name: 'CIS_GCP_1.5 Ensure that IAM users are not assigned Service Account User role at project level'
-#    mode: blacklist
+#    mode: denylist
 #    resource:
 #      - type: project
 #        applies_to: self

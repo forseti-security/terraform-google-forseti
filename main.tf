@@ -311,7 +311,7 @@ module "server_config" {
   cloudsql_acl_enabled                                = var.cloudsql_acl_enabled
   config_validator_enabled                            = var.config_validator_enabled
   bucket_acl_enabled                                  = var.bucket_acl_enabled
-  blacklist_enabled                                   = var.blacklist_enabled
+  denylist_enabled                                    = var.denylist_enabled
   bigquery_enabled                                    = var.bigquery_enabled
   audit_logging_enabled                               = var.audit_logging_enabled
   service_account_key_violations_should_notify        = var.service_account_key_violations_should_notify
@@ -341,7 +341,7 @@ module "server_config" {
   cloudsql_acl_violations_should_notify               = var.cloudsql_acl_violations_should_notify
   config_validator_violations_should_notify           = var.config_validator_violations_should_notify
   buckets_acl_violations_should_notify                = var.buckets_acl_violations_should_notify
-  blacklist_violations_should_notify                  = var.blacklist_violations_should_notify
+  denylist_violations_should_notify                   = var.denylist_violations_should_notify
   bigquery_acl_violations_should_notify               = var.bigquery_acl_violations_should_notify
   audit_logging_violations_should_notify              = var.audit_logging_violations_should_notify
   excluded_resources                                  = var.excluded_resources

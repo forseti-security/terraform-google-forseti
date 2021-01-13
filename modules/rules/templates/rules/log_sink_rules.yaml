@@ -37,7 +37,7 @@
 #      filter: 'logName:"logs/cloudaudit.googleapis.com"'
 #      include_children: '*'
 #   - name: 'Don't allow Org Level log sinks.'
-#     mode: blacklist
+#     mode: denylist
 #     resource:
 #       - type: organization
 #         applies_to: self

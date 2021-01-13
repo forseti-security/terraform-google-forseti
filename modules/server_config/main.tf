@@ -130,7 +130,7 @@ data "template_file" "forseti_server_config" {
     CLOUDSQL_ACL_ENABLED                                = var.cloudsql_acl_enabled
     CONFIG_VALIDATOR_ENABLED                            = var.config_validator_enabled
     BUCKET_ACL_ENABLED                                  = var.bucket_acl_enabled
-    BLACKLIST_ENABLED                                   = var.blacklist_enabled
+    DENYLIST_ENABLED                                    = var.denylist_enabled
     BIGQUERY_ENABLED                                    = var.bigquery_enabled
     AUDIT_LOGGING_ENABLED                               = var.audit_logging_enabled
     SERVICE_ACCOUNT_KEY_VIOLATIONS_SHOULD_NOTIFY        = var.service_account_key_violations_should_notify
@@ -160,7 +160,7 @@ data "template_file" "forseti_server_config" {
     CLOUDSQL_ACL_VIOLATIONS_SHOULD_NOTIFY               = var.cloudsql_acl_violations_should_notify
     CONFIG_VALIDATOR_VIOLATIONS_SHOULD_NOTIFY           = var.config_validator_violations_should_notify
     BUCKETS_ACL_VIOLATIONS_SHOULD_NOTIFY                = var.buckets_acl_violations_should_notify
-    BLACKLIST_VIOLATIONS_SHOULD_NOTIFY                  = var.blacklist_violations_should_notify
+    DENYLIST_VIOLATIONS_SHOULD_NOTIFY                   = var.denylist_violations_should_notify
     BIGQUERY_ACL_VIOLATIONS_SHOULD_NOTIFY               = var.bigquery_acl_violations_should_notify
     AUDIT_LOGGING_VIOLATIONS_SHOULD_NOTIFY              = var.audit_logging_violations_should_notify
     VIOLATIONS_SLACK_WEBHOOK                            = var.violations_slack_webhook

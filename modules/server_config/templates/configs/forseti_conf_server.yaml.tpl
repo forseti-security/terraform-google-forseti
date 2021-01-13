@@ -231,8 +231,6 @@ scanner:
           enabled: ${AUDIT_LOGGING_ENABLED}
         - name: bigquery
           enabled: ${BIGQUERY_ENABLED}
-        - name: blacklist
-          enabled: ${BLACKLIST_ENABLED}
         - name: bucket_acl
           enabled: ${BUCKET_ACL_ENABLED}
         - name: config_validator
@@ -240,6 +238,8 @@ scanner:
           verify_policy_library: ${VERIFY_POLICY_LIBRARY}
         - name: cloudsql_acl
           enabled: ${CLOUDSQL_ACL_ENABLED}
+        - name: denylist
+          enabled: ${DENYLIST_ENABLED}
         - name: enabled_apis
           enabled: ${ENABLED_APIS_ENABLED}
         - name: firewall_rule
@@ -343,26 +343,6 @@ notifier:
                 webhook_url: ${VIOLATIONS_SLACK_WEBHOOK}
             %{ endif }
 
-        - resource: blacklist_violations
-          should_notify: ${BLACKLIST_VIOLATIONS_SHOULD_NOTIFY}
-          notifiers:
-            %{ if SENDGRID_API_KEY != "" }
-            # Email violations
-            - name: email_violations
-            %{ endif }
-            # Upload violations to GCS.
-            - name: gcs_violations
-              configuration:
-                data_format: csv
-                # gcs_path should begin with "gs://"
-                gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
-            %{ if VIOLATIONS_SLACK_WEBHOOK != "" }
-            - name: slack_webhook
-              configuration:
-                data_format: json  # slack only supports json
-                webhook_url: ${VIOLATIONS_SLACK_WEBHOOK}
-            %{ endif }
-
         - resource: bigquery_acl_violations
           should_notify: ${BIGQUERY_ACL_VIOLATIONS_SHOULD_NOTIFY}
           notifiers:
@@ -425,6 +405,26 @@ notifier:
 
         - resource: cloudsql_acl_violations
           should_notify: ${CLOUDSQL_ACL_VIOLATIONS_SHOULD_NOTIFY}
+          notifiers:
+            %{ if SENDGRID_API_KEY != "" }
+            # Email violations
+            - name: email_violations
+            %{ endif }
+            # Upload violations to GCS.
+            - name: gcs_violations
+              configuration:
+                data_format: csv
+                # gcs_path should begin with "gs://"
+                gcs_path: gs://${FORSETI_BUCKET}/scanner_violations
+            %{ if VIOLATIONS_SLACK_WEBHOOK != "" }
+            - name: slack_webhook
+              configuration:
+                data_format: json  # slack only supports json
+                webhook_url: ${VIOLATIONS_SLACK_WEBHOOK}
+            %{ endif }
+
+        - resource: denylist_violations
+          should_notify: ${DENYLIST_VIOLATIONS_SHOULD_NOTIFY}
           notifiers:
             %{ if SENDGRID_API_KEY != "" }
             # Email violations

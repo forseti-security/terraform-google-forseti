@@ -15,7 +15,7 @@
 rules:
   - rule_id: 'prevent_allow_all_ingress'
     description: Detect allow ingress to all policies
-    mode: blacklist
+    mode: denylist
     match_policies:
       - direction: ingress
         allowed: ['*']
@@ -25,7 +25,7 @@ rules:
 
   - rule_id: 'disallow_all_ports'
     description: Don't allow policies that expose every port
-    mode: blacklist
+    mode: denylist
     match_policies:
       - direction: ingress
         allowed: ['*']
@@ -58,7 +58,7 @@ org_policy:
 # These scanners have not been validated by the formal CIS certification process.
 #  - rule_id: 'CIS_GCP_3.6'
 #    description: Don't allow allow SSH from 0.0.0.0/0
-#    mode: blacklist
+#    mode: denylist
 #    match_policies:
 #      - direction: ingress
 #        allowed: ['*']
@@ -72,7 +72,7 @@ org_policy:
 
 #  - rule_id: 'CIS_GCP_3.7'
 #    description: Don't allow allow RDP from 0.0.0.0/0
-#    mode: blacklist
+#    mode: denylist
 #    match_policies:
 #      - direction: ingress
 #        allowed: ['*']

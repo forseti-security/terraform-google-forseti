@@ -22,9 +22,9 @@ control "server-rules" do
   expected_files = %w[
     audit_logging_rules.yaml
     bigquery_rules.yaml
-    blacklist_rules.yaml
     bucket_rules.yaml
     cloudsql_rules.yaml
+    denylist_rules.yaml
     enabled_apis_rules.yaml
     external_project_access_rules.yaml
     firewall_rules.yaml

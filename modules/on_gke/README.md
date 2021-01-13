@@ -19,8 +19,6 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | bigquery\_enabled | Big Query scanner enabled. | bool | `"true"` | no |
 | bigquery\_max\_calls | Maximum calls that can be made to Big Query API | string | `"160"` | no |
 | bigquery\_period | The period of max calls for the Big Query API (in seconds) | string | `"1.0"` | no |
-| blacklist\_enabled | Blacklist scanner enabled. | bool | `"true"` | no |
-| blacklist\_violations\_should\_notify | Notify for Blacklist violations | bool | `"true"` | no |
 | bucket\_acl\_enabled | Bucket ACL scanner enabled. | bool | `"true"` | no |
 | bucket\_cai\_lifecycle\_age | GCS CAI lifecycle age value | string | `"14"` | no |
 | bucket\_cai\_location | GCS CAI storage bucket location | string | `"us-central1"` | no |
@@ -67,6 +65,8 @@ This sub-module deploys Forseti on GKE.  In short, this deploys a server contain
 | crm\_period | The period of max calls for the CRM  API (in seconds) | string | `"1.2"` | no |
 | cscc\_source\_id | Source ID for CSCC Beta API | string | `""` | no |
 | cscc\_violations\_enabled | Notify for CSCC violations | bool | `"false"` | no |
+| denylist\_enabled | Denylist scanner enabled. | bool | `"true"` | no |
+| denylist\_violations\_should\_notify | Notify for Denylist violations | bool | `"true"` | no |
 | domain | The domain associated with the GCP Organization ID | string | n/a | yes |
 | enable\_cai\_bucket | Create a GCS bucket for CAI exports | bool | `"true"` | no |
 | enable\_service\_networking | Create a global service networking peering connection at the VPC level | bool | `"true"` | no |

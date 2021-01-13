@@ -13,5 +13,5 @@
 # limitations under the License.
 
 rules:
-    - blacklist: Emerging Threat blacklist
+    - denylist: Emerging Threat denylist
       url: https://rules.emergingthreats.net/fwrules/emerging-Block-IPs.txt

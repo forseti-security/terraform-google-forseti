@@ -43,7 +43,7 @@
 #     locations:
 #       - 'us*'
 #   - name: All buckets in organization must not be in EU.
-#     mode: blacklist
+#     mode: denylist
 #     resource:
 #       - type: organization
 #         resource_ids:

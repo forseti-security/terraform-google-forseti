@@ -17,9 +17,9 @@
 # resource: A mapping of resources that this rule applies to.
 #  * type: The type of resource, can be organization, folder, or project.
 #  * resource_ids: A list of one or more numeric ids to match, or '*' for all.
-# mode: blacklist or whitelist, must be specified
+# mode: denylist or whitelist, must be specified
 # key: jmespath to the values you'd like to check
-# values: a list of values to blacklist/whitelist according to mode
+# values: a list of values to denylist/whitelist according to mode
 
 rules:
   # Note: please use the id of the resource (such as organization id,
@@ -105,7 +105,7 @@ rules:
 #        resource_ids:
 #          - '*'
 #    key: resourceLabels
-#    mode: blacklist
+#    mode: denylist
 #    values:
 #      - null
 
@@ -175,7 +175,7 @@ rules:
 #        resource_ids:
 #          - '*'
 #    key: masterAuth.clientKey
-#    mode: blacklist
+#    mode: denylist
 #    values:
 #      - null
 
@@ -219,7 +219,7 @@ rules:
 #        resource_ids:
 #          - '*'
 #    key: 'length(nodePools[?config.serviceAccount ==`default`]) >`0`'
-#    mode: blacklist
+#    mode: denylist
 #    values:
 #      - true
 

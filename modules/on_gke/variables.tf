@@ -373,12 +373,6 @@ variable "bigquery_enabled" {
   default     = true
 }
 
-variable "blacklist_enabled" {
-  description = "Blacklist scanner enabled."
-  type        = bool
-  default     = true
-}
-
 variable "bucket_acl_enabled" {
   description = "Bucket ACL scanner enabled."
   type        = bool
@@ -395,6 +389,12 @@ variable "config_validator_enabled" {
   description = "Config Validator scanner enabled."
   type        = bool
   default     = false
+}
+
+variable "denylist_enabled" {
+  description = "Denylist scanner enabled."
+  type        = bool
+  default     = true
 }
 
 variable "enabled_apis_enabled" {
@@ -558,12 +558,6 @@ variable "audit_logging_violations_should_notify" {
   default     = true
 }
 
-variable "blacklist_violations_should_notify" {
-  description = "Notify for Blacklist violations"
-  type        = bool
-  default     = true
-}
-
 variable "bigquery_acl_violations_should_notify" {
   description = "Notify for BigQuery ACL violations"
   type        = bool
@@ -584,6 +578,12 @@ variable "cloudsql_acl_violations_should_notify" {
 
 variable "config_validator_violations_should_notify" {
   description = "Notify for Config Validator violations."
+  type        = bool
+  default     = true
+}
+
+variable "denylist_violations_should_notify" {
+  description = "Notify for Denylist violations"
   type        = bool
   default     = true
 }

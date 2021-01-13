@@ -18,9 +18,9 @@ locals {
   files = [
     "rules/audit_logging_rules.yaml",
     "rules/bigquery_rules.yaml",
-    "rules/blacklist_rules.yaml",
     "rules/bucket_rules.yaml",
     "rules/cloudsql_rules.yaml",
+    "rules/denylist_rules.yaml",
     "rules/enabled_apis_rules.yaml",
     "rules/external_project_access_rules.yaml",
     "rules/firewall_rules.yaml",
