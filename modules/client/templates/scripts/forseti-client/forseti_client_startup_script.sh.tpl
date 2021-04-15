@@ -9,7 +9,7 @@ USER_HOME=/home/ubuntu
 sudo apt-get update -y
 sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade
 sudo apt-get update -y
-sudo apt-get --assume-yes install google-cloud-sdk git unzip
+sudo apt-get --assume-yes install git unzip
 
 # Install fluentd if necessary.
 if [ -e "/usr/sbin/google-fluentd" ]; then
