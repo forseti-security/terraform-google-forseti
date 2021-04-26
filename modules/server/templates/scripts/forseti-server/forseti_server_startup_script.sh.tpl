@@ -20,7 +20,7 @@ echo "Forseti Startup - Updating Ubuntu."
 sudo apt-get update -y
 sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade
 sudo apt-get update -y
-sudo apt-get --assume-yes install google-cloud-sdk git unzip
+sudo apt-get --assume-yes install git unzip
 
 if ! [ -e "/usr/sbin/google-fluentd" ]; then
   echo "Forseti Startup - Installing GCP Logging agent."
