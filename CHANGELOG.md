@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Extending the adopted spec, each change should have a link to its corresponding pull request appended.
 
+## [v5.2.3] - 2021-04-26
+
+### Fixed
+- Deleted google-cloud-sdk install from the startup script [#622]
+
 ## [v5.2.2] - 2020-07-23
 
 ### Added
@@ -417,7 +422,9 @@ Version 4.0.0 is a backwards-incompatible release. Please see the [upgrade instr
 [v5.2.0]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v5.1.3...v5.2.0
 [v5.2.1]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v5.2.0...v5.2.1
 [v5.2.2]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v5.2.1...v5.2.2
+[v5.2.3]: https://github.com/terraform-google-modules/terraform-google-forseti/compare/v5.2.2...v5.2.3
 
+[#622]: https://github.com/forseti-security/terraform-google-forseti/pull/622
 [#563]: https://github.com/forseti-security/terraform-google-forseti/pull/563
 [#546]: https://github.com/forseti-security/terraform-google-forseti/pull/546
 [#535]: https://github.com/forseti-security/terraform-google-forseti/pull/535
