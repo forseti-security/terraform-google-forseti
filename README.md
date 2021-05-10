@@ -267,7 +267,7 @@ For this module to work, you need the following APIs enabled on the Forseti proj
 | forwarding\_rule\_enabled | Forwarding rule scanner enabled. | bool | `"false"` | no |
 | forwarding\_rule\_violations\_should\_notify | Notify for forwarding rule violations | bool | `"true"` | no |
 | gcs\_labels | GCS bucket labels | map(string) | `<map>` | no |
-| google\_cloud\_sdk\_version | Version of the Google Cloud SDK to install | string | `"289.0.0-0"` | no |
+| google\_cloud\_sdk\_version | Version of the Google Cloud SDK to install | string | `"335.0.0-0"` | no |
 | group\_enabled | Group scanner enabled. | bool | `"true"` | no |
 | groups\_settings\_disable\_polling | Whether to disable polling for the G Suite Groups API | bool | `"false"` | no |
 | groups\_settings\_enabled | Groups settings scanner enabled. | bool | `"true"` | no |

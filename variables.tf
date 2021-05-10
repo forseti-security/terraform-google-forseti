@@ -167,7 +167,7 @@ variable "mailjet_enabled" {
 
 variable "google_cloud_sdk_version" {
   description = "Version of the Google Cloud SDK to install"
-  default     = "289.0.0-0"
+  default     = "335.0.0-0"
   type        = string
 }
 
@@ -1011,6 +1011,7 @@ variable "gcs_labels" {
   type        = map(string)
   default     = {}
 }
+
 #---------#
 # Network #
 #---------#
