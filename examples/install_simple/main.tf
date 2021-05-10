@@ -21,6 +21,7 @@ data "google_compute_network" "forseti_network" {
 
 module "cloud-nat" {
   source                             = "terraform-google-modules/cloud-nat/google"
+  version                            = "~> 1.4.0"
   name                               = "cloud-nat-${var.project_id}"
   create_router                      = true
   network                            = var.network

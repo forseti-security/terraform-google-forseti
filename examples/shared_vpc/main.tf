@@ -15,11 +15,11 @@
  */
 
 provider "google" {
-  version = "~> 3.7"
+  version = "~> 3.52"
 }
 
 provider "google-beta" {
-  version = "~> 3.7"
+  version = "~> 3.52"
 }
 
 provider "local" {
