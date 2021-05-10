@@ -45,16 +45,17 @@ module "bastion" {
 }
 
 module "forseti-shared-vpc" {
-  source             = "../../../examples/shared_vpc"
-  project_id         = var.project_id
-  region             = var.region
-  gsuite_admin_email = var.gsuite_admin_email
-  network            = var.network
-  subnetwork         = var.subnetwork
-  network_project    = var.network_project
-  org_id             = var.org_id
-  domain             = var.domain
-  forseti_version    = var.forseti_version
+  source              = "../../../examples/shared_vpc"
+  project_id          = var.project_id
+  region              = var.region
+  gsuite_admin_email  = var.gsuite_admin_email
+  network             = var.network
+  subnetwork          = var.subnetwork
+  network_project     = var.network_project
+  org_id              = var.org_id
+  domain              = var.domain
+  forseti_version     = var.forseti_version
+  deletion_protection = false
 
   instance_metadata = {
     sshKeys = "ubuntu:${tls_private_key.main.public_key_openssh}"

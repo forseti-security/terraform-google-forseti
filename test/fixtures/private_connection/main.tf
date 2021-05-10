@@ -45,13 +45,14 @@ module "bastion" {
 }
 
 module "forseti-private-connection" {
-  source          = "../../../examples/private_connection"
-  project_id      = var.project_id
-  region          = var.region
-  org_id          = var.org_id
-  domain          = var.domain
-  block_egress    = var.block_egress
-  forseti_version = var.forseti_version
+  source              = "../../../examples/private_connection"
+  project_id          = var.project_id
+  region              = var.region
+  org_id              = var.org_id
+  domain              = var.domain
+  block_egress        = var.block_egress
+  forseti_version     = var.forseti_version
+  deletion_protection = false
 
   instance_metadata = {
     sshKeys = "ubuntu:${tls_private_key.main.public_key_openssh}"

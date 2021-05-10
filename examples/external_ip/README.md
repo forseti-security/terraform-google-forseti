@@ -8,6 +8,7 @@ This example illustrates how to set up a minimal Forseti installation.
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | credentials\_path | Path to service account json | string | n/a | yes |
+| deletion\_protection | Whether or not to allow Terraform to destroy the instance. Unless this field is set to false in Terraform state, a terraform destroy or terraform apply command that deletes the instance will fail. | string | `"true"` | no |
 | domain | The domain associated with the GCP Organization ID | string | n/a | yes |
 | gsuite\_admin\_email | The email of a GSuite super admin, used for pulling user directory information *and* sending notifications. | string | n/a | yes |
 | instance\_metadata | Metadata key/value pairs to make available from within the client and server instances. | map(string) | `<map>` | no |

@@ -57,6 +57,7 @@ module "forseti-install-simple" {
   server_tags              = var.instance_tags
   client_private           = false # enable client public IP
   server_private           = false # enable server public IP
+  deletion_protection      = var.deletion_protection
 
   # These optional blocks allow to override the default `access_config` block
   # (empty by default) for the client and server VMs.

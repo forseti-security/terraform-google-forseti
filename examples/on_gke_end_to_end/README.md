@@ -62,6 +62,7 @@ This script will also activate necessary APIs required for Terraform to deploy F
 | default\_node\_pool\_disk\_size | Default Node Pool disk size | string | `"100"` | no |
 | default\_node\_pool\_disk\_type | Default Node Pool disk type | string | `"pd-ssd"` | no |
 | default\_node\_pool\_machine\_type | Default Node Pool machine type | string | `"n1-standard-8"` | no |
+| deletion\_protection | Whether or not to allow Terraform to destroy the instance. Unless this field is set to false in Terraform state, a terraform destroy or terraform apply command that deletes the instance will fail. | string | `"true"` | no |
 | domain | The domain associated with the GCP Organization ID | string | n/a | yes |
 | forseti\_email\_recipient | Email address that receives Forseti notifications | string | `""` | no |
 | forseti\_email\_sender | Email address that sends the Forseti notifications | string | `""` | no |

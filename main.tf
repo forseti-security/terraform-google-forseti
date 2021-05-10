@@ -195,6 +195,7 @@ module "cloudsql" {
   cloudsql_user              = var.cloudsql_db_user
   cloudsql_user_host         = var.cloudsql_user_host
   cloudsql_labels            = var.cloudsql_labels
+  deletion_protection        = var.deletion_protection
   enable_service_networking  = var.enable_service_networking
   network                    = var.network
   network_project            = var.network_project

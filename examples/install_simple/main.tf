@@ -28,15 +28,7 @@ module "cloud-nat" {
   project_id                         = var.project_id
   region                             = var.region
   router                             = "router-${var.project_id}"
-  source_subnetwork_ip_ranges_to_nat = "LIST_OF_SUBNETWORKS"
-
-  subnetworks = [
-    {
-      name                     = var.subnetwork
-      source_ip_ranges_to_nat  = ["ALL_IP_RANGES"]
-      secondary_ip_range_names = []
-    }
-  ]
+  source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
 }
 
 module "forseti-install-simple" {
@@ -56,8 +48,9 @@ module "forseti-install-simple" {
   client_tags              = var.instance_tags
 
   # CloudSQL
-  cloudsql_private = var.private
-  cloudsql_region  = var.region
+  cloudsql_private    = var.private
+  cloudsql_region     = var.region
+  deletion_protection = var.deletion_protection
 
   # Forseti
   forseti_email_recipient = var.forseti_email_recipient

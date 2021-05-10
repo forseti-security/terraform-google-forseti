@@ -86,14 +86,15 @@ module "bastion" {
 module "forseti-install-simple" {
   source = "../../../examples/install_simple"
 
-  gsuite_admin_email = var.gsuite_admin_email
-  project_id         = var.project_id
-  org_id             = var.org_id
-  domain             = var.domain
-  region             = var.region
-  network            = module.forseti-service-network-install-simple.network_name
-  subnetwork         = module.forseti-service-network-install-simple.subnets_names[0]
-  forseti_version    = var.forseti_version
+  gsuite_admin_email  = var.gsuite_admin_email
+  project_id          = var.project_id
+  org_id              = var.org_id
+  domain              = var.domain
+  region              = var.region
+  network             = var.network
+  subnetwork          = var.subnetwork
+  forseti_version     = var.forseti_version
+  deletion_protection = false
 
   config_validator_enabled = var.config_validator_enabled
 

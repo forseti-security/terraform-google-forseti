@@ -85,3 +85,8 @@ variable "sendgrid_api_key" {
 variable "subnetwork" {
   description = "The VPC subnetwork where the Forseti client and server will be created"
 }
+
+variable "deletion_protection" {
+  description = "Whether or not to allow Terraform to destroy the instance. Unless this field is set to false in Terraform state, a terraform destroy or terraform apply command that deletes the instance will fail."
+  default     = true
+}

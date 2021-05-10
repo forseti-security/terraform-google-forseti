@@ -10,6 +10,7 @@ This configuration is used to simply install Forseti. It includes a full Cloud S
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | config\_validator\_enabled | Config Validator scanner enabled. | bool | `"false"` | no |
+| deletion\_protection | Whether or not to allow Terraform to destroy the instance. Unless this field is set to false in Terraform state, a terraform destroy or terraform apply command that deletes the instance will fail. | string | `"true"` | no |
 | domain | The domain associated with the GCP Organization ID | string | n/a | yes |
 | forseti\_email\_recipient | Forseti email recipient. | string | `""` | no |
 | forseti\_email\_sender | Forseti email sender. | string | `""` | no |

@@ -484,6 +484,7 @@ module "cloudsql" {
   cloudsql_db_name           = var.cloudsql_db_name
   cloudsql_user_host         = var.cloudsql_user_host
   cloudsql_net_write_timeout = var.cloudsql_net_write_timeout
+  deletion_protection        = var.deletion_protection
   enable_service_networking  = var.enable_service_networking
   network                    = var.network
   network_project            = var.network_project

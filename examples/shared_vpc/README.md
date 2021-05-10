@@ -7,6 +7,7 @@ This example illustrates how to set up a Forseti installation with shared VPC.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
+| deletion\_protection | Whether or not to allow Terraform to destroy the instance. Unless this field is set to false in Terraform state, a terraform destroy or terraform apply command that deletes the instance will fail. | string | `"true"` | no |
 | domain | Organization domain | string | n/a | yes |
 | forseti\_version | The version of Forseti to install | string | `"v2.25.1"` | no |
 | gsuite\_admin\_email | G Suite admin email | string | n/a | yes |

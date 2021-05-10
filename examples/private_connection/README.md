@@ -56,6 +56,7 @@ In order to operate the following APIs should be active on the example's project
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | block\_egress | Controls whether the forseti infrastructure components can communicate to internet | bool | `"false"` | no |
+| deletion\_protection | Whether or not to allow Terraform to destroy the instance. Unless this field is set to false in Terraform state, a terraform destroy or terraform apply command that deletes the instance will fail. | string | `"true"` | no |
 | domain | The domain associated with the GCP Organization ID | string | n/a | yes |
 | forseti\_version | The version of Forseti to install | string | `"master"` | no |
 | instance\_metadata | Metadata key/value pairs to make available from within the client and server instances. | map(string) | `<map>` | no |

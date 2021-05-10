@@ -208,3 +208,8 @@ variable "bucket_cai_location" {
   description = "GCS CAI storage bucket location"
   default     = "us-central1"
 }
+
+variable "deletion_protection" {
+  description = "Whether or not to allow Terraform to destroy the instance. Unless this field is set to false in Terraform state, a terraform destroy or terraform apply command that deletes the instance will fail."
+  default     = true
+}

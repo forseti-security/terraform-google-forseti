@@ -141,6 +141,7 @@ module "forseti" {
   network                  = google_compute_network.network.name
   subnetwork               = google_compute_subnetwork.subnet.name
   forseti_version          = var.forseti_version
+  deletion_protection      = var.deletion_protection
 }
 
 resource "google_compute_firewall" "forseti-server-allow-sql-connection" {

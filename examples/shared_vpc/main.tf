@@ -54,4 +54,5 @@ module "forseti" {
   client_private           = "true"
   server_private           = "true"
   forseti_version          = var.forseti_version
+  deletion_protection      = var.deletion_protection
 }

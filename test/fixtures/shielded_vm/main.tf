@@ -17,16 +17,17 @@
 module "shielded-vm" {
   source = "../../.."
 
-  project_id       = var.project_id
-  org_id           = var.org_id
-  domain           = var.domain
-  network          = var.network
-  subnetwork       = var.subnetwork
-  network_project  = var.network_project
-  server_private   = true
-  client_private   = true
-  cloudsql_private = true
-  forseti_version  = var.forseti_version
+  project_id          = var.project_id
+  org_id              = var.org_id
+  domain              = var.domain
+  network             = var.network
+  subnetwork          = var.subnetwork
+  network_project     = var.network_project
+  server_private      = true
+  client_private      = true
+  cloudsql_private    = true
+  forseti_version     = var.forseti_version
+  deletion_protection = false
 
   server_shielded_instance_config = {
     enable_secure_boot          = true
