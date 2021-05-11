@@ -1046,6 +1046,7 @@ variable "firewall_logging" {
   type        = bool
   default     = false
 }
+
 #-------#
 # Flags #
 #-------#
