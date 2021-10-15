@@ -157,7 +157,10 @@ resource "google_compute_firewall" "forseti-client-deny-all" {
   target_service_accounts = [var.client_iam_module.forseti-client-service-account]
   source_ranges           = ["0.0.0.0/0"]
   priority                = "200"
-  enable_logging          = var.firewall_logging
+  
+  log_config {
+    metadata = "EXCLUDE_ALL_METADATA"
+  }
 
   deny {
     protocol = "icmp"
