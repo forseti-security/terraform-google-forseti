@@ -22,7 +22,7 @@ resource "null_resource" "org_id_and_folder_id_are_both_empty" {
   count = length(var.composite_root_resources) == 0 && var.org_id == "" && var.folder_id == "" ? 1 : 0
 
   provisioner "local-exec" {
-    command     = "echo 'composite_root_resources=${var.composite_root_resources} org_id=${var.org_id} folder_id=${var.org_id}' >&2; false"
+    command     = "echo 'composite_root_resources=${join(",", var.composite_root_resources)} org_id=${var.org_id} folder_id=${var.org_id}' >&2; false"
     interpreter = ["bash", "-c"]
   }
 }
