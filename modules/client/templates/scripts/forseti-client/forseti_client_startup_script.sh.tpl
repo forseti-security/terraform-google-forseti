@@ -25,8 +25,8 @@ sudo apt-get update -y && sudo apt-get install -y google-cloud-sdk=${google_clou
 # Install fluentd if necessary.
 if [ -e "/usr/sbin/google-fluentd" ]; then
     cd $USER_HOME
-    curl -sSO https://dl.google.com/cloudagents/install-logging-agent.sh
-    bash install-logging-agent.sh
+    curl -sSO https://dl.google.com/cloudagents/add-logging-agent-repo.sh
+    bash add-logging-agent-repo.sh --also-install
 fi
 
 # Install Forseti Security.
