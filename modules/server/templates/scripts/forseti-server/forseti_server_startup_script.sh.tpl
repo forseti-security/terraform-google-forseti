@@ -228,6 +228,6 @@ echo -e "root\n$USER" > /etc/cron.allow
 # queue up the jobs.
 # If the cron job failed the acquire lock on the process, it will log a warning message to syslog.
 chmod +x ${forseti_scripts}/run_forseti.sh
-(echo "${forseti_run_frequency} (/usr/bin/flock -n ${forseti_home}/forseti_cron_runner.lock ${forseti_scripts}/run_forseti.sh || echo '[forseti-security] Warning: New Forseti cron job will not be started, because previous Forseti job is still running.') 2>&1 | logger") | crontab -u $USER -
+(echo "${forseti_run_frequency} (/usr/bin/flock -n ${forseti_scripts}/forseti_cron_runner.lock ${forseti_scripts}/run_forseti.sh || echo '[forseti-security] Warning: New Forseti cron job will not be started, because previous Forseti job is still running.') 2>&1 | logger") | crontab -u $USER -
 echo "Forseti Startup - Added the run_forseti.sh to crontab under user $USER."
 echo "Forseti Startup - Execution of startup script finished."
