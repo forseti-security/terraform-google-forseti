@@ -94,3 +94,5 @@ echo "Finished running Forseti notifier."
 echo "Cleaning up model tables"
 forseti model delete $MODEL_NAME
 
+# Restart Forseti to release used memory
+systemctl restart forseti
