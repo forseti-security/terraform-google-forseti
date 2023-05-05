@@ -45,10 +45,6 @@ locals {
 
   services_list = [
     "admin.googleapis.com",
-    "appengine.googleapis.com",
-    "bigquery.googleapis.com",
-    "cloudbilling.googleapis.com",
-    "cloudresourcemanager.googleapis.com",
     "sql-component.googleapis.com",
     "sqladmin.googleapis.com",
     "compute.googleapis.com",
@@ -57,6 +53,10 @@ locals {
     "servicemanagement.googleapis.com",
     "serviceusage.googleapis.com",
     "logging.googleapis.com",
+    "appengine.googleapis.com",
+    "bigquery.googleapis.com",
+    "cloudbilling.googleapis.com",
+    "cloudresourcemanager.googleapis.com",
     "cloudasset.googleapis.com",
     "storage-api.googleapis.com",
     "groupssettings.googleapis.com",
